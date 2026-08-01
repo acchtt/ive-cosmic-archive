@@ -14,7 +14,7 @@
   <div id="starfield" class="starfield" aria-hidden="true"></div>
 
   <header class="site-header" data-header>
-    <a class="brand" href="#home" aria-label="IVE Cosmic Archive home">
+    <a class="brand" href="index.html" aria-label="IVE Cosmic Archive home">
       <span class="brand-mark">IVE</span>
       <span class="brand-sub">Cosmic Archive</span>
     </a>
@@ -25,11 +25,11 @@
     </button>
 
     <nav id="site-nav" class="site-nav" aria-label="Primary navigation" data-nav>
-      <a href="#home">Home</a>
-      <a href="#members">Members</a>
-      <a href="#eras">Eras</a>
-      <a href="#media">Media</a>
-      <a href="#dive-zone">DIVE Zone</a>
+      <a href="index.html" data-route="index">Home</a>
+      <a href="members.html" data-route="members">Members</a>
+      <a href="eras.html" data-route="eras">Eras</a>
+      <a href="media.html" data-route="media">Media</a>
+      <a href="dive-zone.html" data-route="dive-zone">DIVE Zone</a>
     </nav>
 
     <button class="motion-toggle" type="button" aria-pressed="false" data-motion-toggle>
@@ -55,8 +55,8 @@
           A fan-made command center for six members, unforgettable eras, iconic music, and every signal sent by DIVE.
         </p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#eras">Enter the archive <span aria-hidden="true">↗</span></a>
-          <a class="button button-ghost" href="#members">Explore members</a>
+          <a class="button button-primary" href="eras.html">Enter the archive <span aria-hidden="true">↗</span></a>
+          <a class="button button-ghost" href="members.html">Explore members</a>
         </div>
       </div>
 
@@ -87,7 +87,7 @@
           <p class="eyebrow"><span></span> Member command</p>
           <h2 id="members-title">Six stars.<br />One constellation.</h2>
         </div>
-        <p>Focus a member card to access their profile signal. Portrait areas are intentionally abstract placeholders for future credited imagery.</p>
+        <div class="section-side"><p>Focus a member card to access their profile signal. Portrait areas are intentionally abstract placeholders for future credited imagery.</p><a class="text-link" href="members.html">Open member dossiers ↗</a></div>
       </div>
 
       <div class="member-grid" data-member-grid></div>
@@ -99,7 +99,7 @@
           <p class="eyebrow"><span></span> Orbit of eras</p>
           <h2 id="eras-title">Navigate the timeline.</h2>
         </div>
-        <p>Select an era node to update the archive transmission.</p>
+        <div class="section-side"><p>Select an era node to update the archive transmission.</p><a class="text-link" href="eras.html">Open full era archive ↗</a></div>
       </div>
 
       <div class="era-console reveal">
@@ -127,7 +127,7 @@
           <p class="eyebrow"><span></span> Media transmission</p>
           <h2 id="media-title">Signals worth replaying.</h2>
         </div>
-        <p>Use official embeds later; this prototype uses visual placeholders only.</p>
+        <div class="section-side"><p>Use official embeds later; this prototype uses visual placeholders only.</p><a class="text-link" href="media.html">Open media vault ↗</a></div>
       </div>
 
       <div class="media-console reveal">
@@ -155,7 +155,7 @@
           <p class="eyebrow"><span></span> DIVE laboratory</p>
           <h2 id="dive-title">Interactive fan tools.</h2>
         </div>
-        <p>Small experiences that make the archive feel personal.</p>
+        <div class="section-side"><p>Small experiences that make the archive feel personal.</p><a class="text-link" href="dive-zone.html">Enter DIVE Zone ↗</a></div>
       </div>
 
       <div class="lab-grid">
@@ -221,18 +221,18 @@
 
   <footer class="site-footer section-shell">
     <div>
-      <a class="brand footer-brand" href="#home">
+      <a class="brand footer-brand" href="index.html">
         <span class="brand-mark">IVE</span>
         <span class="brand-sub">Cosmic Archive</span>
       </a>
       <p>An unofficial fan-made design prototype. Not affiliated with IVE, Starship Entertainment, or associated partners.</p>
     </div>
     <div class="footer-links">
-      <a href="#home">Back to top</a>
-      <a href="#media">Official links placeholder</a>
+      <a href="#main">Back to top</a>
+      <a href="media.html">Media archive</a>
       <button type="button" data-motion-toggle-footer>Toggle motion</button>
     </div>
-    <p class="footer-code">Archive build · 001</p>
+    <p class="footer-code">Archive build · 002 · Multi-page system</p>
   </footer>
 </body>
 </html>
