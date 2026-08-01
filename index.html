@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="IVE Cosmic Archive — an unofficial, interactive fan-made archive concept." />
+  <title>IVE Cosmic Archive</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+  <div id="starfield" class="starfield" aria-hidden="true"></div>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="#home" aria-label="IVE Cosmic Archive home">
+      <span class="brand-mark">IVE</span>
+      <span class="brand-sub">Cosmic Archive</span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
+      <span></span><span></span>
+      <span class="sr-only">Toggle navigation</span>
+    </button>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary navigation" data-nav>
+      <a href="#home">Home</a>
+      <a href="#members">Members</a>
+      <a href="#eras">Eras</a>
+      <a href="#media">Media</a>
+      <a href="#dive-zone">DIVE Zone</a>
+    </nav>
+
+    <button class="motion-toggle" type="button" aria-pressed="false" data-motion-toggle>
+      <span class="motion-dot" aria-hidden="true"></span>
+      <span data-motion-label>Motion on</span>
+    </button>
+  </header>
+
+  <main id="main">
+    <section id="home" class="hero section-shell" aria-labelledby="hero-title">
+      <div class="hero-orbit orbit-one" aria-hidden="true"></div>
+      <div class="hero-orbit orbit-two" aria-hidden="true"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><span></span> Transmission 001 · Latest era</p>
+        <h1 id="hero-title">
+          <span class="hero-kicker">Enter the</span>
+          <span class="hero-title-main">IVE</span>
+          <span class="hero-title-outline">Universe</span>
+        </h1>
+        <p class="hero-description">
+          A fan-made command center for six members, unforgettable eras, iconic music, and every signal sent by DIVE.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#eras">Enter the archive <span aria-hidden="true">↗</span></a>
+          <a class="button button-ghost" href="#members">Explore members</a>
+        </div>
+      </div>
+
+      <div class="hero-console reveal" aria-label="Archive status">
+        <div class="console-topline">
+          <span>Archive online</span>
+          <span class="status-pulse">Live</span>
+        </div>
+        <div class="core-visual" aria-hidden="true">
+          <div class="core-ring ring-a"></div>
+          <div class="core-ring ring-b"></div>
+          <div class="core-ring ring-c"></div>
+          <div class="core-word">IVE</div>
+        </div>
+        <dl class="console-stats">
+          <div><dt>Members</dt><dd>06</dd></div>
+          <div><dt>Archive</dt><dd>∞</dd></div>
+          <div><dt>Signal</dt><dd>100%</dd></div>
+        </dl>
+      </div>
+
+      <div class="scroll-cue" aria-hidden="true"><span></span>Scroll to synchronize</div>
+    </section>
+
+    <section id="members" class="content-section section-shell" aria-labelledby="members-title">
+      <div class="section-heading reveal">
+        <div>
+          <p class="eyebrow"><span></span> Member command</p>
+          <h2 id="members-title">Six stars.<br />One constellation.</h2>
+        </div>
+        <p>Focus a member card to access their profile signal. Portrait areas are intentionally abstract placeholders for future credited imagery.</p>
+      </div>
+
+      <div class="member-grid" data-member-grid></div>
+    </section>
+
+    <section id="eras" class="content-section section-shell eras-section" aria-labelledby="eras-title">
+      <div class="section-heading reveal">
+        <div>
+          <p class="eyebrow"><span></span> Orbit of eras</p>
+          <h2 id="eras-title">Navigate the timeline.</h2>
+        </div>
+        <p>Select an era node to update the archive transmission.</p>
+      </div>
+
+      <div class="era-console reveal">
+        <div class="era-track-wrap">
+          <div class="era-line" aria-hidden="true"></div>
+          <div class="era-track" role="tablist" aria-label="IVE eras" data-era-tabs></div>
+        </div>
+
+        <article class="era-detail" aria-live="polite">
+          <div class="era-index" data-era-index>01</div>
+          <div>
+            <p class="eyebrow compact"><span></span><span data-era-year>2021</span></p>
+            <h3 data-era-name>ELEVEN</h3>
+            <p data-era-copy>The first signal: elegant, mysterious, and impossible to ignore.</p>
+            <div class="era-tags" data-era-tags></div>
+          </div>
+          <div class="era-planet" aria-hidden="true"><span data-era-planet>01</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="media" class="content-section section-shell" aria-labelledby="media-title">
+      <div class="section-heading reveal">
+        <div>
+          <p class="eyebrow"><span></span> Media transmission</p>
+          <h2 id="media-title">Signals worth replaying.</h2>
+        </div>
+        <p>Use official embeds later; this prototype uses visual placeholders only.</p>
+      </div>
+
+      <div class="media-console reveal">
+        <article class="featured-media">
+          <div class="video-placeholder" data-video-placeholder>
+            <div class="video-grid" aria-hidden="true"></div>
+            <button class="play-button" type="button" aria-label="Play prototype preview" data-play-button><span></span></button>
+            <p data-featured-label>Featured transmission</p>
+          </div>
+          <div class="featured-meta">
+            <div>
+              <p class="eyebrow compact"><span></span><span data-featured-type>Performance</span></p>
+              <h3 data-featured-title>Cosmic Stage Archive</h3>
+            </div>
+            <span class="timecode" data-featured-time>04:18</span>
+          </div>
+        </article>
+        <div class="media-list" role="list" data-media-list></div>
+      </div>
+    </section>
+
+    <section id="dive-zone" class="content-section section-shell" aria-labelledby="dive-title">
+      <div class="section-heading reveal">
+        <div>
+          <p class="eyebrow"><span></span> DIVE laboratory</p>
+          <h2 id="dive-title">Interactive fan tools.</h2>
+        </div>
+        <p>Small experiences that make the archive feel personal.</p>
+      </div>
+
+      <div class="lab-grid">
+        <article class="lab-card lab-song reveal">
+          <div class="lab-number">01</div>
+          <p class="eyebrow compact"><span></span> Random signal</p>
+          <h3>What should you play next?</h3>
+          <div class="song-result" aria-live="polite">
+            <span>Now transmitting</span>
+            <strong data-song-result>LOVE DIVE</strong>
+          </div>
+          <button class="button button-primary full" type="button" data-song-picker>Shuffle the archive</button>
+        </article>
+
+        <article class="lab-card reveal">
+          <div class="lab-number">02</div>
+          <p class="eyebrow compact"><span></span> Era scan</p>
+          <h3>Which IVE era matches your signal?</h3>
+          <div class="quiz-options" data-quiz-options>
+            <button type="button" data-quiz-value="glamour">High-glamour confidence</button>
+            <button type="button" data-quiz-value="dream">Dreamy and cinematic</button>
+            <button type="button" data-quiz-value="power">Bold and electric</button>
+          </div>
+          <p class="quiz-result" aria-live="polite" data-quiz-result>Select your current energy.</p>
+        </article>
+
+        <article class="lab-card reveal">
+          <div class="lab-number">03</div>
+          <p class="eyebrow compact"><span></span> Bias identity</p>
+          <h3>Generate a personal DIVE access card.</h3>
+          <label class="select-label" for="bias-select">Select member</label>
+          <select id="bias-select" data-bias-select></select>
+          <button class="button button-ghost full" type="button" data-bias-generate>Generate card</button>
+          <div class="bias-card" data-bias-card aria-live="polite">
+            <span>DIVE ACCESS</span>
+            <strong>Choose a member</strong>
+            <small>Archive ID · 000000</small>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="signals" class="content-section section-shell signals-section" aria-labelledby="signals-title">
+      <div class="section-heading reveal">
+        <div>
+          <p class="eyebrow"><span></span> DIVE signals</p>
+          <h2 id="signals-title">Messages across the universe.</h2>
+        </div>
+        <p>Prototype content only. Real submissions will require moderation and a database in a later phase.</p>
+      </div>
+
+      <div class="signal-layout reveal">
+        <div class="signal-feed" data-signal-feed></div>
+        <form class="signal-form" data-signal-form>
+          <span class="prototype-badge">Prototype · disabled</span>
+          <label for="signal-message">Send a signal</label>
+          <textarea id="signal-message" rows="5" placeholder="Fan-message submissions are not connected yet." disabled></textarea>
+          <button class="button button-primary full" type="submit" disabled>Transmit message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer section-shell">
+    <div>
+      <a class="brand footer-brand" href="#home">
+        <span class="brand-mark">IVE</span>
+        <span class="brand-sub">Cosmic Archive</span>
+      </a>
+      <p>An unofficial fan-made design prototype. Not affiliated with IVE, Starship Entertainment, or associated partners.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#home">Back to top</a>
+      <a href="#media">Official links placeholder</a>
+      <button type="button" data-motion-toggle-footer>Toggle motion</button>
+    </div>
+    <p class="footer-code">Archive build · 001</p>
+  </footer>
+</body>
+</html>
