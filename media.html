@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" data-page="media">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Browse the media vault in the IVE Cosmic Archive." />
+  <title>Media · IVE Cosmic Archive</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+  <div id="starfield" class="starfield" aria-hidden="true"></div>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="index.html" aria-label="IVE Cosmic Archive home">
+      <span class="brand-mark">IVE</span>
+      <span class="brand-sub">Cosmic Archive</span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
+      <span></span><span></span>
+      <span class="sr-only">Toggle navigation</span>
+    </button>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary navigation" data-nav>
+      <a href="index.html" data-route="index">Home</a>
+      <a href="members.html" data-route="members">Members</a>
+      <a href="eras.html" data-route="eras">Eras</a>
+      <a href="media.html" data-route="media">Media</a>
+      <a href="dive-zone.html" data-route="dive-zone">DIVE Zone</a>
+    </nav>
+
+    <button class="motion-toggle" type="button" aria-pressed="false" data-motion-toggle>
+      <span class="motion-dot" aria-hidden="true"></span>
+      <span data-motion-label>Motion on</span>
+    </button>
+  </header>
+  <main id="main">
+    <section class="page-hero section-shell page-hero-media" aria-labelledby="page-title">
+      <div class="page-hero-copy reveal">
+        <p class="eyebrow"><span></span> Media transmission</p>
+        <h1 id="page-title">A vault built<br /><span>for replay.</span></h1>
+        <p>Browse performances, music videos, dance practices, and interviews from one focused command interface.</p>
+      </div>
+      <div class="page-hero-orb media-orb" aria-hidden="true"><span>▶</span></div>
+    </section>
+
+    <section class="page-section section-shell" aria-labelledby="featured-title">
+      <div class="section-heading reveal">
+        <div><p class="eyebrow"><span></span> Featured signal</p><h2 id="featured-title">Current transmission.</h2></div>
+        <p>Official YouTube embeds will replace the abstract preview once the final media list and rights-safe linking approach are selected.</p>
+      </div>
+      <div class="media-console reveal">
+        <article class="featured-media">
+          <div class="video-placeholder" data-video-placeholder>
+            <div class="video-grid" aria-hidden="true"></div>
+            <button class="play-button" type="button" aria-label="Play prototype preview" data-play-button><span></span></button>
+            <p data-featured-label>Featured transmission</p>
+          </div>
+          <div class="featured-meta">
+            <div><p class="eyebrow compact"><span></span><span data-featured-type>Performance</span></p><h3 data-featured-title>Cosmic Stage Archive</h3></div>
+            <span class="timecode" data-featured-time>04:18</span>
+          </div>
+        </article>
+        <div class="media-list" role="list" data-media-list></div>
+      </div>
+    </section>
+
+    <section class="page-section section-shell" aria-labelledby="vault-title">
+      <div class="section-heading reveal">
+        <div><p class="eyebrow"><span></span> Full vault</p><h2 id="vault-title">Filter the signal.</h2></div>
+        <p>The expanded grid demonstrates how a larger media collection can be sorted without losing the command-center aesthetic.</p>
+      </div>
+      <div class="filter-bar reveal" role="group" aria-label="Filter media">
+        <button type="button" class="active" data-media-filter="all">All signals</button>
+        <button type="button" data-media-filter="performance">Performances</button>
+        <button type="button" data-media-filter="music-video">Music videos</button>
+        <button type="button" data-media-filter="practice">Practices</button>
+        <button type="button" data-media-filter="interview">Interviews</button>
+      </div>
+      <div class="vault-grid" data-vault-grid></div>
+    </section>
+  </main>
+  <footer class="site-footer section-shell">
+    <div>
+      <a class="brand footer-brand" href="index.html">
+        <span class="brand-mark">IVE</span>
+        <span class="brand-sub">Cosmic Archive</span>
+      </a>
+      <p>An unofficial fan-made design prototype. Not affiliated with IVE, Starship Entertainment, or associated partners.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#main">Back to top</a>
+      <a href="media.html">Media archive</a>
+      <button type="button" data-motion-toggle-footer>Toggle motion</button>
+    </div>
+    <p class="footer-code">Archive build · 002 · Multi-page system</p>
+  </footer>
+</body>
+</html>
