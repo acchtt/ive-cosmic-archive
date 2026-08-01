@@ -1,3 +1,10 @@
+if (!document.querySelector('link[href="pages.css"]')) {
+  const pageStyles = document.createElement('link');
+  pageStyles.rel = 'stylesheet';
+  pageStyles.href = 'pages.css';
+  document.head.appendChild(pageStyles);
+}
+
 const members = [
   { name: 'Gaeul', code: 'STAR-01', signal: 'Quiet charisma with a sharp performance edge.', className: 'Precision', tone: 'Violet', frequency: '91.4', era: 'AFTER LIKE', a: 'rgba(182, 112, 255, .48)', b: 'rgba(80, 180, 255, .22)' },
   { name: 'Yujin', code: 'STAR-02', signal: 'Bright leadership energy at the center of the formation.', className: 'Command', tone: 'Magenta', frequency: '98.2', era: 'I AM', a: 'rgba(255, 113, 196, .46)', b: 'rgba(255, 178, 105, .18)' },
