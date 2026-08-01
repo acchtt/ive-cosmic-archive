@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" data-page="dive-zone">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Use interactive fan tools in the IVE Cosmic Archive." />
+  <title>DIVE Zone · IVE Cosmic Archive</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+  <div id="starfield" class="starfield" aria-hidden="true"></div>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="index.html" aria-label="IVE Cosmic Archive home">
+      <span class="brand-mark">IVE</span>
+      <span class="brand-sub">Cosmic Archive</span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
+      <span></span><span></span>
+      <span class="sr-only">Toggle navigation</span>
+    </button>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary navigation" data-nav>
+      <a href="index.html" data-route="index">Home</a>
+      <a href="members.html" data-route="members">Members</a>
+      <a href="eras.html" data-route="eras">Eras</a>
+      <a href="media.html" data-route="media">Media</a>
+      <a href="dive-zone.html" data-route="dive-zone">DIVE Zone</a>
+    </nav>
+
+    <button class="motion-toggle" type="button" aria-pressed="false" data-motion-toggle>
+      <span class="motion-dot" aria-hidden="true"></span>
+      <span data-motion-label>Motion on</span>
+    </button>
+  </header>
+  <main id="main">
+    <section class="page-hero section-shell page-hero-dive" aria-labelledby="page-title">
+      <div class="page-hero-copy reveal">
+        <p class="eyebrow"><span></span> DIVE laboratory</p>
+        <h1 id="page-title">Your signal<br /><span>belongs here.</span></h1>
+        <p>Interactive fan tools turn the archive from something you browse into something that responds to you.</p>
+      </div>
+      <div class="page-hero-orb dive-orb" aria-hidden="true"><span>♡</span></div>
+    </section>
+
+    <section class="page-section section-shell" aria-labelledby="tools-title">
+      <div class="section-heading reveal">
+        <div><p class="eyebrow"><span></span> Active experiments</p><h2 id="tools-title">Three ways to synchronize.</h2></div>
+        <p>These interactions work entirely in the browser. Accounts, saved results, and shareable images can be added in a later phase.</p>
+      </div>
+      <div class="lab-grid">
+        <article class="lab-card lab-song reveal">
+          <div class="lab-number">01</div><p class="eyebrow compact"><span></span> Random signal</p><h3>What should you play next?</h3>
+          <div class="song-result" aria-live="polite"><span>Now transmitting</span><strong data-song-result>LOVE DIVE</strong></div>
+          <button class="button button-primary full" type="button" data-song-picker>Shuffle the archive</button>
+        </article>
+        <article class="lab-card reveal">
+          <div class="lab-number">02</div><p class="eyebrow compact"><span></span> Era scan</p><h3>Which IVE era matches your signal?</h3>
+          <div class="quiz-options" data-quiz-options>
+            <button type="button" data-quiz-value="glamour">High-glamour confidence</button>
+            <button type="button" data-quiz-value="dream">Dreamy and cinematic</button>
+            <button type="button" data-quiz-value="power">Bold and electric</button>
+          </div>
+          <p class="quiz-result" aria-live="polite" data-quiz-result>Select your current energy.</p>
+        </article>
+        <article class="lab-card reveal">
+          <div class="lab-number">03</div><p class="eyebrow compact"><span></span> Bias identity</p><h3>Generate a personal DIVE access card.</h3>
+          <label class="select-label" for="bias-select">Select member</label><select id="bias-select" data-bias-select></select>
+          <button class="button button-ghost full" type="button" data-bias-generate>Generate card</button>
+          <div class="bias-card" data-bias-card aria-live="polite"><span>DIVE ACCESS</span><strong>Choose a member</strong><small>Archive ID · 000000</small></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="page-section section-shell" aria-labelledby="signals-title">
+      <div class="section-heading reveal">
+        <div><p class="eyebrow"><span></span> DIVE signals</p><h2 id="signals-title">Messages across the universe.</h2></div>
+        <p>Prototype messages show the future community layout. Public submissions will require moderation, authentication, and a database.</p>
+      </div>
+      <div class="signal-layout reveal">
+        <div class="signal-feed" data-signal-feed></div>
+        <form class="signal-form" data-signal-form>
+          <span class="prototype-badge">Prototype · disabled</span>
+          <label for="signal-message">Send a signal</label>
+          <textarea id="signal-message" rows="5" placeholder="Fan-message submissions are not connected yet." disabled></textarea>
+          <button class="button button-primary full" type="submit" disabled>Transmit message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer section-shell">
+    <div>
+      <a class="brand footer-brand" href="index.html">
+        <span class="brand-mark">IVE</span>
+        <span class="brand-sub">Cosmic Archive</span>
+      </a>
+      <p>An unofficial fan-made design prototype. Not affiliated with IVE, Starship Entertainment, or associated partners.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#main">Back to top</a>
+      <a href="media.html">Media archive</a>
+      <button type="button" data-motion-toggle-footer>Toggle motion</button>
+    </div>
+    <p class="footer-code">Archive build · 002 · Multi-page system</p>
+  </footer>
+</body>
+</html>
