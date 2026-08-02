@@ -2,7 +2,13 @@
 
 A responsive, multi-page fan-site prototype built around a futuristic **Cosmic Control Room** concept.
 
+**Live site:** https://ive-cosmic.pages.dev
+
 > Unofficial fan-made project. Not affiliated with IVE, Starship Entertainment, or associated partners.
+
+## Deployment
+
+The production site is deployed through Cloudflare Pages from the `main` branch. Merges into `main` trigger a new production deployment.
 
 ## Pages
 
@@ -16,8 +22,9 @@ A responsive, multi-page fan-site prototype built around a futuristic **Cosmic C
 
 - Dark cosmic visual system with responsive layouts
 - Shared navigation and motion controls across every page
-- Abstract portrait and media placeholders for future credited assets
+- Officially credited REVIVE+ member portraits
 - Member dossier selector with signature-era scan
+- REVIVE+ album archive and official media embed
 - Selectable era timeline and archive cards
 - Filterable media-vault interface
 - Random song picker, era quiz, and bias access-card generator
@@ -45,9 +52,10 @@ ive-cosmic-archive/
 ├── styles.css
 ├── pages.css
 ├── script.js
+├── _headers
 └── README.md
 ```
 
 ## Next development phase
 
-Replace abstract placeholders with credited assets and official embeds, then add structured content for albums, tracks, member profiles, and moderated fan submissions.
+Replace the remaining media placeholders with credited official embeds, then continue expanding structured album, track, member, and fan-tool content.
