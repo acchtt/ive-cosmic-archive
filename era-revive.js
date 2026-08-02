@@ -29,6 +29,7 @@
     renderEras();
     renderEraArchive();
     selectEra(eras.length - 1);
+    setupReveal();
   }
 
   if (document.readyState === 'loading') {
