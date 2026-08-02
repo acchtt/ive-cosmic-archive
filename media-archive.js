@@ -27,7 +27,7 @@
   ];
 
   const selectedArchive = [
-    { id: 'vS4xzjHCI1o', title: 'Supernova Love · M/V BTS', date: '2024.11.29', type: 'Behind', categories: ['behind'], era: 'Supernova Love' },
+    { id: 'vS4xzjHCI1o', title: 'IVE, David Guetta - Supernova Love MV BTS', date: '2024.11.29', type: 'Behind', categories: ['behind'], era: 'Supernova Love' },
     { id: 'es9MaJPb_U8', title: 'REBEL HEART · Performance Video', date: '2025.01.20', type: 'Performance', categories: ['performance'], era: 'IVE EMPATHY' },
     { id: 'TNDF5Qr6ayo', title: 'BLACKHOLE · Dance Practice', date: '2026.02.28', type: 'Dance practice', categories: ['practice'], era: 'REVIVE+' },
     { id: 'TT1rdIBPfmY', title: 'REBEL HEART · Dance Practice', date: '2025.01.21', type: 'Dance practice', categories: ['practice'], era: 'IVE EMPATHY' }
