@@ -8,10 +8,17 @@
 
   if (!form || !list || !count || !search || !submit || !status) return;
 
+  const formFields = document.createElement('div');
+  formFields.className = 'admin-form-fields';
+  Array.from(form.children).forEach((child) => {
+    if (child !== submit && child !== status) formFields.append(child);
+  });
+  form.prepend(formFields);
+
   const actionBar = document.createElement('div');
   actionBar.className = 'admin-form-actions';
-  submit.before(actionBar);
   actionBar.append(submit, status);
+  form.append(actionBar);
 
   const category = document.createElement('select');
   category.setAttribute('aria-label', 'Filter video catalog by category');
@@ -126,8 +133,9 @@
 
     entries.sort(compareEntries);
     const visibleEntries = entries.filter((entry) => state.category === 'all' || entry.kind === state.category);
+    const visibleRows = new Set(visibleEntries.map((entry) => entry.row));
     entries.forEach((entry) => {
-      entry.row.hidden = !visibleEntries.includes(entry);
+      entry.row.hidden = !visibleRows.has(entry.row);
     });
 
     if (state.sort === 'category') {
