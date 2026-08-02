@@ -9,7 +9,3 @@ export async function onRequestGet(context) {
     return errorResponse(error);
   }
 }
-
-export function onRequest() {
-  return json({ error: 'Method not allowed.' }, 405, { allow: 'GET' });
-}
