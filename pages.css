@@ -7,7 +7,7 @@
 .text-link:hover { color: white; }
 
 .page-hero {
-  position: relative; min-height: 720px; padding-top: 190px; padding-bottom: 110px;
+  position: relative; min-height: 720px; padding-top: 100px; padding-bottom: 110px;
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .65fr); gap: 70px; align-items: center;
 }
 .page-hero::before { content: ""; position: absolute; z-index: -1; inset: 8% -12%; background: radial-gradient(circle at 72% 46%, rgba(143, 81, 238, .18), transparent 28%); }
@@ -97,7 +97,7 @@
 }
 
 @media (max-width: 760px) {
-  .page-hero { min-height: auto; padding-top: 150px; padding-bottom: 80px; grid-template-columns: 1fr; }
+  .page-hero { min-height: auto; padding-top: 72px; padding-bottom: 80px; grid-template-columns: 1fr; }
   .page-hero-orb { width: min(70vw, 300px); margin-top: 20px; }
   .page-section { padding-block: 82px; }
   .dossier-list { grid-template-columns: repeat(2, 1fr); }
