@@ -5,11 +5,12 @@ import {
   normalizeVideoInput,
   requireAdmin,
   requireDatabase,
+  requireSameOrigin,
   serializeVideo
 } from '../../../_lib/video-store.js';
 
 export async function onRequestGet(context) {
-  const denied = requireAdmin(context);
+  const denied = await requireAdmin(context);
   if (denied) return denied;
 
   try {
@@ -21,7 +22,9 @@ export async function onRequestGet(context) {
 }
 
 export async function onRequestPost(context) {
-  const denied = requireAdmin(context);
+  const originDenied = requireSameOrigin(context);
+  if (originDenied) return originDenied;
+  const denied = await requireAdmin(context);
   if (denied) return denied;
 
   try {
