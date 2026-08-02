@@ -1,15 +1,19 @@
 (() => {
   const identities = [
-    { stage: 'GAEUL', english: 'Kim Gaeul', korean: '김가을' },
-    { stage: 'YUJIN', english: 'An Yujin', korean: '안유진' },
-    { stage: 'REI', english: 'Naoi Rei', korean: '나오이 레이', japanese: '直井怜' },
-    { stage: 'WONYOUNG', english: 'Jang Wonyoung', korean: '장원영' },
-    { stage: 'LIZ', english: 'Kim Jiwon', korean: '김지원' },
-    { stage: 'LEESEO', english: 'Lee Hyunseo', korean: '이현서' }
+    { stage: 'GAEUL', english: 'Kim Gaeul', korean: '김가을', instagram: 'fallingin__fall' },
+    { stage: 'YUJIN', english: 'An Yujin', korean: '안유진', instagram: '_yujin_an' },
+    { stage: 'REI', english: 'Naoi Rei', korean: '나오이 레이', japanese: '直井怜', instagram: 'reinyourheart' },
+    { stage: 'WONYOUNG', english: 'Jang Wonyoung', korean: '장원영', instagram: 'for_everyoung10' },
+    { stage: 'LIZ', english: 'Kim Jiwon', korean: '김지원', instagram: 'liz.yeyo' },
+    { stage: 'LEESEO', english: 'Lee Hyunseo', korean: '이현서', instagram: 'eeseooes' }
   ];
 
   function fullIdentity(identity) {
     return [identity.english, identity.korean, identity.japanese].filter(Boolean).join(' · ');
+  }
+
+  function instagramUrl(handle) {
+    return `https://www.instagram.com/${handle}/`;
   }
 
   function decorateDirectory() {
@@ -27,9 +31,33 @@
         button.appendChild(fullName);
       }
 
+      let instagram = button.querySelector('.dossier-instagram');
+      if (!instagram) {
+        instagram = document.createElement('span');
+        instagram.className = 'dossier-instagram';
+        button.appendChild(instagram);
+      }
+
       fullName.textContent = fullIdentity(identity);
-      button.setAttribute('aria-label', `${identity.stage}, ${fullIdentity(identity)}`);
+      instagram.textContent = `@${identity.instagram}`;
+      button.setAttribute('aria-label', `${identity.stage}, ${fullIdentity(identity)}, Instagram @${identity.instagram}`);
     });
+  }
+
+  function ensureInstagramLink(identityGroup) {
+    if (!identityGroup) return null;
+
+    let link = document.querySelector('[data-profile-instagram]');
+    if (!link) {
+      link = document.createElement('a');
+      link.className = 'profile-instagram';
+      link.dataset.profileInstagram = '';
+      link.target = '_blank';
+      link.rel = 'noreferrer';
+      identityGroup.insertAdjacentElement('afterend', link);
+    }
+
+    return link;
   }
 
   function updateActiveIdentity() {
@@ -43,6 +71,7 @@
     const koreanName = document.querySelector('[data-profile-korean-name]');
     const japaneseName = document.querySelector('[data-profile-japanese-name]');
     const identityGroup = document.querySelector('.profile-identity');
+    const instagramLink = ensureInstagramLink(identityGroup);
 
     if (stageName) stageName.textContent = identity.stage;
     if (englishName) englishName.textContent = identity.english;
@@ -55,6 +84,12 @@
 
     if (identityGroup) {
       identityGroup.setAttribute('aria-label', `Full member name: ${fullIdentity(identity)}`);
+    }
+
+    if (instagramLink) {
+      instagramLink.href = instagramUrl(identity.instagram);
+      instagramLink.textContent = `Instagram · @${identity.instagram} ↗`;
+      instagramLink.setAttribute('aria-label', `Open ${identity.stage} on Instagram, @${identity.instagram}`);
     }
   }
 
