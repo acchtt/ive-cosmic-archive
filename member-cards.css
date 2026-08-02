@@ -3,7 +3,7 @@
    Source mapping: official IVE "BANGERS" concept-photo posts for REVIVE+. */
 
 /*
-   Portrait fit strategy:
+   Homepage card fit strategy:
    - the element background supplies a soft edge-to-edge backdrop
    - ::before renders the complete source image with contain, preventing crop/zoom
    - ::after preserves the existing text-legibility gradient
@@ -55,14 +55,18 @@
 .member-grid .member-card:nth-child(6) .member-art { --member-portrait: url("https://i.imgur.com/dCKfure.jpg"); }
 
 /*
-   pages.css is injected after this stylesheet. The extra dossier-panel specificity
-   below ensures the real portrait layer overrides the original abstract silhouette.
+   Members dossier strategy:
+   - use a neutral cosmic panel background instead of a second copy of the portrait
+   - render exactly one full portrait with contain
+   - apply only a light bottom fade for the STAR label
+   The added selector specificity prevents late-loaded pages.css from restoring the
+   original abstract silhouette.
 */
 html[data-page="members"] .dossier-panel .dossier-visual {
   background-color: #08060e;
   background-image:
-    linear-gradient(rgba(5, 4, 10, .6), rgba(5, 4, 10, .6)),
-    var(--dossier-portrait);
+    radial-gradient(circle at 50% 20%, rgba(159, 108, 255, .18), transparent 42%),
+    linear-gradient(180deg, #0b0812 0%, #06040a 100%);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -95,14 +99,11 @@ html[data-page="members"] .dossier-panel .dossier-visual::before {
 html[data-page="members"] .dossier-panel .dossier-visual::after {
   content: "";
   position: absolute;
-  inset: 18px;
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: 20px;
-  background:
-    linear-gradient(180deg, rgba(5, 4, 10, .02) 42%, rgba(5, 4, 10, .78) 100%),
-    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-  background-size: auto, 36px 36px, 36px 36px;
+  inset: 0;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(180deg, transparent 70%, rgba(5, 4, 10, .68) 100%);
+  background-size: auto;
   pointer-events: none;
   z-index: 1;
 }
