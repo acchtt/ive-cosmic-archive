@@ -26,6 +26,8 @@ html[data-page="members"] .dossier-button > span:first-child {
 
 html[data-page="members"] .dossier-button strong {
   font-size: .94rem;
+  text-transform: uppercase;
+  letter-spacing: .035em;
 }
 
 html[data-page="members"] .dossier-button small {
@@ -39,6 +41,7 @@ html[data-page="members"] .dossier-button small {
   font-style: normal;
   line-height: 1.25;
   letter-spacing: .025em;
+  white-space: normal;
 }
 
 html[data-page="members"] .dossier-copy {
@@ -48,7 +51,8 @@ html[data-page="members"] .dossier-copy {
 html[data-page="members"] .dossier-copy h2 {
   margin: 9px 0 8px;
   font-size: clamp(2.8rem, 5vw, 4.8rem);
-  letter-spacing: -.055em;
+  letter-spacing: -.035em;
+  text-transform: uppercase;
 }
 
 .profile-identity {
@@ -66,7 +70,7 @@ html[data-page="members"] .dossier-copy h2 {
   letter-spacing: .01em;
 }
 
-.profile-identity span:last-child {
+.profile-identity span:not(:first-child) {
   color: #aaa3b8;
   font-size: .92rem;
   font-weight: 500;
@@ -76,6 +80,11 @@ html[data-page="members"] .dossier-copy h2 {
   content: "·";
   margin-right: 10px;
   color: #716a79;
+}
+
+.profile-identity [data-profile-japanese-name] {
+  color: #c9c1d2;
+  letter-spacing: .035em;
 }
 
 html[data-page="members"] .dossier-copy > p:not(.eyebrow) {
