@@ -1,0 +1,9 @@
+html[data-page="media"] .media-mv-rail,
+html[data-page="media"] .media-mv-rail .media-latest-card {
+  cursor: grab;
+}
+
+html[data-page="media"] .media-mv-rail.is-dragging,
+html[data-page="media"] .media-mv-rail.is-dragging .media-latest-card {
+  cursor: grabbing;
+}
