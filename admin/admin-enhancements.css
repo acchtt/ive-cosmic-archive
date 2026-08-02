@@ -20,13 +20,25 @@
 
 .admin-form-fields {
   min-height: 0;
-  display: grid;
+  display: flex;
   flex: 1 1 auto;
+  flex-direction: column;
+  align-items: stretch;
   gap: 18px;
   padding-right: 8px;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
+}
+
+.admin-form-fields > * {
+  min-width: 0;
+  flex: 0 0 auto;
+}
+
+.admin-form-fields .admin-preview {
+  width: 100%;
+  min-height: 220px;
 }
 
 .admin-form-actions {
@@ -133,6 +145,10 @@
 @media (max-width: 680px) {
   .admin-editor {
     max-height: calc(100svh - 16px);
+  }
+
+  .admin-form-fields .admin-preview {
+    min-height: 190px;
   }
 
   .admin-catalog-tools {
