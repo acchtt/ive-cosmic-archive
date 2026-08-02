@@ -1,10 +1,12 @@
 (() => {
-  if (!document.querySelector('link[href="era-korean-discography.css"]')) {
-    const koreanDiscographyStyles = document.createElement('link');
-    koreanDiscographyStyles.rel = 'stylesheet';
-    koreanDiscographyStyles.href = 'era-korean-discography.css';
-    document.head.appendChild(koreanDiscographyStyles);
-  }
+  const styleSheets = ['era-korean-discography.css', 'ive-discography.css'];
+  styleSheets.forEach((href) => {
+    if (document.querySelector(`link[href="${href}"]`)) return;
+    const style = document.createElement('link');
+    style.rel = 'stylesheet';
+    style.href = href;
+    document.head.appendChild(style);
+  });
 
   const reviveEra = {
     year: '2026',
@@ -27,6 +29,37 @@
     { title: 'Unreal', korean: '리즈 솔로', role: 'LIZ solo' },
     { title: 'In Your Heart', korean: '레이 솔로', role: 'REI solo' },
     { title: 'Force', korean: '안유진 솔로', role: 'YUJIN solo' }
+  ];
+
+  const koreanReleases = [
+    { date: '2026.02.23', title: 'REVIVE+', type: '2nd full album', lead: 'BLACKHOLE · BANG BANG' },
+    { date: '2025.08.25', title: 'IVE SECRET', type: '4th EP', lead: 'XOXZ' },
+    { date: '2025.02.03', title: 'IVE EMPATHY', type: '3rd EP', lead: 'REBEL HEART · ATTITUDE' },
+    { date: '2024.04.29', title: 'IVE SWITCH', type: '2nd EP', lead: 'HEYA · Accendio' },
+    { date: '2023.10.13', title: 'I’VE MINE', type: '1st EP', lead: 'Baddie · Off The Record · Either Way' },
+    { date: '2023.04.10', title: 'I’ve IVE', type: '1st full album', lead: 'I AM · Kitsch' },
+    { date: '2022.08.22', title: 'After LIKE', type: '3rd single album', lead: 'After LIKE' },
+    { date: '2022.04.05', title: 'LOVE DIVE', type: '2nd single album', lead: 'LOVE DIVE' },
+    { date: '2021.12.01', title: 'ELEVEN', type: '1st single album', lead: 'ELEVEN' }
+  ];
+
+  const japaneseReleases = [
+    { date: '2026.05.27', title: 'LUCID DREAM', type: 'Japan 4th EP', lead: 'LUCID DREAM' },
+    { date: '2025.07.30', title: 'Be Alright', type: 'Japan 3rd EP', lead: 'Be Alright' },
+    { date: '2024.08.28', title: 'ALIVE', type: 'Japan 2nd EP', lead: 'CRUSH' },
+    { date: '2023.05.31', title: 'WAVE', type: 'Japan 1st EP', lead: 'WAVE' },
+    { date: '2022.10.19', title: 'ELEVEN -Japanese ver.-', type: 'Japan 1st single', lead: 'ELEVEN -Japanese ver.-' }
+  ];
+
+  const digitalSingles = [
+    { date: '2026.04.03', title: 'Fashion', type: 'Japanese digital single', lead: 'LUCID DREAM pre-release' },
+    { date: '2025.04.21', title: 'DARE ME', type: 'Japanese digital single', lead: 'Be Alright pre-release' },
+    { date: '2024.11.08', title: 'Supernova Love', type: 'Collaboration single', lead: 'with David Guetta' },
+    { date: '2024.06.28', title: 'SUMMER FESTA', type: 'Promotional single', lead: 'Pepsi campaign' },
+    { date: '2024.04.12', title: 'Will', type: 'Japanese digital single', lead: 'Pokémon opening theme' },
+    { date: '2024.01.19', title: 'All Night', type: 'English single', lead: 'feat. Saweetie' },
+    { date: '2023.07.13', title: 'I WANT', type: 'Promotional single', lead: 'Pepsi campaign' },
+    { date: '2023.01.16', title: 'LOVE DIVE -Japanese ver.-', type: 'Japanese digital single', lead: 'Digital release' }
   ];
 
   const latestIndex = eras.findIndex((era) => era.name === 'LATEST SIGNAL' || era.name === 'REVIVE+');
@@ -91,6 +124,86 @@
     }
   }
 
+  function releaseRows(releases) {
+    return releases.map((release) => `
+      <li class="discography-row">
+        <time datetime="${release.date.replaceAll('.', '-')}">${release.date}</time>
+        <div class="discography-release">
+          <strong>${release.title}</strong>
+          <span>${release.type}</span>
+        </div>
+        <div class="discography-lead">
+          ${release.lead}
+          <span>Lead release</span>
+        </div>
+      </li>`).join('');
+  }
+
+  function renderCompleteDiscography() {
+    if (document.documentElement.dataset.page !== 'eras') return;
+    if (document.querySelector('[data-complete-discography]')) return;
+
+    const archiveSection = document.querySelector('[data-era-archive]')?.closest('section');
+    if (!archiveSection) return;
+
+    const section = document.createElement('section');
+    section.className = 'page-section section-shell discography-section';
+    section.dataset.completeDiscography = '';
+    section.setAttribute('aria-labelledby', 'discography-title');
+    section.innerHTML = `
+      <div class="section-heading discography-heading reveal">
+        <div>
+          <p class="eyebrow"><span></span> Complete catalog</p>
+          <h2 id="discography-title">Albums &amp; singles.</h2>
+        </div>
+        <p>A chronological release index covering IVE’s Korean catalog, Japanese physical releases, and official standalone digital or collaboration singles.</p>
+      </div>
+
+      <div class="discography-summary reveal" aria-label="Discography totals">
+        <div><strong>${koreanReleases.length}</strong><span>Korean releases</span></div>
+        <div><strong>${japaneseReleases.length}</strong><span>Japanese releases</span></div>
+        <div><strong>${digitalSingles.length}</strong><span>Digital &amp; special singles</span></div>
+      </div>
+
+      <div class="discography-grid">
+        <article class="discography-panel reveal">
+          <header>
+            <div>
+              <h3>Korean catalog</h3>
+              <p>Full albums, EPs, and single albums.</p>
+            </div>
+            <a class="discography-source" href="https://www.starship-ent.com/musician/ive" target="_blank" rel="noreferrer">Official source ↗</a>
+          </header>
+          <ol class="discography-list">${releaseRows(koreanReleases)}</ol>
+        </article>
+
+        <article class="discography-panel reveal">
+          <header>
+            <div>
+              <h3>Japanese catalog</h3>
+              <p>Physical singles and EPs.</p>
+            </div>
+            <a class="discography-source" href="https://ive-official.jp/mob/news/diarKiji.php?cd=DISCOGRAPHY&amp;site=DIVE" target="_blank" rel="noreferrer">Official source ↗</a>
+          </header>
+          <ol class="discography-list">${releaseRows(japaneseReleases)}</ol>
+        </article>
+
+        <article class="discography-panel discography-panel--wide reveal">
+          <header>
+            <div>
+              <h3>Digital &amp; special singles</h3>
+              <p>Standalone Japanese, English, promotional, and collaboration releases.</p>
+            </div>
+            <a class="discography-source" href="https://ive-official.jp/mob/news/diarKiji.php?cd=DISCOGRAPHY&amp;ct=DIGITAL&amp;site=DIVE" target="_blank" rel="noreferrer">Official source ↗</a>
+          </header>
+          <ol class="discography-list">${releaseRows(digitalSingles)}</ol>
+          <p class="discography-note">Album tracks with an advance campaign but no separate official discography entry remain listed with their parent album rather than being duplicated here.</p>
+        </article>
+      </div>`;
+
+    archiveSection.before(section);
+  }
+
   function refreshEraInterface() {
     if (document.documentElement.dataset.page !== 'eras') return;
 
@@ -110,6 +223,7 @@
     renderEraArchive();
     selectEra(eras.length - 1);
     applyKoreanDiscography();
+    renderCompleteDiscography();
     setupReveal();
   }
 
