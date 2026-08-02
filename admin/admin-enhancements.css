@@ -11,6 +11,18 @@
 
 .admin-editor > form {
   min-height: 0;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+}
+
+.admin-form-fields {
+  min-height: 0;
+  display: grid;
+  flex: 1 1 auto;
+  gap: 18px;
   padding-right: 8px;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -18,19 +30,15 @@
 }
 
 .admin-form-actions {
-  position: sticky;
-  bottom: 0;
+  position: relative;
   z-index: 5;
   display: grid;
+  flex: 0 0 auto;
   gap: 9px;
-  margin: 0 -2px -2px;
-  padding: 22px 2px 2px;
-  background: linear-gradient(
-    180deg,
-    rgba(12, 9, 20, 0),
-    rgba(12, 9, 20, .96) 28%,
-    rgba(12, 9, 20, .995) 100%
-  );
+  margin: 14px -2px -2px;
+  padding: 16px 2px 2px;
+  border-top: 1px solid var(--line);
+  background: rgba(12, 9, 20, .98);
 }
 
 .admin-form-actions .admin-primary {
@@ -114,22 +122,19 @@
 
 @media (max-width: 1050px) {
   .admin-editor {
-    max-height: none;
-    overflow: visible;
-  }
-
-  .admin-editor > form {
-    padding-right: 0;
-    overflow: visible;
+    max-height: calc(100svh - 28px);
   }
 
   .admin-form-actions {
-    bottom: 0;
     padding-bottom: max(2px, env(safe-area-inset-bottom));
   }
 }
 
 @media (max-width: 680px) {
+  .admin-editor {
+    max-height: calc(100svh - 16px);
+  }
+
   .admin-catalog-tools {
     grid-template-columns: 1fr;
   }
