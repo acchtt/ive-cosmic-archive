@@ -116,9 +116,10 @@ export async function authenticateAdmin(context) {
   const localBypass = context.env?.ADMIN_DEV_BYPASS === 'true' && ['localhost', '127.0.0.1'].includes(hostname);
   if (localBypass) return { method: 'local' };
 
+  const accessEnabled = context.env?.ADMIN_ACCESS_ENABLED === 'true';
   const accessJwt = context.request.headers.get('cf-access-jwt-assertion');
   const accessEmail = context.request.headers.get('cf-access-authenticated-user-email')?.trim().toLowerCase();
-  if (accessJwt && accessEmail && allowedAccessEmail(context.env, accessEmail)) {
+  if (accessEnabled && accessJwt && accessEmail && allowedAccessEmail(context.env, accessEmail)) {
     return { method: 'access', email: accessEmail };
   }
 
