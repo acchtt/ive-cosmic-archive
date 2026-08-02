@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ive-cosmic-archive",
+  "pages_build_output_dir": ".",
+  "d1_databases": [
+    {
+      "binding": "IVE_MEDIA_DB",
+      "database_name": "ive-cosmic-media",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "migrations_dir": "migrations"
+    }
+  ]
+}
