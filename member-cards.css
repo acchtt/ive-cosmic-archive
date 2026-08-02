@@ -1,0 +1,90 @@
+/* REVIVE+ member portraits
+   Promotional concept images are credited to IVE / Starship Entertainment.
+   Source mapping: official IVE "BANGERS" concept-photo posts for REVIVE+. */
+
+.member-card .member-art {
+  background-color: #090710;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 18%;
+  filter: saturate(.96) contrast(1.03);
+}
+
+.member-card .member-art::before,
+.dossier-visual::before {
+  display: none;
+}
+
+.member-card .member-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5, 4, 10, .02) 38%, rgba(5, 4, 10, .22) 62%, rgba(5, 4, 10, .94) 100%),
+    linear-gradient(120deg, rgba(159, 108, 255, .08), transparent 45%, rgba(255, 120, 200, .08));
+  pointer-events: none;
+}
+
+/* Card order follows the shared members array: Gaeul, Yujin, Rei, Wonyoung, Liz, Leeseo. */
+.member-grid .member-card:nth-child(1) .member-art {
+  background-image: url("https://i.imgur.com/WuNitxa.jpg");
+  background-position: center 16%;
+}
+.member-grid .member-card:nth-child(2) .member-art {
+  background-image: url("https://i.imgur.com/bx3bimk.jpg");
+  background-position: center 14%;
+}
+.member-grid .member-card:nth-child(3) .member-art {
+  background-image: url("https://i.imgur.com/4UCnYQC.jpg");
+  background-position: center 16%;
+}
+.member-grid .member-card:nth-child(4) .member-art {
+  background-image: url("https://i.imgur.com/QJEOoxJ.jpg");
+  background-position: center 14%;
+}
+.member-grid .member-card:nth-child(5) .member-art {
+  background-image: url("https://i.imgur.com/X9GMWnT.jpg");
+  background-position: center 16%;
+}
+.member-grid .member-card:nth-child(6) .member-art {
+  background-image: url("https://i.imgur.com/dCKfure.jpg");
+  background-position: center 15%;
+}
+
+.dossier-visual {
+  background-color: #08060e;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 16%;
+}
+
+.dossier-visual::after {
+  background:
+    linear-gradient(180deg, rgba(5, 4, 10, .02) 42%, rgba(5, 4, 10, .82) 100%),
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: auto, 36px 36px, 36px 36px;
+}
+
+.dossier-panel[data-active-member="0"] .dossier-visual { background-image: url("https://i.imgur.com/WuNitxa.jpg"); }
+.dossier-panel[data-active-member="1"] .dossier-visual { background-image: url("https://i.imgur.com/bx3bimk.jpg"); }
+.dossier-panel[data-active-member="2"] .dossier-visual { background-image: url("https://i.imgur.com/4UCnYQC.jpg"); }
+.dossier-panel[data-active-member="3"] .dossier-visual { background-image: url("https://i.imgur.com/QJEOoxJ.jpg"); }
+.dossier-panel[data-active-member="4"] .dossier-visual { background-image: url("https://i.imgur.com/X9GMWnT.jpg"); }
+.dossier-panel[data-active-member="5"] .dossier-visual { background-image: url("https://i.imgur.com/dCKfure.jpg"); }
+
+.source-link { margin-left: 16px; }
+.photo-credit {
+  margin: 18px 4px 0;
+  color: var(--muted);
+  font-size: .7rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.photo-credit a { color: #f2d6ff; text-decoration: underline; text-underline-offset: 3px; }
+.photo-credit a:hover { color: white; }
+
+@media (max-width: 760px) {
+  .source-link { margin-left: 0; display: flex; }
+  .dossier-visual { background-position: center 14%; }
+}
