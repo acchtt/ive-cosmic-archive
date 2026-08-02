@@ -1,0 +1,183 @@
+/* Complete IVE release catalog */
+.discography-section {
+  padding-top: 28px;
+}
+
+.discography-heading {
+  margin-bottom: 34px;
+}
+
+.discography-summary {
+  margin-bottom: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+
+.discography-summary div {
+  padding: 20px 18px 20px 0;
+}
+
+.discography-summary div + div {
+  padding-left: 18px;
+  border-left: 1px solid rgba(255, 255, 255, .1);
+}
+
+.discography-summary strong {
+  display: block;
+  margin-bottom: 3px;
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  line-height: 1;
+}
+
+.discography-summary span {
+  color: #8f879a;
+  font-size: .63rem;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.discography-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.discography-panel {
+  padding: clamp(22px, 3vw, 32px);
+  border: 1px solid rgba(255, 255, 255, .11);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 92% 3%, rgba(162, 98, 255, .1), transparent 30%),
+    linear-gradient(150deg, rgba(25, 17, 40, .78), rgba(7, 5, 13, .94));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .26);
+}
+
+.discography-panel--wide {
+  grid-column: 1 / -1;
+}
+
+.discography-panel header {
+  margin-bottom: 18px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.discography-panel h3 {
+  margin: 0;
+  font-size: clamp(1.55rem, 3vw, 2.25rem);
+  letter-spacing: -.035em;
+}
+
+.discography-panel header p {
+  margin: 6px 0 0;
+  color: #918999;
+  font-size: .72rem;
+}
+
+.discography-source {
+  flex: 0 0 auto;
+  color: #dfc5f3;
+  font-size: .64rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.discography-source:hover,
+.discography-source:focus-visible {
+  color: #fff;
+}
+
+.discography-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.discography-row {
+  min-height: 74px;
+  padding: 15px 0;
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr) minmax(135px, .7fr);
+  gap: 18px;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+}
+
+.discography-row time {
+  color: #8f879a;
+  font-size: .67rem;
+  letter-spacing: .08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.discography-release strong {
+  display: block;
+  color: #f6effa;
+  font-size: .94rem;
+}
+
+.discography-release span,
+.discography-lead span {
+  display: block;
+  margin-top: 3px;
+  color: #8f879a;
+  font-size: .66rem;
+}
+
+.discography-lead {
+  color: #cfc6d6;
+  font-size: .73rem;
+  text-align: right;
+}
+
+.discography-note {
+  margin: 18px 0 0;
+  color: #817989;
+  font-size: .69rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .discography-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .discography-panel--wide {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .discography-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .discography-summary div + div {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+  }
+
+  .discography-panel {
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .discography-panel header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .discography-row {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .discography-lead {
+    text-align: left;
+  }
+}
