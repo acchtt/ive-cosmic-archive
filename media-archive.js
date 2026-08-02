@@ -20,15 +20,6 @@
       description: 'The title transmission for REVIVE+, presented through a cinematic science-fiction world of disappearance and rebirth.'
     },
     {
-      id: 'mfj5OfIZu1I',
-      title: 'BLACKHOLE · Behind The Scenes',
-      date: '2026.03.02',
-      type: 'Behind',
-      categories: ['behind'],
-      era: 'REVIVE+',
-      description: 'The official making archive from the BLACKHOLE music-video production.'
-    },
-    {
       id: 'TNDF5Qr6ayo',
       title: 'BLACKHOLE · Dance Practice',
       date: '2026.02.28',
@@ -63,15 +54,6 @@
       categories: ['music-video'],
       era: 'IVE EMPATHY',
       description: 'The second IVE EMPATHY title transmission, centered on bright confidence and self-directed luck.'
-    },
-    {
-      id: 'xMilZv-Clms',
-      title: 'ATTITUDE · Behind The Scenes',
-      date: '2025.02.17',
-      type: 'Behind',
-      categories: ['behind'],
-      era: 'IVE EMPATHY',
-      description: 'The official production archive from the ATTITUDE music-video set.'
     },
     {
       id: 'g36q0ZLvygQ',
