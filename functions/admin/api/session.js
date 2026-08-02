@@ -7,6 +7,25 @@ import {
   requireSameOrigin
 } from '../../_lib/video-store.js';
 
+function configurationError(env) {
+  const password = String(env?.ADMIN_PASSWORD || '');
+  const secret = String(env?.ADMIN_SESSION_SECRET || '');
+
+  if (!password) {
+    return 'ADMIN_PASSWORD is not available to this production deployment.';
+  }
+
+  if (!secret) {
+    return 'ADMIN_SESSION_SECRET is not available to this production deployment.';
+  }
+
+  if (secret.length < 32) {
+    return `ADMIN_SESSION_SECRET is ${secret.length} characters long; it must be at least 32 characters.`;
+  }
+
+  return '';
+}
+
 export async function onRequestGet(context) {
   const identity = await authenticateAdmin(context);
   return identity
@@ -17,6 +36,11 @@ export async function onRequestGet(context) {
 export async function onRequestPost(context) {
   const denied = requireSameOrigin(context);
   if (denied) return denied;
+
+  const configurationMessage = configurationError(context.env);
+  if (configurationMessage) {
+    return json({ error: configurationMessage }, 503);
+  }
 
   try {
     const body = await context.request.json();
