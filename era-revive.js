@@ -50,11 +50,14 @@
     if (metaLabels[2]) metaLabels[2].textContent = 'Title track';
     if (metaValues[2]) metaValues[2].textContent = 'BLACKHOLE';
 
+    const conceptPills = document.querySelector('.revive-concepts');
+    if (conceptPills) conceptPills.remove();
+
     const actions = document.querySelectorAll('.revive-actions a');
     if (actions[0]) {
       actions[0].href = 'https://ive-official.com/disco/revive/';
-      actions[0].textContent = 'Korean official discography ↗';
-      actions[0].setAttribute('aria-label', 'Open the Korean official REVIVE+ discography');
+      actions[0].textContent = 'Official discography ↗';
+      actions[0].setAttribute('aria-label', 'Open the official REVIVE+ discography');
     }
 
     const transmission = document.querySelector('.blackhole-label span:last-child');
