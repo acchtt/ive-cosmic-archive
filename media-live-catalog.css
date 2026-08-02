@@ -1,4 +1,5 @@
 @import url("media-toolbar-visibility.css");
+@import url("media-hero.css");
 
 html[data-page="media"] .media-mv-rail,
 html[data-page="media"] .media-mv-rail .media-latest-card {
