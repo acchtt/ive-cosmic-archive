@@ -1,0 +1,70 @@
+name: Apply static header layout
+
+on:
+  push:
+    branches:
+      - agent/static-header-menu
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/static-header-menu
+
+      - name: Update header and hero spacing
+        shell: python
+        run: |
+          from pathlib import Path
+
+          styles_path = Path('styles.css')
+          styles = styles_path.read_text()
+          replacements = {
+              'position: fixed; z-index: 80; top: 18px; left: 50%; transform: translateX(-50%);':
+                  'position: relative; z-index: 80; margin: 18px auto 0;',
+              '.site-header.scrolled { background: rgba(7, 5, 13, .92); border-color: var(--line-strong); box-shadow: 0 15px 50px rgba(0,0,0,.35); }':
+                  '.site-header.scrolled { background: rgba(7, 5, 13, .62); border-color: var(--line); box-shadow: none; }',
+              'position: relative; min-height: 100svh; padding-top: 150px; padding-bottom: 86px;':
+                  'position: relative; min-height: 100svh; padding-top: 82px; padding-bottom: 86px;',
+              '.hero { grid-template-columns: 1fr; padding-top: 140px; }':
+                  '.hero { grid-template-columns: 1fr; padding-top: 76px; }',
+              '.site-header { top: 8px; width: calc(100% - 16px); padding-left: 14px; gap: 8px; }':
+                  '.site-header { margin-top: 8px; width: calc(100% - 16px); padding-left: 14px; gap: 8px; }',
+              '.hero { padding-top: 126px; padding-bottom: 70px; }':
+                  '.hero { padding-top: 64px; padding-bottom: 70px; }',
+          }
+          for old, new in replacements.items():
+              if old not in styles:
+                  raise SystemExit(f'Missing styles.css pattern: {old}')
+              styles = styles.replace(old, new, 1)
+          styles_path.write_text(styles)
+
+          pages_path = Path('pages.css')
+          pages = pages_path.read_text()
+          replacements = {
+              'position: relative; min-height: 720px; padding-top: 190px; padding-bottom: 110px;':
+                  'position: relative; min-height: 720px; padding-top: 100px; padding-bottom: 110px;',
+              '.page-hero { min-height: auto; padding-top: 150px; padding-bottom: 80px; grid-template-columns: 1fr; }':
+                  '.page-hero { min-height: auto; padding-top: 72px; padding-bottom: 80px; grid-template-columns: 1fr; }',
+          }
+          for old, new in replacements.items():
+              if old not in pages:
+                  raise SystemExit(f'Missing pages.css pattern: {old}')
+              pages = pages.replace(old, new, 1)
+          pages_path.write_text(pages)
+
+      - name: Commit patch
+        run: |
+          rm .github/workflows/apply-static-header.yml
+          rmdir .github/workflows 2>/dev/null || true
+          rmdir .github 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Make header scroll with page"
+          git push origin HEAD:agent/static-header-menu
