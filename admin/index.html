@@ -18,7 +18,10 @@
       <span class="brand-mark">IVE</span>
       <span class="brand-sub">Media Admin</span>
     </a>
-    <a class="admin-back" href="../media.html">View live archive ↗</a>
+    <div class="admin-header-actions">
+      <button class="admin-logout" type="button" data-admin-logout hidden>Sign out</button>
+      <a class="admin-back" href="../media.html">View live archive ↗</a>
+    </div>
   </header>
 
   <main id="admin-main" class="admin-shell">
@@ -28,7 +31,21 @@
       <p>Add, edit, feature, or remove videos from the live Media page. Changes are stored in Cloudflare D1 and appear without a new deployment.</p>
     </section>
 
-    <div class="admin-layout">
+    <section class="admin-panel admin-login" data-admin-login>
+      <p class="admin-kicker">Administrator access</p>
+      <h2>Sign in to continue.</h2>
+      <p>The password is verified by a Pages Function and is never stored in the browser.</p>
+      <form data-login-form>
+        <label>
+          <span>Admin password</span>
+          <input name="password" type="password" autocomplete="current-password" required />
+        </label>
+        <button class="admin-primary" type="submit" data-login-button>Sign in</button>
+        <p class="admin-form-status" role="status" aria-live="polite" data-login-status></p>
+      </form>
+    </section>
+
+    <div class="admin-layout" data-admin-console hidden>
       <section class="admin-panel admin-editor" aria-labelledby="editor-title">
         <div class="admin-panel-heading">
           <div>
