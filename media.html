@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Search and play official IVE music videos, performances, dance practices, and behind-the-scenes transmissions." />
+  <meta name="description" content="Search and play every official IVE music video plus selected performances, dance practices, and behind-the-scenes transmissions." />
   <title>Media · IVE Cosmic Archive</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="media-archive.css" />
-  <link rel="stylesheet" href="media-archive-sync.css" />
   <script src="script.js" defer></script>
   <script src="media-archive.js" defer></script>
-  <script src="media-channel-sync.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -47,7 +45,7 @@
       <div class="page-hero-copy reveal">
         <p class="eyebrow"><span></span> Media transmission</p>
         <h1 id="page-title">A vault built<br /><span>for replay.</span></h1>
-        <p>Search official IVE music videos, performances, practices, and production archives without loading a video player until you press play.</p>
+        <p>Browse every official IVE music video, then filter selected performances, practices, and production archives without loading a player until you press play.</p>
       </div>
       <div class="page-hero-orb media-orb" aria-hidden="true"><span>▶</span></div>
     </section>
@@ -58,7 +56,7 @@
           <p class="eyebrow"><span></span> Featured signal</p>
           <h2 id="featured-title">Current transmission.</h2>
         </div>
-        <p>BLACKHOLE anchors the Korean archive, while the latest official Japanese and Korean videos remain one step away in the transmission row.</p>
+        <p>BLACKHOLE anchors the current Korean era. The complete official M/V catalog is available directly below.</p>
       </div>
 
       <article class="official-media-feature reveal">
@@ -85,7 +83,17 @@
         </div>
       </article>
 
-      <div class="media-latest reveal" aria-label="Latest official transmissions" data-media-latest></div>
+      <div class="media-mv-heading reveal">
+        <div>
+          <p class="eyebrow compact"><span></span> Complete catalog</p>
+          <h3>All official M/Vs.</h3>
+        </div>
+        <div class="media-rail-controls" aria-label="Scroll music video catalog">
+          <button type="button" data-mv-scroll="-1" aria-label="Scroll music videos left">←</button>
+          <button type="button" data-mv-scroll="1" aria-label="Scroll music videos right">→</button>
+        </div>
+      </div>
+      <div class="media-latest media-mv-rail reveal" role="list" aria-label="All official IVE music videos" tabindex="0" data-media-latest></div>
     </section>
 
     <section class="page-section section-shell" aria-labelledby="vault-title">
@@ -94,7 +102,7 @@
           <p class="eyebrow"><span></span> Official vault</p>
           <h2 id="vault-title">Filter the signal.</h2>
         </div>
-        <p>The curated archive stays available immediately, then the page indexes additional long-form uploads from IVE’s official channel and classifies practices, performances, behinds, and music videos automatically.</p>
+        <p>Search the explicit catalog by title or era. Behind currently contains the Supernova Love M/V production film.</p>
       </div>
 
       <div class="media-toolbar reveal">
@@ -114,17 +122,12 @@
       </div>
 
       <div class="media-results-meta reveal" aria-live="polite">
-        <span data-media-count>12 shown · 12 indexed</span>
-        <span class="media-sync-status" data-media-sync-status data-state="idle">Curated archive ready.</span>
-      </div>
-
-      <div class="media-archive-controls reveal">
-        <button type="button" data-media-load-older>Sync official channel archive</button>
-        <a href="https://www.youtube.com/@IVEstarship/videos" target="_blank" rel="noreferrer">Browse the complete official channel ↗</a>
+        <span data-media-count>28 transmissions</span>
+        <span>Player loads only when opened</span>
       </div>
 
       <div class="official-media-grid" data-official-media-grid></div>
-      <p class="media-empty" data-media-empty hidden>No transmissions match this search.</p>
+      <p class="media-empty" data-media-empty hidden>No videos match this filter or search.</p>
     </section>
   </main>
 
@@ -153,7 +156,7 @@
       <a href="eras.html">Discography</a>
       <button type="button" data-motion-toggle-footer>Toggle motion</button>
     </div>
-    <p class="footer-code">Archive build · 005 · Expandable official media index</p>
+    <p class="footer-code">Archive build · 006 · Complete official M/V catalog</p>
   </footer>
 </body>
 </html>
