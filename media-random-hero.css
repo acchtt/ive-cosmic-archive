@@ -7,27 +7,28 @@ html[data-page="media"] .page-hero-media .page-hero-orb.media-orb.is-random-read
 
 html[data-page="media"] .page-hero-media .page-hero-orb.media-orb.is-random-ready:hover,
 html[data-page="media"] .page-hero-media .page-hero-orb.media-orb.is-random-ready:focus-visible {
-  transform: translateY(-4px);
-  border-color: rgba(151, 216, 255, .58);
+  transform: translateY(-2px);
+  border-color: rgba(151, 216, 255, .5);
   box-shadow:
-    0 32px 82px rgba(0, 0, 0, .42),
-    0 0 0 3px rgba(121, 213, 255, .1),
-    inset 0 0 0 1px rgba(255, 255, 255, .04);
+    0 28px 72px rgba(0, 0, 0, .38),
+    0 0 0 3px rgba(121, 213, 255, .08),
+    inset 0 0 0 1px rgba(255, 255, 255, .035);
   outline: 0;
 }
 
 html[data-page="media"] .page-hero-media .media-orb.is-random-ready::before {
   z-index: 2;
   background:
-    linear-gradient(180deg, rgba(6, 4, 11, .12) 18%, rgba(6, 4, 11, .82) 100%),
-    linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px),
-    linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px);
+    linear-gradient(180deg, rgba(6, 4, 11, .02) 28%, rgba(6, 4, 11, .16) 58%, rgba(6, 4, 11, .66) 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, .022) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, .022) 1px, transparent 1px);
   background-size: auto, 28px 28px, 28px 28px;
 }
 
 html[data-page="media"] .page-hero-media .media-orb.is-random-ready::after {
   z-index: 5;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, .9);
+  color: rgba(241, 234, 248, .68);
+  text-shadow: 0 1px 7px rgba(0, 0, 0, .82);
 }
 
 html[data-page="media"] .media-random-thumb {
@@ -38,29 +39,33 @@ html[data-page="media"] .media-random-thumb {
   height: 100%;
   display: block;
   object-fit: cover;
-  opacity: .68;
-  filter: saturate(.9) contrast(1.05) brightness(.72);
-  transform: scale(1.015);
+  opacity: .9;
+  filter: saturate(.98) contrast(1.03) brightness(.86);
+  transform: scale(1.01);
   transition: transform .55s cubic-bezier(.2, .75, .25, 1), opacity .3s ease, filter .3s ease;
 }
 
 html[data-page="media"] .media-orb.is-random-ready:hover .media-random-thumb,
 html[data-page="media"] .media-orb.is-random-ready:focus-visible .media-random-thumb {
-  opacity: .82;
-  filter: saturate(1) contrast(1.04) brightness(.82);
-  transform: scale(1.055);
+  opacity: .96;
+  filter: saturate(1.03) contrast(1.02) brightness(.92);
+  transform: scale(1.03);
 }
 
 html[data-page="media"] .page-hero-media .media-orb.is-random-ready > .media-random-play {
   z-index: 4;
-  width: 78px;
-  height: 78px;
-  border-radius: 21px;
-  font-size: 1.75rem;
+  width: 54px;
+  height: 54px;
+  border: 1px solid rgba(255, 255, 255, .48);
+  border-radius: 16px;
+  background: rgba(11, 8, 18, .72);
+  color: white;
+  font-size: 1.1rem;
   box-shadow:
-    0 0 50px rgba(112, 204, 255, .24),
-    0 18px 40px rgba(0, 0, 0, .38);
-  transition: transform .28s ease, box-shadow .28s ease;
+    0 10px 28px rgba(0, 0, 0, .34),
+    0 0 24px rgba(112, 204, 255, .12);
+  backdrop-filter: blur(12px);
+  transition: transform .28s ease, background .28s ease, box-shadow .28s ease;
 }
 
 html[data-page="media"] .page-hero-media .media-orb.is-random-ready > .media-random-play::before,
@@ -70,63 +75,73 @@ html[data-page="media"] .page-hero-media .media-orb.is-random-ready > .media-ran
 
 html[data-page="media"] .media-orb.is-random-ready:hover .media-random-play,
 html[data-page="media"] .media-orb.is-random-ready:focus-visible .media-random-play {
-  transform: scale(1.08);
+  transform: scale(1.04);
+  background: rgba(18, 13, 29, .84);
   box-shadow:
-    0 0 62px rgba(112, 204, 255, .36),
-    0 20px 44px rgba(0, 0, 0, .42);
+    0 12px 32px rgba(0, 0, 0, .38),
+    0 0 30px rgba(112, 204, 255, .18);
 }
 
 html[data-page="media"] .media-random-copy {
   position: absolute;
   left: 29px;
   right: 29px;
-  bottom: 24px;
+  bottom: 23px;
   z-index: 4;
   min-width: 0;
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 18px;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, .9);
+  display: block;
+  text-shadow: 0 2px 13px rgba(0, 0, 0, .92);
+}
+
+html[data-page="media"] .media-random-copy::before {
+  content: "Random M/V";
+  display: block;
+  margin-bottom: 6px;
+  color: rgba(222, 208, 238, .78);
+  font-size: .53rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
 }
 
 html[data-page="media"] .media-random-copy strong {
-  min-width: 0;
+  display: -webkit-box;
+  max-width: min(100%, 390px);
   overflow: hidden;
   color: white;
-  font-size: clamp(1rem, 1.7vw, 1.35rem);
-  line-height: 1.05;
+  font-size: clamp(1.12rem, 2vw, 1.5rem);
+  line-height: 1.04;
   letter-spacing: -.025em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 html[data-page="media"] .media-random-copy small {
-  flex: 0 0 auto;
+  display: block;
+  margin-top: 7px;
   color: rgba(239, 231, 247, .72);
   font-size: .54rem;
   font-weight: 650;
-  letter-spacing: .12em;
+  letter-spacing: .11em;
+  line-height: 1.35;
   text-transform: uppercase;
-  white-space: nowrap;
 }
 
 @media (max-width: 600px) {
+  html[data-page="media"] .page-hero-media .media-orb.is-random-ready > .media-random-play {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+  }
+
   html[data-page="media"] .media-random-copy {
     left: 22px;
     right: 22px;
-    bottom: 20px;
-    display: block;
+    bottom: 19px;
   }
 
-  html[data-page="media"] .media-random-copy strong,
-  html[data-page="media"] .media-random-copy small {
-    display: block;
-  }
-
-  html[data-page="media"] .media-random-copy small {
-    margin-top: 7px;
-    white-space: normal;
+  html[data-page="media"] .media-random-copy strong {
+    max-width: 100%;
   }
 }
 
