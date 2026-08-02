@@ -7,8 +7,10 @@
   <title>Media · IVE Cosmic Archive</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="media-archive.css" />
+  <link rel="stylesheet" href="media-archive-sync.css" />
   <script src="script.js" defer></script>
   <script src="media-archive.js" defer></script>
+  <script src="media-channel-sync.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -92,7 +94,7 @@
           <p class="eyebrow"><span></span> Official vault</p>
           <h2 id="vault-title">Filter the signal.</h2>
         </div>
-        <p>Search by title or era, then narrow the archive by transmission type. Videos open in a privacy-enhanced player inside the site.</p>
+        <p>The curated archive stays available immediately, then the page indexes additional long-form uploads from IVE’s official channel and classifies practices, performances, behinds, and music videos automatically.</p>
       </div>
 
       <div class="media-toolbar reveal">
@@ -111,9 +113,14 @@
         </div>
       </div>
 
-      <div class="media-results-meta reveal">
-        <span data-media-count>12 transmissions</span>
-        <span>Player loads only when opened</span>
+      <div class="media-results-meta reveal" aria-live="polite">
+        <span data-media-count>12 shown · 12 indexed</span>
+        <span class="media-sync-status" data-media-sync-status data-state="idle">Curated archive ready.</span>
+      </div>
+
+      <div class="media-archive-controls reveal">
+        <button type="button" data-media-load-older>Sync official channel archive</button>
+        <a href="https://www.youtube.com/@IVEstarship/videos" target="_blank" rel="noreferrer">Browse the complete official channel ↗</a>
       </div>
 
       <div class="official-media-grid" data-official-media-grid></div>
@@ -146,7 +153,7 @@
       <a href="eras.html">Discography</a>
       <button type="button" data-motion-toggle-footer>Toggle motion</button>
     </div>
-    <p class="footer-code">Archive build · 004 · Official media vault</p>
+    <p class="footer-code">Archive build · 005 · Expandable official media index</p>
   </footer>
 </body>
 </html>
