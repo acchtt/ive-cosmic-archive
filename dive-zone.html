@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Use interactive fan tools in the IVE Cosmic Archive." />
+  <meta name="description" content="Build a personal DIVE passport, discover your matching IVE era, complete a daily music-video mission, and keep a private fan signal log." />
   <title>DIVE Zone · IVE Cosmic Archive</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="pages.css" />
+  <link rel="stylesheet" href="dive-zone.css" />
   <script src="script.js" defer></script>
+  <script src="dive-zone.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -37,61 +40,183 @@
       <span data-motion-label>Motion on</span>
     </button>
   </header>
+
   <main id="main">
-    <section class="page-hero section-shell page-hero-dive" aria-labelledby="page-title">
-      <div class="page-hero-copy reveal">
-        <p class="eyebrow"><span></span> DIVE laboratory</p>
-        <h1 id="page-title">Your signal<br /><span>belongs here.</span></h1>
-        <p>Interactive fan tools turn the archive from something you browse into something that responds to you.</p>
+    <section class="dive-hero section-shell" aria-labelledby="page-title">
+      <div class="dive-hero-copy reveal">
+        <p class="eyebrow"><span></span> DIVE control node</p>
+        <h1 id="page-title">Build your signal.<br /><span>Keep it in orbit.</span></h1>
+        <p>Create a personal archive identity, discover the era that matches your energy, complete a new listening mission each day, and record the details you want to remember.</p>
+        <div class="dive-local-note">Private by default · saved in this browser</div>
       </div>
-      <div class="page-hero-orb dive-orb" aria-hidden="true"><span>♡</span></div>
+
+      <aside class="dive-control-board reveal" aria-label="DIVE dashboard status">
+        <div class="dive-status-node" data-dive-status="passport"><span>Identity</span><strong>Not generated</strong></div>
+        <div class="dive-status-node" data-dive-status="resonance"><span>Resonance</span><strong>Scan pending</strong></div>
+        <div class="dive-status-node" data-dive-status="mission"><span>Daily mission</span><strong>Mission active</strong></div>
+        <div class="dive-status-node" data-dive-status="signals"><span>Signal log</span><strong>Log empty</strong></div>
+      </aside>
     </section>
 
-    <section class="page-section section-shell" aria-labelledby="tools-title">
-      <div class="section-heading reveal">
-        <div><p class="eyebrow"><span></span> Active experiments</p><h2 id="tools-title">Three ways to synchronize.</h2></div>
-        <p>These interactions work entirely in the browser. Accounts, saved results, and shareable images can be added in a later phase.</p>
+    <section class="dive-section section-shell" aria-labelledby="passport-title">
+      <div class="dive-section-heading reveal">
+        <div>
+          <p class="eyebrow"><span></span> Identity module</p>
+          <h2 id="passport-title">Create your DIVE passport.</h2>
+        </div>
+        <p>Your passport is generated locally and can be downloaded as an SVG card. No account or upload is required.</p>
       </div>
-      <div class="lab-grid">
-        <article class="lab-card lab-song reveal">
-          <div class="lab-number">01</div><p class="eyebrow compact"><span></span> Random signal</p><h3>What should you play next?</h3>
-          <div class="song-result" aria-live="polite"><span>Now transmitting</span><strong data-song-result>LOVE DIVE</strong></div>
-          <button class="button button-primary full" type="button" data-song-picker>Shuffle the archive</button>
-        </article>
-        <article class="lab-card reveal">
-          <div class="lab-number">02</div><p class="eyebrow compact"><span></span> Era scan</p><h3>Which IVE era matches your signal?</h3>
-          <div class="quiz-options" data-quiz-options>
-            <button type="button" data-quiz-value="glamour">High-glamour confidence</button>
-            <button type="button" data-quiz-value="dream">Dreamy and cinematic</button>
-            <button type="button" data-quiz-value="power">Bold and electric</button>
+
+      <div class="dive-passport-layout">
+        <form class="dive-panel dive-passport-form reveal" data-passport-form>
+          <p class="dive-panel-kicker">Passport configuration</p>
+          <div class="dive-field-grid">
+            <label class="dive-field-wide">
+              <span>Display name</span>
+              <input type="text" maxlength="20" placeholder="DIVE" autocomplete="nickname" data-dive-name />
+            </label>
+            <label class="dive-field">
+              <span>Bias signal</span>
+              <select data-dive-bias></select>
+            </label>
+            <label class="dive-field">
+              <span>Favorite era</span>
+              <select data-dive-era></select>
+            </label>
           </div>
-          <p class="quiz-result" aria-live="polite" data-quiz-result>Select your current energy.</p>
+
+          <div class="dive-tone-picker">
+            <span class="dive-tone-label">Signal tone</span>
+            <div class="dive-tone-options" role="group" aria-label="Choose passport signal tone" data-dive-tones></div>
+          </div>
+
+          <div class="dive-form-actions">
+            <button class="dive-button dive-button-primary" type="submit">Generate passport</button>
+            <button class="dive-button" type="button" data-passport-reset>Reset</button>
+          </div>
+        </form>
+
+        <div class="dive-panel dive-passport-preview reveal">
+          <article class="dive-passport-card" style="--passport-a:#b870ff;--passport-b:#6bcfff" data-passport-card aria-live="polite">
+            <div class="dive-passport-top"><span>IVE Cosmic Archive</span><span>DIVE access</span></div>
+            <strong class="dive-passport-name" data-passport-name>DIVE</strong>
+            <p class="dive-passport-meta" data-passport-meta>All members · ELEVEN</p>
+            <div class="dive-passport-bottom"><span data-passport-id>DIVE-000000</span><span data-passport-tone>Violet signal</span></div>
+          </article>
+          <div class="dive-passport-actions">
+            <button class="dive-button" type="button" data-passport-download>Download SVG passport</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dive-section section-shell" aria-labelledby="tools-title">
+      <div class="dive-section-heading reveal">
+        <div>
+          <p class="eyebrow"><span></span> Personal orbit</p>
+          <h2 id="tools-title">Scan and complete.</h2>
+        </div>
+        <p>The resonance scan remains saved until you restart it. The listening mission changes once per local calendar day.</p>
+      </div>
+
+      <div class="dive-two-column">
+        <article class="dive-panel dive-tool-card reveal" aria-labelledby="quiz-title">
+          <div class="dive-tool-header">
+            <div>
+              <p class="dive-panel-kicker">Era resonance scan</p>
+              <h3 id="quiz-title">Which era matches your signal?</h3>
+              <p class="dive-tool-intro">Four choices map your current energy to one archive era.</p>
+            </div>
+            <span class="dive-tool-number">01</span>
+          </div>
+
+          <div data-quiz-body>
+            <div class="dive-quiz-progress" data-quiz-progress><span></span></div>
+            <span class="dive-quiz-step" data-quiz-step>Question 1 / 4</span>
+            <p class="dive-quiz-question" data-quiz-question></p>
+            <div class="dive-quiz-options" data-quiz-options></div>
+          </div>
+
+          <div class="dive-quiz-result" data-quiz-result hidden aria-live="polite">
+            <span>Your matching era</span>
+            <strong data-quiz-result-era>LOVE DIVE</strong>
+            <p data-quiz-result-copy></p>
+            <div class="dive-quiz-actions">
+              <button class="dive-button" type="button" data-quiz-restart>Restart scan</button>
+              <a class="dive-button" href="eras.html">Open eras archive</a>
+            </div>
+          </div>
         </article>
-        <article class="lab-card reveal">
-          <div class="lab-number">03</div><p class="eyebrow compact"><span></span> Bias identity</p><h3>Generate a personal DIVE access card.</h3>
-          <label class="select-label" for="bias-select">Select member</label><select id="bias-select" data-bias-select></select>
-          <button class="button button-ghost full" type="button" data-bias-generate>Generate card</button>
-          <div class="bias-card" data-bias-card aria-live="polite"><span>DIVE ACCESS</span><strong>Choose a member</strong><small>Archive ID · 000000</small></div>
+
+        <article class="dive-panel dive-tool-card reveal" aria-labelledby="mission-title">
+          <div class="dive-tool-header">
+            <div>
+              <p class="dive-panel-kicker">Daily listening mission</p>
+              <h3 id="mission-title">One transmission for today.</h3>
+              <p class="dive-tool-intro">The live Media catalog assigns the same official M/V for your entire local day.</p>
+            </div>
+            <span class="dive-tool-number">02</span>
+          </div>
+
+          <div class="dive-mission-visual">
+            <img src="" alt="" loading="eager" decoding="async" fetchpriority="high" data-mission-image />
+            <span class="dive-mission-date" data-mission-date>Today</span>
+            <div class="dive-mission-copy">
+              <strong data-mission-title>Loading transmission…</strong>
+              <span data-mission-meta>Official M/V</span>
+            </div>
+          </div>
+          <p class="dive-mission-prompt" data-mission-prompt>Loading today’s archive prompt…</p>
+          <div class="dive-mission-actions">
+            <a class="dive-button dive-button-primary" href="media.html" target="_blank" rel="noreferrer" data-mission-link>Open transmission ↗</a>
+            <button class="dive-button" type="button" aria-pressed="false" data-mission-complete>Mark complete</button>
+          </div>
         </article>
       </div>
     </section>
 
-    <section class="page-section section-shell" aria-labelledby="signals-title">
-      <div class="section-heading reveal">
-        <div><p class="eyebrow"><span></span> DIVE signals</p><h2 id="signals-title">Messages across the universe.</h2></div>
-        <p>Prototype messages show the future community layout. Public submissions will require moderation, authentication, and a database.</p>
+    <section class="dive-section section-shell" aria-labelledby="signals-title">
+      <div class="dive-section-heading reveal">
+        <div>
+          <p class="eyebrow"><span></span> Private signal log</p>
+          <h2 id="signals-title">Keep what you noticed.</h2>
+        </div>
+        <p>Entries are stored only in this browser. They are not submitted publicly, synced to an account, or visible to other visitors.</p>
       </div>
-      <div class="signal-layout reveal">
-        <div class="signal-feed" data-signal-feed></div>
-        <form class="signal-form" data-signal-form>
-          <span class="prototype-badge">Prototype · disabled</span>
-          <label for="signal-message">Send a signal</label>
-          <textarea id="signal-message" rows="5" placeholder="Fan-message submissions are not connected yet." disabled></textarea>
-          <button class="button button-primary full" type="submit" disabled>Transmit message</button>
+
+      <div class="dive-signal-layout">
+        <form class="dive-panel dive-signal-form reveal" data-local-signal-form>
+          <p class="dive-panel-kicker">New archive note</p>
+          <label class="dive-field-wide">
+            <span>Signal message</span>
+            <textarea maxlength="240" placeholder="Record a scene, lyric, styling detail, or performance moment…" data-signal-message></textarea>
+          </label>
+          <div class="dive-signal-form-row">
+            <label class="dive-field">
+              <span>Signal type</span>
+              <select data-signal-mood>
+                <option>Visual detail</option>
+                <option>Performance note</option>
+                <option>Favorite lyric</option>
+                <option>Era thought</option>
+                <option>Open signal</option>
+              </select>
+            </label>
+            <span class="dive-character-count" data-signal-count>0 / 240</span>
+          </div>
+          <div class="dive-form-actions">
+            <button class="dive-button dive-button-primary" type="submit">Save signal</button>
+            <button class="dive-button" type="button" data-clear-signals>Clear log</button>
+          </div>
         </form>
+
+        <div class="dive-panel dive-signal-feed reveal" data-local-signal-feed aria-live="polite">
+          <p class="dive-signal-empty" data-local-signal-empty>Your private signal log is empty.</p>
+        </div>
       </div>
     </section>
   </main>
+
   <footer class="site-footer section-shell">
     <div>
       <a class="brand footer-brand" href="index.html">
@@ -105,7 +230,7 @@
       <a href="media.html">Media archive</a>
       <button type="button" data-motion-toggle-footer>Toggle motion</button>
     </div>
-    <p class="footer-code">Archive build · 002 · Multi-page system</p>
+    <p class="footer-code">Archive build · 008 · DIVE personal dashboard</p>
   </footer>
 </body>
 </html>
