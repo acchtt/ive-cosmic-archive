@@ -1,0 +1,239 @@
+html[data-page="media"] .page-hero.page-hero-media {
+  position: relative;
+  isolation: isolate;
+  min-height: 540px;
+  margin-top: clamp(18px, 3vw, 34px);
+  padding-block: clamp(54px, 6vw, 78px);
+  padding-inline: clamp(30px, 5vw, 70px);
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, .72fr);
+  gap: clamp(36px, 6vw, 82px);
+  overflow: hidden;
+  border: 1px solid rgba(206, 183, 255, .22);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 82% 26%, rgba(102, 196, 255, .14), transparent 30%),
+    radial-gradient(circle at 18% 84%, rgba(184, 112, 255, .12), transparent 34%),
+    linear-gradient(145deg, rgba(18, 13, 30, .97), rgba(7, 5, 13, .985));
+  box-shadow:
+    0 34px 100px rgba(0, 0, 0, .34),
+    inset 0 1px rgba(255, 255, 255, .035);
+}
+
+html[data-page="media"] .page-hero.page-hero-media::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px);
+  background-size: 42px 42px;
+  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, .58), transparent 76%);
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, .58), transparent 76%);
+  pointer-events: none;
+}
+
+html[data-page="media"] .page-hero.page-hero-media::after {
+  content: "MEDIA ARCHIVE / NODE 07";
+  position: absolute;
+  right: clamp(28px, 4vw, 54px);
+  bottom: 22px;
+  z-index: 2;
+  color: rgba(225, 214, 239, .42);
+  font-size: .58rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+html[data-page="media"] .page-hero-media .page-hero-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
+
+html[data-page="media"] .page-hero-media .page-hero-copy::after {
+  content: "LIVE CATALOG  /  SEARCHABLE  /  ON-DEMAND PLAYER";
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 30px;
+  padding: 10px 13px;
+  border: 1px solid rgba(205, 183, 255, .18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .035);
+  color: rgba(230, 219, 241, .66);
+  font-size: .58rem;
+  letter-spacing: .12em;
+  line-height: 1.35;
+}
+
+html[data-page="media"] .page-hero-media h1 {
+  margin: 15px 0 22px;
+  font-size: clamp(3.8rem, 6.3vw, 6.7rem);
+  line-height: .91;
+  letter-spacing: -.065em;
+}
+
+html[data-page="media"] .page-hero-media h1 span {
+  color: transparent;
+  background: linear-gradient(100deg, #d6c3ff 0%, #8bdcff 82%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 0;
+}
+
+html[data-page="media"] .page-hero-media .page-hero-copy > p:last-of-type {
+  max-width: 620px;
+  color: #bdb4c7;
+  font-size: clamp(.98rem, 1.35vw, 1.12rem);
+  line-height: 1.55;
+}
+
+html[data-page="media"] .page-hero-media .page-hero-orb.media-orb {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 460px);
+  aspect-ratio: 1.3;
+  justify-self: end;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(199, 178, 255, .24);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 58% 44%, rgba(89, 202, 255, .14), transparent 28%),
+    radial-gradient(circle at 28% 74%, rgba(177, 101, 255, .16), transparent 36%),
+    linear-gradient(145deg, rgba(18, 14, 31, .96), rgba(7, 5, 13, .98));
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, .34),
+    inset 0 0 0 1px rgba(255, 255, 255, .025);
+}
+
+html[data-page="media"] .page-hero-media .page-hero-orb.media-orb::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  width: auto;
+  height: auto;
+  transform: none;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 17px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px),
+    radial-gradient(circle at 62% 42%, rgba(107, 213, 255, .17), transparent 22%);
+  background-size: 28px 28px, 28px 28px, auto;
+}
+
+html[data-page="media"] .page-hero-media .page-hero-orb.media-orb::after {
+  content: "ARCHIVE NODE 07  •  ONLINE";
+  position: absolute;
+  top: 27px;
+  left: 29px;
+  width: auto;
+  height: auto;
+  transform: none;
+  animation: none;
+  border: 0;
+  border-radius: 0;
+  color: rgba(218, 207, 232, .62);
+  font-size: .58rem;
+  font-weight: 650;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+html[data-page="media"] .page-hero-media .page-hero-orb.media-orb > span {
+  position: relative;
+  z-index: 3;
+  width: 92px;
+  height: 92px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, .42);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(202, 178, 255, .92), rgba(103, 205, 255, .92));
+  color: #100b18;
+  font-size: 2.2rem;
+  line-height: 1;
+  letter-spacing: 0;
+  box-shadow:
+    0 0 46px rgba(112, 204, 255, .18),
+    0 18px 40px rgba(0, 0, 0, .32);
+}
+
+html[data-page="media"] .page-hero-media .page-hero-orb.media-orb > span::before {
+  content: "OFFICIAL VIDEO";
+  position: absolute;
+  left: 50%;
+  top: -64px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: rgba(235, 225, 244, .78);
+  font-size: .58rem;
+  font-weight: 650;
+  letter-spacing: .16em;
+}
+
+html[data-page="media"] .page-hero-media .page-hero-orb.media-orb > span::after {
+  content: "SEARCH  ·  FILTER  ·  PLAY";
+  position: absolute;
+  left: 50%;
+  top: 119px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: rgba(207, 196, 220, .54);
+  font-size: .54rem;
+  font-weight: 600;
+  letter-spacing: .13em;
+}
+
+html[data-page="media"] .media-feature-section {
+  padding-top: clamp(64px, 7vw, 90px);
+}
+
+@media (max-width: 900px) {
+  html[data-page="media"] .page-hero.page-hero-media {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  html[data-page="media"] .page-hero-media .page-hero-orb.media-orb {
+    width: 100%;
+    max-width: none;
+    aspect-ratio: 1.7;
+    justify-self: stretch;
+  }
+}
+
+@media (max-width: 600px) {
+  html[data-page="media"] .page-hero.page-hero-media {
+    margin-top: 12px;
+    padding: 38px 22px 46px;
+    border-radius: 23px;
+  }
+
+  html[data-page="media"] .page-hero-media h1 {
+    font-size: clamp(3.1rem, 16vw, 4.7rem);
+  }
+
+  html[data-page="media"] .page-hero-media .page-hero-copy::after {
+    border-radius: 14px;
+  }
+
+  html[data-page="media"] .page-hero-media .page-hero-orb.media-orb {
+    min-height: 270px;
+    aspect-ratio: auto;
+  }
+
+  html[data-page="media"] .page-hero.page-hero-media::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-page="media"] .page-hero-media .page-hero-orb.media-orb::after {
+    animation: none;
+  }
+}
