@@ -17,7 +17,7 @@ The production site is deployed through Cloudflare Pages from the `main` branch.
 - `eras.html` — era timeline and discography archive
 - `media.html` — featured media console, complete M/V rail, and filterable vault
 - `dive-zone.html` — song picker, era quiz, bias card, and fan signals
-- `admin/` — protected D1-backed media management dashboard
+- `admin/` — password-protected D1-backed media management dashboard
 
 ## Media admin setup
 
@@ -43,23 +43,32 @@ IVE_MEDIA_DB
 
 Select the `ive-cosmic-media` database and redeploy the project.
 
-### 3. Protect the admin path
+### 3. Add encrypted admin secrets
 
-Create a Cloudflare Access self-hosted application for:
+In **Settings → Variables and Secrets**, add and encrypt:
 
 ```text
-ive-cosmic.pages.dev/admin/*
+ADMIN_PASSWORD
+ADMIN_SESSION_SECRET
 ```
 
-Add an Allow policy for the email address or identity group that should manage the site. The dashboard and write API both live below this protected path.
+Use a strong unique password. `ADMIN_SESSION_SECRET` must be at least 32 characters; a random 64-character value is recommended:
 
-Optionally add a Pages environment variable named `ADMIN_EMAILS` containing a comma-separated allowlist. The API also requires Cloudflare Access authentication headers and will reject unauthenticated writes.
+```bash
+openssl rand -hex 32
+```
+
+The login Function creates an eight-hour signed session stored in a Secure, HttpOnly, SameSite=Strict cookie. Write requests also require the same browser origin.
 
 Admin URL:
 
 ```text
 https://ive-cosmic.pages.dev/admin/
 ```
+
+### Optional Cloudflare Access layer
+
+Cloudflare Access public-hostname protection requires a domain in an active Cloudflare zone. After adding a custom domain to the Pages project, you can also protect `/admin/*` with Access. Set `ADMIN_EMAILS` to a comma-separated allowlist if the API should accept Access-authenticated identities.
 
 ## Local development
 
@@ -69,13 +78,20 @@ The static pages can still be served directly:
 python -m http.server 8000
 ```
 
-To test Pages Functions and D1 locally, configure `wrangler.jsonc` and run:
+To test Pages Functions and D1 locally, configure `wrangler.jsonc`, create `.dev.vars`, and run:
 
 ```bash
 npx wrangler pages dev .
 ```
 
-For local-only admin API testing, set `ADMIN_DEV_BYPASS=true` in `.dev.vars`. Never enable that variable in production.
+Example `.dev.vars`:
+
+```text
+ADMIN_PASSWORD="local-password"
+ADMIN_SESSION_SECRET="replace-with-at-least-32-characters"
+```
+
+For local-only API testing without login, set `ADMIN_DEV_BYPASS=true`. Never enable that variable in production. Do not commit `.dev.vars` or `.env` files.
 
 ## Project structure
 
@@ -88,7 +104,9 @@ ive-cosmic-archive/
 ├── functions/
 │   ├── _lib/video-store.js
 │   ├── api/videos.js
-│   └── admin/api/videos/
+│   └── admin/api/
+│       ├── session.js
+│       └── videos/
 ├── migrations/0001_media_catalog.sql
 ├── index.html
 ├── members.html
