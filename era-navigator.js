@@ -13,7 +13,7 @@
     {
       title: 'After LIKE', date: '2022.08.22', year: '2022', type: '3rd Single Album', titleTrack: 'After LIKE',
       description: 'A bright disco-pop expansion that turned the group’s direct confidence into a celebratory summer-scale release.',
-      appleId: '1639416895', query: 'IVE After LIKE', official: 'https://www.starship-ent.com/musician/ive'
+      appleId: '1639416895', query: 'IVE After LIKE', official: 'https://www.starship-ent.com/musician/ive', coverScale: .88
     },
     {
       title: "I've IVE", date: '2023.04.10', year: '2023', type: '1st Full Album', titleTrack: 'I AM',
@@ -47,6 +47,8 @@
     }
   ];
 
+  const ARTWORK_SIZE = 420;
+  const ARTWORK_CACHE_KEY = 'ive-discography-artwork-v2';
   const artworkCache = new Map();
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -56,35 +58,118 @@
     return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
   }
 
-  async function fetchArtwork(release) {
-    if (artworkCache.has(release.title)) return artworkCache.get(release.title);
-    const endpoint = release.appleId
-      ? `https://itunes.apple.com/lookup?id=${release.appleId}&entity=album&country=US`
-      : `https://itunes.apple.com/search?term=${encodeURIComponent(release.query)}&entity=album&limit=25&country=US`;
+  function normalizeArtworkUrl(url) {
+    return url?.replace('100x100bb', `${ARTWORK_SIZE}x${ARTWORK_SIZE}bb`);
+  }
 
+  function readStoredArtwork(release) {
     try {
-      const response = await fetch(endpoint);
-      if (!response.ok) throw new Error('Artwork request failed');
-      const payload = await response.json();
-      const candidates = payload.results.filter((item) => item.wrapperType === 'collection' && /IVE/i.test(item.artistName || ''));
-      const normalizedTitle = release.title.replace(/[^a-z0-9]/gi, '').toLowerCase();
-      const match = candidates.find((item) => (item.collectionName || '').replace(/[^a-z0-9]/gi, '').toLowerCase().includes(normalizedTitle)) || candidates[0];
-      if (!match) throw new Error('No matching release');
-      const result = {
-        artwork: match.artworkUrl100?.replace('100x100bb', '800x800bb') || fallbackCover(release),
-        url: match.collectionViewUrl || `https://music.apple.com/us/search?term=${encodeURIComponent(release.query)}`
-      };
-      artworkCache.set(release.title, result);
-      return result;
+      const stored = JSON.parse(sessionStorage.getItem(ARTWORK_CACHE_KEY) || '{}');
+      const result = stored[release.title];
+      if (!result?.artwork || !result?.url) return null;
+      return { ...result, artwork: normalizeArtworkUrl(result.artwork) };
     } catch (error) {
-      const result = { artwork: fallbackCover(release), url: `https://music.apple.com/us/search?term=${encodeURIComponent(release.query)}` };
-      artworkCache.set(release.title, result);
-      return result;
+      return null;
     }
+  }
+
+  function storeArtwork(release, result) {
+    try {
+      const stored = JSON.parse(sessionStorage.getItem(ARTWORK_CACHE_KEY) || '{}');
+      stored[release.title] = result;
+      sessionStorage.setItem(ARTWORK_CACHE_KEY, JSON.stringify(stored));
+    } catch (error) {
+      // Storage is optional; the in-memory cache still handles this visit.
+    }
+  }
+
+  function fetchArtwork(release) {
+    if (artworkCache.has(release.title)) return artworkCache.get(release.title);
+
+    const stored = readStoredArtwork(release);
+    if (stored) {
+      const cachedRequest = Promise.resolve(stored);
+      artworkCache.set(release.title, cachedRequest);
+      return cachedRequest;
+    }
+
+    const request = (async () => {
+      const endpoint = release.appleId
+        ? `https://itunes.apple.com/lookup?id=${release.appleId}&entity=album&country=US`
+        : `https://itunes.apple.com/search?term=${encodeURIComponent(release.query)}&entity=album&limit=8&country=US`;
+
+      try {
+        const response = await fetch(endpoint, { cache: 'force-cache' });
+        if (!response.ok) throw new Error('Artwork request failed');
+        const payload = await response.json();
+        const candidates = payload.results.filter((item) => item.wrapperType === 'collection' && /IVE/i.test(item.artistName || ''));
+        const normalizedTitle = release.title.replace(/[^a-z0-9]/gi, '').toLowerCase();
+        const match = candidates.find((item) => (item.collectionName || '').replace(/[^a-z0-9]/gi, '').toLowerCase().includes(normalizedTitle)) || candidates[0];
+        if (!match) throw new Error('No matching release');
+
+        const result = {
+          artwork: normalizeArtworkUrl(match.artworkUrl100) || fallbackCover(release),
+          url: match.collectionViewUrl || `https://music.apple.com/us/search?term=${encodeURIComponent(release.query)}`
+        };
+        storeArtwork(release, result);
+        return result;
+      } catch (error) {
+        return {
+          artwork: fallbackCover(release),
+          url: `https://music.apple.com/us/search?term=${encodeURIComponent(release.query)}`
+        };
+      }
+    })();
+
+    artworkCache.set(release.title, request);
+    return request;
+  }
+
+  function preloadImage(src) {
+    return new Promise((resolve) => {
+      const image = new Image();
+      image.decoding = 'async';
+      image.onload = async () => {
+        try {
+          await image.decode();
+        } catch (error) {
+          // The image is already usable even when decode() is unavailable.
+        }
+        resolve(true);
+      };
+      image.onerror = () => resolve(false);
+      image.src = src;
+    });
   }
 
   function wait(duration) {
     return new Promise((resolve) => window.setTimeout(resolve, duration));
+  }
+
+  function scheduleArtworkWarmup(activeIndex) {
+    const warm = async () => {
+      const queue = releases
+        .map((release, index) => ({ release, index }))
+        .filter(({ index }) => index !== activeIndex)
+        .sort((a, b) => Math.abs(a.index - activeIndex) - Math.abs(b.index - activeIndex));
+
+      const worker = async () => {
+        while (queue.length) {
+          const next = queue.shift();
+          if (!next) return;
+          const artwork = await fetchArtwork(next.release);
+          await preloadImage(artwork.artwork);
+        }
+      };
+
+      await Promise.all([worker(), worker()]);
+    };
+
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(() => warm(), { timeout: 1200 });
+    } else {
+      window.setTimeout(warm, 260);
+    }
   }
 
   function renderNavigator() {
@@ -130,7 +215,14 @@
 
       detail.innerHTML = `
         <div class="disco-cover-wrap">
-          <img class="disco-cover is-loading" src="${fallbackCover(release)}" alt="${release.title} album artwork" data-release-cover />
+          <img
+            class="disco-cover is-loading"
+            src="${fallbackCover(release)}"
+            alt="${release.title} album artwork"
+            decoding="async"
+            fetchpriority="${index === releases.length - 1 ? 'high' : 'auto'}"
+            style="--cover-scale: ${release.coverScale || 1}"
+            data-release-cover />
         </div>
         <div class="disco-copy">
           <p class="disco-sequence">${String(index + 1).padStart(2, '0')} / ${release.date}</p>
@@ -157,22 +249,23 @@
       if (tracklistLink) tracklistLink.href = artwork.url;
       if (!cover) return;
 
-      const preload = new Image();
-      preload.onload = () => {
-        if (requestId !== transitionId) return;
-        cover.classList.add('is-swapping');
-        window.setTimeout(() => {
-          if (requestId !== transitionId) return;
-          cover.src = artwork.artwork;
-          cover.classList.remove('is-loading', 'is-swapping');
-        }, reducedMotion.matches ? 0 : 120);
-      };
-      preload.onerror = () => cover.classList.remove('is-loading');
-      preload.src = artwork.artwork;
+      const loaded = await preloadImage(artwork.artwork);
+      if (!loaded || requestId !== transitionId) {
+        cover.classList.remove('is-loading');
+        return;
+      }
+
+      cover.classList.add('is-swapping');
+      await wait(reducedMotion.matches ? 0 : 60);
+      if (requestId !== transitionId) return;
+      cover.src = artwork.artwork;
+      cover.classList.remove('is-loading', 'is-swapping');
     }
 
     tabs.forEach((tab) => tab.addEventListener('click', () => selectRelease(Number(tab.dataset.releaseIndex), true)));
-    selectRelease(releases.length - 1);
+    const initialIndex = releases.length - 1;
+    selectRelease(initialIndex);
+    scheduleArtworkWarmup(initialIndex);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderNavigator, { once: true });
