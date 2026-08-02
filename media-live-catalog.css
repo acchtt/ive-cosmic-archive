@@ -1,3 +1,5 @@
+@import url("media-toolbar-visibility.css");
+
 html[data-page="media"] .media-mv-rail,
 html[data-page="media"] .media-mv-rail .media-latest-card {
   cursor: grab;
