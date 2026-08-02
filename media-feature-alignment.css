@@ -15,9 +15,10 @@ html[data-page="media"] .media-feature-copy h2 {
   font-size: clamp(2.9rem, 4.15vw, 4.5rem);
   line-height: .9;
   letter-spacing: -.06em;
-  white-space: nowrap;
+  white-space: normal;
   overflow-wrap: normal;
   word-break: normal;
+  text-wrap: balance;
 }
 
 html[data-page="media"] .media-feature-description {
