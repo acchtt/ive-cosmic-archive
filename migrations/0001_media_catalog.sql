@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS videos (
 );
 
 CREATE INDEX IF NOT EXISTS videos_release_date_idx ON videos(release_date DESC);
-CREATE INDEX IF NOT EXISTS videos_featured_idx ON videos(featured);
+CREATE UNIQUE INDEX IF NOT EXISTS videos_single_featured_idx ON videos(featured) WHERE featured = 1;
 
 INSERT OR IGNORE INTO videos (youtube_id, title, release_date, kind, era, description, featured) VALUES
 ('trlOTS4nKO4', 'LUCID DREAM', '2026-05-26', 'japanese-music-video', 'LUCID DREAM', '', 0),
