@@ -75,7 +75,7 @@
     const title = document.createElement('strong');
     title.textContent = video.title;
     const meta = document.createElement('small');
-    meta.textContent = `${video.meta} · Random transmission`;
+    meta.textContent = video.meta;
     copy.append(title, meta);
 
     panel.replaceChildren(image, play, copy);
