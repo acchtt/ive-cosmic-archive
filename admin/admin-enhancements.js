@@ -8,6 +8,47 @@
 
   if (!form || !list || !count || !search || !submit || !status) return;
 
+  function upgradeAdminThumbnail(image) {
+    if (!(image instanceof HTMLImageElement) || image.dataset.highResolution === 'true') return;
+
+    const source = image.currentSrc || image.src || '';
+    const match = source.match(/\/vi\/([^/]+)\/(?:mqdefault|hqdefault|maxresdefault)\.jpg(?:\?.*)?$/u);
+    if (!match) return;
+
+    const videoId = match[1];
+    const isPreview = Boolean(image.closest('[data-video-preview]'));
+    image.dataset.highResolution = 'true';
+    image.decoding = 'async';
+    image.loading = isPreview ? 'eager' : 'lazy';
+    image.fetchPriority = isPreview ? 'high' : 'auto';
+    image.onerror = () => {
+      if (image.dataset.thumbnailFallback === 'true') return;
+      image.dataset.thumbnailFallback = 'true';
+      image.onerror = null;
+      image.src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+    };
+    image.src = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+  }
+
+  function upgradeAdminThumbnailScope(scope) {
+    const images = scope instanceof HTMLImageElement
+      ? [scope]
+      : [...(scope?.querySelectorAll?.('img') || [])];
+    images.forEach(upgradeAdminThumbnail);
+  }
+
+  const thumbnailObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node instanceof Element) upgradeAdminThumbnailScope(node);
+      });
+    });
+  });
+  thumbnailObserver.observe(form, { childList: true, subtree: true });
+  thumbnailObserver.observe(list, { childList: true, subtree: true });
+  upgradeAdminThumbnailScope(form);
+  upgradeAdminThumbnailScope(list);
+
   const formFields = document.createElement('div');
   formFields.className = 'admin-form-fields';
   Array.from(form.children).forEach((child) => {
