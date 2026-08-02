@@ -1,8 +1,10 @@
 import {
   errorResponse,
+  json,
   normalizeVideoInput,
   requireAdmin,
   requireDatabase,
+  requireSameOrigin,
   serializeVideo
 } from '../../../_lib/video-store.js';
 
@@ -15,7 +17,9 @@ function parseId(context) {
 }
 
 export async function onRequestPut(context) {
-  const denied = requireAdmin(context);
+  const originDenied = requireSameOrigin(context);
+  if (originDenied) return originDenied;
+  const denied = await requireAdmin(context);
   if (denied) return denied;
 
   try {
@@ -50,17 +54,16 @@ export async function onRequestPut(context) {
       FROM videos WHERE id = ?
     `).bind(id).first();
 
-    return new Response(JSON.stringify({ video: serializeVideo(row) }), {
-      status: 200,
-      headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' }
-    });
+    return json({ video: serializeVideo(row) });
   } catch (error) {
     return errorResponse(error);
   }
 }
 
 export async function onRequestDelete(context) {
-  const denied = requireAdmin(context);
+  const originDenied = requireSameOrigin(context);
+  if (originDenied) return originDenied;
+  const denied = await requireAdmin(context);
   if (denied) return denied;
 
   try {
