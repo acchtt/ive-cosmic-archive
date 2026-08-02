@@ -1,6 +1,5 @@
 import {
   errorResponse,
-  json,
   normalizeVideoInput,
   requireAdmin,
   requireDatabase,
@@ -51,7 +50,10 @@ export async function onRequestPut(context) {
       FROM videos WHERE id = ?
     `).bind(id).first();
 
-    return json({ video: serializeVideo(row) });
+    return new Response(JSON.stringify({ video: serializeVideo(row) }), {
+      status: 200,
+      headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' }
+    });
   } catch (error) {
     return errorResponse(error);
   }
@@ -70,8 +72,4 @@ export async function onRequestDelete(context) {
   } catch (error) {
     return errorResponse(error);
   }
-}
-
-export function onRequest() {
-  return json({ error: 'Method not allowed.' }, 405, { allow: 'PUT, DELETE' });
 }
