@@ -68,7 +68,7 @@ https://ive-cosmic.pages.dev/admin/
 
 ### Optional Cloudflare Access layer
 
-Cloudflare Access public-hostname protection requires a domain in an active Cloudflare zone. After adding a custom domain to the Pages project, you can also protect `/admin/*` with Access. Set `ADMIN_EMAILS` to a comma-separated allowlist if the API should accept Access-authenticated identities.
+Cloudflare Access public-hostname protection requires a domain in an active Cloudflare zone. After adding a custom domain to the Pages project, you can also protect `/admin/*` with Access. Set `ADMIN_ACCESS_ENABLED=true` and optionally set `ADMIN_EMAILS` to a comma-separated allowlist before the API accepts Access-authenticated identities.
 
 ## Local development
 
