@@ -26,6 +26,7 @@
   position: absolute;
   inset: 0;
   width: auto;
+  height: auto;
   aspect-ratio: auto;
   transform: none;
   border-radius: 0;
@@ -53,7 +54,11 @@
 .member-grid .member-card:nth-child(5) .member-art { --member-portrait: url("https://i.imgur.com/X9GMWnT.jpg"); }
 .member-grid .member-card:nth-child(6) .member-art { --member-portrait: url("https://i.imgur.com/dCKfure.jpg"); }
 
-.dossier-visual {
+/*
+   pages.css is injected after this stylesheet. The extra dossier-panel specificity
+   below ensures the real portrait layer overrides the original abstract silhouette.
+*/
+html[data-page="members"] .dossier-panel .dossier-visual {
   background-color: #08060e;
   background-image:
     linear-gradient(rgba(5, 4, 10, .6), rgba(5, 4, 10, .6)),
@@ -64,39 +69,55 @@
   isolation: isolate;
 }
 
-.dossier-visual::before {
+html[data-page="members"] .dossier-panel .dossier-visual::before {
   content: "";
   display: block;
   position: absolute;
   inset: 0;
   left: 0;
+  right: 0;
   top: 0;
+  bottom: 0;
   width: auto;
+  height: auto;
   aspect-ratio: auto;
   transform: none;
   border-radius: 0;
-  background: var(--dossier-portrait) center / contain no-repeat;
+  background-color: transparent;
+  background-image: var(--dossier-portrait);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
   box-shadow: none;
   z-index: 0;
 }
 
-.dossier-visual::after {
+html[data-page="members"] .dossier-panel .dossier-visual::after {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 20px;
   background:
     linear-gradient(180deg, rgba(5, 4, 10, .02) 42%, rgba(5, 4, 10, .78) 100%),
     linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
   background-size: auto, 36px 36px, 36px 36px;
+  pointer-events: none;
   z-index: 1;
 }
 
-.dossier-visual > span { z-index: 2; }
+html[data-page="members"] .dossier-panel .dossier-visual > span {
+  position: relative;
+  z-index: 2;
+}
 
-.dossier-panel[data-active-member="0"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/WuNitxa.jpg"); }
-.dossier-panel[data-active-member="1"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/bx3bimk.jpg"); }
-.dossier-panel[data-active-member="2"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/4UCnYQC.jpg"); }
-.dossier-panel[data-active-member="3"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/QJEOoxJ.jpg"); }
-.dossier-panel[data-active-member="4"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/X9GMWnT.jpg"); }
-.dossier-panel[data-active-member="5"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/dCKfure.jpg"); }
+html[data-page="members"] .dossier-panel[data-active-member="0"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/WuNitxa.jpg"); }
+html[data-page="members"] .dossier-panel[data-active-member="1"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/bx3bimk.jpg"); }
+html[data-page="members"] .dossier-panel[data-active-member="2"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/4UCnYQC.jpg"); }
+html[data-page="members"] .dossier-panel[data-active-member="3"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/QJEOoxJ.jpg"); }
+html[data-page="members"] .dossier-panel[data-active-member="4"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/X9GMWnT.jpg"); }
+html[data-page="members"] .dossier-panel[data-active-member="5"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/dCKfure.jpg"); }
 
 .source-link { margin-left: 16px; }
 .photo-credit {
@@ -111,5 +132,5 @@
 
 @media (max-width: 760px) {
   .source-link { margin-left: 0; display: flex; }
-  .dossier-visual::before { background-size: contain; }
+  html[data-page="members"] .dossier-panel .dossier-visual::before { background-size: contain; }
 }
