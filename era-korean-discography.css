@@ -1,0 +1,68 @@
+/* Korean official discography refinements for REVIVE+ */
+.revive-tracklist li {
+  min-height: 50px;
+  grid-template-columns: 28px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-content: center;
+  align-items: initial;
+}
+
+.revive-tracklist li::before {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  align-self: center;
+}
+
+.revive-track-name {
+  grid-column: 2;
+  grid-row: 1;
+  line-height: 1.25;
+}
+
+.revive-track-meta {
+  grid-column: 2;
+  grid-row: 2;
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  color: #8f879a;
+  font-size: .63rem;
+  line-height: 1.3;
+}
+
+.revive-track-meta span + span::before {
+  content: "·";
+  margin-right: 7px;
+  color: #665e70;
+}
+
+.revive-track-meta [lang="ko"] {
+  color: #b8afc2;
+  font-weight: 550;
+}
+
+.revive-source-note {
+  margin: 18px 0 0;
+  color: #81798b;
+  font-size: .68rem;
+  line-height: 1.55;
+}
+
+.revive-source-note a {
+  color: #d8b9ec;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.revive-source-note a:hover,
+.revive-source-note a:focus-visible {
+  color: #fff;
+}
+
+@media (max-width: 760px) {
+  .revive-tracklist li {
+    min-height: 54px;
+  }
+}
