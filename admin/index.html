@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en" data-page="admin">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Media Admin · IVE Cosmic Archive</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="admin.css" />
+  <script src="admin.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#admin-main">Skip to admin controls</a>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="admin-header">
+    <a class="brand" href="../media.html" aria-label="Return to Media page">
+      <span class="brand-mark">IVE</span>
+      <span class="brand-sub">Media Admin</span>
+    </a>
+    <a class="admin-back" href="../media.html">View live archive ↗</a>
+  </header>
+
+  <main id="admin-main" class="admin-shell">
+    <section class="admin-intro">
+      <p class="eyebrow"><span></span> Protected console</p>
+      <h1>Manage video transmissions.</h1>
+      <p>Add, edit, feature, or remove videos from the live Media page. Changes are stored in Cloudflare D1 and appear without a new deployment.</p>
+    </section>
+
+    <div class="admin-layout">
+      <section class="admin-panel admin-editor" aria-labelledby="editor-title">
+        <div class="admin-panel-heading">
+          <div>
+            <p class="admin-kicker">Catalog entry</p>
+            <h2 id="editor-title" data-editor-title>Add video</h2>
+          </div>
+          <button type="button" class="admin-text-button" data-reset-form>Clear</button>
+        </div>
+
+        <form data-video-form>
+          <input type="hidden" name="recordId" />
+
+          <label>
+            <span>YouTube URL or ID</span>
+            <input name="youtubeInput" type="text" autocomplete="off" placeholder="https://youtu.be/…" required />
+          </label>
+
+          <div class="admin-preview" data-video-preview>
+            <span>Thumbnail preview</span>
+          </div>
+
+          <label>
+            <span>Title</span>
+            <input name="title" type="text" maxlength="140" required />
+          </label>
+
+          <div class="admin-form-grid">
+            <label>
+              <span>Release date</span>
+              <input name="releaseDate" type="date" required />
+            </label>
+            <label>
+              <span>Video type</span>
+              <select name="kind" required>
+                <option value="music-video">Music video</option>
+                <option value="japanese-music-video">Japanese music video</option>
+                <option value="performance">Performance</option>
+                <option value="practice">Dance practice</option>
+                <option value="behind">Behind</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            <span>Era or release</span>
+            <input name="era" type="text" maxlength="100" required />
+          </label>
+
+          <label>
+            <span>Description</span>
+            <textarea name="description" rows="4" maxlength="800" placeholder="Optional featured-card description"></textarea>
+          </label>
+
+          <label class="admin-check">
+            <input name="featured" type="checkbox" />
+            <span>Use as the featured transmission</span>
+          </label>
+
+          <button class="admin-primary" type="submit" data-submit-button>Save video</button>
+          <p class="admin-form-status" role="status" aria-live="polite" data-form-status></p>
+        </form>
+      </section>
+
+      <section class="admin-panel admin-catalog" aria-labelledby="catalog-title">
+        <div class="admin-panel-heading admin-catalog-heading">
+          <div>
+            <p class="admin-kicker">Live database</p>
+            <h2 id="catalog-title">Video catalog</h2>
+          </div>
+          <span data-video-count>Loading…</span>
+        </div>
+
+        <label class="admin-search">
+          <span class="sr-only">Search videos</span>
+          <input type="search" placeholder="Search title or era" data-admin-search />
+        </label>
+
+        <div class="admin-list" data-video-list aria-live="polite"></div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
