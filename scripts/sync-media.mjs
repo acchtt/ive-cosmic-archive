@@ -4,9 +4,9 @@ import { writeFileSync } from 'node:fs';
 const CHANNEL_URL = 'https://www.youtube.com/@IVEstarship/videos';
 const OUTPUT_FILE = 'media-index.json';
 const CURATED_IDS = new Set([
-  'trlOTS4nKO4', '1Lmy7qwmSMc', 'mfj5OfIZu1I', 'TNDF5Qr6ayo',
-  '9qkpcLK422o', 'B1ShLiq3EVc', '38xYeot-ciM', 'xMilZv-Clms',
-  'g36q0ZLvygQ', 'es9MaJPb_U8', 'TT1rdIBPfmY', 'D-geLVTaBAo'
+  'trlOTS4nKO4', '1Lmy7qwmSMc', 'TNDF5Qr6ayo', '9qkpcLK422o',
+  'B1ShLiq3EVc', '38xYeot-ciM', 'g36q0ZLvygQ', 'es9MaJPb_U8',
+  'TT1rdIBPfmY', 'D-geLVTaBAo'
 ]);
 
 function inferEra(title) {
@@ -26,18 +26,8 @@ function inferEra(title) {
 function classifyTitle(title, duration = 0) {
   const value = String(title || '').toUpperCase();
   if (!value || (duration > 0 && duration < 75)) return null;
-  if (/TEASER|REACTION|CHEERING GUIDE|HIGHLIGHT MEDLEY|TRAILER|CHALLENGE|FANCAM|FACE ?CAM|FOCUS CAM|SHORTS/.test(value)) return null;
-
-  if (/BEHIND|IVE ON|MAKING|PHOTOSHOOT|PHOTO ?SHOOT|JACKET|RECORDING/.test(value)) {
-    return { type: 'Behind', categories: ['behind'] };
-  }
-  if (/DANCE PRACTICE|CHOREOGRAPHY PRACTICE|PRACTICE VIDEO/.test(value)) {
-    return { type: 'Dance practice', categories: ['practice'] };
-  }
-  if (/PERFORMANCE|SPECIAL CLIP|LIVE CLIP|STUDIO CHOOM|BE ORIGINAL|RELAY DANCE|BAND LIVE|SHOWCASE|ONE TAKE|AMAZON MUSIC ORIGINAL|MOVE REC|IT'S LIVE|IT’S LIVE|DANCE VIDEO/.test(value)) {
-    return { type: 'Performance', categories: ['performance'] };
-  }
-  if (/\bMV\b|M\/V|MUSIC VIDEO/.test(value)) {
+  if (/TEASER|REACTION|CHEERING GUIDE|HIGHLIGHT MEDLEY|TRAILER|CHALLENGE|FANCAM|FACE ?CAM|FOCUS CAM|SHORTS|BEHIND|IVE ON|MAKING|DANCE PRACTICE|PERFORMANCE VIDEO/.test(value)) return null;
+  if (/\bMV\b|M\/V|MUSIC VIDEO|OFFICIAL VIDEO/.test(value)) {
     return { type: 'Music video', categories: ['music-video'] };
   }
   return null;
@@ -88,18 +78,13 @@ for (const entry of entries) {
   });
 }
 
-const categoryCounts = videos.reduce((counts, video) => {
-  for (const category of video.categories) counts[category] = (counts[category] || 0) + 1;
-  return counts;
-}, {});
-
 const output = {
   generatedAt: new Date().toISOString(),
   source: CHANNEL_URL,
   count: videos.length,
-  categoryCounts,
+  categoryCounts: { 'music-video': videos.length },
   videos
 };
 
 writeFileSync(OUTPUT_FILE, `${JSON.stringify(output, null, 2)}\n`);
-console.log(`Wrote ${videos.length} official media entries to ${OUTPUT_FILE}.`);
+console.log(`Wrote ${videos.length} official M/V entries to ${OUTPUT_FILE}.`);

@@ -1,8 +1,8 @@
 (() => {
   const CURATED_IDS = new Set([
-    'trlOTS4nKO4', '1Lmy7qwmSMc', 'mfj5OfIZu1I', 'TNDF5Qr6ayo',
-    '9qkpcLK422o', 'B1ShLiq3EVc', '38xYeot-ciM', 'xMilZv-Clms',
-    'g36q0ZLvygQ', 'es9MaJPb_U8', 'TT1rdIBPfmY', 'D-geLVTaBAo'
+    'trlOTS4nKO4', '1Lmy7qwmSMc', 'TNDF5Qr6ayo', '9qkpcLK422o',
+    'B1ShLiq3EVc', '38xYeot-ciM', 'g36q0ZLvygQ', 'es9MaJPb_U8',
+    'TT1rdIBPfmY', 'D-geLVTaBAo'
   ]);
   const PAGE_SIZE = 24;
 
@@ -26,13 +26,14 @@
 
   function normalizeVideo(video) {
     const id = String(video?.id || '');
-    if (!/^[A-Za-z0-9_-]{11}$/.test(id) || CURATED_IDS.has(id)) return null;
+    const categories = Array.isArray(video?.categories) ? video.categories.map(String) : [];
+    if (!/^[A-Za-z0-9_-]{11}$/.test(id) || CURATED_IDS.has(id) || !categories.includes('music-video')) return null;
     return {
       id,
-      title: String(video.title || 'Official IVE upload'),
+      title: String(video.title || 'Official IVE M/V'),
       date: String(video.date || 'Official upload'),
-      type: String(video.type || 'Official video'),
-      categories: Array.isArray(video.categories) ? video.categories.map(String) : [],
+      type: String(video.type || 'Music video'),
+      categories: ['music-video'],
       era: String(video.era || 'IVE official archive')
     };
   }
@@ -87,10 +88,10 @@
     button.disabled = loading || remaining === 0;
     button.hidden = indexedVideos.length === 0;
     button.textContent = loading
-      ? 'Loading official archive…'
+      ? 'Loading official M/V archive…'
       : remaining > 0
-        ? `Show ${Math.min(PAGE_SIZE, remaining)} more official uploads`
-        : 'All matching uploads shown';
+        ? `Show ${Math.min(PAGE_SIZE, remaining)} more M/Vs`
+        : 'All matching M/Vs shown';
   }
 
   function renderIndexedVideos() {
@@ -115,7 +116,7 @@
   async function loadIndex() {
     if (loading) return;
     loading = true;
-    setStatus('Loading the generated official-channel index…', 'syncing');
+    setStatus('Loading the generated official M/V index…', 'syncing');
     updateLoadButton(0);
 
     try {
@@ -137,14 +138,14 @@
       const dateLabel = formatGeneratedAt();
       if (indexedVideos.length) {
         setStatus(
-          `${indexedVideos.length} additional official uploads indexed${dateLabel ? ` · updated ${dateLabel}` : ''}.`,
+          `${indexedVideos.length} additional official M/Vs indexed${dateLabel ? ` · updated ${dateLabel}` : ''}.`,
           'ready'
         );
       } else {
-        setStatus('The expanded index is being generated; the curated archive remains available.', 'error');
+        setStatus('No additional M/Vs are indexed yet; the curated archive remains available.', 'idle');
       }
     } catch (error) {
-      setStatus('The expanded index could not load; the curated archive remains available.', 'error');
+      setStatus('The expanded M/V index could not load; the curated archive remains available.', 'error');
     } finally {
       loading = false;
       renderIndexedVideos();
@@ -203,7 +204,7 @@
   function init() {
     if (document.documentElement.dataset.page !== 'media') return;
     setupInteractions();
-    setStatus('Curated archive ready · loading expanded index.', 'idle');
+    setStatus('Curated archive ready · loading official M/V index.', 'idle');
     loadIndex();
   }
 
