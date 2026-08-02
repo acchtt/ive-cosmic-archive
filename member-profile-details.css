@@ -25,12 +25,18 @@ html[data-page="members"] .dossier-button > span:first-child {
 }
 
 html[data-page="members"] .dossier-button strong {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
   font-size: .94rem;
   text-transform: uppercase;
   letter-spacing: .035em;
 }
 
 html[data-page="members"] .dossier-button small {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
   font-size: .61rem;
 }
 
@@ -43,13 +49,22 @@ html[data-page="members"] .dossier-button small {
 }
 
 .dossier-full-name {
+  grid-row: 3;
   color: #8f889a;
   font-size: .64rem;
   letter-spacing: .025em;
 }
 
-.dossier-instagram {
-  margin-top: 2px;
+html[data-page="members"] .dossier-button > .dossier-instagram {
+  grid-column: 2;
+  grid-row: 4;
+  width: auto;
+  height: auto;
+  margin-top: 3px;
+  display: block;
+  place-items: initial;
+  border: 0;
+  border-radius: 0;
   color: #c7a9dc;
   font-size: .61rem;
   letter-spacing: .035em;
