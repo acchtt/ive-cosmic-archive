@@ -8,8 +8,14 @@
   const preview = document.querySelector('[data-video-preview]');
   const editorTitle = document.querySelector('[data-editor-title]');
   const search = document.querySelector('[data-admin-search]');
+  const loginPanel = document.querySelector('[data-admin-login]');
+  const loginForm = document.querySelector('[data-login-form]');
+  const loginButton = document.querySelector('[data-login-button]');
+  const loginStatus = document.querySelector('[data-login-status]');
+  const adminConsole = document.querySelector('[data-admin-console]');
+  const logoutButton = document.querySelector('[data-admin-logout]');
 
-  if (!form || !list) return;
+  if (!form || !list || !loginForm || !adminConsole) return;
 
   function escapeHtml(value) {
     return String(value)
@@ -41,6 +47,26 @@
     status.dataset.state = stateName;
   }
 
+  function setLoginStatus(message = '', stateName = '') {
+    loginStatus.textContent = message;
+    loginStatus.dataset.state = stateName;
+  }
+
+  function showLogin(message = '') {
+    loginPanel.hidden = false;
+    adminConsole.hidden = true;
+    logoutButton.hidden = true;
+    if (message) setLoginStatus(message, 'error');
+    loginForm.elements.password.focus({ preventScroll: true });
+  }
+
+  function showConsole() {
+    loginPanel.hidden = true;
+    adminConsole.hidden = false;
+    logoutButton.hidden = false;
+    setLoginStatus();
+  }
+
   function updatePreview() {
     const id = extractYouTubeId(form.elements.youtubeInput.value);
     preview.innerHTML = id
@@ -61,7 +87,12 @@
 
     if (response.status === 204) return null;
     const payload = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(payload.error || `Request failed (${response.status}).`);
+    if (!response.ok) {
+      if (response.status === 401 && url !== '/admin/api/session') {
+        showLogin('Your admin session expired. Sign in again.');
+      }
+      throw new Error(payload.error || `Request failed (${response.status}).`);
+    }
     return payload;
   }
 
@@ -101,8 +132,20 @@
       state.videos = Array.isArray(payload.videos) ? payload.videos : [];
       renderList();
     } catch (error) {
-      count.textContent = 'Unavailable';
-      list.innerHTML = `<p class="admin-load-error">${escapeHtml(error.message)}<br /><br />Confirm the D1 binding, migration, and Cloudflare Access policy are configured.</p>`;
+      if (!adminConsole.hidden) {
+        count.textContent = 'Unavailable';
+        list.innerHTML = `<p class="admin-load-error">${escapeHtml(error.message)}<br /><br />Confirm the D1 binding and migration are configured.</p>`;
+      }
+    }
+  }
+
+  async function checkSession() {
+    try {
+      await api('/admin/api/session');
+      showConsole();
+      await loadVideos();
+    } catch {
+      showLogin();
     }
   }
 
@@ -142,9 +185,37 @@
       renderList();
       if (Number(form.elements.recordId.value) === id) resetForm();
     } catch (error) {
-      window.alert(error.message);
+      if (!adminConsole.hidden) window.alert(error.message);
     }
   }
+
+  loginForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    loginButton.disabled = true;
+    setLoginStatus('Signing in…');
+    try {
+      await api('/admin/api/session', {
+        method: 'POST',
+        body: JSON.stringify({ password: loginForm.elements.password.value })
+      });
+      loginForm.reset();
+      showConsole();
+      await loadVideos();
+    } catch (error) {
+      setLoginStatus(error.message, 'error');
+    } finally {
+      loginButton.disabled = false;
+    }
+  });
+
+  logoutButton.addEventListener('click', async () => {
+    try {
+      await api('/admin/api/session', { method: 'DELETE' });
+    } finally {
+      state.videos = [];
+      showLogin('Signed out.');
+    }
+  });
 
   form.elements.youtubeInput.addEventListener('input', updatePreview);
   document.querySelector('[data-reset-form]')?.addEventListener('click', resetForm);
@@ -195,15 +266,15 @@
       else state.videos.unshift(saved);
       state.videos.sort((a, b) => b.releaseDate.localeCompare(a.releaseDate) || b.recordId - a.recordId);
       renderList();
-      setStatus('Saved. The Media page now reads this catalog entry.', 'success');
       if (!recordId) resetForm();
+      setStatus('Saved. The Media page now reads this catalog entry.', 'success');
     } catch (error) {
-      setStatus(error.message, 'error');
+      if (!adminConsole.hidden) setStatus(error.message, 'error');
     } finally {
       submit.disabled = false;
     }
   });
 
   updatePreview();
-  loadVideos();
+  checkSession();
 })();
