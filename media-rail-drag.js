@@ -228,3 +228,10 @@
     event.stopImmediatePropagation();
   }, true);
 })();
+
+(() => {
+  const script = document.createElement('script');
+  script.src = 'media-random-hero.js';
+  script.defer = true;
+  document.head.append(script);
+})();
