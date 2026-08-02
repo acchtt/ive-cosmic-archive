@@ -18,3 +18,6 @@
   Link: <https://ive-cosmic.pages.dev/dive-zone>; rel="canonical"
 /dive-zone.html
   Link: <https://ive-cosmic.pages.dev/dive-zone>; rel="canonical"
+/admin/*
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow, noarchive
