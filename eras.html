@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Navigate the era and discography timeline in the IVE Cosmic Archive." />
+  <meta name="description" content="Navigate IVE eras and explore the REVIVE+ archive in the IVE Cosmic Archive." />
   <title>Eras · IVE Cosmic Archive</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="era-revive.css" />
   <script src="script.js" defer></script>
+  <script src="era-revive.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -37,6 +39,7 @@
       <span data-motion-label>Motion on</span>
     </button>
   </header>
+
   <main id="main">
     <section class="page-hero section-shell page-hero-eras" aria-labelledby="page-title">
       <div class="page-hero-copy reveal">
@@ -49,8 +52,11 @@
 
     <section class="page-section section-shell" aria-labelledby="timeline-title">
       <div class="section-heading reveal">
-        <div><p class="eyebrow"><span></span> Main timeline</p><h2 id="timeline-title">Choose an orbit.</h2></div>
-        <p>The archive currently focuses on visual direction. Release dates, complete track lists, credits, and official links can be added after the content system is finalized.</p>
+        <div>
+          <p class="eyebrow"><span></span> Main timeline</p>
+          <h2 id="timeline-title">Choose an orbit.</h2>
+        </div>
+        <p>The current orbit is REVIVE+, IVE’s second full album. Select an era below, then open the featured archive for its official track sequence and title transmission.</p>
       </div>
 
       <div class="era-console reveal era-console-page">
@@ -71,14 +77,81 @@
       </div>
     </section>
 
+    <section id="revive-plus" class="page-section section-shell revive-feature" aria-labelledby="revive-title">
+      <article class="revive-shell reveal">
+        <div class="revive-copy">
+          <p class="eyebrow"><span></span> Current orbit · February 23, 2026</p>
+          <h2 id="revive-title" class="revive-title">REVIVE+</h2>
+          <p class="revive-lead">IVE’s second full album records the group at its present point of expansion: a 12-track chapter that moves from the confidence of “I” toward the connection of “we,” while preserving the polished identity at the center of the archive.</p>
+
+          <div class="revive-meta" aria-label="REVIVE+ album details">
+            <div><span>Archive class</span><strong>2nd full album</strong></div>
+            <div><span>Track count</span><strong>12 signals</strong></div>
+            <div><span>Lead transmission</span><strong>BLACKHOLE</strong></div>
+          </div>
+
+          <div class="revive-concepts" aria-label="REVIVE+ concepts">
+            <span>BLACKHOLE cinematic</span>
+            <span>BANG BANG pre-release</span>
+            <span>BANGERS portraits</span>
+            <span>Six solo signals</span>
+          </div>
+
+          <div class="revive-actions">
+            <a href="https://ive-official.jp/mob/news/diarKijiShw.php?aff=ROBO004&amp;id=303477&amp;site=DIVE" target="_blank" rel="noreferrer">Official discography ↗</a>
+            <a href="https://youtu.be/1Lmy7qwmSMc" target="_blank" rel="noreferrer">Open BLACKHOLE MV ↗</a>
+          </div>
+        </div>
+
+        <div class="revive-visual">
+          <div>
+            <div class="blackhole-frame">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/1Lmy7qwmSMc"
+                title="IVE BLACKHOLE official music video"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+            <div class="blackhole-label"><span>Official transmission</span><span>BLACKHOLE · 03:14</span></div>
+          </div>
+
+          <section class="revive-track-panel" aria-labelledby="tracklist-title">
+            <header>
+              <h3 id="tracklist-title">Track sequence</h3>
+              <span>REVIVE+ · 2026</span>
+            </header>
+            <ol class="revive-tracklist">
+              <li>BLACKHOLE</li>
+              <li>BANG BANG</li>
+              <li>Hush</li>
+              <li>Stuck In Your Head</li>
+              <li>Fireworks</li>
+              <li>HOT COFFEE</li>
+              <li>8 <em>· WONYOUNG solo</em></li>
+              <li>Odd <em>· GAEUL solo</em></li>
+              <li>Super ICY <em>· LEESEO solo</em></li>
+              <li>Unreal <em>· LIZ solo</em></li>
+              <li>In Your Heart <em>· REI solo</em></li>
+              <li>Force <em>· YUJIN solo</em></li>
+            </ol>
+          </section>
+        </div>
+      </article>
+    </section>
+
     <section class="page-section section-shell" aria-labelledby="archive-grid-title">
       <div class="section-heading reveal">
-        <div><p class="eyebrow"><span></span> Archive map</p><h2 id="archive-grid-title">Era coordinates.</h2></div>
-        <p>Use these cards as the future entry point for concept photos, track information, styling notes, and official media.</p>
+        <div>
+          <p class="eyebrow"><span></span> Archive map</p>
+          <h2 id="archive-grid-title">Era coordinates.</h2>
+        </div>
+        <p>Each coordinate can grow into a focused archive for concept photos, track information, styling notes, and official media.</p>
       </div>
       <div class="era-archive-grid" data-era-archive></div>
     </section>
   </main>
+
   <footer class="site-footer section-shell">
     <div>
       <a class="brand footer-brand" href="index.html">
@@ -92,7 +165,7 @@
       <a href="media.html">Media archive</a>
       <button type="button" data-motion-toggle-footer>Toggle motion</button>
     </div>
-    <p class="footer-code">Archive build · 002 · Multi-page system</p>
+    <p class="footer-code">Archive build · 003 · REVIVE+ orbit</p>
   </footer>
 </body>
 </html>
