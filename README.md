@@ -10,7 +10,7 @@ A responsive, multi-page fan site built around a futuristic **Cosmic Control Roo
 
 The production site is deployed through Cloudflare Pages from the `main` branch. Merges into `main` trigger a new production deployment.
 
-After adding or changing a Pages binding or secret, create a fresh production deployment before testing the associated Function.
+After adding or changing a Pages binding or secret, create a fresh production deployment before testing the associated Function. The deployment must be created after all required production secrets have been saved.
 
 ## Pages
 
