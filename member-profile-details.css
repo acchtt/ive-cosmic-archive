@@ -70,6 +70,13 @@ html[data-page="members"] .dossier-button > .dossier-instagram {
   letter-spacing: .035em;
 }
 
+html[data-page="members"] .dossier-button[aria-pressed="true"] > .dossier-instagram {
+  background: transparent;
+  border-color: transparent;
+  color: #e8c8ff;
+  box-shadow: none;
+}
+
 html[data-page="members"] .dossier-copy {
   padding: clamp(28px, 4.2vw, 52px);
 }
