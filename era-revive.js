@@ -1,4 +1,11 @@
 (() => {
+  if (!document.querySelector('link[href="era-korean-discography.css"]')) {
+    const koreanDiscographyStyles = document.createElement('link');
+    koreanDiscographyStyles.rel = 'stylesheet';
+    koreanDiscographyStyles.href = 'era-korean-discography.css';
+    document.head.appendChild(koreanDiscographyStyles);
+  }
+
   const reviveEra = {
     year: '2026',
     name: 'REVIVE+',
@@ -59,11 +66,15 @@
     const tracklist = document.querySelector('.revive-tracklist');
     if (tracklist) {
       tracklist.innerHTML = officialTracks.map((track) => {
-        const secondary = [track.korean, track.role].filter(Boolean).join(' · ');
+        const metadata = [
+          track.korean ? `<span lang="ko">${track.korean}</span>` : '',
+          track.role ? `<span>${track.role}</span>` : ''
+        ].filter(Boolean).join('');
+
         return `
           <li>
             <span class="revive-track-name">${track.title}</span>
-            ${secondary ? `<small class="revive-track-ko" lang="ko">${secondary}</small>` : ''}
+            ${metadata ? `<span class="revive-track-meta">${metadata}</span>` : ''}
           </li>`;
       }).join('');
     }
