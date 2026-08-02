@@ -57,7 +57,3 @@ export async function onRequestPost(context) {
     return errorResponse(error);
   }
 }
-
-export function onRequest() {
-  return json({ error: 'Method not allowed.' }, 405, { allow: 'GET, POST' });
-}
