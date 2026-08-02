@@ -115,3 +115,11 @@
   .dossier-copy { padding: 28px 22px; }
   .vault-grid { grid-template-columns: 1fr; }
 }
+
+/* Temporary feature flags */
+.site-nav a[data-route="dive-zone"],
+a[href="dive-zone.html"],
+a[href="/dive-zone"],
+a[href="/dive-zone.html"] {
+  display: none !important;
+}
