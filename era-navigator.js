@@ -48,6 +48,7 @@
   ];
 
   const artworkCache = new Map();
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   function fallbackCover(release) {
     const safeTitle = release.title.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -82,6 +83,10 @@
     }
   }
 
+  function wait(duration) {
+    return new Promise((resolve) => window.setTimeout(resolve, duration));
+  }
+
   function renderNavigator() {
     if (document.documentElement.dataset.page !== 'eras') return;
     const consoleElement = document.querySelector('.era-console-page');
@@ -105,15 +110,27 @@
 
     const detail = consoleElement.querySelector('[data-release-detail]');
     const tabs = [...consoleElement.querySelectorAll('.disco-tab')];
+    let transitionId = 0;
+    let activeIndex = -1;
 
     async function selectRelease(index, focus = false) {
+      if (index === activeIndex && detail.childElementCount) return;
+      activeIndex = index;
+      const requestId = ++transitionId;
       const release = releases[index];
+
       tabs.forEach((tab, tabIndex) => tab.setAttribute('aria-selected', String(tabIndex === index)));
-      if (focus) tabs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      if (focus) tabs[index].scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
+
+      if (detail.childElementCount && !reducedMotion.matches) {
+        detail.classList.add('is-leaving');
+        await wait(170);
+        if (requestId !== transitionId) return;
+      }
 
       detail.innerHTML = `
         <div class="disco-cover-wrap">
-          <img class="disco-cover" src="${fallbackCover(release)}" alt="${release.title} album artwork" data-release-cover />
+          <img class="disco-cover is-loading" src="${fallbackCover(release)}" alt="${release.title} album artwork" data-release-cover />
         </div>
         <div class="disco-copy">
           <p class="disco-sequence">${String(index + 1).padStart(2, '0')} / ${release.date}</p>
@@ -127,12 +144,31 @@
           </div>
         </div>`;
 
+      detail.classList.remove('is-leaving');
+      if (!reducedMotion.matches) {
+        detail.classList.add('is-entering');
+        requestAnimationFrame(() => requestAnimationFrame(() => detail.classList.remove('is-entering')));
+      }
+
       const artwork = await fetchArtwork(release);
-      if (tabs[index].getAttribute('aria-selected') !== 'true') return;
+      if (requestId !== transitionId || tabs[index].getAttribute('aria-selected') !== 'true') return;
       const cover = detail.querySelector('[data-release-cover]');
       const tracklistLink = detail.querySelector('[data-tracklist-link]');
-      if (cover) cover.src = artwork.artwork;
       if (tracklistLink) tracklistLink.href = artwork.url;
+      if (!cover) return;
+
+      const preload = new Image();
+      preload.onload = () => {
+        if (requestId !== transitionId) return;
+        cover.classList.add('is-swapping');
+        window.setTimeout(() => {
+          if (requestId !== transitionId) return;
+          cover.src = artwork.artwork;
+          cover.classList.remove('is-loading', 'is-swapping');
+        }, reducedMotion.matches ? 0 : 120);
+      };
+      preload.onerror = () => cover.classList.remove('is-loading');
+      preload.src = artwork.artwork;
     }
 
     tabs.forEach((tab) => tab.addEventListener('click', () => selectRelease(Number(tab.dataset.releaseIndex), true)));
