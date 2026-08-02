@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Browse the media vault in the IVE Cosmic Archive." />
+  <meta name="description" content="Search and play official IVE music videos, performances, dance practices, and behind-the-scenes transmissions." />
   <title>Media · IVE Cosmic Archive</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="media-archive.css" />
   <script src="script.js" defer></script>
+  <script src="media-archive.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -37,52 +39,100 @@
       <span data-motion-label>Motion on</span>
     </button>
   </header>
+
   <main id="main">
     <section class="page-hero section-shell page-hero-media" aria-labelledby="page-title">
       <div class="page-hero-copy reveal">
         <p class="eyebrow"><span></span> Media transmission</p>
         <h1 id="page-title">A vault built<br /><span>for replay.</span></h1>
-        <p>Browse performances, music videos, dance practices, and interviews from one focused command interface.</p>
+        <p>Search official IVE music videos, performances, practices, and production archives without loading a video player until you press play.</p>
       </div>
       <div class="page-hero-orb media-orb" aria-hidden="true"><span>▶</span></div>
     </section>
 
-    <section class="page-section section-shell" aria-labelledby="featured-title">
+    <section class="page-section section-shell media-feature-section" aria-labelledby="featured-title">
       <div class="section-heading reveal">
-        <div><p class="eyebrow"><span></span> Featured signal</p><h2 id="featured-title">Current transmission.</h2></div>
-        <p>Official YouTube embeds will replace the abstract preview once the final media list and rights-safe linking approach are selected.</p>
+        <div>
+          <p class="eyebrow"><span></span> Featured signal</p>
+          <h2 id="featured-title">Current transmission.</h2>
+        </div>
+        <p>BLACKHOLE anchors the Korean archive, while the latest official Japanese and Korean videos remain one step away in the transmission row.</p>
       </div>
-      <div class="media-console reveal">
-        <article class="featured-media">
-          <div class="video-placeholder" data-video-placeholder>
-            <div class="video-grid" aria-hidden="true"></div>
-            <button class="play-button" type="button" aria-label="Play prototype preview" data-play-button><span></span></button>
-            <p data-featured-label>Featured transmission</p>
+
+      <article class="official-media-feature reveal">
+        <button class="media-feature-preview" type="button" data-media-feature-open>
+          <img src="" alt="" data-media-feature-image fetchpriority="high" decoding="async" />
+          <span class="media-feature-play" aria-hidden="true"></span>
+          <span class="media-feature-code" data-media-feature-code>REVIVE+ · official transmission</span>
+        </button>
+
+        <div class="media-feature-copy">
+          <p class="eyebrow compact"><span></span><span data-media-feature-type>Music video</span></p>
+          <h2 data-media-feature-title>BLACKHOLE</h2>
+          <p class="media-feature-description" data-media-feature-description></p>
+
+          <div class="media-feature-meta" aria-label="Featured media details">
+            <div><span>Release</span><strong data-media-feature-date>2026.02.23</strong></div>
+            <div><span>Source</span><strong>IVE official YouTube</strong></div>
           </div>
-          <div class="featured-meta">
-            <div><p class="eyebrow compact"><span></span><span data-featured-type>Performance</span></p><h3 data-featured-title>Cosmic Stage Archive</h3></div>
-            <span class="timecode" data-featured-time>04:18</span>
+
+          <div class="media-feature-actions">
+            <button type="button" data-media-feature-open>Play in archive</button>
+            <a href="https://www.youtube.com/watch?v=1Lmy7qwmSMc" target="_blank" rel="noreferrer" data-media-feature-youtube>Open on YouTube ↗</a>
           </div>
-        </article>
-        <div class="media-list" role="list" data-media-list></div>
-      </div>
+        </div>
+      </article>
+
+      <div class="media-latest reveal" aria-label="Latest official transmissions" data-media-latest></div>
     </section>
 
     <section class="page-section section-shell" aria-labelledby="vault-title">
-      <div class="section-heading reveal">
-        <div><p class="eyebrow"><span></span> Full vault</p><h2 id="vault-title">Filter the signal.</h2></div>
-        <p>The expanded grid demonstrates how a larger media collection can be sorted without losing the command-center aesthetic.</p>
+      <div class="section-heading media-vault-heading reveal">
+        <div>
+          <p class="eyebrow"><span></span> Official vault</p>
+          <h2 id="vault-title">Filter the signal.</h2>
+        </div>
+        <p>Search by title or era, then narrow the archive by transmission type. Videos open in a privacy-enhanced player inside the site.</p>
       </div>
-      <div class="filter-bar reveal" role="group" aria-label="Filter media">
-        <button type="button" class="active" data-media-filter="all">All signals</button>
-        <button type="button" data-media-filter="performance">Performances</button>
-        <button type="button" data-media-filter="music-video">Music videos</button>
-        <button type="button" data-media-filter="practice">Practices</button>
-        <button type="button" data-media-filter="interview">Interviews</button>
+
+      <div class="media-toolbar reveal">
+        <label class="media-search">
+          <span class="sr-only">Search official media</span>
+          <input type="search" placeholder="Search title or era" autocomplete="off" data-media-search />
+        </label>
+
+        <div class="media-filters" role="group" aria-label="Filter official media">
+          <button type="button" aria-pressed="true" data-official-media-filter="all">All</button>
+          <button type="button" aria-pressed="false" data-official-media-filter="music-video">Music videos</button>
+          <button type="button" aria-pressed="false" data-official-media-filter="performance">Performance</button>
+          <button type="button" aria-pressed="false" data-official-media-filter="practice">Practice</button>
+          <button type="button" aria-pressed="false" data-official-media-filter="behind">Behind</button>
+          <button type="button" aria-pressed="false" data-official-media-filter="japanese">Japanese</button>
+        </div>
       </div>
-      <div class="vault-grid" data-vault-grid></div>
+
+      <div class="media-results-meta reveal">
+        <span data-media-count>12 transmissions</span>
+        <span>Player loads only when opened</span>
+      </div>
+
+      <div class="official-media-grid" data-official-media-grid></div>
+      <p class="media-empty" data-media-empty hidden>No transmissions match this search.</p>
     </section>
   </main>
+
+  <dialog class="media-modal" data-media-modal aria-labelledby="media-modal-title">
+    <div class="media-modal-header">
+      <h2 id="media-modal-title" data-media-modal-title>Official transmission</h2>
+      <button class="media-modal-close" type="button" aria-label="Close video player" data-media-modal-close>×</button>
+    </div>
+    <div class="media-player" data-media-player></div>
+    <div class="media-modal-footer">
+      <span data-media-modal-meta></span>
+      <a href="https://www.youtube.com/@IVEstarship" target="_blank" rel="noreferrer" data-media-modal-youtube>Open on YouTube ↗</a>
+    </div>
+  </dialog>
+
   <footer class="site-footer section-shell">
     <div>
       <a class="brand footer-brand" href="index.html">
@@ -93,10 +143,10 @@
     </div>
     <div class="footer-links">
       <a href="#main">Back to top</a>
-      <a href="media.html">Media archive</a>
+      <a href="eras.html">Discography</a>
       <button type="button" data-motion-toggle-footer>Toggle motion</button>
     </div>
-    <p class="footer-code">Archive build · 002 · Multi-page system</p>
+    <p class="footer-code">Archive build · 004 · Official media vault</p>
   </footer>
 </body>
 </html>
