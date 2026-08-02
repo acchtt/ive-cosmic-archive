@@ -1,13 +1,15 @@
 (() => {
   if (document.documentElement.dataset.page !== 'dive-zone') return;
 
-  const PASSPORT_KEY = 'ive-dive-passport-v1';
-  const QUIZ_KEY = 'ive-dive-resonance-v1';
-  const MISSION_KEY = 'ive-dive-missions-v1';
-  const SIGNALS_KEY = 'ive-dive-signal-log-v1';
+  const KEYS = {
+    passport: 'ive-dive-passport-v1',
+    quiz: 'ive-dive-resonance-v1',
+    missions: 'ive-dive-missions-v1',
+    signals: 'ive-dive-signal-log-v1'
+  };
 
   const MEMBERS = ['All members', 'Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
-  const ERAS = ['ELEVEN', 'LOVE DIVE', 'AFTER LIKE', "I’ve IVE", "I’VE MINE", 'IVE SWITCH', 'IVE EMPATHY', 'IVE SECRET', 'REVIVE+'];
+  const ERAS = ['ELEVEN', 'LOVE DIVE', 'AFTER LIKE', 'I’ve IVE', 'I’VE MINE', 'IVE SWITCH', 'IVE EMPATHY', 'IVE SECRET', 'REVIVE+'];
   const TONES = [
     { id: 'violet', label: 'Violet', a: '#b870ff', b: '#6bcfff' },
     { id: 'rose', label: 'Rose', a: '#ff79c8', b: '#a777ff' },
@@ -101,8 +103,7 @@
 
   function readJson(key, fallback) {
     try {
-      const value = JSON.parse(localStorage.getItem(key) || 'null');
-      return value ?? fallback;
+      return JSON.parse(localStorage.getItem(key) || 'null') ?? fallback;
     } catch {
       return fallback;
     }
@@ -112,7 +113,7 @@
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch {
-      // The dashboard remains usable when storage is blocked.
+      // The dashboard remains usable when storage is unavailable.
     }
   }
 
@@ -163,12 +164,14 @@
     }
   }
 
-  function passportFromForm(existingId = '') {
+  function passportFromForm(existingId = '', generateId = true) {
     const name = q('[data-dive-name]')?.value.trim().slice(0, 20) || 'DIVE';
     const bias = q('[data-dive-bias]')?.value || MEMBERS[0];
     const era = q('[data-dive-era]')?.value || ERAS[0];
     const tone = q('[data-dive-tones] [aria-pressed="true"]')?.dataset.tone || TONES[0].id;
-    const id = existingId || `DIVE-${String(hashString(`${name}|${bias}|${era}|${Date.now()}`) % 1000000).padStart(6, '0')}`;
+    const id = existingId || (generateId
+      ? `DIVE-${String(hashString(`${name}|${bias}|${era}|${Date.now()}`) % 1000000).padStart(6, '0')}`
+      : '');
     return { name, bias, era, tone, id };
   }
 
@@ -187,14 +190,12 @@
   }
 
   function restorePassport() {
-    const saved = readJson(PASSPORT_KEY, null);
+    const saved = readJson(KEYS.passport, null);
     const defaults = saved || { name: 'DIVE', bias: MEMBERS[0], era: ERAS[0], tone: TONES[0].id, id: '' };
     const name = q('[data-dive-name]');
-    const bias = q('[data-dive-bias]');
-    const era = q('[data-dive-era]');
     if (name) name.value = saved?.name || '';
-    if (bias) bias.value = defaults.bias;
-    if (era) era.value = defaults.era;
+    if (q('[data-dive-bias]')) q('[data-dive-bias]').value = defaults.bias;
+    if (q('[data-dive-era]')) q('[data-dive-era]').value = defaults.era;
     qa('[data-tone]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.tone === defaults.tone)));
     renderPassport(defaults);
   }
@@ -209,36 +210,27 @@
   }
 
   function downloadPassport() {
-    const saved = readJson(PASSPORT_KEY, passportFromForm());
-    const tone = toneById(saved.tone);
+    let passport = readJson(KEYS.passport, null);
+    if (!passport) {
+      passport = passportFromForm();
+      writeJson(KEYS.passport, passport);
+      renderPassport(passport);
+    }
+    const tone = toneById(passport.tone);
     const svg = `
       <svg xmlns="http://www.w3.org/2000/svg" width="1620" height="1000" viewBox="0 0 1620 1000">
         <defs>
-          <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#171022"/>
-            <stop offset="1" stop-color="#07050d"/>
-          </linearGradient>
-          <radialGradient id="glowA" cx="0" cy="1" r="1">
-            <stop offset="0" stop-color="${tone.a}" stop-opacity=".72"/>
-            <stop offset="1" stop-color="${tone.a}" stop-opacity="0"/>
-          </radialGradient>
-          <radialGradient id="glowB" cx="1" cy="0" r="1">
-            <stop offset="0" stop-color="${tone.b}" stop-opacity=".72"/>
-            <stop offset="1" stop-color="${tone.b}" stop-opacity="0"/>
-          </radialGradient>
-          <pattern id="grid" width="70" height="70" patternUnits="userSpaceOnUse">
-            <path d="M70 0H0V70" fill="none" stroke="#ffffff" stroke-opacity=".045" stroke-width="2"/>
-          </pattern>
+          <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#171022"/><stop offset="1" stop-color="#07050d"/></linearGradient>
+          <radialGradient id="glowA" cx="0" cy="1" r="1"><stop offset="0" stop-color="${tone.a}" stop-opacity=".72"/><stop offset="1" stop-color="${tone.a}" stop-opacity="0"/></radialGradient>
+          <radialGradient id="glowB" cx="1" cy="0" r="1"><stop offset="0" stop-color="${tone.b}" stop-opacity=".72"/><stop offset="1" stop-color="${tone.b}" stop-opacity="0"/></radialGradient>
+          <pattern id="grid" width="70" height="70" patternUnits="userSpaceOnUse"><path d="M70 0H0V70" fill="none" stroke="#ffffff" stroke-opacity=".045" stroke-width="2"/></pattern>
         </defs>
-        <rect width="1620" height="1000" rx="70" fill="url(#bg)"/>
-        <rect width="1620" height="1000" rx="70" fill="url(#glowA)"/>
-        <rect width="1620" height="1000" rx="70" fill="url(#glowB)"/>
-        <rect width="1620" height="1000" rx="70" fill="url(#grid)"/>
+        <rect width="1620" height="1000" rx="70" fill="url(#bg)"/><rect width="1620" height="1000" rx="70" fill="url(#glowA)"/><rect width="1620" height="1000" rx="70" fill="url(#glowB)"/><rect width="1620" height="1000" rx="70" fill="url(#grid)"/>
         <rect x="3" y="3" width="1614" height="994" rx="67" fill="none" stroke="#ffffff" stroke-opacity=".42" stroke-width="6"/>
         <text x="100" y="125" fill="#eee4f5" fill-opacity=".75" font-family="Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="8">IVE COSMIC ARCHIVE / DIVE ACCESS</text>
-        <text x="100" y="535" fill="#ffffff" font-family="Arial, sans-serif" font-size="150" font-weight="800" letter-spacing="-8">${svgEscape(saved.name || 'DIVE')}</text>
-        <text x="104" y="620" fill="#eee4f5" fill-opacity=".74" font-family="Arial, sans-serif" font-size="38">${svgEscape(saved.bias)} · ${svgEscape(saved.era)}</text>
-        <text x="104" y="865" fill="#eee4f5" fill-opacity=".66" font-family="Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="5">${svgEscape(saved.id || 'DIVE-000000')}</text>
+        <text x="100" y="535" fill="#ffffff" font-family="Arial, sans-serif" font-size="150" font-weight="800" letter-spacing="-8">${svgEscape(passport.name || 'DIVE')}</text>
+        <text x="104" y="620" fill="#eee4f5" fill-opacity=".74" font-family="Arial, sans-serif" font-size="38">${svgEscape(passport.bias)} · ${svgEscape(passport.era)}</text>
+        <text x="104" y="865" fill="#eee4f5" fill-opacity=".66" font-family="Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="5">${svgEscape(passport.id)}</text>
         <text x="1515" y="865" text-anchor="end" fill="#eee4f5" fill-opacity=".66" font-family="Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="5">${svgEscape(tone.label.toUpperCase())} SIGNAL</text>
         <text x="1245" y="560" text-anchor="middle" fill="#ffffff" fill-opacity=".92" font-family="Arial, sans-serif" font-size="330">♡</text>
       </svg>`;
@@ -246,7 +238,7 @@
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${(saved.name || 'dive').replace(/[^a-z0-9]+/gi, '-').toLowerCase()}-dive-passport.svg`;
+    link.download = `${(passport.name || 'dive').replace(/[^a-z0-9]+/gi, '-').toLowerCase()}-dive-passport.svg`;
     document.body.appendChild(link);
     link.click();
     link.remove();
@@ -261,23 +253,22 @@
       const button = event.target.closest('[data-tone]');
       if (!button) return;
       qa('[data-tone]').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-      const preview = passportFromForm(readJson(PASSPORT_KEY, {})?.id || '');
-      renderPassport(preview);
+      const saved = readJson(KEYS.passport, null);
+      renderPassport(passportFromForm(saved?.id || '', false));
     });
 
     q('[data-passport-form]')?.addEventListener('submit', (event) => {
       event.preventDefault();
-      const existing = readJson(PASSPORT_KEY, null);
+      const existing = readJson(KEYS.passport, null);
       const passport = passportFromForm(existing?.id || '');
-      writeJson(PASSPORT_KEY, passport);
+      writeJson(KEYS.passport, passport);
       renderPassport(passport);
     });
 
     q('[data-passport-download]')?.addEventListener('click', downloadPassport);
     q('[data-passport-reset]')?.addEventListener('click', () => {
-      removeStored(PASSPORT_KEY);
-      const name = q('[data-dive-name]');
-      if (name) name.value = '';
+      removeStored(KEYS.passport);
+      if (q('[data-dive-name]')) q('[data-dive-name]').value = '';
       if (q('[data-dive-bias]')) q('[data-dive-bias]').value = MEMBERS[0];
       if (q('[data-dive-era]')) q('[data-dive-era]').value = ERAS[0];
       qa('[data-tone]').forEach((button, index) => button.setAttribute('aria-pressed', String(index === 0)));
@@ -289,10 +280,8 @@
 
   function showQuizResult(resultKey) {
     const result = QUIZ_RESULTS[resultKey] || QUIZ_RESULTS.allure;
-    const body = q('[data-quiz-body]');
-    const panel = q('[data-quiz-result]');
-    if (body) body.hidden = true;
-    if (panel) panel.hidden = false;
+    if (q('[data-quiz-body]')) q('[data-quiz-body]').hidden = true;
+    if (q('[data-quiz-result]')) q('[data-quiz-result]').hidden = false;
     if (q('[data-quiz-result-era]')) q('[data-quiz-result-era]').textContent = result.era;
     if (q('[data-quiz-result-copy]')) q('[data-quiz-result-copy]').textContent = result.copy;
     setStatus('resonance', result.era, true);
@@ -300,92 +289,54 @@
 
   function renderQuizStep() {
     const question = QUIZ_QUESTIONS[quizState.step];
-    const step = q('[data-quiz-step]');
-    const prompt = q('[data-quiz-question]');
     const options = q('[data-quiz-options]');
-    const progress = q('[data-quiz-progress]');
     if (!question || !options) return;
-    if (step) step.textContent = `Question ${quizState.step + 1} / ${QUIZ_QUESTIONS.length}`;
-    if (prompt) prompt.textContent = question.prompt;
-    if (progress) progress.style.setProperty('--quiz-progress', `${((quizState.step + 1) / QUIZ_QUESTIONS.length) * 100}%`);
-    options.innerHTML = question.answers.map(([label, profile]) => `
-      <button class="dive-quiz-option" type="button" data-quiz-profile="${profile}">${label}</button>`).join('');
+    if (q('[data-quiz-step]')) q('[data-quiz-step]').textContent = `Question ${quizState.step + 1} / ${QUIZ_QUESTIONS.length}`;
+    if (q('[data-quiz-question]')) q('[data-quiz-question]').textContent = question.prompt;
+    if (q('[data-quiz-progress]')) q('[data-quiz-progress]').style.setProperty('--quiz-progress', `${((quizState.step + 1) / QUIZ_QUESTIONS.length) * 100}%`);
+    options.innerHTML = question.answers.map(([label, profile]) => `<button class="dive-quiz-option" type="button" data-quiz-profile="${profile}">${label}</button>`).join('');
   }
 
   function restartQuiz() {
     quizState.step = 0;
     quizState.scores = { allure: 0, ambition: 0, radiance: 0, rebirth: 0 };
-    const body = q('[data-quiz-body]');
-    const panel = q('[data-quiz-result]');
-    if (body) body.hidden = false;
-    if (panel) panel.hidden = true;
+    if (q('[data-quiz-body]')) q('[data-quiz-body]').hidden = false;
+    if (q('[data-quiz-result]')) q('[data-quiz-result]').hidden = true;
     renderQuizStep();
   }
 
   function setupQuiz() {
-    const saved = readJson(QUIZ_KEY, null);
+    const saved = readJson(KEYS.quiz, null);
     if (saved?.profile && QUIZ_RESULTS[saved.profile]) showQuizResult(saved.profile);
     else renderQuizStep();
 
     q('[data-quiz-options]')?.addEventListener('click', (event) => {
       const button = event.target.closest('[data-quiz-profile]');
-      if (!button) return;
-      const profile = button.dataset.quizProfile;
-      if (!(profile in quizState.scores)) return;
-      quizState.scores[profile] += 1;
+      if (!button || !(button.dataset.quizProfile in quizState.scores)) return;
+      quizState.scores[button.dataset.quizProfile] += 1;
       quizState.step += 1;
       if (quizState.step < QUIZ_QUESTIONS.length) {
         renderQuizStep();
         return;
       }
-      const resultKey = Object.entries(quizState.scores)
-        .sort((left, right) => right[1] - left[1])[0][0];
-      writeJson(QUIZ_KEY, { profile: resultKey, completedAt: Date.now() });
+      const resultKey = Object.entries(quizState.scores).sort((left, right) => right[1] - left[1])[0][0];
+      writeJson(KEYS.quiz, { profile: resultKey, completedAt: Date.now() });
       showQuizResult(resultKey);
     });
 
     q('[data-quiz-restart]')?.addEventListener('click', () => {
-      removeStored(QUIZ_KEY);
+      removeStored(KEYS.quiz);
       setStatus('resonance', 'Scan pending', false);
       restartQuiz();
     });
   }
 
   function localDateKey(date = new Date()) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-
-  function renderMission(video) {
-    const today = new Date();
-    const dateKey = localDateKey(today);
-    const dateLabel = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(today);
-    const image = q('[data-mission-image]');
-    if (image) {
-      image.dataset.fallback = 'false';
-      image.src = `https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`;
-      image.alt = `${video.title} official music video thumbnail`;
-      image.onerror = () => {
-        if (image.dataset.fallback === 'true') return;
-        image.dataset.fallback = 'true';
-        image.onerror = null;
-        image.src = `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`;
-      };
-    }
-    if (q('[data-mission-date]')) q('[data-mission-date]').textContent = dateLabel;
-    if (q('[data-mission-title]')) q('[data-mission-title]').textContent = video.title;
-    if (q('[data-mission-meta]')) q('[data-mission-meta]').textContent = `${video.type || 'Music video'} · ${video.date || video.era || 'Official archive'}`;
-    if (q('[data-mission-prompt]')) q('[data-mission-prompt]').textContent = MISSION_PROMPTS[hashString(`${dateKey}:prompt`) % MISSION_PROMPTS.length];
-    const link = q('[data-mission-link]');
-    if (link) link.href = `https://www.youtube.com/watch?v=${video.id}`;
-    updateMissionButton();
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
   }
 
   function missionCompleted() {
-    const completed = readJson(MISSION_KEY, {});
-    return Boolean(completed[localDateKey()]);
+    return Boolean(readJson(KEYS.missions, {})[localDateKey()]);
   }
 
   function updateMissionButton() {
@@ -399,6 +350,29 @@
     setStatus('mission', complete ? 'Completed today' : 'Mission active', complete);
   }
 
+  function renderMission(video) {
+    const today = new Date();
+    const dateKey = localDateKey(today);
+    const image = q('[data-mission-image]');
+    if (image) {
+      image.dataset.fallback = 'false';
+      image.src = `https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`;
+      image.alt = `${video.title} official music video thumbnail`;
+      image.onerror = () => {
+        if (image.dataset.fallback === 'true') return;
+        image.dataset.fallback = 'true';
+        image.onerror = null;
+        image.src = `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`;
+      };
+    }
+    if (q('[data-mission-date]')) q('[data-mission-date]').textContent = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(today);
+    if (q('[data-mission-title]')) q('[data-mission-title]').textContent = video.title;
+    if (q('[data-mission-meta]')) q('[data-mission-meta]').textContent = `${video.type || 'Music video'} · ${video.date || video.era || 'Official archive'}`;
+    if (q('[data-mission-prompt]')) q('[data-mission-prompt]').textContent = MISSION_PROMPTS[hashString(`${dateKey}:prompt`) % MISSION_PROMPTS.length];
+    if (q('[data-mission-link]')) q('[data-mission-link]').href = `https://www.youtube.com/watch?v=${video.id}`;
+    updateMissionButton();
+  }
+
   function setupMission() {
     const today = localDateKey();
     fetch('/api/videos', { headers: { accept: 'application/json' } })
@@ -407,45 +381,44 @@
         return response.json();
       })
       .then((payload) => {
-        const videos = Array.isArray(payload.videos)
+        const liveVideos = Array.isArray(payload.videos)
           ? payload.videos.filter((video) => Array.isArray(video.categories) && video.categories.includes('music-video'))
           : [];
-        const catalog = videos.length ? videos : FALLBACK_VIDEOS;
+        const catalog = liveVideos.length ? liveVideos : FALLBACK_VIDEOS;
         renderMission(catalog[hashString(today) % catalog.length]);
       })
-      .catch(() => {
-        renderMission(FALLBACK_VIDEOS[hashString(today) % FALLBACK_VIDEOS.length]);
-      });
+      .catch(() => renderMission(FALLBACK_VIDEOS[hashString(today) % FALLBACK_VIDEOS.length]));
 
     q('[data-mission-complete]')?.addEventListener('click', () => {
-      const completed = readJson(MISSION_KEY, {});
+      const completed = readJson(KEYS.missions, {});
       const key = localDateKey();
       if (completed[key]) delete completed[key];
       else completed[key] = Date.now();
-      writeJson(MISSION_KEY, completed);
+      writeJson(KEYS.missions, completed);
       updateMissionButton();
     });
   }
 
   function signalDate(timestamp) {
-    return new Intl.DateTimeFormat('en-US', {
-      month: 'short',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit'
-    }).format(new Date(timestamp));
+    return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).format(new Date(timestamp));
   }
 
   function renderSignals() {
     const feed = q('[data-local-signal-feed]');
-    const empty = q('[data-local-signal-empty]');
     if (!feed) return;
-    const signals = readJson(SIGNALS_KEY, []);
+    const signals = readJson(KEYS.signals, []);
     feed.replaceChildren();
+
+    if (!signals.length) {
+      const empty = document.createElement('p');
+      empty.className = 'dive-signal-empty';
+      empty.textContent = 'Your private signal log is empty.';
+      feed.append(empty);
+    }
+
     signals.forEach((signal) => {
       const card = document.createElement('article');
       card.className = 'dive-signal-card';
-      card.dataset.signalId = signal.id;
       const copy = document.createElement('div');
       const meta = document.createElement('span');
       meta.className = 'dive-signal-meta';
@@ -462,7 +435,7 @@
       card.append(copy, remove);
       feed.append(card);
     });
-    if (empty) empty.hidden = signals.length > 0;
+
     setStatus('signals', signals.length ? `${signals.length} saved` : 'Log empty', signals.length > 0);
   }
 
@@ -482,15 +455,14 @@
         message?.focus();
         return;
       }
-      const mood = q('[data-signal-mood]')?.value || 'Open signal';
-      const signals = readJson(SIGNALS_KEY, []);
+      const signals = readJson(KEYS.signals, []);
       signals.unshift({
         id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
         message: text,
-        mood,
+        mood: q('[data-signal-mood]')?.value || 'Open signal',
         createdAt: Date.now()
       });
-      writeJson(SIGNALS_KEY, signals.slice(0, 12));
+      writeJson(KEYS.signals, signals.slice(0, 12));
       if (message) message.value = '';
       updateCount();
       renderSignals();
@@ -499,13 +471,12 @@
     q('[data-local-signal-feed]')?.addEventListener('click', (event) => {
       const button = event.target.closest('[data-delete-signal]');
       if (!button) return;
-      const signals = readJson(SIGNALS_KEY, []).filter((signal) => signal.id !== button.dataset.deleteSignal);
-      writeJson(SIGNALS_KEY, signals);
+      writeJson(KEYS.signals, readJson(KEYS.signals, []).filter((signal) => signal.id !== button.dataset.deleteSignal));
       renderSignals();
     });
 
     q('[data-clear-signals]')?.addEventListener('click', () => {
-      removeStored(SIGNALS_KEY);
+      removeStored(KEYS.signals);
       renderSignals();
     });
 
