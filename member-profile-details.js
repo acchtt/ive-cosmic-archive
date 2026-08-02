@@ -31,16 +31,9 @@
         button.appendChild(fullName);
       }
 
-      let instagram = button.querySelector('.dossier-instagram');
-      if (!instagram) {
-        instagram = document.createElement('span');
-        instagram.className = 'dossier-instagram';
-        button.appendChild(instagram);
-      }
-
+      button.querySelector('.dossier-instagram')?.remove();
       fullName.textContent = fullIdentity(identity);
-      instagram.textContent = `@${identity.instagram}`;
-      button.setAttribute('aria-label', `${identity.stage}, ${fullIdentity(identity)}, Instagram @${identity.instagram}`);
+      button.setAttribute('aria-label', `${identity.stage}, ${fullIdentity(identity)}`);
     });
   }
 
@@ -88,8 +81,18 @@
 
     if (instagramLink) {
       instagramLink.href = instagramUrl(identity.instagram);
-      instagramLink.textContent = `Instagram · @${identity.instagram} ↗`;
+      instagramLink.innerHTML = `
+        <span class="profile-instagram-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img">
+            <rect x="3.3" y="3.3" width="17.4" height="17.4" rx="5.1"></rect>
+            <circle cx="12" cy="12" r="4.05"></circle>
+            <circle class="instagram-icon-dot" cx="17.2" cy="6.8" r="1.15"></circle>
+          </svg>
+        </span>
+        <span class="profile-instagram-handle">@${identity.instagram}</span>
+        <span class="profile-instagram-arrow" aria-hidden="true">↗</span>`;
       instagramLink.setAttribute('aria-label', `Open ${identity.stage} on Instagram, @${identity.instagram}`);
+      instagramLink.setAttribute('title', `@${identity.instagram}`);
     }
   }
 
