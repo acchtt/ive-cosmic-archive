@@ -20,25 +20,33 @@
 
 .admin-form-fields {
   min-height: 0;
-  display: flex;
+  display: grid;
+  grid-auto-flow: row;
+  grid-auto-rows: max-content;
   flex: 1 1 auto;
-  flex-direction: column;
-  align-items: stretch;
   gap: 18px;
   padding-right: 8px;
   overflow-y: auto;
+  overflow-x: hidden;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
 }
 
 .admin-form-fields > * {
   min-width: 0;
-  flex: 0 0 auto;
+  position: relative;
 }
 
 .admin-form-fields .admin-preview {
   width: 100%;
-  min-height: 220px;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+}
+
+.admin-form-fields label,
+.admin-form-fields .admin-form-grid,
+.admin-form-fields .admin-check {
+  align-self: stretch;
 }
 
 .admin-form-actions {
@@ -147,8 +155,12 @@
     max-height: calc(100svh - 16px);
   }
 
+  .admin-form-fields {
+    gap: 16px;
+  }
+
   .admin-form-fields .admin-preview {
-    min-height: 190px;
+    aspect-ratio: 16 / 10;
   }
 
   .admin-catalog-tools {
