@@ -1,4 +1,53 @@
 (() => {
+  function upgradeYouTubeThumbnail(image, index = 0) {
+    if (!(image instanceof HTMLImageElement) || image.dataset.highResolution === 'true') return;
+
+    const source = image.currentSrc || image.src || '';
+    const match = source.match(/\/vi\/([^/]+)\/(?:mqdefault|hqdefault|maxresdefault)\.jpg(?:\?.*)?$/u);
+    if (!match) return;
+
+    const videoId = match[1];
+    const highResolution = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+    const fallback = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+    const inRail = Boolean(image.closest('[data-media-latest]'));
+
+    image.dataset.highResolution = 'true';
+    image.decoding = 'async';
+    if (inRail && index < 6) {
+      image.loading = 'eager';
+      image.fetchPriority = 'high';
+    } else {
+      image.loading = image.loading || 'lazy';
+      image.fetchPriority = inRail ? 'auto' : 'low';
+    }
+
+    image.onerror = () => {
+      if (image.dataset.thumbnailFallback === 'true') return;
+      image.dataset.thumbnailFallback = 'true';
+      image.onerror = null;
+      image.src = fallback;
+    };
+
+    if (source !== highResolution) image.src = highResolution;
+  }
+
+  function upgradeThumbnailScope(scope) {
+    const images = scope instanceof HTMLImageElement
+      ? [scope]
+      : [...(scope?.querySelectorAll?.('img') || [])];
+    images.forEach((image, index) => upgradeYouTubeThumbnail(image, index));
+  }
+
+  upgradeThumbnailScope(document);
+  const thumbnailObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node instanceof Element) upgradeThumbnailScope(node);
+      });
+    });
+  });
+  if (document.body) thumbnailObserver.observe(document.body, { childList: true, subtree: true });
+
   const rail = document.querySelector('[data-media-latest]');
   if (!rail || !('PointerEvent' in window)) return;
 
