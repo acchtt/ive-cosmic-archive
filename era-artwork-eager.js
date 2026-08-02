@@ -32,7 +32,7 @@
   }
 
   function artworkUrl(url) {
-    return url?.replace('100x100bb', `${ARTWORK_SIZE}x${ARTWORK_SIZE}bb`);
+    return url?.replace(/\d+x\d+bb/u, `${ARTWORK_SIZE}x${ARTWORK_SIZE}bb`);
   }
 
   function warmImage(src) {
@@ -43,10 +43,43 @@
     image.src = src;
   }
 
+  function upgradeRenderedCover(image) {
+    if (!(image instanceof HTMLImageElement) || !image.matches('.disco-cover')) return;
+    const upgraded = artworkUrl(image.src);
+    if (!upgraded || upgraded === image.src) return;
+    image.loading = 'eager';
+    image.decoding = 'async';
+    image.fetchPriority = 'high';
+    image.src = upgraded;
+  }
+
+  const coverObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes') {
+        upgradeRenderedCover(mutation.target);
+        return;
+      }
+      mutation.addedNodes.forEach((node) => {
+        if (!(node instanceof Element)) return;
+        if (node.matches('.disco-cover')) upgradeRenderedCover(node);
+        node.querySelectorAll?.('.disco-cover').forEach(upgradeRenderedCover);
+      });
+    });
+  });
+  if (document.body) {
+    coverObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['src']
+    });
+  }
+
   async function resolveArtwork(release, cache) {
     const cached = cache[release.title];
     if (cached?.artwork) {
       cached.artwork = artworkUrl(cached.artwork);
+      writeCache(cache);
       warmImage(cached.artwork);
       return;
     }
