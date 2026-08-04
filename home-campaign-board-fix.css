@@ -128,9 +128,16 @@ html[data-page="index"] .campaign-sticker-us {
   transform-origin: center;
 }
 
-/* Keep Wonyoung centered in the BANGERS crop and mask the thumbnail mark. */
+/* Keep Wonyoung centered in the BANGERS crop, slightly closer to the top. */
 html[data-page="index"] .concept-bangers img {
   object-position: 76% 42%;
+  transform: scale(1.07) translateY(-3%);
+  transform-origin: center top;
+}
+
+html[data-page="index"] .concept-bangers:hover img,
+html[data-page="index"] .concept-bangers:focus-within img {
+  transform: scale(1.11) translateY(-3%);
 }
 
 html[data-page="index"] .concept-bangers::after {
@@ -139,7 +146,7 @@ html[data-page="index"] .concept-bangers::after {
     linear-gradient(90deg, rgba(8, 5, 9, .2), transparent 68%);
 }
 
-/* Show the complete BLACKHOLE lineup over a full-height cinematic backdrop. */
+/* Show the BLACKHOLE lineup over a full-height cinematic backdrop. */
 html[data-page="index"] .concept-blackhole {
   isolation: isolate;
   background: #08070a;
@@ -160,21 +167,21 @@ html[data-page="index"] .concept-blackhole::before {
 
 html[data-page="index"] .concept-blackhole img {
   z-index: 1;
-  inset: 12px 0 auto;
+  inset: 8px 0 auto;
   width: 100%;
-  height: 49%;
+  height: 52%;
   object-fit: contain;
   object-position: center;
   background: transparent;
   filter: saturate(.9) contrast(1.03) brightness(.76);
-  transform: scale(1.08);
+  transform: scale(1.16);
   transform-origin: center top;
 }
 
 html[data-page="index"] .concept-blackhole:hover img,
 html[data-page="index"] .concept-blackhole:focus-within img {
   filter: saturate(.96) contrast(1.03) brightness(.82);
-  transform: scale(1.11);
+  transform: scale(1.2);
 }
 
 html[data-page="index"] .concept-blackhole::after {
@@ -266,17 +273,23 @@ html[data-page="index"] .concept-blackhole::after {
 
   html[data-page="index"] .concept-bangers img {
     object-position: 76% 42%;
+    transform: scale(1.06) translateY(-2.5%);
+  }
+
+  html[data-page="index"] .concept-bangers:hover img,
+  html[data-page="index"] .concept-bangers:focus-within img {
+    transform: scale(1.1) translateY(-2.5%);
   }
 
   html[data-page="index"] .concept-blackhole img {
-    inset: 10px 0 auto;
-    height: 47%;
-    transform: scale(1.07);
+    inset: 6px 0 auto;
+    height: 50%;
+    transform: scale(1.14);
   }
 
   html[data-page="index"] .concept-blackhole:hover img,
   html[data-page="index"] .concept-blackhole:focus-within img {
-    transform: scale(1.1);
+    transform: scale(1.18);
   }
 }
 
@@ -320,16 +333,22 @@ html[data-page="index"] .concept-blackhole::after {
 
   html[data-page="index"] .concept-bangers img {
     object-position: 74% 42%;
+    transform: scale(1.05) translateY(-2%);
+  }
+
+  html[data-page="index"] .concept-bangers:hover img,
+  html[data-page="index"] .concept-bangers:focus-within img {
+    transform: scale(1.08) translateY(-2%);
   }
 
   html[data-page="index"] .concept-blackhole img {
-    inset: 8px 0 auto;
-    height: 45%;
-    transform: scale(1.06);
+    inset: 5px 0 auto;
+    height: 48%;
+    transform: scale(1.12);
   }
 
   html[data-page="index"] .concept-blackhole:hover img,
   html[data-page="index"] .concept-blackhole:focus-within img {
-    transform: scale(1.08);
+    transform: scale(1.15);
   }
 }
