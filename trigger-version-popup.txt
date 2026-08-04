@@ -1,1 +1,2 @@
 Trigger the registered workflow that converts the REVIVE+ edition selector into a bottom popup.
+Retry after fixing the workflow extractor.
