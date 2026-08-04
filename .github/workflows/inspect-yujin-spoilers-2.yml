@@ -43,29 +43,37 @@ jobs:
           out.mkdir(exist_ok=True)
           headers = {'User-Agent': 'Mozilla/5.0', 'Referer': 'https://pantip.com/'}
           files = []
-          for index, url in enumerate(urls, 1):
-              request = urllib.request.Request(url, headers=headers)
-              with urllib.request.urlopen(request, timeout=60) as response:
-                  data = response.read()
-              target = out / f'{index:02d}.jpg'
-              target.write_bytes(data)
-              files.append(target)
-              print(index, len(data), url)
-              time.sleep(.15)
+          for source_index, url in enumerate(urls, 1):
+              try:
+                  request = urllib.request.Request(url, headers=headers)
+                  with urllib.request.urlopen(request, timeout=60) as response:
+                      data = response.read()
+                  if len(data) < 20000:
+                      raise RuntimeError(f'image too small: {len(data)} bytes')
+                  target = out / f'{source_index:02d}.jpg'
+                  target.write_bytes(data)
+                  files.append((source_index, target))
+                  print('downloaded', source_index, len(data), url)
+              except Exception as exc:
+                  print('skipped', source_index, url, exc)
+              time.sleep(.2)
+
+          if not files:
+              raise RuntimeError('No candidate images downloaded')
 
           thumb_w, thumb_h = 300, 420
           cols = 5
           rows = (len(files) + cols - 1) // cols
           sheet = Image.new('RGB', (cols * thumb_w, rows * (thumb_h + 34)), 'white')
           draw = ImageDraw.Draw(sheet)
-          for index, path in enumerate(files, 1):
+          for tile_index, (source_index, path) in enumerate(files):
               image = Image.open(path).convert('RGB')
               tile = ImageOps.fit(image, (thumb_w, thumb_h), method=Image.Resampling.LANCZOS)
-              x = ((index - 1) % cols) * thumb_w
-              y = ((index - 1) // cols) * (thumb_h + 34)
+              x = (tile_index % cols) * thumb_w
+              y = (tile_index // cols) * (thumb_h + 34)
               sheet.paste(tile, (x, y))
               draw.rectangle((x, y + thumb_h, x + thumb_w, y + thumb_h + 34), fill='white')
-              draw.text((x + 12, y + thumb_h + 8), f'YUJIN {index:02d}', fill='black')
+              draw.text((x + 12, y + thumb_h + 8), f'YUJIN {source_index:02d}', fill='black')
           sheet.save(out / 'contact-sheet.jpg', quality=90)
           PY
       - uses: actions/upload-artifact@v4
