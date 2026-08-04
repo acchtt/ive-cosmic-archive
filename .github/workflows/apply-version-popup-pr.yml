@@ -22,13 +22,15 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import re
-          import textwrap
 
           workflow = Path('.github/workflows/apply-version-popup.yml').read_text(encoding='utf-8')
           match = re.search(r"python3 - <<'PY'\n([\s\S]*?)\n          PY", workflow)
           if not match:
               raise RuntimeError('Could not locate popup patch in registered workflow')
-          script = textwrap.dedent(match.group(1))
+          script = '\n'.join(
+              line[10:] if line.startswith('          ') else line
+              for line in match.group(1).splitlines()
+          )
           exec(compile(script, 'apply-version-popup.yml', 'exec'))
           PY
 
