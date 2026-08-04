@@ -1,1 +1,2 @@
 Trigger the temporary pull-request workflow that applies the production preload and atomic theme-switch fix.
+Retrigger after the workflow became available on the default branch.
