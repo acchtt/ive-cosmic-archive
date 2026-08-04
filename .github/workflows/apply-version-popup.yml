@@ -114,7 +114,7 @@ jobs:
       if (!button || !SETS[button.dataset.memberSet]) return;
       setActiveSet(button.dataset.memberSet);
       setSwitcherOpen(switcher, false);
-      toggle?.focus();
+      switcher.querySelector('[data-member-set-toggle]')?.focus();
     });
 
     document.addEventListener('pointerdown', (event) => {
@@ -404,3 +404,5 @@ jobs:
           git add revive-member-sets.js revive-member-sets.css index.html members.html eras.html media.html
           git commit -m "Move REVIVE+ selector into a bottom popup"
           git push origin main
+
+# Trigger popup application
