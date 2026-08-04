@@ -4,35 +4,23 @@
 
 /*
    Homepage card fit strategy:
-   - the element background supplies a soft edge-to-edge backdrop
-   - ::before renders the complete source image with contain, preventing crop/zoom
-   - ::after preserves the existing text-legibility gradient
+   - render each portrait exactly once
+   - use cover to fill the card without a second enlarged copy behind it
+   - preserve the existing text-legibility gradient as the only overlay
 */
 .member-card .member-art {
   background-color: #090710;
-  background-image:
-    linear-gradient(rgba(5, 4, 10, .54), rgba(5, 4, 10, .54)),
-    var(--member-portrait);
+  background-image: var(--member-portrait);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   filter: saturate(.96) contrast(1.03);
   isolation: isolate;
 }
 
 .member-card .member-art::before {
-  content: "";
-  display: block;
-  position: absolute;
-  inset: 0;
-  width: auto;
-  height: auto;
-  aspect-ratio: auto;
-  transform: none;
-  border-radius: 0;
-  background: var(--member-portrait) center / contain no-repeat;
-  box-shadow: none;
-  z-index: 1;
+  content: none;
+  display: none;
 }
 
 .member-card .member-art::after {
