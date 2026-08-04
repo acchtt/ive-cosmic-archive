@@ -33,44 +33,46 @@ jobs:
 
           SOURCES = {
               "challengers": {
-                  "gaeul": "https://i.imgur.com/U9c80gv.jpg",
-                  "yujin": "https://i.imgur.com/ZVnaaYc.jpg",
-                  "rei": "https://i.imgur.com/V5MRKib.jpg",
-                  "wonyoung": "https://i.imgur.com/fk5Pt1u.jpg",
-                  "liz": "https://i.imgur.com/j6WvOG4.jpg",
-                  "leeseo": "https://i.imgur.com/6o4i2dg.jpg",
+                  "gaeul": "https://imgur.com/U9c80gv.jpg",
+                  "yujin": "https://imgur.com/ZVnaaYc.jpg",
+                  "rei": "https://imgur.com/V5MRKib.jpg",
+                  "wonyoung": "https://imgur.com/fk5Pt1u.jpg",
+                  "liz": "https://imgur.com/j6WvOG4.jpg",
+                  "leeseo": "https://imgur.com/6o4i2dg.jpg",
               },
               "spoilers": {
-                  "gaeul": "https://i.imgur.com/07h20N1.jpg",
-                  "yujin": "https://i.imgur.com/C9eiRHl.jpg",
-                  "rei": "https://i.imgur.com/QzkZue5.jpg",
-                  "wonyoung": "https://i.imgur.com/7um9Vbl.jpg",
-                  "liz": "https://i.imgur.com/gRgyYBN.jpg",
-                  "leeseo": "https://i.imgur.com/qZgZL3X.jpg",
+                  "gaeul": "https://imgur.com/07h20N1.jpg",
+                  "yujin": "https://imgur.com/C9eiRHl.jpg",
+                  "rei": "https://imgur.com/QzkZue5.jpg",
+                  "wonyoung": "https://imgur.com/7um9Vbl.jpg",
+                  "liz": "https://imgur.com/gRgyYBN.jpg",
+                  "leeseo": "https://imgur.com/qZgZL3X.jpg",
               },
           }
 
           HEADERS = {
               "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36",
               "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-              "Referer": "https://www.ptt.cc/",
+              "Referer": "https://www.reddit.com/",
           }
 
           def download(url: str) -> bytes:
+              candidates = [url, url.replace("https://imgur.com/", "https://i.imgur.com/")]
               errors = []
-              for attempt in range(1, 5):
-                  try:
-                      request = urllib.request.Request(url, headers=HEADERS)
-                      with urllib.request.urlopen(request, timeout=60) as response:
-                          data = response.read()
-                      if len(data) < 20_000:
-                          raise RuntimeError(f"payload too small: {len(data)} bytes")
-                      if not data.startswith(b"\xff\xd8\xff"):
-                          raise RuntimeError("payload is not JPEG")
-                      return data
-                  except Exception as exc:
-                      errors.append(f"attempt {attempt}: {exc}")
-                      time.sleep(attempt * 2)
+              for candidate in candidates:
+                  for attempt in range(1, 5):
+                      try:
+                          request = urllib.request.Request(candidate, headers=HEADERS)
+                          with urllib.request.urlopen(request, timeout=60) as response:
+                              data = response.read()
+                          if len(data) < 20_000:
+                              raise RuntimeError(f"payload too small: {len(data)} bytes")
+                          if not data.startswith(b"\xff\xd8\xff"):
+                              raise RuntimeError("payload is not JPEG")
+                          return data
+                      except Exception as exc:
+                          errors.append(f"{candidate} attempt {attempt}: {exc}")
+                          time.sleep(attempt * 2)
               raise RuntimeError(f"Failed to download {url}: {'; '.join(errors)}")
 
           manifest_path = Path("assets/revive/member-cards/manifest.json")
