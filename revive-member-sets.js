@@ -22,36 +22,36 @@
       label: 'CHALLENGERS',
       description: 'Sharper silhouettes and a confident competitive coordinate.',
       portraits: [
-        'https://i.redd.it/9pbetg8u3wgg1.jpg',
-        'https://i.redd.it/sl3c9mxfjahg1.jpg',
-        'https://i.redd.it/cmr7ai8u3wgg1.jpg',
-        'https://i.redd.it/aaiju3fdeahg1.jpg',
-        'https://i.redd.it/vznhvh8u3wgg1.jpg',
-        'https://i.redd.it/g12qli8u3wgg1.jpg'
+        'https://preview.redd.it/260201-ive-the-2nd-album-revive-concept-photo-1-gaeul-rei-v0-9pbetg8u3wgg1.jpg?auto=webp&crop=smart&s=261987b04f07d9e67a6e085dffceb56f0bce13f8&width=640',
+        'https://preview.redd.it/260203-ive-the-2nd-album-revive-concept-photo-2-yujin-gaeul-v0-sl3c9mxfjahg1.jpg?auto=webp&crop=smart&s=091ebbebb1b4169b927c1a90ed4863413587278b&width=640',
+        'https://preview.redd.it/260201-ive-the-2nd-album-revive-concept-photo-1-gaeul-rei-v0-cmr7ai8u3wgg1.jpg?auto=webp&crop=smart&s=24038a8a9426913116d065c2197d1c9e62271ad8&width=640',
+        'https://preview.redd.it/260203-ive-the-2nd-album-revive-concept-photo-2-wonyoung-v0-aaiju3fdeahg1.jpg?auto=webp&crop=smart&s=e75ae8520946d7405e4ff06f49cb876f07623d51&width=640',
+        'https://preview.redd.it/260201-ive-the-2nd-album-revive-concept-photo-1-gaeul-rei-v0-vznhvh8u3wgg1.jpg?auto=webp&crop=smart&s=cf0f095e3cf415934d5371852186074e50158389&width=640',
+        'https://preview.redd.it/260201-ive-the-2nd-album-revive-concept-photo-1-gaeul-rei-v0-g12qli8u3wgg1.jpg?auto=webp&crop=smart&s=42282195c9321f4e094df619abb79ab30b40defb&width=640'
       ]
     },
     spoilers: {
       label: 'SPOILERS',
       description: 'Lavender press-room styling with polished editorial tension.',
       portraits: [
-        'https://i.redd.it/z0aaaboklifg1.jpg',
-        'https://i.redd.it/bo3j99sklifg1.jpg',
-        'https://i.redd.it/tnyksxtklifg1.jpg',
-        'https://i.redd.it/uy5csgvklifg1.jpg',
-        'https://i.redd.it/s5hrsixklifg1.jpg',
-        'https://i.redd.it/aatv6czklifg1.jpg'
+        'https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-z0aaaboklifg1.jpg?auto=webp&crop=smart&s=9f4bd76d7e4fe49ae05c9ebd1cd4545ddace0a4d&width=640',
+        'https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-bo3j99sklifg1.jpg?auto=webp&crop=smart&s=81790309817a735ff4754bb8a5e064ac1f99b769&width=640',
+        'https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-tnyksxtklifg1.jpg?auto=webp&crop=smart&s=e66bddba6c850953253b4257fd0d27bc4ce70d98&width=640',
+        'https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-uy5csgvklifg1.jpg?auto=webp&crop=smart&s=f08d98cf87b0b75d6ca3b64bc99f2345e622da5b&width=640',
+        'https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-s5hrsixklifg1.jpg?auto=webp&crop=smart&s=64e99c20ea1b730a46f7d7b3c26f9dc1169365d3&width=640',
+        'https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-aatv6czklifg1.jpg?auto=webp&crop=smart&s=eb90de34790e775126cab930539799168c81fb0a&width=640'
       ]
     },
     'loved-ive': {
       label: 'LOVED IVE',
       description: 'A softer graduation-inspired set built around warmth and connection.',
       portraits: [
-        'https://i.redd.it/ixebybt9c2lg1.jpg',
-        'https://i.redd.it/kaphjbnac2lg1.jpg',
-        'https://i.redd.it/gi5cnonac2lg1.jpg',
-        'https://i.redd.it/e1w72gsac2lg1.jpg',
-        'https://i.redd.it/jxkapl0bc2lg1.jpg',
-        'https://i.redd.it/fjg2cr2bc2lg1.jpg'
+        'https://preview.redd.it/ive-the-2nd-album-revive-graduation-concept-photos-v0-ixebybt9c2lg1.jpg?auto=webp&crop=smart&s=e6f9d55ee1353bd1f730fbf892249ba5e0901576&width=640',
+        'https://preview.redd.it/ive-the-2nd-album-revive-graduation-concept-photos-v0-kaphjbnac2lg1.jpg?auto=webp&crop=smart&s=38cf38601f51ee45a6b8aef7078c38bfe8adac8f&width=640',
+        'https://preview.redd.it/ive-the-2nd-album-revive-graduation-concept-photos-v0-gi5cnonac2lg1.jpg?auto=webp&crop=smart&s=fee771799979dd5e7d5abdf3631423ff36c8508e&width=640',
+        'https://preview.redd.it/ive-the-2nd-album-revive-graduation-concept-photos-v0-e1w72gsac2lg1.jpg?auto=webp&crop=smart&s=a96bc42b14b1a34a8001e54f26e355e7f53a2319&width=640',
+        'https://preview.redd.it/ive-the-2nd-album-revive-graduation-concept-photos-v0-jxkapl0bc2lg1.jpg?auto=webp&crop=smart&s=bf98804257f311ca40be595b9e982a3f5539c755&width=640',
+        'https://preview.redd.it/ive-the-2nd-album-revive-graduation-concept-photos-v0-fjg2cr2bc2lg1.jpg?auto=webp&crop=smart&s=c8d379aeb2085e50ba54538a62bc24d147aaa82d&width=640'
       ]
     }
   };
