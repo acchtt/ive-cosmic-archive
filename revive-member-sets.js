@@ -104,13 +104,16 @@
     const existing = document.querySelector('[data-member-set-switcher]');
     if (existing) return existing;
 
+    const main = document.querySelector('main');
     const grid = document.querySelector('[data-member-grid]');
     const dossierLayout = document.querySelector('.dossier-layout');
-    const anchor = grid || dossierLayout;
+    const anchor = main || grid || dossierLayout;
     if (!anchor) return null;
 
     const switcher = document.createElement('div');
-    switcher.className = 'member-set-switcher reveal visible';
+    switcher.className = 'member-set-switcher member-set-switcher-top section-shell reveal visible';
+    switcher.style.margin = '18px auto 0';
+    switcher.style.width = 'min(calc(100% - 40px), var(--max))';
     switcher.dataset.memberSetSwitcher = '';
     switcher.innerHTML = `
       <div class="member-set-switcher-copy">
@@ -125,7 +128,9 @@
       </div>
       <p data-member-set-description>${SETS[activeSetId].description}</p>`;
 
-    anchor.insertAdjacentElement('beforebegin', switcher);
+    if (main) main.insertAdjacentElement('beforebegin', switcher);
+    else anchor.insertAdjacentElement('beforebegin', switcher);
+
     switcher.addEventListener('click', (event) => {
       const button = event.target.closest('[data-member-set]');
       if (!button || !SETS[button.dataset.memberSet]) return;
