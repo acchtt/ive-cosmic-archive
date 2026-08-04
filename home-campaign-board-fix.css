@@ -2,26 +2,85 @@ html[data-page="index"] .campaign-board {
   isolation: isolate;
 }
 
+/*
+ * Keep the six portraits narrow enough to leave intentional negative space for
+ * the campaign stickers. This prevents decorations from being clipped behind
+ * the photos or covering the member labels.
+ */
 html[data-page="index"] .campaign-grid {
   z-index: 3;
-  padding: 62px 34px 34px;
+  display: block;
+  padding: 0;
 }
 
 html[data-page="index"] .campaign-photo {
+  position: absolute;
   z-index: 3;
   min-width: 0;
+  box-sizing: border-box;
+}
+
+html[data-page="index"] .campaign-photo:nth-child(1) {
+  left: 12%;
+  top: 10.5%;
+  width: 17%;
+  height: 39%;
+  transform: rotate(-1.5deg);
+}
+
+html[data-page="index"] .campaign-photo:nth-child(2) {
+  left: 41%;
+  top: 10%;
+  width: 17%;
+  height: 33%;
+  transform: rotate(1deg);
+}
+
+html[data-page="index"] .campaign-photo:nth-child(3) {
+  left: 65.5%;
+  top: 10.5%;
+  width: 17%;
+  height: 39%;
+  transform: rotate(-.8deg);
+}
+
+html[data-page="index"] .campaign-photo:nth-child(4) {
+  left: 12.5%;
+  top: 55%;
+  width: 17%;
+  height: 36%;
+  transform: rotate(1deg);
+}
+
+html[data-page="index"] .campaign-photo:nth-child(5) {
+  left: 41%;
+  top: 48%;
+  width: 17%;
+  height: 43%;
+  transform: rotate(-.8deg);
+}
+
+html[data-page="index"] .campaign-photo:nth-child(6) {
+  left: 65.5%;
+  top: 55%;
+  width: 17%;
+  height: 36%;
+  transform: rotate(1.2deg);
 }
 
 html[data-page="index"] .campaign-photo figcaption {
   z-index: 6;
-  left: 9px;
+  left: 7px;
   right: auto;
-  bottom: 9px;
-  max-width: calc(100% - 18px);
+  bottom: 7px;
+  max-width: calc(100% - 14px);
   overflow: hidden;
+  padding: 5px 6px;
   border: 1px solid rgba(20, 9, 17, .11);
   box-shadow: 0 5px 14px rgba(45, 17, 37, .14);
-  text-overflow: ellipsis;
+  font-size: clamp(.4rem, .62vw, .5rem);
+  letter-spacing: .07em;
+  text-overflow: clip;
   white-space: nowrap;
 }
 
@@ -35,16 +94,18 @@ html[data-page="index"] .campaign-board::after {
 
 html[data-page="index"] .campaign-chrome-ring {
   z-index: 1;
-  right: 19%;
-  top: 38%;
-  width: 150px;
-  height: 150px;
-  border-width: 11px;
+  left: 51.5%;
+  right: auto;
+  top: 42%;
+  width: clamp(104px, 10vw, 142px);
+  height: clamp(104px, 10vw, 142px);
+  border-width: 10px;
   opacity: .34;
   box-shadow:
     inset 0 0 0 2px rgba(15, 7, 13, .1),
     0 0 0 2px rgba(15, 7, 13, .08),
     0 14px 26px rgba(46, 17, 37, .1);
+  transform: translateX(-50%);
 }
 
 html[data-page="index"] .campaign-sticker {
@@ -54,36 +115,47 @@ html[data-page="index"] .campaign-sticker {
 
 html[data-page="index"] .campaign-sticker-power {
   right: 1.5%;
-  top: 42%;
-  width: 112px;
-  padding: 16px;
-  font-size: .62rem;
+  top: 43.5%;
+  width: clamp(72px, 6.2vw, 88px);
+  padding: 13px;
+  font-size: clamp(.46rem, .52vw, .58rem);
   transform: rotate(8deg);
 }
 
 html[data-page="index"] .campaign-sticker-us {
-  left: 2.5%;
-  bottom: 2.5%;
+  left: 3%;
+  bottom: 2.4%;
   padding: 9px 13px;
-  font-size: .56rem;
+  font-size: clamp(.48rem, .54vw, .56rem);
   transform: rotate(-4deg);
 }
 
 @media (max-width: 1180px) {
-  html[data-page="index"] .campaign-grid {
-    padding-inline: 30px;
+  html[data-page="index"] .campaign-photo:nth-child(1),
+  html[data-page="index"] .campaign-photo:nth-child(4) {
+    left: 10.5%;
+    width: 18%;
+  }
+
+  html[data-page="index"] .campaign-photo:nth-child(2),
+  html[data-page="index"] .campaign-photo:nth-child(5) {
+    left: 40.5%;
+    width: 18%;
+  }
+
+  html[data-page="index"] .campaign-photo:nth-child(3),
+  html[data-page="index"] .campaign-photo:nth-child(6) {
+    left: 65%;
+    width: 18%;
   }
 
   html[data-page="index"] .campaign-sticker-power {
     right: 1%;
-    width: 98px;
-    font-size: .56rem;
   }
 
   html[data-page="index"] .campaign-chrome-ring {
-    right: 18%;
-    width: 132px;
-    height: 132px;
+    width: 118px;
+    height: 118px;
   }
 }
 
@@ -92,54 +164,85 @@ html[data-page="index"] .campaign-sticker-us {
     min-height: 680px;
   }
 
-  html[data-page="index"] .campaign-grid {
-    padding: 62px 30px 38px;
-    gap: 12px;
+  html[data-page="index"] .campaign-photo:nth-child(1),
+  html[data-page="index"] .campaign-photo:nth-child(4) {
+    left: 10%;
+    width: 18.5%;
+  }
+
+  html[data-page="index"] .campaign-photo:nth-child(2),
+  html[data-page="index"] .campaign-photo:nth-child(5) {
+    left: 40.5%;
+    width: 18.5%;
+  }
+
+  html[data-page="index"] .campaign-photo:nth-child(3),
+  html[data-page="index"] .campaign-photo:nth-child(6) {
+    left: 64.5%;
+    width: 18.5%;
   }
 
   html[data-page="index"] .campaign-sticker-power {
-    right: 2%;
-    top: 45%;
-    width: 88px;
-    padding: 13px;
-    font-size: .5rem;
-    opacity: .9;
+    right: 1.2%;
+    top: 44%;
+    width: 72px;
+    padding: 11px;
+    font-size: .46rem;
+    opacity: .94;
   }
 
   html[data-page="index"] .campaign-sticker-us {
-    left: 3%;
-    bottom: 2%;
+    left: 2.5%;
+    bottom: 2.2%;
     padding: 8px 11px;
-    font-size: .5rem;
+    font-size: .48rem;
   }
 
   html[data-page="index"] .campaign-chrome-ring {
-    right: 20%;
-    top: 39%;
-    width: 112px;
-    height: 112px;
+    left: 52%;
+    top: 42.5%;
+    width: 104px;
+    height: 104px;
     border-width: 9px;
-    opacity: .25;
+    opacity: .27;
   }
 }
 
 @media (max-width: 640px) {
-  html[data-page="index"] .campaign-grid {
-    padding: 58px 22px 28px;
-    gap: 9px;
+  html[data-page="index"] .campaign-board {
+    min-height: 620px;
+  }
+
+  html[data-page="index"] .campaign-photo:nth-child(1),
+  html[data-page="index"] .campaign-photo:nth-child(4) {
+    left: 6.5%;
+    width: 25.5%;
+  }
+
+  html[data-page="index"] .campaign-photo:nth-child(2),
+  html[data-page="index"] .campaign-photo:nth-child(5) {
+    left: 37.25%;
+    width: 25.5%;
+  }
+
+  html[data-page="index"] .campaign-photo:nth-child(3),
+  html[data-page="index"] .campaign-photo:nth-child(6) {
+    left: 68%;
+    width: 25.5%;
+  }
+
+  html[data-page="index"] .campaign-photo figcaption {
+    left: 6px;
+    bottom: 6px;
+    max-width: calc(100% - 12px);
+    padding: 4px 5px;
+    font-size: .4rem;
+    letter-spacing: .04em;
   }
 
   html[data-page="index"] .campaign-sticker-power,
   html[data-page="index"] .campaign-sticker-us,
   html[data-page="index"] .campaign-chrome-ring {
     display: none;
-  }
-
-  html[data-page="index"] .campaign-photo figcaption {
-    left: 7px;
-    bottom: 7px;
-    max-width: calc(100% - 14px);
-    padding: 4px 6px;
-    font-size: .46rem;
   }
 }
