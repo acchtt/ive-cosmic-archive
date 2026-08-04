@@ -1,8 +1,8 @@
 name: Add footer version info
 
 on:
-  pull_request:
-    branches: [main]
+  push:
+    branches: [footer-version-info]
 
 permissions:
   contents: write
@@ -67,5 +67,3 @@ let revealObserver;
           git add script.js
           git commit -m "Add shared footer version information"
           git push origin main
-
-# Synchronize trigger
