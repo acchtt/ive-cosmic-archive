@@ -4,8 +4,8 @@
 
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ARCHIVE_VERSION = '0.11.0';
-  const ARCHIVE_BUILD = '011';
+  const ARCHIVE_VERSION = '0.12.0';
+  const ARCHIVE_BUILD = '012';
 
   const SETS = {
     bangers: {
@@ -147,12 +147,10 @@
 
     const switcher = document.createElement('div');
     switcher.className = 'member-set-switcher member-set-switcher-top section-shell reveal visible';
-    switcher.style.margin = '18px auto 0';
-    switcher.style.width = 'min(calc(100% - 40px), var(--max))';
     switcher.dataset.memberSetSwitcher = '';
     switcher.innerHTML = `
       <div class="member-set-switcher-copy">
-        <span>REVIVE+ version theme</span>
+        <span>REVIVE+ edition</span>
         <strong data-member-set-title>${SETS[activeSetId].label}</strong>
       </div>
       <div class="member-set-options" role="group" aria-label="Choose a REVIVE+ album-version theme and member-card set">
