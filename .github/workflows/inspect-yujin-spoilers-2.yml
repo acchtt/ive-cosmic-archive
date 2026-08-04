@@ -1,4 +1,4 @@
-name: Apply matching Yujin Spoilers card
+name: Apply tighter Yujin Spoilers crop
 
 on:
   pull_request:
@@ -40,8 +40,9 @@ jobs:
               raise RuntimeError(f'Invalid Yujin image: {len(source_data)} bytes')
 
           image = Image.open(BytesIO(source_data)).convert('RGB')
-          # Isolate the clean right-side full-body portrait and remove the lime text panel.
-          portrait = image.crop((844, 0, 1444, 1018))
+          # Tighten the full-body portrait so Yujin fills the card more consistently.
+          crop = (900, 45, 1390, 875)
+          portrait = image.crop(crop)
           output = BytesIO()
           portrait.save(output, format='JPEG', quality=95, optimize=True)
           data = output.getvalue()
@@ -56,7 +57,7 @@ jobs:
                       'resolved_source': url,
                       'source_page': 'https://pantip.com/topic/43959310',
                       'official_account': 'https://x.com/IVEstarship',
-                      'crop': [844, 0, 1444, 1018],
+                      'crop': list(crop),
                       'bytes': len(data),
                       'sha256': hashlib.sha256(data).hexdigest(),
                   })
@@ -73,5 +74,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add assets/revive/member-cards/spoilers/yujin.jpg assets/revive/member-cards/manifest.json
-          git commit -m "Use a matching full-body Yujin Spoilers portrait"
+          git commit -m "Tighten Yujin Spoilers portrait crop"
           git push origin main
