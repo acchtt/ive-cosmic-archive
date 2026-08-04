@@ -122,10 +122,12 @@
       "set": "spoilers",
       "member": "yujin",
       "path": "assets/revive/member-cards/spoilers/yujin.jpg",
-      "source": "https://imgur.com/C9eiRHl.jpg",
-      "resolved_source": "https://imgur.com/C9eiRHl.jpg",
-      "bytes": 864277,
-      "sha256": "b12a181952956388a318601a77f71bf5b708a46f42bbba8bf48b4af07d0fb389"
+      "source": "https://f.ptcdn.info/433/090/000/mkwpatgzhJIRCXh14Uf-o.jpg",
+      "resolved_source": "https://f.ptcdn.info/433/090/000/mkwpatgzhJIRCXh14Uf-o.jpg",
+      "bytes": 403853,
+      "sha256": "37a2887928dc94cc68caab51cecd7b68c8eed96ba15f9eea95714d67d2d3a641",
+      "source_page": "https://pantip.com/topic/43959310",
+      "official_account": "https://x.com/IVEstarship"
     },
     {
       "set": "spoilers",
