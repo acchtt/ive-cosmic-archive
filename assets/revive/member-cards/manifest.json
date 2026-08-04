@@ -110,60 +110,6 @@
       "sha256": "6a773402170deba51d7cf36b7eb035175a1c1b43a218d36891c50f4344f0b6b4"
     },
     {
-      "set": "spoilers",
-      "member": "gaeul",
-      "path": "assets/revive/member-cards/spoilers/gaeul.jpg",
-      "source": "https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-z0aaaboklifg1.jpg?auto=webp&crop=smart&s=9f4bd76d7e4fe49ae05c9ebd1cd4545ddace0a4d&width=640",
-      "resolved_source": "https://i.redd.it/z0aaaboklifg1.jpg",
-      "bytes": 340142,
-      "sha256": "ce41bb5a85b9a628196ad26ed2b1b927980ff085b2911acd20d4de8ea3a6e4ed"
-    },
-    {
-      "set": "spoilers",
-      "member": "yujin",
-      "path": "assets/revive/member-cards/spoilers/yujin.jpg",
-      "source": "https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-bo3j99sklifg1.jpg?auto=webp&crop=smart&s=81790309817a735ff4754bb8a5e064ac1f99b769&width=640",
-      "resolved_source": "https://i.redd.it/bo3j99sklifg1.jpg",
-      "bytes": 342124,
-      "sha256": "dec9ca78dcdb95166db0bec0c0ff9386048ebc19efe4df659268eadd9b9dee3f"
-    },
-    {
-      "set": "spoilers",
-      "member": "rei",
-      "path": "assets/revive/member-cards/spoilers/rei.jpg",
-      "source": "https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-tnyksxtklifg1.jpg?auto=webp&crop=smart&s=e66bddba6c850953253b4257fd0d27bc4ce70d98&width=640",
-      "resolved_source": "https://i.redd.it/tnyksxtklifg1.jpg",
-      "bytes": 385715,
-      "sha256": "cb3f37e287d95b4b424bc8956121c97ec6f84163011a739d80ecc22fcad473dd"
-    },
-    {
-      "set": "spoilers",
-      "member": "wonyoung",
-      "path": "assets/revive/member-cards/spoilers/wonyoung.jpg",
-      "source": "https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-uy5csgvklifg1.jpg?auto=webp&crop=smart&s=f08d98cf87b0b75d6ca3b64bc99f2345e622da5b&width=640",
-      "resolved_source": "https://i.redd.it/uy5csgvklifg1.jpg",
-      "bytes": 379622,
-      "sha256": "9c4114f75b2b9f4fa715c3423960ed1e3132dab46871543314bd18a96c5a4e30"
-    },
-    {
-      "set": "spoilers",
-      "member": "liz",
-      "path": "assets/revive/member-cards/spoilers/liz.jpg",
-      "source": "https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-s5hrsixklifg1.jpg?auto=webp&crop=smart&s=64e99c20ea1b730a46f7d7b3c26f9dc1169365d3&width=640",
-      "resolved_source": "https://i.redd.it/s5hrsixklifg1.jpg",
-      "bytes": 443927,
-      "sha256": "e6412370dc5197e8f49ff15be51d0c22760471bdbe2a23d2f7e2d1086654d287"
-    },
-    {
-      "set": "spoilers",
-      "member": "leeseo",
-      "path": "assets/revive/member-cards/spoilers/leeseo.jpg",
-      "source": "https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-aatv6czklifg1.jpg?auto=webp&crop=smart&s=eb90de34790e775126cab930539799168c81fb0a&width=640",
-      "resolved_source": "https://i.redd.it/aatv6czklifg1.jpg",
-      "bytes": 397270,
-      "sha256": "6c741a3704a5eb216fd11246df02161b84a8bf654f6d2b141842cdf5c42a9d7c"
-    },
-    {
       "set": "loved-ive",
       "member": "gaeul",
       "path": "assets/revive/member-cards/loved-ive/gaeul.jpg",
@@ -216,6 +162,60 @@
       "resolved_source": "https://i.redd.it/fjg2cr2bc2lg1.jpg",
       "bytes": 256055,
       "sha256": "7e1317e16acfc9285f0e2a331ad40758d56c0b1b2bc948283d844668bd18d41f"
+    },
+    {
+      "set": "spoilers",
+      "member": "gaeul",
+      "path": "assets/revive/member-cards/spoilers/gaeul.jpg",
+      "source": "https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-z0aaaboklifg1.jpg?auto=webp&crop=smart&s=9f4bd76d7e4fe49ae05c9ebd1cd4545ddace0a4d&width=640",
+      "resolved_source": "https://i.redd.it/z0aaaboklifg1.jpg",
+      "bytes": 340142,
+      "sha256": "ce41bb5a85b9a628196ad26ed2b1b927980ff085b2911acd20d4de8ea3a6e4ed"
+    },
+    {
+      "set": "spoilers",
+      "member": "yujin",
+      "path": "assets/revive/member-cards/spoilers/yujin.jpg",
+      "source": "https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-bo3j99sklifg1.jpg?auto=webp&crop=smart&s=81790309817a735ff4754bb8a5e064ac1f99b769&width=640",
+      "resolved_source": "https://i.redd.it/bo3j99sklifg1.jpg",
+      "bytes": 342124,
+      "sha256": "dec9ca78dcdb95166db0bec0c0ff9386048ebc19efe4df659268eadd9b9dee3f"
+    },
+    {
+      "set": "spoilers",
+      "member": "rei",
+      "path": "assets/revive/member-cards/spoilers/rei.jpg",
+      "source": "https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-tnyksxtklifg1.jpg?auto=webp&crop=smart&s=e66bddba6c850953253b4257fd0d27bc4ce70d98&width=640",
+      "resolved_source": "https://i.redd.it/tnyksxtklifg1.jpg",
+      "bytes": 385715,
+      "sha256": "cb3f37e287d95b4b424bc8956121c97ec6f84163011a739d80ecc22fcad473dd"
+    },
+    {
+      "set": "spoilers",
+      "member": "wonyoung",
+      "path": "assets/revive/member-cards/spoilers/wonyoung.jpg",
+      "source": "https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-uy5csgvklifg1.jpg?auto=webp&crop=smart&s=f08d98cf87b0b75d6ca3b64bc99f2345e622da5b&width=640",
+      "resolved_source": "https://i.redd.it/uy5csgvklifg1.jpg",
+      "bytes": 379622,
+      "sha256": "9c4114f75b2b9f4fa715c3423960ed1e3132dab46871543314bd18a96c5a4e30"
+    },
+    {
+      "set": "spoilers",
+      "member": "liz",
+      "path": "assets/revive/member-cards/spoilers/liz.jpg",
+      "source": "https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-s5hrsixklifg1.jpg?auto=webp&crop=smart&s=64e99c20ea1b730a46f7d7b3c26f9dc1169365d3&width=640",
+      "resolved_source": "https://i.redd.it/s5hrsixklifg1.jpg",
+      "bytes": 443927,
+      "sha256": "e6412370dc5197e8f49ff15be51d0c22760471bdbe2a23d2f7e2d1086654d287"
+    },
+    {
+      "set": "spoilers",
+      "member": "leeseo",
+      "path": "assets/revive/member-cards/spoilers/leeseo.jpg",
+      "source": "https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-aatv6czklifg1.jpg?auto=webp&crop=smart&s=eb90de34790e775126cab930539799168c81fb0a&width=640",
+      "resolved_source": "https://i.redd.it/aatv6czklifg1.jpg",
+      "bytes": 397270,
+      "sha256": "6c741a3704a5eb216fd11246df02161b84a8bf654f6d2b141842cdf5c42a9d7c"
     }
   ]
 }
