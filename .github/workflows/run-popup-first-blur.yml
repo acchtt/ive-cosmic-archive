@@ -1,0 +1,46 @@
+name: Run popup-first launch gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/run-popup-first-blur.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply-popup-first:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Run registered popup-first patch
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          workflow = Path('.github/workflows/apply-popup-first-blur-pr.yml').read_text(encoding='utf-8')
+          match = re.search(r"python3 - <<'PY'\n([\s\S]*?)\n          PY", workflow)
+          if not match:
+              raise RuntimeError('Could not locate popup-first patch')
+          script = '\n'.join(
+              line[10:] if line.startswith('          ') else line
+              for line in match.group(1).splitlines()
+          )
+          exec(compile(script, 'apply-popup-first-blur-pr.yml', 'exec'))
+          PY
+
+      - name: Commit popup-first gate
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html members.html eras.html media.html revive-member-sets.js revive-member-sets.css
+          git commit -m "Load launch theme popup before site content"
+          git push origin main
