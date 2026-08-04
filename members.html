@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Explore six member dossiers in the IVE Cosmic Archive." />
   <title>Members · IVE Cosmic Archive</title>
+  <script>
+    (() => {
+      const editions = new Set(['bangers', 'challengers', 'spoilers', 'loved-ive']);
+      let launchRequired = true;
+      try {
+        launchRequired = sessionStorage.getItem('ive-cosmic-revive-launch-seen') !== 'true'
+|| !editions.has(localStorage.getItem('ive-cosmic-revive-member-set'));
+      } catch {
+        launchRequired = true;
+      }
+      if (launchRequired) document.documentElement.dataset.themeLaunchPending = 'true';
+    })();
+  </script>
+  <link rel="stylesheet" href="revive-member-sets.css" />
+  <script src="revive-member-sets.js" defer></script>
   <link rel="preload" as="image" href="assets/revive/member-cards/bangers/gaeul.jpg" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/revive/member-cards/bangers/yujin.jpg" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/revive/member-cards/bangers/rei.jpg" fetchpriority="high" />
@@ -121,7 +136,7 @@
       <a href="media.html">Media archive</a>
       <button type="button" data-motion-toggle-footer>Toggle motion</button>
     </div>
-    <p class="footer-code">Archive build · 014 · Multi-page system · v0.14.0</p>
+    <p class="footer-code">Archive build · 015 · Multi-page system · v0.15.0</p>
   </footer>
 </body>
 </html>

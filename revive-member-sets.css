@@ -959,3 +959,48 @@ html[data-page="members"] .member-set-switcher.member-set-switcher-top { margin-
   }
 }
 /* LAUNCH MODAL v0.14.0 END */
+
+/* FIRST PAINT LAUNCH GATE v0.15.0 START */
+html[data-theme-launch-pending="true"],
+html[data-theme-launch-pending="true"] body {
+  overflow: hidden !important;
+}
+
+html[data-theme-launch-pending="true"]::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 165;
+  background: rgba(3, 2, 7, .54);
+  backdrop-filter: blur(26px) brightness(.42) saturate(.72);
+  -webkit-backdrop-filter: blur(26px) brightness(.42) saturate(.72);
+  pointer-events: auto;
+}
+
+html[data-theme-launch-pending="true"] body > :not(.member-set-switcher-popup) {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+html[data-theme-launch-pending="true"] .member-set-switcher-popup {
+  z-index: 180;
+}
+
+html[data-theme-launch-pending="true"] .member-set-switcher-popup[data-launch="true"] .member-set-launch-backdrop {
+  background: rgba(3, 2, 7, .12);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+html[data-theme-launch-pending="true"] .member-set-switcher-popup[data-launch="true"] .member-set-popover {
+  z-index: 3;
+  box-shadow: 0 34px 110px rgba(0, 0, 0, .72), inset 0 1px 0 rgba(255,255,255,.055);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme-launch-pending="true"]::after {
+    backdrop-filter: blur(18px) brightness(.42);
+    -webkit-backdrop-filter: blur(18px) brightness(.42);
+  }
+}
+/* FIRST PAINT LAUNCH GATE v0.15.0 END */

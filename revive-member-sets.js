@@ -5,8 +5,8 @@
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
-  const ARCHIVE_VERSION = '0.14.0';
-  const ARCHIVE_BUILD = '014';
+  const ARCHIVE_VERSION = '0.15.0';
+  const ARCHIVE_BUILD = '015';
 
   const SETS = {
     bangers: {
@@ -162,6 +162,11 @@
 
   let changeHintTimer = 0;
 
+  function setLaunchPending(pending) {
+    if (pending) document.documentElement.dataset.themeLaunchPending = 'true';
+    else delete document.documentElement.dataset.themeLaunchPending;
+  }
+
   function setSwitcherOpen(switcher, open) {
     if (!switcher) return;
     switcher.dataset.open = String(open);
@@ -185,6 +190,7 @@
 
     const switcher = document.createElement('aside');
     const launchOpen = !hasSeenLaunchPicker() || !hasStoredSet();
+    setLaunchPending(launchOpen);
     switcher.className = 'member-set-switcher-popup';
     switcher.dataset.memberSetSwitcher = '';
     switcher.dataset.open = String(launchOpen);
@@ -223,6 +229,12 @@ ${SET_ORDER.map((setId) => `
 
     document.body.appendChild(switcher);
 
+    if (launchOpen) {
+      requestAnimationFrame(() => {
+        switcher.querySelector('[data-member-set]')?.focus();
+      });
+    }
+
     switcher.addEventListener('click', (event) => {
       if (event.target.closest('[data-member-set-hint-close]')) {
         switcher.dataset.hintVisible = 'false';
@@ -250,6 +262,7 @@ ${SET_ORDER.map((setId) => `
       const wasLaunch = switcher.dataset.launch === 'true';
       setActiveSet(button.dataset.memberSet);
       if (wasLaunch) markLaunchPickerSeen();
+      setLaunchPending(false);
       switcher.dataset.launch = 'false';
       switcher.querySelector('.member-set-popover')?.setAttribute('aria-modal', 'false');
       setSwitcherOpen(switcher, false);
