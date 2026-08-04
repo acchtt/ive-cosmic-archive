@@ -4,6 +4,8 @@
 
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
+  const ARCHIVE_VERSION = '0.11.0';
+  const ARCHIVE_BUILD = '011';
 
   const SETS = {
     bangers: {
@@ -67,10 +69,13 @@
   const SET_ORDER = ['bangers', 'challengers', 'spoilers', 'loved-ive'];
   const resolvedPortraits = new Map();
   const portraitLoads = new Map();
+  const portraitImages = new Map();
+  const setLoads = new Map();
   let activeSetId = readStoredSet();
   let selectionVersion = 0;
 
   document.documentElement.dataset.memberSet = activeSetId;
+  document.documentElement.dataset.memberAssetsReady = 'loading';
 
   function readStoredSet() {
     try {
@@ -94,11 +99,40 @@
   }
 
   function ensureStylesheet() {
-    if (document.querySelector('link[href="revive-member-sets.css"]')) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'revive-member-sets.css';
-    document.head.appendChild(link);
+    if (!document.querySelector('link[href="revive-member-sets.css"]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'revive-member-sets.css';
+      document.head.appendChild(link);
+    }
+
+    if (!document.querySelector('[data-instant-member-swap-style]')) {
+      const style = document.createElement('style');
+      style.dataset.instantMemberSwapStyle = '';
+      style.textContent = `
+        .member-card .member-art,
+        html[data-page="members"] .dossier-panel .dossier-visual::before {
+          transition: filter .18s ease, opacity .18s ease !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+  function injectPreloadHints() {
+    const fragment = document.createDocumentFragment();
+    SET_ORDER.forEach((setId) => {
+      SETS[setId].portraits.forEach((url) => {
+        if (document.querySelector(`link[rel="preload"][as="image"][href="${url}"]`)) return;
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = url;
+        link.fetchPriority = 'high';
+        fragment.appendChild(link);
+      });
+    });
+    document.head.appendChild(fragment);
   }
 
   function createSwitcher() {
@@ -167,6 +201,14 @@
     if (description) description.textContent = set.description;
   }
 
+  function updateFooterVersion() {
+    const footer = document.querySelector('.footer-code');
+    if (!footer) return;
+    let base = footer.textContent.trim().replace(/\s*·\s*v\d+(?:\.\d+){1,2}.*$/, '');
+    base = base.replace(/Archive build\s*·\s*\d+/, `Archive build · ${ARCHIVE_BUILD}`);
+    footer.textContent = `${base} · v${ARCHIVE_VERSION}`;
+  }
+
   function updateMembersPageCopy() {
     if (page !== 'members') return;
     const set = SETS[activeSetId];
@@ -197,7 +239,7 @@
     }
   }
 
-  function preloadPortrait(url, fallbackUrl, priority = 'auto') {
+  function preloadPortrait(url, fallbackUrl, priority = 'high') {
     if (resolvedPortraits.has(url)) return Promise.resolve(resolvedPortraits.get(url));
     if (portraitLoads.has(url)) return portraitLoads.get(url);
 
@@ -205,18 +247,46 @@
       const image = new Image();
       image.decoding = 'async';
       if ('fetchPriority' in image) image.fetchPriority = priority;
-      image.onload = () => {
+
+      image.onload = async () => {
+        try {
+          await image.decode();
+        } catch {
+          // A completed load is still usable when explicit decode is unsupported.
+        }
+        portraitImages.set(url, image);
         resolvedPortraits.set(url, url);
         resolve(url);
       };
+
       image.onerror = () => {
-        resolvedPortraits.set(url, fallbackUrl);
-        resolve(fallbackUrl);
+        if (url === fallbackUrl) {
+          resolvedPortraits.set(url, fallbackUrl);
+          resolve(fallbackUrl);
+          return;
+        }
+        preloadPortrait(fallbackUrl, fallbackUrl, priority).then((resolved) => {
+          resolvedPortraits.set(url, resolved);
+          resolve(resolved);
+        });
       };
+
       image.src = url;
     });
 
     portraitLoads.set(url, load);
+    return load;
+  }
+
+  function preloadSetPortraits(setId, priority = 'high') {
+    if (setLoads.has(setId)) return setLoads.get(setId);
+
+    const load = Promise.all(SETS[setId].portraits.map((url, index) => {
+      const fallback = SETS.bangers.portraits[index];
+      return preloadPortrait(url, fallback, priority);
+    }));
+
+    setLoads.set(setId, load);
     return load;
   }
 
@@ -226,13 +296,10 @@
       ...SET_ORDER.filter((setId) => setId !== activeSetId)
     ];
 
-    preloadOrder.forEach((setId) => {
-      SETS[setId].portraits.forEach((url, index) => {
-        const fallback = SETS.bangers.portraits[index];
-        const priority = setId === activeSetId ? 'high' : 'low';
-        preloadPortrait(url, fallback, priority);
+    return Promise.all(preloadOrder.map((setId) => preloadSetPortraits(setId, 'high')))
+      .then(() => {
+        document.documentElement.dataset.memberAssetsReady = 'true';
       });
-    });
   }
 
   function applyPortraitToCard(index, url) {
@@ -264,54 +331,45 @@
 
   function applyCurrentDossierPortrait() {
     const index = activeMemberIndex();
-    const requested = SETS[activeSetId].portraits[index];
-    const fallback = SETS.bangers.portraits[index];
+    const setId = activeSetId;
     const version = selectionVersion;
 
-    applyPortraitToDossier(index, requested);
-    preloadPortrait(requested, fallback).then((resolved) => {
-      if (version !== selectionVersion || index !== activeMemberIndex()) return;
-      applyPortraitToDossier(index, resolved);
+    preloadSetPortraits(setId, 'high').then((portraits) => {
+      if (version !== selectionVersion || setId !== activeSetId || index !== activeMemberIndex()) return;
+      applyPortraitToDossier(index, portraits[index]);
     });
   }
 
-  function applyCampaignBoard() {
-    if (page !== 'index') return;
-    const set = SETS[activeSetId];
-    const version = selectionVersion;
+  function applyResolvedSet(setId, portraits, version) {
+    if (version !== selectionVersion || setId !== activeSetId) return;
 
-    set.portraits.forEach((requested, index) => {
-      const fallback = SETS.bangers.portraits[index];
-      applyPortraitToCampaignBoard(index, requested);
-      preloadPortrait(requested, fallback).then((resolved) => {
-        if (version !== selectionVersion) return;
-        applyPortraitToCampaignBoard(index, resolved);
+    requestAnimationFrame(() => {
+      if (version !== selectionVersion || setId !== activeSetId) return;
+
+      portraits.forEach((url, index) => {
+        applyPortraitToCard(index, url);
+        if (page === 'index') applyPortraitToCampaignBoard(index, url);
       });
+
+      const dossierIndex = activeMemberIndex();
+      applyPortraitToDossier(dossierIndex, portraits[dossierIndex]);
+      updateSwitcher();
+      updateMembersPageCopy();
+      updateHomeThemeCopy();
     });
   }
 
   function applyCurrentSet() {
-    const set = SETS[activeSetId];
+    const setId = activeSetId;
     const version = selectionVersion;
 
-    set.portraits.forEach((requested, index) => {
-      const fallback = SETS.bangers.portraits[index];
-      applyPortraitToCard(index, requested);
-      preloadPortrait(requested, fallback).then((resolved) => {
-        if (version !== selectionVersion) return;
-        applyPortraitToCard(index, resolved);
-      });
+    return preloadSetPortraits(setId, 'high').then((portraits) => {
+      applyResolvedSet(setId, portraits, version);
     });
-
-    applyCurrentDossierPortrait();
-    applyCampaignBoard();
-    updateSwitcher();
-    updateMembersPageCopy();
-    updateHomeThemeCopy();
   }
 
   function setActiveSet(setId) {
-    if (!SETS[setId]) return;
+    if (!SETS[setId] || setId === activeSetId) return;
     activeSetId = setId;
     selectionVersion += 1;
     storeSet(setId);
@@ -342,12 +400,15 @@
 
   function initialize() {
     ensureStylesheet();
+    injectPreloadHints();
     createSwitcher();
+    updateFooterVersion();
     observeRenderedCards();
     observeDossierSelection();
     applyCurrentSet();
   }
 
+  injectPreloadHints();
   preloadAllPortraits();
 
   if (document.readyState === 'loading') {
