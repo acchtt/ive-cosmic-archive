@@ -1,1 +1,3 @@
 Trigger the production workflow that loads the launch theme popup before the site and blurs all page content until a theme is chosen.
+
+Run the popup-first gate now.
