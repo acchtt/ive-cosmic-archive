@@ -1,0 +1,49 @@
+name: Run LUMINARE brand rollout
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  apply-brand:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Run registered LUMINARE rollout
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          workflow = Path('.github/workflows/apply-luminare-brand.yml').read_text(encoding='utf-8')
+          match = re.search(
+              r"      - name: Install LUMINARE identity\n        shell: bash\n        run: \|\n([\s\S]*?)\n      - name: Commit LUMINARE production brand",
+              workflow,
+          )
+          if not match:
+              raise RuntimeError('Could not locate registered LUMINARE rollout')
+
+          script = '\n'.join(
+              line[10:] if line.startswith('          ') else line
+              for line in match.group(1).splitlines()
+          )
+          Path('/tmp/apply-luminare.sh').write_text(script + '\n', encoding='utf-8')
+          PY
+          bash /tmp/apply-luminare.sh
+
+      - name: Commit production brand
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/luminare-mark.svg header-editorial-glass.css index.html members.html eras.html media.html revive-member-sets.js
+          git commit -m "Rebrand archive as LUMINARE"
+          git push origin main
