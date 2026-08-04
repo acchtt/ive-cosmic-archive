@@ -1,10 +1,8 @@
 name: Inspect Spoilers candidates
 
 on:
-  push:
-    branches: [fix-revive-member-mappings]
-    paths:
-      - .github/workflows/inspect-spoilers-candidates.yml
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: write
