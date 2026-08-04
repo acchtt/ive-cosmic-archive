@@ -1,0 +1,169 @@
+name: Apply popup-first launch gate
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  apply-popup-first:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply first-paint popup gate
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          VERSION = '0.15.0'
+          BUILD = '015'
+
+          gate = '''
+  <script>
+    (() => {
+      const editions = new Set(['bangers', 'challengers', 'spoilers', 'loved-ive']);
+      let launchRequired = true;
+      try {
+        launchRequired = sessionStorage.getItem('ive-cosmic-revive-launch-seen') !== 'true'
+          || !editions.has(localStorage.getItem('ive-cosmic-revive-member-set'));
+      } catch {
+        launchRequired = true;
+      }
+      if (launchRequired) document.documentElement.dataset.themeLaunchPending = 'true';
+    })();
+  </script>
+  <link rel="stylesheet" href="revive-member-sets.css" />
+  <script src="revive-member-sets.js" defer></script>'''
+
+          for html_name in ['index.html', 'members.html']:
+              path = Path(html_name)
+              text = path.read_text(encoding='utf-8')
+              if 'data.themeLaunchPending' not in text and 'dataset.themeLaunchPending' not in text:
+                  text = text.replace('</title>', '</title>' + gate, 1)
+              path.write_text(text, encoding='utf-8')
+
+          js_path = Path('revive-member-sets.js')
+          js = js_path.read_text(encoding='utf-8')
+          js = re.sub(r"const ARCHIVE_VERSION = '[^']+';", f"const ARCHIVE_VERSION = '{VERSION}';", js, count=1)
+          js = re.sub(r"const ARCHIVE_BUILD = '[^']+';", f"const ARCHIVE_BUILD = '{BUILD}';", js, count=1)
+
+          timer_anchor = "  let changeHintTimer = 0;\n"
+          pending_fn = '''  let changeHintTimer = 0;
+
+  function setLaunchPending(pending) {
+    if (pending) document.documentElement.dataset.themeLaunchPending = 'true';
+    else delete document.documentElement.dataset.themeLaunchPending;
+  }
+'''
+          if 'function setLaunchPending' not in js:
+              if timer_anchor not in js:
+                  raise RuntimeError('Launch hint timer anchor not found')
+              js = js.replace(timer_anchor, pending_fn, 1)
+
+          launch_anchor = "    const launchOpen = !hasSeenLaunchPicker() || !hasStoredSet();\n"
+          launch_replacement = launch_anchor + "    setLaunchPending(launchOpen);\n"
+          if 'setLaunchPending(launchOpen);' not in js:
+              if launch_anchor not in js:
+                  raise RuntimeError('Launch-open anchor not found')
+              js = js.replace(launch_anchor, launch_replacement, 1)
+
+          append_anchor = "    document.body.appendChild(switcher);\n\n    switcher.addEventListener('click', (event) => {"
+          append_replacement = '''    document.body.appendChild(switcher);
+
+    if (launchOpen) {
+      requestAnimationFrame(() => {
+        switcher.querySelector('[data-member-set]')?.focus();
+      });
+    }
+
+    switcher.addEventListener('click', (event) => {'''
+          if 'if (launchOpen) {' not in js[js.find('function createSwitcher'):js.find('function updateThemeColor')]:
+              if append_anchor not in js:
+                  raise RuntimeError('Switcher append anchor not found')
+              js = js.replace(append_anchor, append_replacement, 1)
+
+          select_anchor = "      if (wasLaunch) markLaunchPickerSeen();\n      switcher.dataset.launch = 'false';"
+          select_replacement = "      if (wasLaunch) markLaunchPickerSeen();\n      setLaunchPending(false);\n      switcher.dataset.launch = 'false';"
+          if 'if (wasLaunch) markLaunchPickerSeen();\n      setLaunchPending(false);' not in js:
+              if select_anchor not in js:
+                  raise RuntimeError('Launch selection anchor not found')
+              js = js.replace(select_anchor, select_replacement, 1)
+
+          js_path.write_text(js, encoding='utf-8')
+
+          css_path = Path('revive-member-sets.css')
+          css = css_path.read_text(encoding='utf-8')
+          css = re.sub(r'/\* FIRST PAINT LAUNCH GATE v[\s\S]*? END \*/\s*$', '', css).rstrip()
+          css += r'''
+
+/* FIRST PAINT LAUNCH GATE v0.15.0 START */
+html[data-theme-launch-pending="true"],
+html[data-theme-launch-pending="true"] body {
+  overflow: hidden !important;
+}
+
+html[data-theme-launch-pending="true"]::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 165;
+  background: rgba(3, 2, 7, .54);
+  backdrop-filter: blur(26px) brightness(.42) saturate(.72);
+  -webkit-backdrop-filter: blur(26px) brightness(.42) saturate(.72);
+  pointer-events: auto;
+}
+
+html[data-theme-launch-pending="true"] body > :not(.member-set-switcher-popup) {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+html[data-theme-launch-pending="true"] .member-set-switcher-popup {
+  z-index: 180;
+}
+
+html[data-theme-launch-pending="true"] .member-set-switcher-popup[data-launch="true"] .member-set-launch-backdrop {
+  background: rgba(3, 2, 7, .12);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+html[data-theme-launch-pending="true"] .member-set-switcher-popup[data-launch="true"] .member-set-popover {
+  z-index: 3;
+  box-shadow: 0 34px 110px rgba(0, 0, 0, .72), inset 0 1px 0 rgba(255,255,255,.055);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme-launch-pending="true"]::after {
+    backdrop-filter: blur(18px) brightness(.42);
+    -webkit-backdrop-filter: blur(18px) brightness(.42);
+  }
+}
+/* FIRST PAINT LAUNCH GATE v0.15.0 END */
+'''
+          css_path.write_text(css, encoding='utf-8')
+
+          for html_name in ['index.html', 'members.html', 'eras.html', 'media.html']:
+              path = Path(html_name)
+              text = path.read_text(encoding='utf-8')
+              text = re.sub(r'Archive build\s*·\s*\d+', f'Archive build · {BUILD}', text)
+              text = re.sub(r'·\s*v\d+(?:\.\d+){1,2}', f'· v{VERSION}', text)
+              path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit popup-first gate to main
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html members.html eras.html media.html revive-member-sets.js revive-member-sets.css
+          git commit -m "Load launch theme popup before site content"
+          git push origin main
