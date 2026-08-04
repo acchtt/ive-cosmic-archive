@@ -200,7 +200,7 @@
 
     applyPortraitToDossier(index, requested);
     preloadPortrait(requested, fallback).then((resolved) => {
-      if (version !== selectionVersion) return;
+      if (version !== selectionVersion || index !== activeMemberIndex()) return;
       applyPortraitToDossier(index, resolved);
     });
   }
