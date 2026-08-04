@@ -1,0 +1,159 @@
+/* REVIVE+ multi-set member-card selector. */
+.member-set-switcher {
+  --member-set-accent: #ff8fc7;
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(170px, .55fr) minmax(0, 1.45fr);
+  gap: 10px 22px;
+  align-items: center;
+  margin: -20px 0 30px;
+  padding: 18px 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .15);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--member-set-accent) 18%, transparent), transparent 36%),
+    rgba(13, 8, 14, .76);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .22);
+  backdrop-filter: blur(18px);
+}
+
+html[data-member-set="challengers"] .member-set-switcher { --member-set-accent: #89e5ff; }
+html[data-member-set="spoilers"] .member-set-switcher { --member-set-accent: #c7a8ff; }
+html[data-member-set="loved-ive"] .member-set-switcher { --member-set-accent: #ffd5e8; }
+
+.member-set-switcher::after {
+  content: "04 SETS · 24 CARDS";
+  position: absolute;
+  right: 16px;
+  bottom: 10px;
+  color: rgba(255, 255, 255, .22);
+  font-size: .5rem;
+  font-weight: 800;
+  letter-spacing: .15em;
+  pointer-events: none;
+}
+
+.member-set-switcher-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.member-set-switcher-copy > span {
+  color: rgba(228, 215, 231, .5);
+  font-size: .52rem;
+  font-weight: 750;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.member-set-switcher-copy > strong {
+  color: white;
+  font-size: clamp(1rem, 2vw, 1.38rem);
+  line-height: 1;
+  letter-spacing: -.025em;
+}
+
+.member-set-options {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.member-set-options button {
+  min-width: 0;
+  min-height: 38px;
+  padding: 8px 9px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .13);
+  border-radius: 999px;
+  color: rgba(232, 222, 234, .66);
+  background: rgba(255, 255, 255, .035);
+  font: inherit;
+  font-size: clamp(.48rem, .68vw, .58rem);
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease, background .2s ease, transform .2s ease;
+}
+
+.member-set-options button:hover,
+.member-set-options button:focus-visible {
+  border-color: color-mix(in srgb, var(--member-set-accent) 60%, white 12%);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.member-set-options button[aria-pressed="true"] {
+  border-color: color-mix(in srgb, var(--member-set-accent) 64%, white 16%);
+  color: #130a11;
+  background: linear-gradient(112deg, #fff7fb, var(--member-set-accent));
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--member-set-accent) 25%, transparent);
+}
+
+.member-set-switcher > p {
+  grid-column: 2;
+  min-width: 0;
+  margin: 0 90px 0 2px;
+  color: rgba(220, 207, 223, .58);
+  font-size: .68rem;
+  line-height: 1.45;
+}
+
+.member-card .member-art,
+html[data-page="members"] .dossier-panel .dossier-visual::before {
+  transition: background-image .2s linear, filter .3s ease, opacity .3s ease;
+}
+
+html[data-page="members"] .member-set-switcher {
+  margin-top: -18px;
+}
+
+html[data-page="members"] .section-heading > p strong {
+  color: white;
+  font-weight: 750;
+}
+
+@media (max-width: 900px) {
+  .member-set-switcher {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: -8px;
+  }
+
+  .member-set-switcher > p {
+    grid-column: 1;
+    margin-right: 92px;
+  }
+}
+
+@media (max-width: 640px) {
+  .member-set-switcher {
+    padding: 16px;
+    border-radius: 17px;
+  }
+
+  .member-set-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .member-set-options button {
+    min-height: 36px;
+    font-size: .5rem;
+  }
+
+  .member-set-switcher > p {
+    margin-right: 0;
+    padding-right: 0;
+  }
+
+  .member-set-switcher::after {
+    display: none;
+  }
+}
