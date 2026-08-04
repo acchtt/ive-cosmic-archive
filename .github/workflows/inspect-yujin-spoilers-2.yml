@@ -1,0 +1,75 @@
+name: Inspect alternative Yujin Spoilers card
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-contact-sheet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download candidates and build sheet
+        shell: bash
+        run: |
+          python3 -m pip install --quiet pillow
+          python3 - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageOps, ImageDraw
+          import urllib.request
+          import time
+
+          urls = [
+              'https://f.ptcdn.info/433/090/000/mkwpas37h02b97ieFF7-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpars3orvyuhTtRZb-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpas1cpWw56H7R5MH-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpas8aordLG72JJwg-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpatatoY7Q67QG734-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpatfwhEcqrozPoyc-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpatgzhJIRCXh14Uf-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpatowoECaehwUT21-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpauqviaeDbRQe21n-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpavueh75o7PKkQpY-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpaw3ch6eu5854zv2-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpawk7oO6kl2hugPW-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpawqahh3DalsVlzD-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpawxth9LDzDVEBoS-o.jpg',
+              'https://f.ptcdn.info/433/090/000/mkwpax66o25uPwjlDr5-o.jpg',
+          ]
+          out = Path('yujin-spoilers-candidates')
+          out.mkdir(exist_ok=True)
+          headers = {'User-Agent': 'Mozilla/5.0', 'Referer': 'https://pantip.com/'}
+          files = []
+          for index, url in enumerate(urls, 1):
+              request = urllib.request.Request(url, headers=headers)
+              with urllib.request.urlopen(request, timeout=60) as response:
+                  data = response.read()
+              target = out / f'{index:02d}.jpg'
+              target.write_bytes(data)
+              files.append(target)
+              print(index, len(data), url)
+              time.sleep(.15)
+
+          thumb_w, thumb_h = 300, 420
+          cols = 5
+          rows = (len(files) + cols - 1) // cols
+          sheet = Image.new('RGB', (cols * thumb_w, rows * (thumb_h + 34)), 'white')
+          draw = ImageDraw.Draw(sheet)
+          for index, path in enumerate(files, 1):
+              image = Image.open(path).convert('RGB')
+              tile = ImageOps.fit(image, (thumb_w, thumb_h), method=Image.Resampling.LANCZOS)
+              x = ((index - 1) % cols) * thumb_w
+              y = ((index - 1) // cols) * (thumb_h + 34)
+              sheet.paste(tile, (x, y))
+              draw.rectangle((x, y + thumb_h, x + thumb_w, y + thumb_h + 34), fill='white')
+              draw.text((x + 12, y + thumb_h + 8), f'YUJIN {index:02d}', fill='black')
+          sheet.save(out / 'contact-sheet.jpg', quality=90)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yujin-spoilers-candidates
+          path: yujin-spoilers-candidates
+          retention-days: 1
