@@ -69,3 +69,5 @@ let revealObserver;
           git add script.js
           git commit -m "Add shared footer version information"
           git push origin main
+
+# Trigger after workflow registration
