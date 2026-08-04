@@ -131,10 +131,11 @@
       "set": "spoilers",
       "member": "rei",
       "path": "assets/revive/member-cards/spoilers/rei.jpg",
-      "source": "https://imgur.com/QzkZue5.jpg",
-      "resolved_source": "https://imgur.com/QzkZue5.jpg",
-      "bytes": 630685,
-      "sha256": "f1e1266749d7706aad6ecb01cab7c38f5a76003f34960927ff181f4917fd21f8"
+      "source": "https://pbs.twimg.com/media/G_rOft1bUAAeD9X.jpg?name=orig",
+      "resolved_source": "https://pbs.twimg.com/media/G_rOft1bUAAeD9X.jpg?name=orig",
+      "bytes": 319690,
+      "sha256": "0527852eff81d9491834116026cb2144823a4ca74c4d44edf26bc949bc5f8113",
+      "official_post": "https://x.com/IVEstarship/status/2016150841498206610"
     },
     {
       "set": "spoilers",
@@ -158,10 +159,11 @@
       "set": "spoilers",
       "member": "leeseo",
       "path": "assets/revive/member-cards/spoilers/leeseo.jpg",
-      "source": "https://imgur.com/qZgZL3X.jpg",
-      "resolved_source": "https://imgur.com/qZgZL3X.jpg",
-      "bytes": 608621,
-      "sha256": "13c97ad9066461c07e6713f85b13fbfd909ce2b8bd07aca88be4e2276db1dfe6"
+      "source": "https://pbs.twimg.com/media/G_rOZWMW8AA9wLp.jpg?name=orig",
+      "resolved_source": "https://pbs.twimg.com/media/G_rOZWMW8AA9wLp.jpg?name=orig",
+      "bytes": 288782,
+      "sha256": "85302dc58db2989968d6183c9dc861abf5d61877443979833d90196ae75b3c81",
+      "official_post": "https://x.com/IVEstarship/status/2016150728646262878"
     },
     {
       "set": "loved-ive",
