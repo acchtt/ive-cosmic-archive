@@ -124,15 +124,15 @@
       "path": "assets/revive/member-cards/spoilers/yujin.jpg",
       "source": "https://f.ptcdn.info/433/090/000/mkwpas8aordLG72JJwg-o.jpg",
       "resolved_source": "https://f.ptcdn.info/433/090/000/mkwpas8aordLG72JJwg-o.jpg",
-      "bytes": 86860,
-      "sha256": "750f63995aa7f827147e8d7c0a7b1159f5c0ae556b5003f80c70be6f33fbe760",
+      "bytes": 70191,
+      "sha256": "4e2b7babf89ab6c0025620781a9158f9fb75c991b3ee8e271b731fb4270ad73d",
       "source_page": "https://pantip.com/topic/43959310",
       "official_account": "https://x.com/IVEstarship",
       "crop": [
-        844,
-        0,
-        1444,
-        1018
+        900,
+        45,
+        1390,
+        875
       ]
     },
     {
