@@ -70,3 +70,5 @@ jobs:
           git add dive-zone.html
           git commit -m "Apply LUMINARE brand to DIVE Zone"
           git push origin main
+
+# Triggered after the workflow was registered on main.
