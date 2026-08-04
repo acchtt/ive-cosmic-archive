@@ -4,136 +4,61 @@ on:
   pull_request:
     branches: [main]
 
-permissions:
-  contents: write
-
 jobs:
-  inspect-media:
+  build-contact-sheets:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: fix-revive-member-mappings
-          fetch-depth: 0
 
-      - name: Download official tweet media
+      - name: Install Pillow
+        run: python3 -m pip install pillow
+
+      - name: Build contact sheets
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import json
-          import urllib.request
+          from PIL import Image, ImageDraw, ImageFont, ImageOps
 
-          tweets = {
-              'rei': [
-                  '2016150820228890959',
-                  '2016150841498206610',
-                  '2016150859290444248',
-                  '2016150875480481982',
-              ],
-              'leeseo': [
-                  '2016150712049402127',
-                  '2016150728646262878',
-                  '2016150745087914014',
-                  '2016150760975913281',
-              ],
-          }
-          headers = {'User-Agent': 'ive-cosmic-archive/1.0'}
-          root = Path('tmp/revive-spoilers-official')
-          root.mkdir(parents=True, exist_ok=True)
+          source_root = Path('tmp/revive-spoilers-official')
+          output_root = Path('tmp/spoilers-contact-sheets')
+          output_root.mkdir(parents=True, exist_ok=True)
 
-          def read_json(url: str):
-              request = urllib.request.Request(url, headers=headers)
-              with urllib.request.urlopen(request, timeout=60) as response:
-                  return json.loads(response.read().decode('utf-8'))
+          thumb_w, thumb_h = 280, 360
+          label_h = 42
+          columns = 5
+          font = ImageFont.load_default()
 
-          def media_urls(payload):
-              urls = []
-              if isinstance(payload, dict):
-                  for key in ('mediaURLs', 'media_urls'):
-                      value = payload.get(key)
-                      if isinstance(value, list):
-                          urls.extend(item for item in value if isinstance(item, str))
-                  tweet = payload.get('tweet')
-                  if isinstance(tweet, dict):
-                      media = tweet.get('media')
-                      if isinstance(media, dict):
-                          for key in ('photos', 'all'):
-                              value = media.get(key)
-                              if isinstance(value, list):
-                                  for item in value:
-                                      if isinstance(item, str):
-                                          urls.append(item)
-                                      elif isinstance(item, dict):
-                                          for url_key in ('url', 'media_url_https', 'media_url'):
-                                              found = item.get(url_key)
-                                              if isinstance(found, str):
-                                                  urls.append(found)
-                                                  break
-              return list(dict.fromkeys(urls))
+          for member in ('rei', 'leeseo'):
+              files = sorted((source_root / member).glob('*.*'))
+              files = [path for path in files if path.suffix.lower() in {'.jpg', '.jpeg', '.png'}]
+              rows = (len(files) + columns - 1) // columns
+              sheet = Image.new('RGB', (columns * thumb_w, rows * (thumb_h + label_h)), 'white')
+              draw = ImageDraw.Draw(sheet)
 
-          manifest = []
-          for member, ids in tweets.items():
-              folder = root / member
-              folder.mkdir(parents=True, exist_ok=True)
-              for tweet_index, tweet_id in enumerate(ids):
-                  payload = None
-                  api_used = None
-                  for api_url in (
-                      f'https://api.fxtwitter.com/IVEstarship/status/{tweet_id}',
-                      f'https://api.vxtwitter.com/IVEstarship/status/{tweet_id}',
-                  ):
-                      try:
-                          candidate = read_json(api_url)
-                          urls = media_urls(candidate)
-                          if urls:
-                              payload = candidate
-                              api_used = api_url
-                              break
-                      except Exception as exc:
-                          print(f'API failed {api_url}: {exc}')
-                  if payload is None:
-                      raise RuntimeError(f'No media metadata for tweet {tweet_id}')
+              for index, path in enumerate(files):
+                  image = Image.open(path).convert('RGB')
+                  fitted = ImageOps.contain(image, (thumb_w - 12, thumb_h - 12))
+                  tile = Image.new('RGB', (thumb_w, thumb_h), '#111111')
+                  x = (thumb_w - fitted.width) // 2
+                  y = (thumb_h - fitted.height) // 2
+                  tile.paste(fitted, (x, y))
 
-                  urls = media_urls(payload)
-                  for photo_index, url in enumerate(urls):
-                      if 'video.twimg.com' in url:
-                          continue
-                      if 'pbs.twimg.com' in url and '?' not in url:
-                          url = url + '?name=orig'
-                      request = urllib.request.Request(url, headers=headers)
-                      with urllib.request.urlopen(request, timeout=60) as response:
-                          data = response.read()
-                      if len(data) < 20000:
-                          raise RuntimeError(f'Image too small: {url} ({len(data)} bytes)')
-                      suffix = '.jpg'
-                      if data.startswith(b'\x89PNG'):
-                          suffix = '.png'
-                      target = folder / f'{tweet_index:02d}-{photo_index:02d}-{tweet_id}{suffix}'
-                      target.write_bytes(data)
-                      manifest.append({
-                          'member': member,
-                          'tweet_id': tweet_id,
-                          'tweet_index': tweet_index,
-                          'photo_index': photo_index,
-                          'path': target.as_posix(),
-                          'source': url,
-                          'api': api_used,
-                          'bytes': len(data),
-                      })
-                      print(target, len(data))
+                  col = index % columns
+                  row = index // columns
+                  px = col * thumb_w
+                  py = row * (thumb_h + label_h)
+                  sheet.paste(tile, (px, py))
+                  label = path.stem.rsplit('-', 1)[0]
+                  draw.text((px + 8, py + thumb_h + 12), label, fill='black', font=font)
 
-          (root / 'manifest.json').write_text(
-              json.dumps({'count': len(manifest), 'assets': manifest}, indent=2) + '\n',
-              encoding='utf-8',
-          )
+              sheet.save(output_root / f'{member}-contact-sheet.jpg', quality=90)
           PY
 
-      - name: Commit official media candidates
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tmp/revive-spoilers-official
-          git commit -m "Add official Spoilers media candidates"
-          git push origin fix-revive-member-mappings
+      - uses: actions/upload-artifact@v4
+        with:
+          name: spoilers-contact-sheets
+          path: tmp/spoilers-contact-sheets/*.jpg
+          retention-days: 1
