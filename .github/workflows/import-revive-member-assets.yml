@@ -1,0 +1,190 @@
+name: Import REVIVE+ member-card assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/import-revive-member-assets.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Download and localize member-card images
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import hashlib
+          import json
+          import time
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+          from pathlib import Path
+
+          ROOT = Path('assets/revive/member-cards')
+          MEMBERS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo']
+
+          SOURCES = {
+              'bangers': [
+                  'https://i.imgur.com/WuNitxa.jpg',
+                  'https://i.imgur.com/bx3bimk.jpg',
+                  'https://i.imgur.com/4UCnYQC.jpg',
+                  'https://i.imgur.com/QJEOoxJ.jpg',
+                  'https://i.imgur.com/X9GMWnT.jpg',
+                  'https://i.imgur.com/dCKfure.jpg',
+              ],
+              'challengers': [
+                  'https://preview.redd.it/260201-ive-the-2nd-album-revive-concept-photo-1-gaeul-rei-v0-9pbetg8u3wgg1.jpg?auto=webp&crop=smart&s=261987b04f07d9e67a6e085dffceb56f0bce13f8&width=640',
+                  'https://preview.redd.it/260203-ive-the-2nd-album-revive-concept-photo-2-yujin-gaeul-v0-sl3c9mxfjahg1.jpg?auto=webp&crop=smart&s=091ebbebb1b4169b927c1a90ed4863413587278b&width=640',
+                  'https://preview.redd.it/260201-ive-the-2nd-album-revive-concept-photo-1-gaeul-rei-v0-cmr7ai8u3wgg1.jpg?auto=webp&crop=smart&s=24038a8a9426913116d065c2197d1c9e62271ad8&width=640',
+                  'https://preview.redd.it/260203-ive-the-2nd-album-revive-concept-photo-2-wonyoung-v0-aaiju3fdeahg1.jpg?auto=webp&crop=smart&s=e75ae8520946d7405e4ff06f49cb876f07623d51&width=640',
+                  'https://preview.redd.it/260201-ive-the-2nd-album-revive-concept-photo-1-gaeul-rei-v0-vznhvh8u3wgg1.jpg?auto=webp&crop=smart&s=cf0f095e3cf415934d5371852186074e50158389&width=640',
+                  'https://preview.redd.it/260201-ive-the-2nd-album-revive-concept-photo-1-gaeul-rei-v0-g12qli8u3wgg1.jpg?auto=webp&crop=smart&s=42282195c9321f4e094df619abb79ab30b40defb&width=640',
+              ],
+              'spoilers': [
+                  'https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-z0aaaboklifg1.jpg?auto=webp&crop=smart&s=9f4bd76d7e4fe49ae05c9ebd1cd4545ddace0a4d&width=640',
+                  'https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-bo3j99sklifg1.jpg?auto=webp&crop=smart&s=81790309817a735ff4754bb8a5e064ac1f99b769&width=640',
+                  'https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-tnyksxtklifg1.jpg?auto=webp&crop=smart&s=e66bddba6c850953253b4257fd0d27bc4ce70d98&width=640',
+                  'https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-uy5csgvklifg1.jpg?auto=webp&crop=smart&s=f08d98cf87b0b75d6ca3b64bc99f2345e622da5b&width=640',
+                  'https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-s5hrsixklifg1.jpg?auto=webp&crop=smart&s=64e99c20ea1b730a46f7d7b3c26f9dc1169365d3&width=640',
+                  'https://preview.redd.it/ive-the-2nd-album-revive-concept-photos-v0-aatv6czklifg1.jpg?auto=webp&crop=smart&s=eb90de34790e775126cab930539799168c81fb0a&width=640',
+              ],
+              'loved-ive': [
+                  'https://preview.redd.it/ive-the-2nd-album-revive-graduation-concept-photos-v0-ixebybt9c2lg1.jpg?auto=webp&crop=smart&s=e6f9d55ee1353bd1f730fbf892249ba5e0901576&width=640',
+                  'https://preview.redd.it/ive-the-2nd-album-revive-graduation-concept-photos-v0-kaphjbnac2lg1.jpg?auto=webp&crop=smart&s=38cf38601f51ee45a6b8aef7078c38bfe8adac8f&width=640',
+                  'https://preview.redd.it/ive-the-2nd-album-revive-graduation-concept-photos-v0-gi5cnonac2lg1.jpg?auto=webp&crop=smart&s=fee771799979dd5e7d5abdf3631423ff36c8508e&width=640',
+                  'https://preview.redd.it/ive-the-2nd-album-revive-graduation-concept-photos-v0-e1w72gsac2lg1.jpg?auto=webp&crop=smart&s=a96bc42b14b1a34a8001e54f26e355e7f53a2319&width=640',
+                  'https://preview.redd.it/ive-the-2nd-album-revive-graduation-concept-photos-v0-jxkapl0bc2lg1.jpg?auto=webp&crop=smart&s=bf98804257f311ca40be595b9e982a3f5539c755&width=640',
+                  'https://preview.redd.it/ive-the-2nd-album-revive-graduation-concept-photos-v0-fjg2cr2bc2lg1.jpg?auto=webp&crop=smart&s=c8d379aeb2085e50ba54538a62bc24d147aaa82d&width=640',
+              ],
+          }
+
+          HEADERS = {
+              'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36',
+              'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+              'Referer': 'https://www.reddit.com/',
+          }
+
+          def direct_reddit_url(url: str) -> str | None:
+              parsed = urllib.parse.urlparse(url)
+              if parsed.hostname != 'preview.redd.it':
+                  return None
+              filename = Path(parsed.path).name
+              marker = '-v0-'
+              if marker not in filename:
+                  return None
+              return f"https://i.redd.it/{filename.split(marker, 1)[1]}"
+
+          def extension_for(data: bytes) -> str:
+              if data.startswith(b'\xff\xd8\xff'):
+                  return '.jpg'
+              if data.startswith(b'\x89PNG\r\n\x1a\n'):
+                  return '.png'
+              if data[:4] == b'RIFF' and data[8:12] == b'WEBP':
+                  return '.webp'
+              raise RuntimeError('Downloaded payload is not a supported image')
+
+          def download(url: str) -> tuple[bytes, str]:
+              candidates = [url]
+              direct = direct_reddit_url(url)
+              if direct:
+                  candidates.append(direct)
+
+              errors: list[str] = []
+              for candidate in candidates:
+                  for attempt in range(1, 4):
+                      request = urllib.request.Request(candidate, headers=HEADERS)
+                      try:
+                          with urllib.request.urlopen(request, timeout=60) as response:
+                              data = response.read()
+                          if len(data) < 10_000:
+                              raise RuntimeError(f'payload too small ({len(data)} bytes)')
+                          extension_for(data)
+                          return data, candidate
+                      except Exception as exc:
+                          errors.append(f'{candidate} attempt {attempt}: {exc}')
+                          time.sleep(attempt * 2)
+              raise RuntimeError('\n'.join(errors))
+
+          replacements: dict[str, str] = {}
+          manifest: list[dict[str, object]] = []
+
+          for set_id, urls in SOURCES.items():
+              if len(urls) != len(MEMBERS):
+                  raise RuntimeError(f'{set_id} does not contain six member images')
+
+              destination = ROOT / set_id
+              destination.mkdir(parents=True, exist_ok=True)
+
+              for member, source_url in zip(MEMBERS, urls, strict=True):
+                  data, resolved_source = download(source_url)
+                  suffix = extension_for(data)
+                  local_path = destination / f'{member}{suffix}'
+                  local_path.write_bytes(data)
+                  replacements[source_url] = local_path.as_posix()
+                  manifest.append({
+                      'set': set_id,
+                      'member': member,
+                      'path': local_path.as_posix(),
+                      'source': source_url,
+                      'resolved_source': resolved_source,
+                      'bytes': len(data),
+                      'sha256': hashlib.sha256(data).hexdigest(),
+                  })
+                  print(f'Downloaded {set_id}/{member}: {len(data):,} bytes -> {local_path}')
+
+          targets = [
+              Path('revive-member-sets.js'),
+              Path('member-cards.css'),
+              Path('index.html'),
+              Path('members.html'),
+          ]
+
+          for target in targets:
+              text = target.read_text(encoding='utf-8')
+              original = text
+              for external_url, local_path in replacements.items():
+                  text = text.replace(external_url, local_path)
+              if text != original:
+                  target.write_text(text, encoding='utf-8')
+                  print(f'Updated local references in {target}')
+
+          manifest_path = ROOT / 'manifest.json'
+          manifest_path.write_text(
+              json.dumps({'count': len(manifest), 'assets': manifest}, indent=2, ensure_ascii=False) + '\n',
+              encoding='utf-8',
+          )
+
+          if len(manifest) != 24:
+              raise RuntimeError(f'Expected 24 downloaded images, found {len(manifest)}')
+
+          js = Path('revive-member-sets.js').read_text(encoding='utf-8')
+          if 'preview.redd.it' in js or 'i.imgur.com' in js:
+              raise RuntimeError('External member-card URLs remain in revive-member-sets.js')
+          PY
+
+      - name: Commit localized assets
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/revive/member-cards revive-member-sets.js member-cards.css index.html members.html
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Localize all REVIVE+ member-card assets"
+          git push origin main
