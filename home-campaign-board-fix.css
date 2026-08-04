@@ -110,11 +110,12 @@ html[data-page="index"] .campaign-chrome-ring {
 
 html[data-page="index"] .campaign-sticker {
   z-index: 2;
+  box-sizing: border-box;
   pointer-events: none;
 }
 
 html[data-page="index"] .campaign-sticker-power {
-  right: 1.5%;
+  right: 3.25%;
   top: 43.5%;
   width: clamp(72px, 6.2vw, 88px);
   padding: 13px;
@@ -123,11 +124,29 @@ html[data-page="index"] .campaign-sticker-power {
 }
 
 html[data-page="index"] .campaign-sticker-us {
-  left: 3%;
-  bottom: 2.4%;
+  left: 6%;
+  bottom: 3.4%;
   padding: 9px 13px;
   font-size: clamp(.48rem, .54vw, .56rem);
+  white-space: nowrap;
   transform: rotate(-4deg);
+  transform-origin: center;
+}
+
+/* Keep the intended subjects visible inside the tall concept-card crops. */
+html[data-page="index"] .concept-bangers img {
+  object-position: 36% center;
+}
+
+html[data-page="index"] .concept-blackhole img {
+  object-fit: contain;
+  object-position: center 18%;
+  background: #08070a;
+  transform: none;
+}
+
+html[data-page="index"] .concept-blackhole:hover img {
+  transform: none;
 }
 
 @media (max-width: 1180px) {
@@ -150,7 +169,11 @@ html[data-page="index"] .campaign-sticker-us {
   }
 
   html[data-page="index"] .campaign-sticker-power {
-    right: 1%;
+    right: 3%;
+  }
+
+  html[data-page="index"] .campaign-sticker-us {
+    left: 5.5%;
   }
 
   html[data-page="index"] .campaign-chrome-ring {
@@ -183,7 +206,7 @@ html[data-page="index"] .campaign-sticker-us {
   }
 
   html[data-page="index"] .campaign-sticker-power {
-    right: 1.2%;
+    right: 3%;
     top: 44%;
     width: 72px;
     padding: 11px;
@@ -192,8 +215,8 @@ html[data-page="index"] .campaign-sticker-us {
   }
 
   html[data-page="index"] .campaign-sticker-us {
-    left: 2.5%;
-    bottom: 2.2%;
+    left: 5%;
+    bottom: 3%;
     padding: 8px 11px;
     font-size: .48rem;
   }
@@ -205,6 +228,10 @@ html[data-page="index"] .campaign-sticker-us {
     height: 104px;
     border-width: 9px;
     opacity: .27;
+  }
+
+  html[data-page="index"] .concept-bangers img {
+    object-position: center;
   }
 }
 
