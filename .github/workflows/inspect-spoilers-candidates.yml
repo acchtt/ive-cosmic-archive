@@ -8,7 +8,7 @@ permissions:
   contents: write
 
 jobs:
-  download-candidates:
+  inspect-media:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,41 +16,64 @@ jobs:
           ref: fix-revive-member-mappings
           fetch-depth: 0
 
-      - name: Download candidate images
+      - name: Fetch official tweet metadata
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import json
+          import urllib.parse
           import urllib.request
-          import time
 
-          candidates = {
-              'rei': ['QzkZue5','JGJe8Z2','k82x3Cr','9lCLKgA','cwCDsBn','6Vw8aFa','eimFTEB','HptaZta','tcMoUt2','BXTxBOk','Mzwjkxd','LdhiE6g','kFQu8tO','blUwr2A','Eimswes'],
-              'leeseo': ['qZgZL3X','wADkLMC','fAxHA7F','p6V7PWS','jwF6PO3','KGSGu9d','v8Hx7FJ','2wfP9xh','PWHBROy','JzR0f2N','fnzIxcz','V7mLr5T','FXwyhEe','H3CiZjF','f9BLVAY'],
+          tweets = {
+              'rei': [
+                  '2016150820228890959',
+                  '2016150841498206610',
+                  '2016150859290444248',
+                  '2016150875480481982',
+              ],
+              'leeseo': [
+                  '2016150712049402127',
+                  '2016150728646262878',
+                  '2016150745087914014',
+                  '2016150760975913281',
+              ],
           }
-          headers = {'User-Agent': 'Mozilla/5.0', 'Referer': 'https://www.ptt.cc/'}
-          root = Path('tmp/revive-spoilers-candidates')
-          for member, ids in candidates.items():
-              folder = root / member
-              folder.mkdir(parents=True, exist_ok=True)
-              for index, image_id in enumerate(ids):
-                  url = f'https://imgur.com/{image_id}.jpg'
-                  request = urllib.request.Request(url, headers=headers)
-                  with urllib.request.urlopen(request, timeout=60) as response:
-                      data = response.read()
-                  if len(data) < 20000 or not data.startswith(b'\xff\xd8\xff'):
-                      raise RuntimeError(f'Invalid image: {url} ({len(data)} bytes)')
-                  target = folder / f'{index:02d}-{image_id}.jpg'
-                  target.write_bytes(data)
-                  print(target, len(data))
-                  time.sleep(0.1)
+          headers = {'User-Agent': 'Mozilla/5.0'}
+          root = Path('tmp/revive-spoilers-tweets')
+          root.mkdir(parents=True, exist_ok=True)
+
+          for member, ids in tweets.items():
+              for index, tweet_id in enumerate(ids):
+                  urls = {
+                      'syndication': f'https://cdn.syndication.twimg.com/tweet-result?id={tweet_id}&lang=en',
+                      'oembed': 'https://publish.twitter.com/oembed?' + urllib.parse.urlencode({
+                          'url': f'https://x.com/IVEstarship/status/{tweet_id}',
+                          'omit_script': 'true',
+                      }),
+                  }
+                  result = {'tweet_id': tweet_id}
+                  for key, url in urls.items():
+                      try:
+                          request = urllib.request.Request(url, headers=headers)
+                          with urllib.request.urlopen(request, timeout=60) as response:
+                              payload = response.read().decode('utf-8')
+                          try:
+                              result[key] = json.loads(payload)
+                          except json.JSONDecodeError:
+                              result[key] = payload
+                      except Exception as exc:
+                          result[key] = {'error': str(exc)}
+                  target = root / f'{member}-{index}-{tweet_id}.json'
+                  target.write_text(json.dumps(result, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+                  print(target)
           PY
 
-      - name: Commit candidates
+      - name: Commit tweet metadata
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tmp/revive-spoilers-candidates
-          git commit -m "Add Spoilers portrait candidates"
+          git add tmp/revive-spoilers-tweets
+          git commit -m "Add official Spoilers tweet metadata"
           git push origin fix-revive-member-mappings
