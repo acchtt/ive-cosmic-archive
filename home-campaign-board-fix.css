@@ -128,16 +128,16 @@ html[data-page="index"] .campaign-sticker-us {
   transform-origin: center;
 }
 
-/* Keep Wonyoung centered in the BANGERS crop, slightly closer to the top. */
+/* Keep Wonyoung centered in the BANGERS crop and align her higher with the BLACKHOLE lineup. */
 html[data-page="index"] .concept-bangers img {
-  object-position: 76% 42%;
-  transform: scale(1.07) translateY(-4.5%);
+  object-position: 76% 39%;
+  transform: scale(1.07) translateY(-6%);
   transform-origin: center top;
 }
 
 html[data-page="index"] .concept-bangers:hover img,
 html[data-page="index"] .concept-bangers:focus-within img {
-  transform: scale(1.11) translateY(-4.5%);
+  transform: scale(1.11) translateY(-6%);
 }
 
 html[data-page="index"] .concept-bangers::after {
@@ -272,13 +272,13 @@ html[data-page="index"] .concept-blackhole::after {
   }
 
   html[data-page="index"] .concept-bangers img {
-    object-position: 76% 42%;
-    transform: scale(1.06) translateY(-4%);
+    object-position: 76% 39%;
+    transform: scale(1.06) translateY(-5.5%);
   }
 
   html[data-page="index"] .concept-bangers:hover img,
   html[data-page="index"] .concept-bangers:focus-within img {
-    transform: scale(1.1) translateY(-4%);
+    transform: scale(1.1) translateY(-5.5%);
   }
 
   html[data-page="index"] .concept-blackhole img {
@@ -332,13 +332,13 @@ html[data-page="index"] .concept-blackhole::after {
   }
 
   html[data-page="index"] .concept-bangers img {
-    object-position: 74% 42%;
-    transform: scale(1.05) translateY(-3.5%);
+    object-position: 74% 39%;
+    transform: scale(1.05) translateY(-5%);
   }
 
   html[data-page="index"] .concept-bangers:hover img,
   html[data-page="index"] .concept-bangers:focus-within img {
-    transform: scale(1.08) translateY(-3.5%);
+    transform: scale(1.08) translateY(-5%);
   }
 
   html[data-page="index"] .concept-blackhole img {
