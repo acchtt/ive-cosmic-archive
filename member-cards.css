@@ -47,12 +47,12 @@
 }
 
 /* Card order follows the shared members array: Gaeul, Yujin, Rei, Wonyoung, Liz, Leeseo. */
-.member-grid .member-card:nth-child(1) .member-art { --member-portrait: url("https://i.imgur.com/WuNitxa.jpg"); }
-.member-grid .member-card:nth-child(2) .member-art { --member-portrait: url("https://i.imgur.com/bx3bimk.jpg"); }
-.member-grid .member-card:nth-child(3) .member-art { --member-portrait: url("https://i.imgur.com/4UCnYQC.jpg"); }
-.member-grid .member-card:nth-child(4) .member-art { --member-portrait: url("https://i.imgur.com/QJEOoxJ.jpg"); }
-.member-grid .member-card:nth-child(5) .member-art { --member-portrait: url("https://i.imgur.com/X9GMWnT.jpg"); }
-.member-grid .member-card:nth-child(6) .member-art { --member-portrait: url("https://i.imgur.com/dCKfure.jpg"); }
+.member-grid .member-card:nth-child(1) .member-art { --member-portrait: url("assets/revive/member-cards/bangers/gaeul.jpg"); }
+.member-grid .member-card:nth-child(2) .member-art { --member-portrait: url("assets/revive/member-cards/bangers/yujin.jpg"); }
+.member-grid .member-card:nth-child(3) .member-art { --member-portrait: url("assets/revive/member-cards/bangers/rei.jpg"); }
+.member-grid .member-card:nth-child(4) .member-art { --member-portrait: url("assets/revive/member-cards/bangers/wonyoung.jpg"); }
+.member-grid .member-card:nth-child(5) .member-art { --member-portrait: url("assets/revive/member-cards/bangers/liz.jpg"); }
+.member-grid .member-card:nth-child(6) .member-art { --member-portrait: url("assets/revive/member-cards/bangers/leeseo.jpg"); }
 
 /*
    Members dossier strategy:
@@ -113,12 +113,12 @@ html[data-page="members"] .dossier-panel .dossier-visual > span {
   z-index: 2;
 }
 
-html[data-page="members"] .dossier-panel[data-active-member="0"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/WuNitxa.jpg"); }
-html[data-page="members"] .dossier-panel[data-active-member="1"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/bx3bimk.jpg"); }
-html[data-page="members"] .dossier-panel[data-active-member="2"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/4UCnYQC.jpg"); }
-html[data-page="members"] .dossier-panel[data-active-member="3"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/QJEOoxJ.jpg"); }
-html[data-page="members"] .dossier-panel[data-active-member="4"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/X9GMWnT.jpg"); }
-html[data-page="members"] .dossier-panel[data-active-member="5"] .dossier-visual { --dossier-portrait: url("https://i.imgur.com/dCKfure.jpg"); }
+html[data-page="members"] .dossier-panel[data-active-member="0"] .dossier-visual { --dossier-portrait: url("assets/revive/member-cards/bangers/gaeul.jpg"); }
+html[data-page="members"] .dossier-panel[data-active-member="1"] .dossier-visual { --dossier-portrait: url("assets/revive/member-cards/bangers/yujin.jpg"); }
+html[data-page="members"] .dossier-panel[data-active-member="2"] .dossier-visual { --dossier-portrait: url("assets/revive/member-cards/bangers/rei.jpg"); }
+html[data-page="members"] .dossier-panel[data-active-member="3"] .dossier-visual { --dossier-portrait: url("assets/revive/member-cards/bangers/wonyoung.jpg"); }
+html[data-page="members"] .dossier-panel[data-active-member="4"] .dossier-visual { --dossier-portrait: url("assets/revive/member-cards/bangers/liz.jpg"); }
+html[data-page="members"] .dossier-panel[data-active-member="5"] .dossier-visual { --dossier-portrait: url("assets/revive/member-cards/bangers/leeseo.jpg"); }
 
 .source-link { margin-left: 16px; }
 .photo-credit {
