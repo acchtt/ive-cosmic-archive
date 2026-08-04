@@ -2,11 +2,6 @@ html[data-page="index"] .campaign-board {
   isolation: isolate;
 }
 
-/*
- * Keep the six portraits narrow enough to leave intentional negative space for
- * the campaign stickers. This prevents decorations from being clipped behind
- * the photos or covering the member labels.
- */
 html[data-page="index"] .campaign-grid {
   z-index: 3;
   display: block;
@@ -133,20 +128,58 @@ html[data-page="index"] .campaign-sticker-us {
   transform-origin: center;
 }
 
-/* Keep the intended subjects visible inside the tall concept-card crops. */
+/* Keep Wonyoung centered in the BANGERS crop and mask the thumbnail mark. */
 html[data-page="index"] .concept-bangers img {
-  object-position: 36% center;
+  object-position: 76% 42%;
+}
+
+html[data-page="index"] .concept-bangers::after {
+  background:
+    linear-gradient(180deg, rgba(8, 5, 9, .04) 18%, rgba(8, 5, 9, .28) 48%, rgba(8, 5, 9, .96) 100%),
+    linear-gradient(90deg, rgba(8, 5, 9, .2), transparent 68%);
+}
+
+/* Show the complete BLACKHOLE lineup over a full-height cinematic backdrop. */
+html[data-page="index"] .concept-blackhole {
+  isolation: isolate;
+  background: #08070a;
+}
+
+html[data-page="index"] .concept-blackhole::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: -18px;
+  background:
+    linear-gradient(180deg, rgba(8, 7, 10, .08), rgba(8, 7, 10, .58)),
+    url("https://i.ytimg.com/vi/1Lmy7qwmSMc/maxresdefault.jpg") center / cover no-repeat;
+  filter: blur(13px) saturate(.82) brightness(.58);
+  opacity: .72;
+  transform: scale(1.08);
 }
 
 html[data-page="index"] .concept-blackhole img {
+  z-index: 1;
+  inset: 18px 0 auto;
+  width: 100%;
+  height: 46%;
   object-fit: contain;
-  object-position: center 18%;
-  background: #08070a;
+  object-position: center;
+  background: transparent;
+  filter: saturate(.9) contrast(1.03) brightness(.76);
   transform: none;
 }
 
-html[data-page="index"] .concept-blackhole:hover img {
+html[data-page="index"] .concept-blackhole:hover img,
+html[data-page="index"] .concept-blackhole:focus-within img {
+  filter: saturate(.96) contrast(1.03) brightness(.82);
   transform: none;
+}
+
+html[data-page="index"] .concept-blackhole::after {
+  z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(8, 5, 9, .06) 12%, rgba(8, 5, 9, .2) 34%, rgba(8, 5, 9, .78) 55%, rgba(8, 5, 9, .97) 100%);
 }
 
 @media (max-width: 1180px) {
@@ -231,7 +264,12 @@ html[data-page="index"] .concept-blackhole:hover img {
   }
 
   html[data-page="index"] .concept-bangers img {
-    object-position: center;
+    object-position: 76% 42%;
+  }
+
+  html[data-page="index"] .concept-blackhole img {
+    inset: 14px 0 auto;
+    height: 44%;
   }
 }
 
@@ -271,5 +309,14 @@ html[data-page="index"] .concept-blackhole:hover img {
   html[data-page="index"] .campaign-sticker-us,
   html[data-page="index"] .campaign-chrome-ring {
     display: none;
+  }
+
+  html[data-page="index"] .concept-bangers img {
+    object-position: 74% 42%;
+  }
+
+  html[data-page="index"] .concept-blackhole img {
+    inset: 10px 0 auto;
+    height: 42%;
   }
 }
