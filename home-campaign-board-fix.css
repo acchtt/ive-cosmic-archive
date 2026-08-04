@@ -160,20 +160,21 @@ html[data-page="index"] .concept-blackhole::before {
 
 html[data-page="index"] .concept-blackhole img {
   z-index: 1;
-  inset: 18px 0 auto;
+  inset: 12px 0 auto;
   width: 100%;
-  height: 46%;
+  height: 49%;
   object-fit: contain;
   object-position: center;
   background: transparent;
   filter: saturate(.9) contrast(1.03) brightness(.76);
-  transform: none;
+  transform: scale(1.08);
+  transform-origin: center top;
 }
 
 html[data-page="index"] .concept-blackhole:hover img,
 html[data-page="index"] .concept-blackhole:focus-within img {
   filter: saturate(.96) contrast(1.03) brightness(.82);
-  transform: none;
+  transform: scale(1.11);
 }
 
 html[data-page="index"] .concept-blackhole::after {
@@ -268,8 +269,14 @@ html[data-page="index"] .concept-blackhole::after {
   }
 
   html[data-page="index"] .concept-blackhole img {
-    inset: 14px 0 auto;
-    height: 44%;
+    inset: 10px 0 auto;
+    height: 47%;
+    transform: scale(1.07);
+  }
+
+  html[data-page="index"] .concept-blackhole:hover img,
+  html[data-page="index"] .concept-blackhole:focus-within img {
+    transform: scale(1.1);
   }
 }
 
@@ -316,7 +323,13 @@ html[data-page="index"] .concept-blackhole::after {
   }
 
   html[data-page="index"] .concept-blackhole img {
-    inset: 10px 0 auto;
-    height: 42%;
+    inset: 8px 0 auto;
+    height: 45%;
+    transform: scale(1.06);
+  }
+
+  html[data-page="index"] .concept-blackhole:hover img,
+  html[data-page="index"] .concept-blackhole:focus-within img {
+    transform: scale(1.08);
   }
 }
