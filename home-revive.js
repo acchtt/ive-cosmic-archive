@@ -8,6 +8,13 @@
     document.head.appendChild(collageFixStyles);
   }
 
+  if (!document.querySelector('script[src="revive-member-sets.js"]')) {
+    const memberSetScript = document.createElement('script');
+    memberSetScript.src = 'revive-member-sets.js';
+    memberSetScript.async = false;
+    document.head.appendChild(memberSetScript);
+  }
+
   const board = document.querySelector('[data-campaign-board]');
   const mediaCount = document.querySelector('[data-home-media-count]');
   const mvCount = document.querySelector('[data-home-mv-count]');
