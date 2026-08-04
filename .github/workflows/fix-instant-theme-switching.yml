@@ -1,0 +1,304 @@
+name: Apply instant REVIVE+ theme switching
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  apply-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Preload, decode, and atomically swap every member-card set
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          sets = ['bangers', 'challengers', 'spoilers', 'loved-ive']
+          members = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo']
+
+          preload_lines = []
+          for set_id in sets:
+              priority = 'high' if set_id == 'bangers' else 'low'
+              for member in members:
+                  preload_lines.append(
+                      f'  <link rel="preload" as="image" href="assets/revive/member-cards/{set_id}/{member}.jpg" fetchpriority="{priority}" />'
+                  )
+          preload_block = '\n'.join(preload_lines) + '\n'
+
+          preload_pattern = re.compile(
+              r'  <link rel="preload" as="image" href="assets/revive/member-cards/bangers/gaeul\.jpg"[^\n]*\n'
+              r'(?:  <link rel="preload" as="image" href="assets/revive/member-cards/bangers/[^\n]+\n){5}'
+          )
+
+          version = '0.11.0'
+          build = '011'
+          for html_name in ['index.html', 'members.html']:
+              path = Path(html_name)
+              text = path.read_text(encoding='utf-8')
+              text, count = preload_pattern.subn(preload_block, text, count=1)
+              if count != 1:
+                  raise RuntimeError(f'Could not replace preload block in {html_name}')
+              path.write_text(text, encoding='utf-8')
+
+          for html_name in ['index.html', 'members.html', 'eras.html', 'media.html']:
+              path = Path(html_name)
+              text = path.read_text(encoding='utf-8')
+              match = re.search(r'<p class="footer-code">(.*?)</p>', text, flags=re.S)
+              if not match:
+                  raise RuntimeError(f'Footer version line missing in {html_name}')
+              base = re.sub(r'\s*·\s*v\d+(?:\.\d+){1,2}.*$', '', match.group(1).strip())
+              base = re.sub(r'Archive build\s*·\s*\d+', f'Archive build · {build}', base)
+              replacement = f'<p class="footer-code">{base} · v{version}</p>'
+              text = text[:match.start()] + replacement + text[match.end():]
+              path.write_text(text, encoding='utf-8')
+
+          js_path = Path('revive-member-sets.js')
+          js = js_path.read_text(encoding='utf-8')
+
+          js = js.replace(
+              "  const resolvedPortraits = new Map();\n  const portraitLoads = new Map();\n",
+              "  const resolvedPortraits = new Map();\n  const portraitLoads = new Map();\n  const portraitImages = new Map();\n  const setLoads = new Map();\n"
+          )
+          js = js.replace(
+              "  document.documentElement.dataset.memberSet = activeSetId;\n",
+              "  document.documentElement.dataset.memberSet = activeSetId;\n  document.documentElement.dataset.memberAssetsReady = 'loading';\n",
+              1
+          )
+
+          old_preload = '''  function preloadPortrait(url, fallbackUrl, priority = 'auto') {
+    if (resolvedPortraits.has(url)) return Promise.resolve(resolvedPortraits.get(url));
+    if (portraitLoads.has(url)) return portraitLoads.get(url);
+
+    const load = new Promise((resolve) => {
+      const image = new Image();
+      image.decoding = 'async';
+      if ('fetchPriority' in image) image.fetchPriority = priority;
+      image.onload = () => {
+        resolvedPortraits.set(url, url);
+        resolve(url);
+      };
+      image.onerror = () => {
+        resolvedPortraits.set(url, fallbackUrl);
+        resolve(fallbackUrl);
+      };
+      image.src = url;
+    });
+
+    portraitLoads.set(url, load);
+    return load;
+  }
+
+  function preloadAllPortraits() {
+    const preloadOrder = [
+      activeSetId,
+      ...SET_ORDER.filter((setId) => setId !== activeSetId)
+    ];
+
+    preloadOrder.forEach((setId) => {
+      SETS[setId].portraits.forEach((url, index) => {
+        const fallback = SETS.bangers.portraits[index];
+        const priority = setId === activeSetId ? 'high' : 'low';
+        preloadPortrait(url, fallback, priority);
+      });
+    });
+  }
+'''
+
+          new_preload = '''  function preloadPortrait(url, fallbackUrl, priority = 'auto') {
+    if (resolvedPortraits.has(url)) return Promise.resolve(resolvedPortraits.get(url));
+    if (portraitLoads.has(url)) return portraitLoads.get(url);
+
+    const load = new Promise((resolve) => {
+      const image = new Image();
+      image.decoding = 'async';
+      if ('fetchPriority' in image) image.fetchPriority = priority;
+
+      image.onload = async () => {
+        try {
+          await image.decode();
+        } catch {
+          // A completed load is still usable when explicit decode is unsupported.
+        }
+        portraitImages.set(url, image);
+        resolvedPortraits.set(url, url);
+        resolve(url);
+      };
+
+      image.onerror = () => {
+        if (url === fallbackUrl) {
+          resolvedPortraits.set(url, fallbackUrl);
+          resolve(fallbackUrl);
+          return;
+        }
+        preloadPortrait(fallbackUrl, fallbackUrl, priority).then((resolved) => {
+          resolvedPortraits.set(url, resolved);
+          resolve(resolved);
+        });
+      };
+
+      image.src = url;
+    });
+
+    portraitLoads.set(url, load);
+    return load;
+  }
+
+  function preloadSetPortraits(setId, priority = 'high') {
+    if (setLoads.has(setId)) return setLoads.get(setId);
+
+    const load = Promise.all(SETS[setId].portraits.map((url, index) => {
+      const fallback = SETS.bangers.portraits[index];
+      return preloadPortrait(url, fallback, priority);
+    }));
+
+    setLoads.set(setId, load);
+    return load;
+  }
+
+  function preloadAllPortraits() {
+    const preloadOrder = [
+      activeSetId,
+      ...SET_ORDER.filter((setId) => setId !== activeSetId)
+    ];
+
+    return Promise.all(preloadOrder.map((setId) => (
+      preloadSetPortraits(setId, setId === activeSetId ? 'high' : 'low')
+    ))).then(() => {
+      document.documentElement.dataset.memberAssetsReady = 'true';
+    });
+  }
+'''
+
+          if old_preload not in js:
+              raise RuntimeError('Current preload implementation did not match expected source')
+          js = js.replace(old_preload, new_preload, 1)
+
+          old_apply = '''  function applyCurrentDossierPortrait() {
+    const index = activeMemberIndex();
+    const requested = SETS[activeSetId].portraits[index];
+    const fallback = SETS.bangers.portraits[index];
+    const version = selectionVersion;
+
+    applyPortraitToDossier(index, requested);
+    preloadPortrait(requested, fallback).then((resolved) => {
+      if (version !== selectionVersion || index !== activeMemberIndex()) return;
+      applyPortraitToDossier(index, resolved);
+    });
+  }
+
+  function applyCampaignBoard() {
+    if (page !== 'index') return;
+    const set = SETS[activeSetId];
+    const version = selectionVersion;
+
+    set.portraits.forEach((requested, index) => {
+      const fallback = SETS.bangers.portraits[index];
+      applyPortraitToCampaignBoard(index, requested);
+      preloadPortrait(requested, fallback).then((resolved) => {
+        if (version !== selectionVersion) return;
+        applyPortraitToCampaignBoard(index, resolved);
+      });
+    });
+  }
+
+  function applyCurrentSet() {
+    const set = SETS[activeSetId];
+    const version = selectionVersion;
+
+    set.portraits.forEach((requested, index) => {
+      const fallback = SETS.bangers.portraits[index];
+      applyPortraitToCard(index, requested);
+      preloadPortrait(requested, fallback).then((resolved) => {
+        if (version !== selectionVersion) return;
+        applyPortraitToCard(index, resolved);
+      });
+    });
+
+    applyCurrentDossierPortrait();
+    applyCampaignBoard();
+    updateSwitcher();
+    updateMembersPageCopy();
+    updateHomeThemeCopy();
+  }
+'''
+
+          new_apply = '''  function applyCurrentDossierPortrait() {
+    const index = activeMemberIndex();
+    const setId = activeSetId;
+    const version = selectionVersion;
+
+    preloadSetPortraits(setId, 'high').then((portraits) => {
+      if (version !== selectionVersion || setId !== activeSetId || index !== activeMemberIndex()) return;
+      applyPortraitToDossier(index, portraits[index]);
+    });
+  }
+
+  function applyResolvedSet(setId, portraits, version) {
+    if (version !== selectionVersion || setId !== activeSetId) return;
+
+    requestAnimationFrame(() => {
+      if (version !== selectionVersion || setId !== activeSetId) return;
+
+      portraits.forEach((url, index) => {
+        applyPortraitToCard(index, url);
+        if (page === 'index') applyPortraitToCampaignBoard(index, url);
+      });
+
+      const dossierIndex = activeMemberIndex();
+      applyPortraitToDossier(dossierIndex, portraits[dossierIndex]);
+      updateSwitcher();
+      updateMembersPageCopy();
+      updateHomeThemeCopy();
+    });
+  }
+
+  function applyCurrentSet() {
+    const setId = activeSetId;
+    const version = selectionVersion;
+
+    preloadSetPortraits(setId, 'high').then((portraits) => {
+      applyResolvedSet(setId, portraits, version);
+    });
+  }
+'''
+
+          if old_apply not in js:
+              raise RuntimeError('Current set application implementation did not match expected source')
+          js = js.replace(old_apply, new_apply, 1)
+          js_path.write_text(js, encoding='utf-8')
+
+          css_path = Path('revive-member-sets.css')
+          css = css_path.read_text(encoding='utf-8')
+          old_transition = '''.member-card .member-art,
+html[data-page="members"] .dossier-panel .dossier-visual::before {
+  transition: background-image .2s linear, filter .3s ease, opacity .3s ease;
+}
+'''
+          new_transition = '''.member-card .member-art,
+html[data-page="members"] .dossier-panel .dossier-visual::before {
+  transition: filter .18s ease, opacity .18s ease;
+}
+'''
+          if old_transition not in css:
+              raise RuntimeError('Member portrait transition block did not match expected source')
+          css_path.write_text(css.replace(old_transition, new_transition, 1), encoding='utf-8')
+          PY
+
+      - name: Commit smoother switching to main
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html members.html eras.html media.html revive-member-sets.js revive-member-sets.css
+          git commit -m "Make REVIVE+ theme switching instant"
+          git push origin main
