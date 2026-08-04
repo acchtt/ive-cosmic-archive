@@ -5,8 +5,8 @@
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
-  const ARCHIVE_VERSION = '0.18.0';
-  const ARCHIVE_BUILD = '018';
+  const ARCHIVE_VERSION = '0.19.0';
+  const ARCHIVE_BUILD = '019';
   const RELOAD_NAVIGATION = (() => {
     try {
       const navigation = window.performance?.getEntriesByType?.('navigation')?.[0];
