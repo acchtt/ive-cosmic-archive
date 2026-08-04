@@ -1,0 +1,1 @@
+Trigger the registered workflow that adds the launch theme picker and bottom-right change hint.
