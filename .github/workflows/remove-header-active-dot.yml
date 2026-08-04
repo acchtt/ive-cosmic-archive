@@ -1,0 +1,65 @@
+name: Remove header active dot
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/remove-header-active-dot.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Remove active navigation dot
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          VERSION = '0.17.1'
+          BUILD = '018'
+
+          css_path = Path('header-editorial-glass.css')
+          css = css_path.read_text(encoding='utf-8')
+          marker = '/* Active page uses only the underline; no dot indicator. */'
+          override = '''\n\n/* Active page uses only the underline; no dot indicator. */
+html body .site-header .site-nav a::before {
+  content: none !important;
+  display: none !important;
+}
+'''
+          if marker not in css:
+              css = css.rstrip() + override
+          css_path.write_text(css, encoding='utf-8')
+
+          js_path = Path('revive-member-sets.js')
+          js = js_path.read_text(encoding='utf-8')
+          js = re.sub(r"const ARCHIVE_VERSION = '[^']+';", f"const ARCHIVE_VERSION = '{VERSION}';", js, count=1)
+          js = re.sub(r"const ARCHIVE_BUILD = '[^']+';", f"const ARCHIVE_BUILD = '{BUILD}';", js, count=1)
+          js_path.write_text(js, encoding='utf-8')
+
+          for html_name in ['index.html', 'members.html', 'eras.html', 'media.html']:
+              path = Path(html_name)
+              text = path.read_text(encoding='utf-8')
+              text = re.sub(r'Archive build\s*·\s*\d+', f'Archive build · {BUILD}', text)
+              text = re.sub(r'·\s*v\d+(?:\.\d+){1,2}', f'· v{VERSION}', text)
+              path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit production change
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add header-editorial-glass.css revive-member-sets.js index.html members.html eras.html media.html
+          git commit -m "Remove active navigation dot"
+          git push origin main
