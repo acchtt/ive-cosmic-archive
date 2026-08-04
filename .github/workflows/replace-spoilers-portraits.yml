@@ -1,0 +1,88 @@
+name: Replace Spoilers portraits
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/replace-spoilers-portraits.yml
+
+permissions:
+  contents: write
+
+jobs:
+  replace-portraits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Replace Rei and Leeseo portraits
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import hashlib
+          import json
+          import urllib.request
+          from pathlib import Path
+
+          REPLACEMENTS = {
+              ('spoilers', 'rei'): {
+                  'url': 'https://pbs.twimg.com/media/G_rOft1bUAAeD9X.jpg?name=orig',
+                  'tweet': 'https://x.com/IVEstarship/status/2016150841498206610',
+              },
+              ('spoilers', 'leeseo'): {
+                  'url': 'https://pbs.twimg.com/media/G_rOZWMW8AA9wLp.jpg?name=orig',
+                  'tweet': 'https://x.com/IVEstarship/status/2016150728646262878',
+              },
+          }
+
+          headers = {
+              'User-Agent': 'ive-cosmic-archive/1.0',
+              'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+          }
+
+          manifest_path = Path('assets/revive/member-cards/manifest.json')
+          manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+          entries = {(entry['set'], entry['member']): entry for entry in manifest['assets']}
+
+          for (set_id, member), replacement in REPLACEMENTS.items():
+              request = urllib.request.Request(replacement['url'], headers=headers)
+              with urllib.request.urlopen(request, timeout=60) as response:
+                  data = response.read()
+
+              if len(data) < 50_000 or not data.startswith(b'\xff\xd8\xff'):
+                  raise RuntimeError(f'Invalid JPEG for {set_id}/{member}: {len(data)} bytes')
+
+              target = Path(f'assets/revive/member-cards/{set_id}/{member}.jpg')
+              target.write_bytes(data)
+              digest = hashlib.sha256(data).hexdigest()
+
+              entries[(set_id, member)].update({
+                  'path': target.as_posix(),
+                  'source': replacement['url'],
+                  'resolved_source': replacement['url'],
+                  'official_post': replacement['tweet'],
+                  'bytes': len(data),
+                  'sha256': digest,
+              })
+              print(f'Replaced {set_id}/{member}: {len(data):,} bytes, {digest}')
+
+          manifest_path.write_text(
+              json.dumps(manifest, indent=2, ensure_ascii=False) + '\n',
+              encoding='utf-8',
+          )
+          PY
+
+      - name: Commit replacements
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/revive/member-cards/spoilers/rei.jpg assets/revive/member-cards/spoilers/leeseo.jpg assets/revive/member-cards/manifest.json
+          git commit -m "Use cleaner Rei and Leeseo Spoilers portraits"
+          git push origin main
