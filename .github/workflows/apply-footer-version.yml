@@ -1,0 +1,71 @@
+name: Apply footer version info
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-footer-version.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  add-footer-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Add shared version metadata to every footer
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('script.js')
+          text = path.read_text(encoding='utf-8')
+
+          constants_anchor = "}\n\nconst members = ["
+          constants = "}\n\n// Increment both values with every production change.\nconst ARCHIVE_VERSION = '0.10.0';\nconst ARCHIVE_BUILD = '010';\n\nconst members = ["
+          if "const ARCHIVE_VERSION" not in text:
+              if constants_anchor not in text:
+                  raise RuntimeError('Could not locate version constant anchor')
+              text = text.replace(constants_anchor, constants, 1)
+
+          function_anchor = "\nlet revealObserver;\n"
+          function_block = """
+function updateFooterVersion() {
+  $$('.footer-code').forEach((node) => {
+    const base = node.dataset.archiveBase || node.textContent.trim();
+    node.dataset.archiveBase = base;
+    node.textContent = `${base} · v${ARCHIVE_VERSION} · Build ${ARCHIVE_BUILD}`;
+  });
+}
+
+let revealObserver;
+"""
+          if "function updateFooterVersion()" not in text:
+              if function_anchor not in text:
+                  raise RuntimeError('Could not locate footer version function anchor')
+              text = text.replace(function_anchor, '\n' + function_block, 1)
+
+          init_anchor = "  setActiveRoute();\n  renderMembers();"
+          init_replacement = "  setActiveRoute();\n  updateFooterVersion();\n  renderMembers();"
+          if "  updateFooterVersion();\n" not in text:
+              if init_anchor not in text:
+                  raise RuntimeError('Could not locate init anchor')
+              text = text.replace(init_anchor, init_replacement, 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit version footer to main
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add script.js
+          git commit -m "Add shared footer version information"
+          git push origin main
