@@ -1,3 +1,4 @@
+# one-time correction workflow
 name: Fix REVIVE+ member mappings
 
 on:
