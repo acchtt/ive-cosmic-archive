@@ -5,6 +5,7 @@ import json
 import time
 import urllib.parse
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 ROOT = Path("assets/revive/member-cards")
@@ -74,17 +75,15 @@ def extension_for(data: bytes) -> str:
 
 
 def download(url: str) -> tuple[bytes, str]:
-    candidates = [url]
     direct = direct_reddit_url(url)
-    if direct:
-        candidates.append(direct)
-
+    candidates = [candidate for candidate in (direct, url) if candidate]
     errors: list[str] = []
+
     for candidate in candidates:
-        for attempt in range(1, 4):
+        for attempt in range(1, 3):
             request = urllib.request.Request(candidate, headers=HEADERS)
             try:
-                with urllib.request.urlopen(request, timeout=60) as response:
+                with urllib.request.urlopen(request, timeout=15) as response:
                     data = response.read()
                 if len(data) < 10_000:
                     raise RuntimeError(f"payload too small ({len(data)} bytes)")
@@ -92,23 +91,35 @@ def download(url: str) -> tuple[bytes, str]:
                 return data, candidate
             except Exception as exc:
                 errors.append(f"{candidate} attempt {attempt}: {exc}")
-                time.sleep(attempt * 2)
+                time.sleep(1)
+
     raise RuntimeError("\n".join(errors))
 
 
+def fetch_asset(task: tuple[str, str, str]) -> tuple[str, str, str, bytes, str]:
+    set_id, member, source_url = task
+    data, resolved_source = download(source_url)
+    return set_id, member, source_url, data, resolved_source
+
+
 def main() -> None:
+    tasks = [
+        (set_id, member, source_url)
+        for set_id, urls in SOURCES.items()
+        for member, source_url in zip(MEMBERS, urls, strict=True)
+    ]
+    if len(tasks) != 24:
+        raise RuntimeError(f"Expected 24 source images, found {len(tasks)}")
+
     replacements: dict[str, str] = {}
     manifest: list[dict[str, object]] = []
 
-    for set_id, urls in SOURCES.items():
-        if len(urls) != len(MEMBERS):
-            raise RuntimeError(f"{set_id} does not contain six member images")
-
-        destination = ROOT / set_id
-        destination.mkdir(parents=True, exist_ok=True)
-
-        for member, source_url in zip(MEMBERS, urls, strict=True):
-            data, resolved_source = download(source_url)
+    with ThreadPoolExecutor(max_workers=12) as executor:
+        futures = {executor.submit(fetch_asset, task): task for task in tasks}
+        for future in as_completed(futures):
+            set_id, member, source_url, data, resolved_source = future.result()
+            destination = ROOT / set_id
+            destination.mkdir(parents=True, exist_ok=True)
             suffix = extension_for(data)
             local_path = destination / f"{member}{suffix}"
             local_path.write_bytes(data)
@@ -124,7 +135,7 @@ def main() -> None:
                     "sha256": hashlib.sha256(data).hexdigest(),
                 }
             )
-            print(f"Downloaded {set_id}/{member}: {len(data):,} bytes -> {local_path}")
+            print(f"Downloaded {set_id}/{member}: {len(data):,} bytes -> {local_path}", flush=True)
 
     targets = [
         Path("revive-member-sets.js"),
@@ -132,7 +143,6 @@ def main() -> None:
         Path("index.html"),
         Path("members.html"),
     ]
-
     for target in targets:
         text = target.read_text(encoding="utf-8")
         original = text
@@ -142,8 +152,8 @@ def main() -> None:
             target.write_text(text, encoding="utf-8")
             print(f"Updated local references in {target}")
 
-    manifest_path = ROOT / "manifest.json"
-    manifest_path.write_text(
+    manifest.sort(key=lambda item: (str(item["set"]), MEMBERS.index(str(item["member"]))))
+    (ROOT / "manifest.json").write_text(
         json.dumps({"count": len(manifest), "assets": manifest}, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
