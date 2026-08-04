@@ -4,8 +4,8 @@
 
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ARCHIVE_VERSION = '0.12.0';
-  const ARCHIVE_BUILD = '012';
+  const ARCHIVE_VERSION = '0.13.0';
+  const ARCHIVE_BUILD = '013';
 
   const SETS = {
     bangers: {
@@ -86,6 +86,14 @@
     }
   }
 
+  function hasStoredSet() {
+    try {
+      return Boolean(SETS[window.localStorage.getItem(STORAGE_KEY)]);
+    } catch {
+      return false;
+    }
+  }
+
   function storeSet(setId) {
     try {
       window.localStorage.setItem(STORAGE_KEY, setId);
@@ -135,39 +143,78 @@
     document.head.appendChild(fragment);
   }
 
+  function setSwitcherOpen(switcher, open) {
+    if (!switcher) return;
+    switcher.dataset.open = String(open);
+    const toggle = switcher.querySelector('[data-member-set-toggle]');
+    if (toggle) toggle.setAttribute('aria-expanded', String(open));
+  }
+
   function createSwitcher() {
     const existing = document.querySelector('[data-member-set-switcher]');
     if (existing) return existing;
 
-    const main = document.querySelector('main');
-    const grid = document.querySelector('[data-member-grid]');
-    const dossierLayout = document.querySelector('.dossier-layout');
-    const anchor = main || grid || dossierLayout;
-    if (!anchor) return null;
-
-    const switcher = document.createElement('div');
-    switcher.className = 'member-set-switcher member-set-switcher-top section-shell reveal visible';
+    const switcher = document.createElement('aside');
+    const startOpen = !hasStoredSet();
+    switcher.className = 'member-set-switcher-popup';
     switcher.dataset.memberSetSwitcher = '';
+    switcher.dataset.open = String(startOpen);
+    switcher.setAttribute('aria-label', 'REVIVE+ album-version theme selector');
     switcher.innerHTML = `
-      <div class="member-set-switcher-copy">
-        <span>REVIVE+ edition</span>
+      <button class="member-set-dock" type="button" data-member-set-toggle aria-expanded="${startOpen}" aria-controls="revive-version-menu">
+        <span class="member-set-dock-dot" aria-hidden="true"></span>
+        <span class="member-set-dock-label">REVIVE+ edition</span>
         <strong data-member-set-title>${SETS[activeSetId].label}</strong>
-      </div>
-      <div class="member-set-options" role="group" aria-label="Choose a REVIVE+ album-version theme and member-card set">
-        ${SET_ORDER.map((setId) => `
-          <button type="button" data-member-set="${setId}" aria-pressed="${setId === activeSetId}" aria-label="Use the ${SETS[setId].label} version theme">
-            ${SETS[setId].label}
-          </button>`).join('')}
-      </div>
-      <p data-member-set-description>${SETS[activeSetId].description}</p>`;
+        <span class="member-set-dock-action" aria-hidden="true">Change</span>
+      </button>
+      <div class="member-set-popover" id="revive-version-menu" role="dialog" aria-label="Choose a REVIVE+ album version">
+        <div class="member-set-popover-head">
+<div>
+  <span>REVIVE+ archive coordinate</span>
+  <strong>Choose an edition</strong>
+</div>
+<button type="button" class="member-set-close" data-member-set-close aria-label="Close edition menu">×</button>
+        </div>
+        <p data-member-set-description>${SETS[activeSetId].description}</p>
+        <div class="member-set-options" role="group" aria-label="Choose a REVIVE+ album-version theme and member-card set">
+${SET_ORDER.map((setId) => `
+  <button type="button" data-member-set="${setId}" aria-pressed="${setId === activeSetId}" aria-label="Use the ${SETS[setId].label} version theme">
+    <span>${SETS[setId].label}</span>
+    <small>06 cards</small>
+  </button>`).join('')}
+        </div>
+      </div>`;
 
-    if (main) main.insertAdjacentElement('beforebegin', switcher);
-    else anchor.insertAdjacentElement('beforebegin', switcher);
+    document.body.appendChild(switcher);
 
     switcher.addEventListener('click', (event) => {
+      const toggle = event.target.closest('[data-member-set-toggle]');
+      if (toggle) {
+        setSwitcherOpen(switcher, switcher.dataset.open !== 'true');
+        return;
+      }
+
+      if (event.target.closest('[data-member-set-close]')) {
+        setSwitcherOpen(switcher, false);
+        return;
+      }
+
       const button = event.target.closest('[data-member-set]');
       if (!button || !SETS[button.dataset.memberSet]) return;
       setActiveSet(button.dataset.memberSet);
+      setSwitcherOpen(switcher, false);
+      switcher.querySelector('[data-member-set-toggle]')?.focus();
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (switcher.dataset.open !== 'true' || switcher.contains(event.target)) return;
+      setSwitcherOpen(switcher, false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || switcher.dataset.open !== 'true') return;
+      setSwitcherOpen(switcher, false);
+      switcher.querySelector('[data-member-set-toggle]')?.focus();
     });
 
     return switcher;
@@ -367,10 +414,16 @@
   }
 
   function setActiveSet(setId) {
-    if (!SETS[setId] || setId === activeSetId) return;
+    if (!SETS[setId]) return;
+
+    storeSet(setId);
+    if (setId === activeSetId) {
+      updateSwitcher();
+      return;
+    }
+
     activeSetId = setId;
     selectionVersion += 1;
-    storeSet(setId);
     applyCurrentSet();
     window.dispatchEvent(new CustomEvent('revive-member-set-change', {
       detail: { id: setId, label: SETS[setId].label, themeColor: SETS[setId].themeColor }
