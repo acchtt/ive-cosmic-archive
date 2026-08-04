@@ -1,6 +1,13 @@
 (() => {
   if (document.documentElement.dataset.page !== 'index') return;
 
+  if (!document.querySelector('link[href="home-revive-collage-fix.css"]')) {
+    const collageFixStyles = document.createElement('link');
+    collageFixStyles.rel = 'stylesheet';
+    collageFixStyles.href = 'home-revive-collage-fix.css';
+    document.head.appendChild(collageFixStyles);
+  }
+
   const board = document.querySelector('[data-campaign-board]');
   const mediaCount = document.querySelector('[data-home-media-count]');
   const mvCount = document.querySelector('[data-home-mv-count]');

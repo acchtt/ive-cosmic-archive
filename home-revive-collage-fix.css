@@ -1,0 +1,126 @@
+/* Keep the REVIVE+ campaign collage readable at every viewport. */
+html[data-page="index"] .revive-campaign-copy {
+  min-width: 0;
+}
+
+html[data-page="index"] .revive-campaign-title {
+  font-size: clamp(4.25rem, 7.4vw, 7rem);
+}
+
+html[data-page="index"] .revive-campaign-title .title-revive {
+  max-width: 100%;
+  margin-left: clamp(14px, 2.5vw, 34px);
+}
+
+html[data-page="index"] .campaign-board {
+  isolation: isolate;
+}
+
+html[data-page="index"] .campaign-grid {
+  z-index: 4;
+  padding: 62px 44px 42px;
+}
+
+html[data-page="index"] .campaign-photo {
+  z-index: 4;
+  min-width: 0;
+}
+
+html[data-page="index"] .campaign-photo figcaption {
+  z-index: 7;
+  max-width: calc(100% - 20px);
+  overflow: hidden;
+  background: rgba(252, 248, 251, .96);
+  box-shadow: 0 5px 16px rgba(36, 14, 30, .18);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  backdrop-filter: blur(5px);
+}
+
+html[data-page="index"] .campaign-sticker,
+html[data-page="index"] .campaign-chrome-ring {
+  z-index: 2;
+  pointer-events: none;
+}
+
+html[data-page="index"] .campaign-sticker-power {
+  right: -18px;
+  top: 39%;
+  width: 118px;
+  padding: 17px;
+  opacity: .9;
+}
+
+html[data-page="index"] .campaign-sticker-us {
+  left: -24px;
+  bottom: 7%;
+  opacity: .88;
+}
+
+html[data-page="index"] .campaign-chrome-ring {
+  right: 28%;
+  top: 39%;
+  width: 138px;
+  height: 138px;
+  border-width: 11px;
+  opacity: .28;
+  box-shadow:
+    inset 0 0 0 2px rgba(15, 7, 13, .12),
+    0 0 0 2px rgba(15, 7, 13, .1),
+    0 12px 26px rgba(46, 17, 37, .12);
+}
+
+html[data-page="index"] .campaign-board::before,
+html[data-page="index"] .campaign-board::after {
+  z-index: 7;
+}
+
+@media (max-width: 1120px) {
+  html[data-page="index"] .revive-campaign-hero {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    padding-top: 70px;
+  }
+
+  html[data-page="index"] .revive-campaign-copy {
+    max-width: 780px;
+  }
+
+  html[data-page="index"] .campaign-board {
+    min-height: 720px;
+  }
+}
+
+@media (max-width: 660px) {
+  html[data-page="index"] .campaign-grid {
+    padding: 58px 20px 27px;
+  }
+
+  html[data-page="index"] .campaign-sticker-us,
+  html[data-page="index"] .campaign-chrome-ring {
+    display: none;
+  }
+
+  html[data-page="index"] .campaign-sticker-power {
+    right: -12px;
+    top: 42%;
+    width: 82px;
+    padding: 12px;
+    font-size: .5rem;
+    opacity: .62;
+  }
+}
+
+@media (max-width: 430px) {
+  html[data-page="index"] .campaign-sticker-power {
+    display: none;
+  }
+
+  html[data-page="index"] .campaign-photo figcaption {
+    left: 7px;
+    bottom: 7px;
+    max-width: calc(100% - 14px);
+    padding: 4px 6px;
+    font-size: .44rem;
+  }
+}
