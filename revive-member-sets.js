@@ -9,6 +9,8 @@
     bangers: {
       label: 'BANGERS',
       description: 'High-impact color, styling, and performance energy.',
+      themeColor: '#ff435e',
+      tags: ['Redline styling', 'High impact', 'Performance', 'Forward motion'],
       portraits: [
         'assets/revive/member-cards/bangers/gaeul.jpg',
         'assets/revive/member-cards/bangers/yujin.jpg',
@@ -21,6 +23,8 @@
     challengers: {
       label: 'CHALLENGERS',
       description: 'Sharper silhouettes and a confident competitive coordinate.',
+      themeColor: '#69e5ff',
+      tags: ['Competitive edge', 'Icy chrome', 'Precision', 'Momentum'],
       portraits: [
         'assets/revive/member-cards/challengers/gaeul.jpg',
         'assets/revive/member-cards/challengers/yujin.jpg',
@@ -33,6 +37,8 @@
     spoilers: {
       label: 'SPOILERS',
       description: 'Lavender press-room styling with polished editorial tension.',
+      themeColor: '#c7a6ff',
+      tags: ['Press room', 'Lavender flash', 'Editorial', 'Tension'],
       portraits: [
         'assets/revive/member-cards/spoilers/gaeul.jpg',
         'assets/revive/member-cards/spoilers/yujin.jpg',
@@ -45,6 +51,8 @@
     'loved-ive': {
       label: 'LOVED IVE',
       description: 'A softer graduation-inspired set built around warmth and connection.',
+      themeColor: '#ffb7d2',
+      tags: ['Graduation', 'Soft focus', 'Warmth', 'Connection'],
       portraits: [
         'assets/revive/member-cards/loved-ive/gaeul.jpg',
         'assets/revive/member-cards/loved-ive/yujin.jpg',
@@ -60,6 +68,8 @@
   const resolvedPortraits = new Map();
   let activeSetId = readStoredSet();
   let selectionVersion = 0;
+
+  document.documentElement.dataset.memberSet = activeSetId;
 
   function readStoredSet() {
     try {
@@ -104,12 +114,12 @@
     switcher.dataset.memberSetSwitcher = '';
     switcher.innerHTML = `
       <div class="member-set-switcher-copy">
-        <span>REVIVE+ card archive</span>
+        <span>REVIVE+ version theme</span>
         <strong data-member-set-title>${SETS[activeSetId].label}</strong>
       </div>
-      <div class="member-set-options" role="group" aria-label="Choose a REVIVE+ member-card set">
+      <div class="member-set-options" role="group" aria-label="Choose a REVIVE+ album-version theme and member-card set">
         ${SET_ORDER.map((setId) => `
-          <button type="button" data-member-set="${setId}" aria-pressed="${setId === activeSetId}">
+          <button type="button" data-member-set="${setId}" aria-pressed="${setId === activeSetId}" aria-label="Use the ${SETS[setId].label} version theme">
             ${SETS[setId].label}
           </button>`).join('')}
       </div>
@@ -125,9 +135,21 @@
     return switcher;
   }
 
+  function updateThemeColor() {
+    const set = SETS[activeSetId];
+    let meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.name = 'theme-color';
+      document.head.appendChild(meta);
+    }
+    meta.content = set.themeColor;
+  }
+
   function updateSwitcher() {
     const set = SETS[activeSetId];
     document.documentElement.dataset.memberSet = activeSetId;
+    updateThemeColor();
 
     document.querySelectorAll('[data-member-set]').forEach((button) => {
       button.setAttribute('aria-pressed', String(button.dataset.memberSet === activeSetId));
@@ -146,11 +168,26 @@
     const credit = document.querySelector('.photo-credit');
 
     if (headingCopy) {
-      headingCopy.innerHTML = `Browse all four standard <em>REVIVE+</em> concept-card sets. Current coordinate: <strong>${set.label}</strong>. Image rights remain with Starship Entertainment and the original campaign sources.`;
+      headingCopy.innerHTML = `Browse all four standard <em>REVIVE+</em> concept-card sets. Current coordinate: <strong>${set.label}</strong>. The archive palette now follows the selected album version.`;
     }
 
     if (credit) {
       credit.innerHTML = `REVIVE+ “${set.label}” concept photos · <a href="https://x.com/IVEstarship" target="_blank" rel="noreferrer">IVE Official</a> · <a href="https://www.starship-ent.com/musician/ive" target="_blank" rel="noreferrer">Starship Entertainment</a>`;
+    }
+  }
+
+  function updateHomeThemeCopy() {
+    if (page !== 'index') return;
+    const set = SETS[activeSetId];
+    const tags = document.querySelectorAll('.revive-campaign-tags span');
+    tags.forEach((tag, index) => {
+      if (set.tags[index]) tag.textContent = set.tags[index];
+    });
+
+    const board = document.querySelector('[data-campaign-board]');
+    if (board) {
+      board.dataset.themeLabel = `REVIVE+ / ${set.label} VERSION / 2026`;
+      board.setAttribute('aria-label', `${set.label} six-member REVIVE+ campaign board`);
     }
   }
 
@@ -180,6 +217,13 @@
     art.setAttribute('aria-label', `${MEMBER_NAMES[index]} — ${SETS[activeSetId].label} concept card`);
   }
 
+  function applyPortraitToCampaignBoard(index, url) {
+    const image = document.querySelectorAll('[data-campaign-board] .campaign-photo img')[index];
+    if (!image) return;
+    image.src = url;
+    image.alt = `${MEMBER_NAMES[index]} in the REVIVE+ ${SETS[activeSetId].label} concept-photo set`;
+  }
+
   function activeMemberIndex() {
     const panel = document.querySelector('[data-member-profile]');
     const parsed = Number(panel?.dataset.activeMember ?? 0);
@@ -205,6 +249,21 @@
     });
   }
 
+  function applyCampaignBoard() {
+    if (page !== 'index') return;
+    const set = SETS[activeSetId];
+    const version = selectionVersion;
+
+    set.portraits.forEach((requested, index) => {
+      const fallback = SETS.bangers.portraits[index];
+      applyPortraitToCampaignBoard(index, requested);
+      preloadPortrait(requested, fallback).then((resolved) => {
+        if (version !== selectionVersion) return;
+        applyPortraitToCampaignBoard(index, resolved);
+      });
+    });
+  }
+
   function applyCurrentSet() {
     const set = SETS[activeSetId];
     const version = selectionVersion;
@@ -219,8 +278,10 @@
     });
 
     applyCurrentDossierPortrait();
+    applyCampaignBoard();
     updateSwitcher();
     updateMembersPageCopy();
+    updateHomeThemeCopy();
   }
 
   function setActiveSet(setId) {
@@ -230,7 +291,7 @@
     storeSet(setId);
     applyCurrentSet();
     window.dispatchEvent(new CustomEvent('revive-member-set-change', {
-      detail: { id: setId, label: SETS[setId].label }
+      detail: { id: setId, label: SETS[setId].label, themeColor: SETS[setId].themeColor }
     }));
   }
 
