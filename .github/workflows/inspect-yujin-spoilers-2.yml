@@ -1,83 +1,66 @@
-name: Inspect alternative Yujin Spoilers card
+name: Apply alternative Yujin Spoilers card
 
 on:
   pull_request:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  build-contact-sheet:
+  replace-yujin-card:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download candidates and build sheet
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Replace Yujin Spoilers card and update manifest
         shell: bash
         run: |
-          python3 -m pip install --quiet pillow
           python3 - <<'PY'
           from pathlib import Path
-          from PIL import Image, ImageOps, ImageDraw
+          import hashlib
+          import json
           import urllib.request
-          import time
 
-          urls = [
-              'https://f.ptcdn.info/433/090/000/mkwpas37h02b97ieFF7-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpars3orvyuhTtRZb-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpas1cpWw56H7R5MH-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpas8aordLG72JJwg-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpatatoY7Q67QG734-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpatfwhEcqrozPoyc-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpatgzhJIRCXh14Uf-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpatowoECaehwUT21-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpauqviaeDbRQe21n-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpavueh75o7PKkQpY-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpaw3ch6eu5854zv2-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpawk7oO6kl2hugPW-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpawqahh3DalsVlzD-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpawxth9LDzDVEBoS-o.jpg',
-              'https://f.ptcdn.info/433/090/000/mkwpax66o25uPwjlDr5-o.jpg',
-          ]
-          out = Path('yujin-spoilers-candidates')
-          out.mkdir(exist_ok=True)
-          headers = {'User-Agent': 'Mozilla/5.0', 'Referer': 'https://pantip.com/'}
-          files = []
-          for source_index, url in enumerate(urls, 1):
-              try:
-                  request = urllib.request.Request(url, headers=headers)
-                  with urllib.request.urlopen(request, timeout=60) as response:
-                      data = response.read()
-                  if len(data) < 20000:
-                      raise RuntimeError(f'image too small: {len(data)} bytes')
-                  target = out / f'{source_index:02d}.jpg'
-                  target.write_bytes(data)
-                  files.append((source_index, target))
-                  print('downloaded', source_index, len(data), url)
-              except Exception as exc:
-                  print('skipped', source_index, url, exc)
-              time.sleep(.2)
+          url = 'https://f.ptcdn.info/433/090/000/mkwpatgzhJIRCXh14Uf-o.jpg'
+          target = Path('assets/revive/member-cards/spoilers/yujin.jpg')
+          request = urllib.request.Request(url, headers={
+              'User-Agent': 'Mozilla/5.0',
+              'Referer': 'https://pantip.com/',
+          })
+          with urllib.request.urlopen(request, timeout=60) as response:
+              data = response.read()
+          if len(data) < 100000 or not data.startswith(b'\xff\xd8\xff'):
+              raise RuntimeError(f'Invalid Yujin image: {len(data)} bytes')
+          target.write_bytes(data)
 
-          if not files:
-              raise RuntimeError('No candidate images downloaded')
-
-          thumb_w, thumb_h = 300, 420
-          cols = 5
-          rows = (len(files) + cols - 1) // cols
-          sheet = Image.new('RGB', (cols * thumb_w, rows * (thumb_h + 34)), 'white')
-          draw = ImageDraw.Draw(sheet)
-          for tile_index, (source_index, path) in enumerate(files):
-              image = Image.open(path).convert('RGB')
-              tile = ImageOps.fit(image, (thumb_w, thumb_h), method=Image.Resampling.LANCZOS)
-              x = (tile_index % cols) * thumb_w
-              y = (tile_index // cols) * (thumb_h + 34)
-              sheet.paste(tile, (x, y))
-              draw.rectangle((x, y + thumb_h, x + thumb_w, y + thumb_h + 34), fill='white')
-              draw.text((x + 12, y + thumb_h + 8), f'YUJIN {source_index:02d}', fill='black')
-          sheet.save(out / 'contact-sheet.jpg', quality=90)
+          manifest_path = Path('assets/revive/member-cards/manifest.json')
+          manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+          for asset in manifest['assets']:
+              if asset.get('set') == 'spoilers' and asset.get('member') == 'yujin':
+                  asset.update({
+                      'source': url,
+                      'resolved_source': url,
+                      'source_page': 'https://pantip.com/topic/43959310',
+                      'official_account': 'https://x.com/IVEstarship',
+                      'bytes': len(data),
+                      'sha256': hashlib.sha256(data).hexdigest(),
+                  })
+                  asset.pop('official_post', None)
+                  break
+          else:
+              raise RuntimeError('Yujin Spoilers manifest entry not found')
+          manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
           PY
-      - uses: actions/upload-artifact@v4
-        with:
-          name: yujin-spoilers-candidates
-          path: yujin-spoilers-candidates
-          retention-days: 1
+
+      - name: Commit replacement to main
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/revive/member-cards/spoilers/yujin.jpg assets/revive/member-cards/manifest.json
+          git commit -m "Use a cleaner Yujin Spoilers portrait"
+          git push origin main
