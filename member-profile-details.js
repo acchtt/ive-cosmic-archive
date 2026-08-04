@@ -1,4 +1,11 @@
 (() => {
+  if (!document.querySelector('script[src="revive-member-sets.js"]')) {
+    const memberSetScript = document.createElement('script');
+    memberSetScript.src = 'revive-member-sets.js';
+    memberSetScript.async = false;
+    document.head.appendChild(memberSetScript);
+  }
+
   const identities = [
     { stage: 'GAEUL', english: 'Kim Gaeul', korean: '김가을', instagram: 'fallingin__fall' },
     { stage: 'YUJIN', english: 'An Yujin', korean: '안유진', instagram: '_yujin_an' },
