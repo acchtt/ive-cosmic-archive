@@ -1,6 +1,156 @@
-/* REVIVE+ multi-set member-card selector. */
+/* REVIVE+ multi-set member-card selector and album-version themes. */
+
+html[data-member-set="bangers"] {
+  --set-bg: #090305;
+  --set-bg-soft: #190509;
+  --set-panel: rgba(27, 6, 11, .78);
+  --set-panel-strong: rgba(34, 7, 13, .94);
+  --set-paper: #fff6f1;
+  --set-muted: #c8aeb1;
+  --set-ink: #1b0508;
+  --set-accent: #ff435e;
+  --set-accent-2: #ffae47;
+  --set-accent-3: #ff7c98;
+  --set-line: rgba(255, 119, 137, .22);
+  --set-glow-a: rgba(255, 45, 77, .24);
+  --set-glow-b: rgba(255, 164, 58, .13);
+  --set-board-a: #fff0e6;
+  --set-board-b: #ff9e8e;
+  --set-board-c: #8e172a;
+}
+
+html[data-member-set="challengers"] {
+  --set-bg: #031014;
+  --set-bg-soft: #071d25;
+  --set-panel: rgba(4, 24, 31, .78);
+  --set-panel-strong: rgba(5, 31, 41, .94);
+  --set-paper: #effcff;
+  --set-muted: #9fc1c9;
+  --set-ink: #031217;
+  --set-accent: #69e5ff;
+  --set-accent-2: #7b8fff;
+  --set-accent-3: #8dffd6;
+  --set-line: rgba(105, 229, 255, .22);
+  --set-glow-a: rgba(55, 209, 255, .22);
+  --set-glow-b: rgba(111, 133, 255, .16);
+  --set-board-a: #effcff;
+  --set-board-b: #a9dce7;
+  --set-board-c: #31536a;
+}
+
+html[data-member-set="spoilers"] {
+  --set-bg: #0b0712;
+  --set-bg-soft: #1a1027;
+  --set-panel: rgba(22, 13, 34, .79);
+  --set-panel-strong: rgba(28, 16, 45, .95);
+  --set-paper: #fcf7ff;
+  --set-muted: #bcaecc;
+  --set-ink: #160c1f;
+  --set-accent: #c7a6ff;
+  --set-accent-2: #ff9ed8;
+  --set-accent-3: #a7c7ff;
+  --set-line: rgba(199, 166, 255, .24);
+  --set-glow-a: rgba(171, 119, 255, .23);
+  --set-glow-b: rgba(255, 126, 205, .13);
+  --set-board-a: #f5efff;
+  --set-board-b: #cdbce8;
+  --set-board-c: #68517e;
+}
+
+html[data-member-set="loved-ive"] {
+  --set-bg: #12090d;
+  --set-bg-soft: #251319;
+  --set-panel: rgba(34, 18, 24, .78);
+  --set-panel-strong: rgba(43, 22, 29, .94);
+  --set-paper: #fff9f3;
+  --set-muted: #d1b8bd;
+  --set-ink: #2b1118;
+  --set-accent: #ffb7d2;
+  --set-accent-2: #ffd488;
+  --set-accent-3: #b9dbff;
+  --set-line: rgba(255, 183, 210, .23);
+  --set-glow-a: rgba(255, 163, 196, .2);
+  --set-glow-b: rgba(255, 211, 130, .13);
+  --set-board-a: #fffaf2;
+  --set-board-b: #f5d9dc;
+  --set-board-c: #b88791;
+}
+
+html[data-member-set] {
+  --bg: var(--set-bg);
+  --bg-soft: var(--set-bg-soft);
+  --panel: var(--set-panel);
+  --panel-strong: var(--set-panel-strong);
+  --line: var(--set-line);
+  --line-strong: color-mix(in srgb, var(--set-accent) 45%, transparent);
+  --text: var(--set-paper);
+  --muted: var(--set-muted);
+  --violet: var(--set-accent);
+  --pink: var(--set-accent-2);
+  --blue: var(--set-accent-3);
+  --success: var(--set-accent-3);
+  background: var(--set-bg);
+}
+
+html[data-member-set] body {
+  background:
+    radial-gradient(circle at 84% 8%, var(--set-glow-a), transparent 25%),
+    radial-gradient(circle at 12% 34%, var(--set-glow-b), transparent 29%),
+    linear-gradient(180deg, var(--set-bg) 0%, var(--set-bg-soft) 48%, var(--set-bg) 100%);
+}
+
+html[data-member-set] ::selection {
+  color: var(--set-ink);
+  background: var(--set-accent);
+}
+
+html[data-member-set] .star {
+  background: color-mix(in srgb, var(--set-accent) 42%, white);
+}
+
+html[data-member-set] .site-header {
+  border-color: color-mix(in srgb, var(--set-accent) 20%, rgba(255,255,255,.08));
+  background: color-mix(in srgb, var(--set-bg) 82%, transparent);
+  box-shadow: 0 18px 68px color-mix(in srgb, var(--set-bg) 72%, transparent);
+}
+
+html[data-member-set] .site-nav a::after,
+html[data-member-set] .eyebrow span:first-child {
+  background: linear-gradient(90deg, var(--set-accent), var(--set-accent-2));
+}
+
+html[data-member-set] .motion-dot {
+  background: var(--set-accent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--set-accent) 72%, transparent);
+}
+
+html[data-member-set] .button-primary {
+  color: var(--set-ink);
+  background: linear-gradient(112deg, var(--set-paper), var(--set-accent) 54%, var(--set-accent-2));
+  box-shadow: 0 15px 42px color-mix(in srgb, var(--set-accent) 22%, transparent);
+}
+
+html[data-member-set] .button-ghost,
+html[data-member-set] .text-link {
+  border-color: color-mix(in srgb, var(--set-accent) 34%, rgba(255,255,255,.1));
+}
+
+html[data-member-set] .member-card {
+  border-color: color-mix(in srgb, var(--set-accent) 20%, rgba(255,255,255,.07));
+  background:
+    radial-gradient(circle at 76% 8%, color-mix(in srgb, var(--set-accent) 10%, transparent), transparent 34%),
+    var(--set-panel);
+}
+
+html[data-member-set] .member-card:hover,
+html[data-member-set] .member-card:focus-within {
+  border-color: color-mix(in srgb, var(--set-accent) 54%, white 8%);
+  box-shadow: 0 24px 70px color-mix(in srgb, var(--set-accent) 12%, rgba(0,0,0,.45));
+}
+
 .member-set-switcher {
-  --member-set-accent: #ff8fc7;
+  --member-set-accent: var(--set-accent, #ff8fc7);
+  --member-set-secondary: var(--set-accent-2, #ffd3e7);
   position: relative;
   z-index: 3;
   display: grid;
@@ -10,25 +160,22 @@
   margin: -20px 0 30px;
   padding: 18px 20px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, .15);
+  border: 1px solid color-mix(in srgb, var(--member-set-accent) 25%, rgba(255,255,255,.08));
   border-radius: 20px;
   background:
-    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--member-set-accent) 18%, transparent), transparent 36%),
-    rgba(13, 8, 14, .76);
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--member-set-accent) 20%, transparent), transparent 36%),
+    radial-gradient(circle at 94% 100%, color-mix(in srgb, var(--member-set-secondary) 10%, transparent), transparent 34%),
+    color-mix(in srgb, var(--set-bg) 76%, transparent);
   box-shadow: 0 20px 60px rgba(0, 0, 0, .22);
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px) saturate(1.15);
 }
 
-html[data-member-set="challengers"] .member-set-switcher { --member-set-accent: #89e5ff; }
-html[data-member-set="spoilers"] .member-set-switcher { --member-set-accent: #c7a8ff; }
-html[data-member-set="loved-ive"] .member-set-switcher { --member-set-accent: #ffd5e8; }
-
 .member-set-switcher::after {
-  content: "04 SETS · 24 CARDS";
+  content: "04 THEMES · 24 CARDS";
   position: absolute;
   right: 16px;
   bottom: 10px;
-  color: rgba(255, 255, 255, .22);
+  color: color-mix(in srgb, var(--member-set-accent) 25%, rgba(255,255,255,.18));
   font-size: .5rem;
   font-weight: 800;
   letter-spacing: .15em;
@@ -43,7 +190,7 @@ html[data-member-set="loved-ive"] .member-set-switcher { --member-set-accent: #f
 }
 
 .member-set-switcher-copy > span {
-  color: rgba(228, 215, 231, .5);
+  color: color-mix(in srgb, var(--set-muted) 70%, transparent);
   font-size: .52rem;
   font-weight: 750;
   letter-spacing: .16em;
@@ -51,7 +198,7 @@ html[data-member-set="loved-ive"] .member-set-switcher { --member-set-accent: #f
 }
 
 .member-set-switcher-copy > strong {
-  color: white;
+  color: var(--set-paper, white);
   font-size: clamp(1rem, 2vw, 1.38rem);
   line-height: 1;
   letter-spacing: -.025em;
@@ -65,13 +212,14 @@ html[data-member-set="loved-ive"] .member-set-switcher { --member-set-accent: #f
 }
 
 .member-set-options button {
+  position: relative;
   min-width: 0;
   min-height: 38px;
-  padding: 8px 9px;
+  padding: 8px 9px 8px 24px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, .13);
   border-radius: 999px;
-  color: rgba(232, 222, 234, .66);
+  color: color-mix(in srgb, var(--set-paper) 66%, transparent);
   background: rgba(255, 255, 255, .035);
   font: inherit;
   font-size: clamp(.48rem, .68vw, .58rem);
@@ -80,28 +228,51 @@ html[data-member-set="loved-ive"] .member-set-switcher { --member-set-accent: #f
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: pointer;
-  transition: border-color .2s ease, color .2s ease, background .2s ease, transform .2s ease;
+  transition: border-color .2s ease, color .2s ease, background .2s ease, transform .2s ease, box-shadow .2s ease;
 }
+
+.member-set-options button::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: var(--option-a, #ff8fc7);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--option-a, #ff8fc7) 65%, transparent);
+}
+
+.member-set-options button[data-member-set="bangers"] { --option-a: #ff435e; --option-b: #ffae47; }
+.member-set-options button[data-member-set="challengers"] { --option-a: #69e5ff; --option-b: #7b8fff; }
+.member-set-options button[data-member-set="spoilers"] { --option-a: #c7a6ff; --option-b: #ff9ed8; }
+.member-set-options button[data-member-set="loved-ive"] { --option-a: #ffb7d2; --option-b: #ffd488; }
 
 .member-set-options button:hover,
 .member-set-options button:focus-visible {
-  border-color: color-mix(in srgb, var(--member-set-accent) 60%, white 12%);
+  border-color: color-mix(in srgb, var(--option-a) 62%, white 10%);
   color: white;
   transform: translateY(-1px);
 }
 
 .member-set-options button[aria-pressed="true"] {
-  border-color: color-mix(in srgb, var(--member-set-accent) 64%, white 16%);
-  color: #130a11;
-  background: linear-gradient(112deg, #fff7fb, var(--member-set-accent));
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--member-set-accent) 25%, transparent);
+  border-color: color-mix(in srgb, var(--option-a) 64%, white 16%);
+  color: var(--set-ink, #130a11);
+  background: linear-gradient(112deg, var(--set-paper, #fff7fb), var(--option-a) 62%, var(--option-b));
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--option-a) 27%, transparent);
+}
+
+.member-set-options button[aria-pressed="true"]::before {
+  background: var(--set-ink, #130a11);
+  box-shadow: none;
 }
 
 .member-set-switcher > p {
   grid-column: 2;
   min-width: 0;
   margin: 0 90px 0 2px;
-  color: rgba(220, 207, 223, .58);
+  color: color-mix(in srgb, var(--set-muted) 72%, transparent);
   font-size: .68rem;
   line-height: 1.45;
 }
@@ -111,13 +282,150 @@ html[data-page="members"] .dossier-panel .dossier-visual::before {
   transition: background-image .2s linear, filter .3s ease, opacity .3s ease;
 }
 
+html[data-page="index"][data-member-set] {
+  --rv-ink: var(--set-ink);
+  --rv-paper: var(--set-paper);
+  --rv-pink: var(--set-accent);
+  --rv-hot: var(--set-accent);
+  --rv-lilac: var(--set-accent-2);
+  --rv-cyan: var(--set-accent-3);
+  --rv-yellow: var(--set-accent-2);
+  --rv-chrome: color-mix(in srgb, var(--set-paper) 84%, var(--set-accent));
+  --rv-line: var(--set-line);
+  background: var(--set-bg);
+}
+
+html[data-page="index"][data-member-set] body {
+  background:
+    radial-gradient(circle at 86% 8%, var(--set-glow-a), transparent 22%),
+    radial-gradient(circle at 12% 31%, var(--set-glow-b), transparent 25%),
+    linear-gradient(180deg, var(--set-bg) 0%, var(--set-bg-soft) 44%, var(--set-bg) 100%);
+}
+
+html[data-page="index"][data-member-set] .revive-campaign-hero::before {
+  background:
+    radial-gradient(circle at 75% 44%, var(--set-glow-a), transparent 19%),
+    radial-gradient(circle at 72% 38%, var(--set-glow-b), transparent 32%),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: auto, auto, 54px 54px, 54px 54px;
+}
+
+html[data-page="index"][data-member-set] .revive-campaign-title .title-revive {
+  color: var(--set-ink);
+  background: linear-gradient(105deg, var(--set-paper), color-mix(in srgb, var(--set-accent) 72%, white) 52%, var(--set-accent-2));
+  box-shadow: 9px 9px 0 color-mix(in srgb, var(--set-accent) 25%, transparent);
+}
+
+html[data-page="index"][data-member-set] .revive-campaign-actions .button-primary,
+html[data-page="index"][data-member-set] .revive-closing .button-primary {
+  color: var(--set-ink);
+  background: linear-gradient(112deg, var(--set-paper), var(--set-accent) 52%, var(--set-accent-2));
+  box-shadow: 0 16px 44px color-mix(in srgb, var(--set-accent) 22%, transparent);
+}
+
+html[data-page="index"][data-member-set] .campaign-board {
+  border-color: color-mix(in srgb, var(--set-accent) 26%, white 8%);
+  background:
+    radial-gradient(circle at 77% 18%, color-mix(in srgb, var(--set-accent-3) 34%, transparent), transparent 20%),
+    radial-gradient(circle at 18% 78%, color-mix(in srgb, var(--set-accent) 32%, transparent), transparent 24%),
+    linear-gradient(145deg, var(--set-board-a) 0%, var(--set-board-b) 48%, var(--set-board-c) 100%);
+  box-shadow: 0 48px 130px color-mix(in srgb, var(--set-accent) 12%, rgba(0,0,0,.56));
+}
+
+html[data-page="index"][data-member-set] .campaign-board::after {
+  content: attr(data-theme-label);
+}
+
+html[data-page="index"][data-member-set] .campaign-photo {
+  border-color: color-mix(in srgb, var(--set-ink) 20%, transparent);
+  background: color-mix(in srgb, var(--set-board-a) 78%, var(--set-board-b));
+  box-shadow: 0 15px 34px color-mix(in srgb, var(--set-ink) 20%, transparent);
+}
+
+html[data-page="index"][data-member-set] .campaign-photo figcaption {
+  color: var(--set-ink);
+  background: color-mix(in srgb, var(--set-paper) 88%, transparent);
+}
+
+html[data-page="index"][data-member-set] .campaign-sticker {
+  border-color: color-mix(in srgb, var(--set-accent) 45%, white 18%);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--set-accent) 15%, transparent);
+}
+
+html[data-page="index"][data-member-set] .revive-status-strip,
+html[data-page="index"][data-member-set] .revive-story,
+html[data-page="index"][data-member-set] .concept-card,
+html[data-page="index"][data-member-set] .revive-portal-card,
+html[data-page="index"][data-member-set] .revive-closing {
+  border-color: color-mix(in srgb, var(--set-accent) 18%, rgba(255,255,255,.08));
+}
+
+html[data-page="index"][data-member-set] .revive-status-strip,
+html[data-page="index"][data-member-set] .revive-story,
+html[data-page="index"][data-member-set] .revive-portal-card {
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--set-accent) 8%, transparent), transparent 35%),
+    color-mix(in srgb, var(--set-panel) 82%, transparent);
+}
+
+html[data-page="index"][data-member-set] .revive-portal-card:hover,
+html[data-page="index"][data-member-set] .revive-portal-card:focus-visible {
+  border-color: color-mix(in srgb, var(--set-accent) 50%, white 8%);
+  box-shadow: 0 24px 64px color-mix(in srgb, var(--set-accent) 11%, rgba(0,0,0,.4));
+}
+
 html[data-page="members"] .member-set-switcher {
   margin-top: -18px;
 }
 
 html[data-page="members"] .section-heading > p strong {
-  color: white;
+  color: var(--set-paper, white);
   font-weight: 750;
+}
+
+html[data-page="members"][data-member-set] .dossier-panel {
+  border-color: color-mix(in srgb, var(--set-accent) 21%, rgba(255,255,255,.07));
+  background:
+    radial-gradient(circle at 38% 34%, color-mix(in srgb, var(--set-accent) 12%, transparent), transparent 34%),
+    linear-gradient(145deg, var(--set-panel-strong), color-mix(in srgb, var(--set-bg) 96%, black));
+}
+
+html[data-page="members"][data-member-set] .dossier-panel .dossier-visual {
+  background:
+    radial-gradient(circle at 46% 25%, color-mix(in srgb, var(--set-accent) 18%, transparent), transparent 38%),
+    linear-gradient(180deg, var(--set-panel-strong), var(--set-bg));
+  box-shadow:
+    0 28px 72px rgba(0, 0, 0, .38),
+    inset 0 0 0 1px color-mix(in srgb, var(--set-accent) 12%, rgba(255,255,255,.04));
+}
+
+html[data-page="members"][data-member-set] .dossier-panel .dossier-visual::before {
+  background-color: var(--set-bg);
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, .34),
+    0 0 38px color-mix(in srgb, var(--set-accent) 12%, transparent);
+}
+
+html[data-page="members"][data-member-set] .dossier-panel .dossier-visual::after {
+  background:
+    linear-gradient(180deg, transparent 58%, color-mix(in srgb, var(--set-bg) 10%, transparent) 72%, color-mix(in srgb, var(--set-bg) 78%, transparent) 100%),
+    linear-gradient(120deg, rgba(255, 255, 255, .025), transparent 45%, color-mix(in srgb, var(--set-accent) 8%, transparent));
+}
+
+html[data-page="members"][data-member-set] .dossier-panel .dossier-visual > span::before {
+  background: linear-gradient(90deg, var(--set-accent), transparent);
+}
+
+html[data-page="members"][data-member-set] .dossier-panel .dossier-copy {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--set-bg) 96%, transparent), color-mix(in srgb, var(--set-panel) 82%, transparent) 32%, color-mix(in srgb, var(--set-bg) 24%, transparent) 100%);
+}
+
+html[data-page="members"][data-member-set] .dossier-button[aria-pressed="true"] {
+  border-color: color-mix(in srgb, var(--set-accent) 48%, white 8%);
+  background: linear-gradient(112deg, color-mix(in srgb, var(--set-accent) 16%, transparent), rgba(255,255,255,.04));
+  box-shadow: 0 12px 34px color-mix(in srgb, var(--set-accent) 11%, transparent);
 }
 
 @media (max-width: 900px) {
@@ -130,6 +438,12 @@ html[data-page="members"] .section-heading > p strong {
   .member-set-switcher > p {
     grid-column: 1;
     margin-right: 92px;
+  }
+}
+
+@media (max-width: 760px) {
+  html[data-page="members"][data-member-set] .dossier-panel .dossier-copy {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--set-bg) 97%, transparent), color-mix(in srgb, var(--set-panel) 84%, transparent));
   }
 }
 
