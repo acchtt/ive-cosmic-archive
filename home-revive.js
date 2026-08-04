@@ -1,33 +1,33 @@
 (() => {
   if (document.documentElement.dataset.page !== 'index') return;
 
-  const heroImage = document.querySelector('[data-home-blackhole-image]');
-  const heroVisual = document.querySelector('[data-home-blackhole-visual]');
+  const board = document.querySelector('[data-campaign-board]');
   const mediaCount = document.querySelector('[data-home-media-count]');
   const mvCount = document.querySelector('[data-home-mv-count]');
   const latestSignal = document.querySelector('[data-home-latest-signal]');
-
-  if (heroImage) {
-    heroImage.addEventListener('error', () => {
-      if (heroImage.dataset.fallback === 'true') return;
-      heroImage.dataset.fallback = 'true';
-      heroImage.src = 'https://i.ytimg.com/vi/1Lmy7qwmSMc/hqdefault.jpg';
-    }, { once: true });
-  }
-
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (heroVisual && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
-    heroVisual.addEventListener('pointermove', (event) => {
-      const rect = heroVisual.getBoundingClientRect();
+
+  document.querySelectorAll('[data-youtube-thumb]').forEach((image) => {
+    image.addEventListener('error', () => {
+      if (image.dataset.fallback === 'true') return;
+      image.dataset.fallback = 'true';
+      const videoId = image.dataset.youtubeThumb;
+      if (videoId) image.src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+    }, { once: true });
+  });
+
+  if (board && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+    board.addEventListener('pointermove', (event) => {
+      const rect = board.getBoundingClientRect();
       const x = ((event.clientX - rect.left) / rect.width - .5) * 2;
       const y = ((event.clientY - rect.top) / rect.height - .5) * 2;
-      heroVisual.style.setProperty('--mx', x.toFixed(3));
-      heroVisual.style.setProperty('--my', y.toFixed(3));
+      board.style.setProperty('--mx', (x * .85).toFixed(3));
+      board.style.setProperty('--my', (y * .85).toFixed(3));
     });
 
-    heroVisual.addEventListener('pointerleave', () => {
-      heroVisual.style.setProperty('--mx', '0');
-      heroVisual.style.setProperty('--my', '0');
+    board.addEventListener('pointerleave', () => {
+      board.style.setProperty('--mx', '0');
+      board.style.setProperty('--my', '0');
     });
   }
 
@@ -48,6 +48,6 @@
       if (latestSignal && newest?.title) latestSignal.textContent = newest.title;
     })
     .catch(() => {
-      // Static homepage values remain visible when the live catalog is unavailable.
+      // Static values remain visible when the live catalog is unavailable.
     });
 })();
