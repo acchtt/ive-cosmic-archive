@@ -5,8 +5,20 @@
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
-  const ARCHIVE_VERSION = '0.15.0';
-  const ARCHIVE_BUILD = '015';
+  const ARCHIVE_VERSION = '0.16.0';
+  const ARCHIVE_BUILD = '016';
+  const RELOAD_NAVIGATION = (() => {
+    try {
+      const navigation = window.performance?.getEntriesByType?.('navigation')?.[0];
+      return navigation?.type === 'reload' || window.performance?.navigation?.type === 1;
+    } catch {
+      return false;
+    }
+  })();
+
+  if (RELOAD_NAVIGATION) {
+    document.documentElement.dataset.themeLaunchPending = 'true';
+  }
 
   const SETS = {
     bangers: {
@@ -189,7 +201,7 @@
     if (existing) return existing;
 
     const switcher = document.createElement('aside');
-    const launchOpen = !hasSeenLaunchPicker() || !hasStoredSet();
+    const launchOpen = RELOAD_NAVIGATION || !hasSeenLaunchPicker() || !hasStoredSet();
     setLaunchPending(launchOpen);
     switcher.className = 'member-set-switcher-popup';
     switcher.dataset.memberSetSwitcher = '';
@@ -507,7 +519,6 @@ ${SET_ORDER.map((setId) => `
   function observeDossierSelection() {
     const panel = document.querySelector('[data-member-profile]');
     if (!panel) return;
-
     const observer = new MutationObserver(applyCurrentDossierPortrait);
     observer.observe(panel, {
       attributes: true,
