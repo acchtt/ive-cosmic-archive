@@ -4,8 +4,9 @@
 
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ARCHIVE_VERSION = '0.13.0';
-  const ARCHIVE_BUILD = '013';
+  const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
+  const ARCHIVE_VERSION = '0.14.0';
+  const ARCHIVE_BUILD = '014';
 
   const SETS = {
     bangers: {
@@ -94,6 +95,22 @@
     }
   }
 
+  function hasSeenLaunchPicker() {
+    try {
+      return window.sessionStorage.getItem(LAUNCH_KEY) === 'true';
+    } catch {
+      return false;
+    }
+  }
+
+  function markLaunchPickerSeen() {
+    try {
+      window.sessionStorage.setItem(LAUNCH_KEY, 'true');
+    } catch {
+      // The launch picker still works when session storage is unavailable.
+    }
+  }
+
   function storeSet(setId) {
     try {
       window.localStorage.setItem(STORAGE_KEY, setId);
@@ -143,11 +160,23 @@
     document.head.appendChild(fragment);
   }
 
+  let changeHintTimer = 0;
+
   function setSwitcherOpen(switcher, open) {
     if (!switcher) return;
     switcher.dataset.open = String(open);
+    if (open) switcher.dataset.hintVisible = 'false';
     const toggle = switcher.querySelector('[data-member-set-toggle]');
     if (toggle) toggle.setAttribute('aria-expanded', String(open));
+  }
+
+  function showChangeHint(switcher) {
+    if (!switcher) return;
+    window.clearTimeout(changeHintTimer);
+    switcher.dataset.hintVisible = 'true';
+    changeHintTimer = window.setTimeout(() => {
+      switcher.dataset.hintVisible = 'false';
+    }, 6500);
   }
 
   function createSwitcher() {
@@ -155,23 +184,30 @@
     if (existing) return existing;
 
     const switcher = document.createElement('aside');
-    const startOpen = !hasStoredSet();
+    const launchOpen = !hasSeenLaunchPicker() || !hasStoredSet();
     switcher.className = 'member-set-switcher-popup';
     switcher.dataset.memberSetSwitcher = '';
-    switcher.dataset.open = String(startOpen);
+    switcher.dataset.open = String(launchOpen);
+    switcher.dataset.launch = String(launchOpen);
+    switcher.dataset.hintVisible = 'false';
     switcher.setAttribute('aria-label', 'REVIVE+ album-version theme selector');
     switcher.innerHTML = `
-      <button class="member-set-dock" type="button" data-member-set-toggle aria-expanded="${startOpen}" aria-controls="revive-version-menu">
+      <div class="member-set-launch-backdrop" aria-hidden="true"></div>
+      <button class="member-set-dock" type="button" data-member-set-toggle aria-expanded="${launchOpen}" aria-controls="revive-version-menu">
         <span class="member-set-dock-dot" aria-hidden="true"></span>
         <span class="member-set-dock-label">REVIVE+ edition</span>
         <strong data-member-set-title>${SETS[activeSetId].label}</strong>
         <span class="member-set-dock-action" aria-hidden="true">Change</span>
       </button>
-      <div class="member-set-popover" id="revive-version-menu" role="dialog" aria-label="Choose a REVIVE+ album version">
+      <div class="member-set-change-hint" role="status" aria-live="polite">
+        <span>Theme set. You can change it anytime from this button.</span>
+        <button type="button" data-member-set-hint-close aria-label="Dismiss theme-change tip">×</button>
+      </div>
+      <div class="member-set-popover" id="revive-version-menu" role="dialog" aria-modal="${launchOpen}" aria-label="Choose a REVIVE+ album version">
         <div class="member-set-popover-head">
 <div>
-  <span>REVIVE+ archive coordinate</span>
-  <strong>Choose an edition</strong>
+  <span>REVIVE+ launch theme</span>
+  <strong>Which edition do you want?</strong>
 </div>
 <button type="button" class="member-set-close" data-member-set-close aria-label="Close edition menu">×</button>
         </div>
@@ -188,31 +224,48 @@ ${SET_ORDER.map((setId) => `
     document.body.appendChild(switcher);
 
     switcher.addEventListener('click', (event) => {
+      if (event.target.closest('[data-member-set-hint-close]')) {
+        switcher.dataset.hintVisible = 'false';
+        window.clearTimeout(changeHintTimer);
+        return;
+      }
+
       const toggle = event.target.closest('[data-member-set-toggle]');
       if (toggle) {
+        switcher.dataset.launch = 'false';
+        switcher.querySelector('.member-set-popover')?.setAttribute('aria-modal', 'false');
         setSwitcherOpen(switcher, switcher.dataset.open !== 'true');
         return;
       }
 
       if (event.target.closest('[data-member-set-close]')) {
+        if (switcher.dataset.launch === 'true') return;
         setSwitcherOpen(switcher, false);
         return;
       }
 
       const button = event.target.closest('[data-member-set]');
       if (!button || !SETS[button.dataset.memberSet]) return;
+
+      const wasLaunch = switcher.dataset.launch === 'true';
       setActiveSet(button.dataset.memberSet);
+      if (wasLaunch) markLaunchPickerSeen();
+      switcher.dataset.launch = 'false';
+      switcher.querySelector('.member-set-popover')?.setAttribute('aria-modal', 'false');
       setSwitcherOpen(switcher, false);
+      showChangeHint(switcher);
       switcher.querySelector('[data-member-set-toggle]')?.focus();
     });
 
     document.addEventListener('pointerdown', (event) => {
+      if (switcher.dataset.launch === 'true') return;
       if (switcher.dataset.open !== 'true' || switcher.contains(event.target)) return;
       setSwitcherOpen(switcher, false);
     });
 
     document.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape' || switcher.dataset.open !== 'true') return;
+      if (switcher.dataset.launch === 'true') return;
       setSwitcherOpen(switcher, false);
       switcher.querySelector('[data-member-set-toggle]')?.focus();
     });

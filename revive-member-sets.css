@@ -796,3 +796,166 @@ html[data-page="members"] .member-set-switcher.member-set-switcher-top { margin-
   }
 }
 /* VERSION POPUP v0.13.0 END */
+
+/* LAUNCH MODAL v0.14.0 START */
+.member-set-launch-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: rgba(3, 2, 7, .7);
+  backdrop-filter: blur(12px) saturate(.86);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .22s ease, visibility .22s ease;
+}
+
+.member-set-switcher-popup[data-launch="true"] .member-set-launch-backdrop {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.member-set-switcher-popup[data-launch="true"] .member-set-dock {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.member-set-switcher-popup[data-launch="true"] .member-set-popover {
+  position: fixed;
+  z-index: 2;
+  left: 50%;
+  right: auto;
+  top: 50%;
+  bottom: auto;
+  width: min(520px, calc(100vw - 32px));
+  padding: 20px;
+  border-radius: 24px;
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+  transform-origin: center;
+}
+
+.member-set-switcher-popup[data-launch="true"] .member-set-popover::before {
+  content: "SELECT YOUR ARCHIVE THEME";
+  display: block;
+  margin-bottom: 14px;
+  color: color-mix(in srgb, var(--popup-accent) 72%, white 12%);
+  font-size: .5rem;
+  font-weight: 850;
+  letter-spacing: .2em;
+}
+
+.member-set-switcher-popup[data-launch="true"] .member-set-popover-head strong {
+  font-size: clamp(1.28rem, 3vw, 1.72rem);
+}
+
+.member-set-switcher-popup[data-launch="true"] .member-set-popover > p {
+  max-width: 440px;
+  margin-bottom: 16px;
+  font-size: .74rem;
+}
+
+.member-set-switcher-popup[data-launch="true"] .member-set-close {
+  display: none;
+}
+
+.member-set-switcher-popup[data-launch="true"] .member-set-options button {
+  min-height: 72px;
+  padding: 14px;
+}
+
+.member-set-switcher-popup[data-launch="true"] .member-set-options button span {
+  font-size: .72rem;
+}
+
+.member-set-change-hint {
+  pointer-events: auto;
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 10px);
+  width: min(278px, calc(100vw - 32px));
+  min-height: 52px;
+  padding: 11px 36px 11px 13px;
+  border: 1px solid color-mix(in srgb, var(--popup-accent) 35%, rgba(255,255,255,.1));
+  border-radius: 14px;
+  color: var(--set-paper, white);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--set-panel-strong) 96%, transparent), color-mix(in srgb, var(--set-bg) 92%, transparent));
+  box-shadow: 0 18px 48px rgba(0,0,0,.4), 0 0 22px color-mix(in srgb, var(--popup-accent) 9%, transparent);
+  backdrop-filter: blur(20px) saturate(1.12);
+  font-size: .65rem;
+  line-height: 1.42;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px) scale(.98);
+  transform-origin: right bottom;
+  transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
+}
+
+.member-set-change-hint::after {
+  content: "";
+  position: absolute;
+  right: 24px;
+  bottom: -6px;
+  width: 10px;
+  height: 10px;
+  border-right: 1px solid color-mix(in srgb, var(--popup-accent) 35%, rgba(255,255,255,.1));
+  border-bottom: 1px solid color-mix(in srgb, var(--popup-accent) 35%, rgba(255,255,255,.1));
+  background: color-mix(in srgb, var(--set-bg) 92%, transparent);
+  transform: rotate(45deg);
+}
+
+.member-set-change-hint button {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: color-mix(in srgb, var(--set-paper) 60%, transparent);
+  background: rgba(255,255,255,.04);
+  cursor: pointer;
+}
+
+.member-set-switcher-popup[data-hint-visible="true"][data-open="false"][data-launch="false"] .member-set-change-hint {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+@media (max-width: 640px) {
+  .member-set-switcher-popup[data-launch="true"] .member-set-popover {
+    width: min(calc(100vw - 20px), 520px);
+    padding: 17px;
+    border-radius: 20px;
+  }
+
+  .member-set-switcher-popup[data-launch="true"] .member-set-options {
+    grid-template-columns: 1fr;
+  }
+
+  .member-set-switcher-popup[data-launch="true"] .member-set-options button {
+    min-height: 58px;
+  }
+
+  .member-set-change-hint {
+    left: 0;
+    right: 0;
+    width: 100%;
+    transform-origin: center bottom;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .member-set-launch-backdrop,
+  .member-set-change-hint {
+    transition: none;
+  }
+}
+/* LAUNCH MODAL v0.14.0 END */
