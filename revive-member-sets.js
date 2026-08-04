@@ -66,6 +66,7 @@
 
   const SET_ORDER = ['bangers', 'challengers', 'spoilers', 'loved-ive'];
   const resolvedPortraits = new Map();
+  const portraitLoads = new Map();
   let activeSetId = readStoredSet();
   let selectionVersion = 0;
 
@@ -196,12 +197,14 @@
     }
   }
 
-  function preloadPortrait(url, fallbackUrl) {
+  function preloadPortrait(url, fallbackUrl, priority = 'auto') {
     if (resolvedPortraits.has(url)) return Promise.resolve(resolvedPortraits.get(url));
+    if (portraitLoads.has(url)) return portraitLoads.get(url);
 
-    return new Promise((resolve) => {
+    const load = new Promise((resolve) => {
       const image = new Image();
       image.decoding = 'async';
+      if ('fetchPriority' in image) image.fetchPriority = priority;
       image.onload = () => {
         resolvedPortraits.set(url, url);
         resolve(url);
@@ -211,6 +214,24 @@
         resolve(fallbackUrl);
       };
       image.src = url;
+    });
+
+    portraitLoads.set(url, load);
+    return load;
+  }
+
+  function preloadAllPortraits() {
+    const preloadOrder = [
+      activeSetId,
+      ...SET_ORDER.filter((setId) => setId !== activeSetId)
+    ];
+
+    preloadOrder.forEach((setId) => {
+      SETS[setId].portraits.forEach((url, index) => {
+        const fallback = SETS.bangers.portraits[index];
+        const priority = setId === activeSetId ? 'high' : 'low';
+        preloadPortrait(url, fallback, priority);
+      });
     });
   }
 
@@ -326,6 +347,8 @@
     observeDossierSelection();
     applyCurrentSet();
   }
+
+  preloadAllPortraits();
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initialize, { once: true });
