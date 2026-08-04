@@ -1,11 +1,10 @@
-# one-time correction workflow
 name: Fix REVIVE+ member mappings
 
 on:
-  push:
+  pull_request:
     branches: [main]
     paths:
-      - .github/workflows/fix-revive-member-mappings.yml
+      - .github/fix-revive-member-mappings.trigger
 
 permissions:
   contents: write
@@ -14,10 +13,10 @@ jobs:
   fix-assets:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: Check out correction branch
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: fix-revive-member-mappings
           fetch-depth: 0
 
       - name: Download correctly labeled member portraits
@@ -117,4 +116,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add assets/revive/member-cards/challengers assets/revive/member-cards/spoilers assets/revive/member-cards/manifest.json
           git commit -m "Correct Challengers and Spoilers member cards"
-          git push origin main
+          git push origin fix-revive-member-mappings
