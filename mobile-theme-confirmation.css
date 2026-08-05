@@ -4,6 +4,14 @@
   display: none;
 }
 
+.member-set-switcher-popup .member-set-options small {
+  display: none !important;
+}
+
+.member-set-switcher-popup .member-set-options button {
+  gap: 0;
+}
+
 .member-set-confirm {
   min-height: 42px;
   padding: 0 18px;
@@ -64,8 +72,6 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* A staged selection owns the visual state. Do not leave the launch-time
-     focus halo on a different card after a touch selection. */
   .member-set-switcher-popup[data-confirmation-pending]
   .member-set-options button:not([aria-pressed="true"]):focus,
   .member-set-switcher-popup[data-confirmation-pending]
@@ -138,6 +144,12 @@
 @media (hover: none) and (pointer: coarse) and (max-width: 640px) {
   .member-set-switcher-popup .member-set-options button:hover {
     transform: none;
+  }
+
+  .member-set-switcher-popup .member-set-options button:focus,
+  .member-set-switcher-popup .member-set-options button:focus-visible {
+    outline: none !important;
+    outline-color: transparent !important;
   }
 
   .member-set-switcher-popup[data-confirmation-pending]
