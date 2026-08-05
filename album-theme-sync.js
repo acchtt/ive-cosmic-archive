@@ -2,7 +2,7 @@
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = '2e0cfd7';
+  const MOBILE_ASSET_VERSION = 'ee17dcf';
 
   const themes = {
     bangers: {
