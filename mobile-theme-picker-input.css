@@ -1,0 +1,43 @@
+/* Mobile-only interaction isolation for the REVIVE+ edition picker. */
+
+@media (max-width: 640px) {
+  html[data-mobile-theme-picker-open="true"] body > :not(.mobile-theme-picker) {
+    pointer-events: none !important;
+  }
+
+  .mobile-theme-picker[data-open="true"],
+  .mobile-theme-picker[data-open="true"] .mobile-theme-screen,
+  .mobile-theme-picker[data-open="true"] .mobile-theme-surface,
+  .mobile-theme-picker[data-open="true"] .mobile-theme-options,
+  .mobile-theme-picker[data-open="true"] .mobile-theme-options button,
+  .mobile-theme-picker[data-open="true"] .mobile-theme-confirm,
+  .mobile-theme-picker[data-open="true"] .mobile-theme-close {
+    pointer-events: auto !important;
+  }
+
+  .mobile-theme-picker {
+    z-index: 2147483000 !important;
+  }
+
+  .mobile-theme-screen {
+    z-index: 1;
+    touch-action: pan-y;
+  }
+
+  .mobile-theme-options button,
+  .mobile-theme-confirm,
+  .mobile-theme-close,
+  .mobile-theme-dock {
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .mobile-theme-options button {
+    cursor: pointer;
+  }
+
+  .mobile-theme-options button:active {
+    transform: scale(.985);
+  }
+}
