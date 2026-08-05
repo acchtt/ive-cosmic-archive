@@ -1,0 +1,230 @@
+/* Album-cover-derived palettes shared across the complete archive. */
+html[data-member-set="bangers"] {
+  --set-bg: #07080b;
+  --set-bg-soft: #19090d;
+  --set-panel: rgba(20, 10, 14, .84);
+  --set-panel-strong: rgba(26, 9, 14, .96);
+  --set-paper: #f5fbfc;
+  --set-muted: #c8bec4;
+  --set-ink: #07080b;
+  --set-accent: #f20808;
+  --set-accent-2: #7edff0;
+  --set-accent-3: #e2ed79;
+  --set-line: rgba(242, 8, 8, .25);
+  --set-glow-a: rgba(242, 8, 8, .26);
+  --set-glow-b: rgba(126, 223, 240, .16);
+  --set-board-a: #f5fbfc;
+  --set-board-b: #d9d9de;
+  --set-board-c: #c70c11;
+}
+
+html[data-member-set="challengers"] {
+  --set-bg: #090a0b;
+  --set-bg-soft: #1a1715;
+  --set-panel: rgba(26, 24, 21, .84);
+  --set-panel-strong: rgba(17, 16, 15, .96);
+  --set-paper: #f2eee4;
+  --set-muted: #b9b1a6;
+  --set-ink: #090a0b;
+  --set-accent: #b62d24;
+  --set-accent-2: #77b8cf;
+  --set-accent-3: #d4c7ad;
+  --set-line: rgba(182, 45, 36, .27);
+  --set-glow-a: rgba(182, 45, 36, .24);
+  --set-glow-b: rgba(119, 184, 207, .14);
+  --set-board-a: #f2eee4;
+  --set-board-b: #aaa49a;
+  --set-board-c: #8f211b;
+}
+
+html[data-member-set="spoilers"] {
+  --set-bg: #080d15;
+  --set-bg-soft: #121d2a;
+  --set-panel: rgba(12, 21, 33, .84);
+  --set-panel-strong: rgba(11, 27, 44, .96);
+  --set-paper: #e9eff1;
+  --set-muted: #a7b8c0;
+  --set-ink: #07101b;
+  --set-accent: #2f70b5;
+  --set-accent-2: #9bcfd9;
+  --set-accent-3: #e4ed25;
+  --set-line: rgba(47, 112, 181, .27);
+  --set-glow-a: rgba(47, 112, 181, .26);
+  --set-glow-b: rgba(155, 207, 217, .16);
+  --set-board-a: #e9eff1;
+  --set-board-b: #9bcfd9;
+  --set-board-c: #2f70b5;
+}
+
+html[data-member-set="loved-ive"] {
+  --set-bg: #09111d;
+  --set-bg-soft: #102640;
+  --set-panel: rgba(10, 28, 47, .84);
+  --set-panel-strong: rgba(9, 37, 62, .96);
+  --set-paper: #f2f0eb;
+  --set-muted: #a9bdcd;
+  --set-ink: #08101a;
+  --set-accent: #6fa6c8;
+  --set-accent-2: #a6becd;
+  --set-accent-3: #cfc5ba;
+  --set-line: rgba(111, 166, 200, .27);
+  --set-glow-a: rgba(32, 99, 157, .26);
+  --set-glow-b: rgba(207, 197, 186, .14);
+  --set-board-a: #e8edf0;
+  --set-board-b: #a6becd;
+  --set-board-c: #09345c;
+}
+
+html[data-member-set] {
+  --bg: var(--set-bg);
+  --bg-soft: var(--set-bg-soft);
+  --panel: var(--set-panel);
+  --panel-strong: var(--set-panel-strong);
+  --line: var(--set-line);
+  --line-strong: color-mix(in srgb, var(--set-accent) 48%, transparent);
+  --text: var(--set-paper);
+  --muted: var(--set-muted);
+  --violet: var(--set-accent);
+  --pink: var(--set-accent-2);
+  --blue: var(--set-accent-3);
+  --cover-surface: color-mix(in srgb, var(--set-panel-strong) 91%, transparent);
+  --cover-surface-soft: color-mix(in srgb, var(--set-panel) 86%, transparent);
+  --cover-edge: color-mix(in srgb, var(--set-accent) 25%, rgba(255,255,255,.1));
+  --cover-copy: color-mix(in srgb, var(--set-muted) 86%, var(--set-paper));
+  background: var(--set-bg);
+}
+
+html[data-member-set] body {
+  color: var(--set-paper);
+  background:
+    radial-gradient(circle at 84% 8%, var(--set-glow-a), transparent 25%),
+    radial-gradient(circle at 12% 34%, var(--set-glow-b), transparent 29%),
+    linear-gradient(180deg, var(--set-bg) 0%, var(--set-bg-soft) 48%, var(--set-bg) 100%) !important;
+}
+
+html[data-member-set] ::selection { color: var(--set-ink); background: var(--set-accent); }
+html[data-member-set] .star { background: color-mix(in srgb, var(--set-accent) 46%, white); }
+
+html[data-member-set] .site-header {
+  border-color: var(--cover-edge) !important;
+  background: color-mix(in srgb, var(--set-bg) 84%, transparent) !important;
+  box-shadow: 0 18px 68px color-mix(in srgb, var(--set-bg) 72%, transparent) !important;
+}
+
+html[data-member-set] .site-nav a::after,
+html[data-member-set] .eyebrow span:first-child {
+  background: linear-gradient(90deg, var(--set-accent), var(--set-accent-2)) !important;
+}
+
+html[data-member-set] .motion-dot {
+  background: var(--set-accent) !important;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--set-accent) 72%, transparent) !important;
+}
+
+html[data-member-set] .page-hero h1 span,
+html[data-member-set] .revive-title,
+html[data-member-set] .disco-copy h3,
+html[data-member-set] .media-page-title span {
+  color: color-mix(in srgb, var(--set-accent) 72%, var(--set-paper)) !important;
+}
+
+html[data-member-set] .page-hero-orb,
+html[data-member-set] .era-orb,
+html[data-member-set] .media-hero-orb {
+  border-color: color-mix(in srgb, var(--set-accent) 40%, transparent) !important;
+  background:
+    radial-gradient(circle at 34% 30%, color-mix(in srgb, var(--set-paper) 32%, transparent), transparent 24%),
+    radial-gradient(circle at 55% 58%, var(--set-glow-a), transparent 42%),
+    linear-gradient(145deg, var(--set-accent-2), var(--set-accent), var(--set-bg)) !important;
+  box-shadow: 0 0 80px var(--set-glow-a) !important;
+}
+
+html[data-member-set] :is(
+  .era-console,
+  .disco-detail,
+  .revive-shell,
+  .discography-panel,
+  .dossier-panel,
+  .member-card,
+  .media-console,
+  .media-feature,
+  .vault-card,
+  .signal-card,
+  .picker-panel,
+  .quiz-panel,
+  .bias-panel,
+  .revive-cover-gallery,
+  .revive-status-strip,
+  .revive-story,
+  .revive-portal-card
+) {
+  border-color: var(--cover-edge) !important;
+  background-color: var(--cover-surface) !important;
+}
+
+html[data-member-set] :is(.era-console, .disco-detail, .revive-shell, .dossier-panel, .media-console, .revive-story) {
+  background-image:
+    radial-gradient(circle at 78% 10%, color-mix(in srgb, var(--set-accent) 13%, transparent), transparent 36%),
+    radial-gradient(circle at 12% 88%, color-mix(in srgb, var(--set-accent-2) 9%, transparent), transparent 38%) !important;
+}
+
+html[data-member-set] :is(
+  .page-hero-copy > p,
+  .section-heading > p,
+  .disco-description,
+  .revive-lead,
+  .discography-panel p,
+  .member-signal,
+  .media-copy,
+  .vault-card p,
+  .signal-card p
+) { color: var(--cover-copy) !important; }
+
+html[data-member-set] :is(
+  .button-primary,
+  .revive-actions a:first-child,
+  .disco-actions a:first-child,
+  .media-action-primary,
+  .quiz-submit,
+  .picker-submit
+) {
+  color: var(--set-ink) !important;
+  border-color: transparent !important;
+  background: linear-gradient(112deg, var(--set-paper), var(--set-accent) 56%, var(--set-accent-2)) !important;
+  box-shadow: 0 15px 42px color-mix(in srgb, var(--set-accent) 22%, transparent) !important;
+}
+
+html[data-member-set] :is(
+  .button-ghost,
+  .text-link,
+  .disco-actions a,
+  .revive-actions a,
+  .discography-source,
+  .vault-card button,
+  .era-archive-card button
+) {
+  border-color: color-mix(in srgb, var(--set-accent) 38%, rgba(255,255,255,.12)) !important;
+}
+
+html[data-member-set] .site-footer {
+  border-color: var(--cover-edge) !important;
+  background:
+    radial-gradient(circle at 88% 20%, color-mix(in srgb, var(--set-accent) 10%, transparent), transparent 34%),
+    color-mix(in srgb, var(--set-bg) 92%, transparent) !important;
+}
+
+html[data-member-set] .member-set-options button[data-member-set="bangers"] { --option-a: #f20808; --option-b: #7edff0; }
+html[data-member-set] .member-set-options button[data-member-set="challengers"] { --option-a: #b62d24; --option-b: #77b8cf; }
+html[data-member-set] .member-set-options button[data-member-set="spoilers"] { --option-a: #2f70b5; --option-b: #9bcfd9; }
+html[data-member-set] .member-set-options button[data-member-set="loved-ive"] { --option-a: #6fa6c8; --option-b: #a6becd; }
+
+html[data-member-set="challengers"] .campaign-board,
+html[data-member-set="challengers"] .concept-campaign {
+  background:
+    radial-gradient(circle at 76% 18%, rgba(119,184,207,.28), transparent 23%),
+    radial-gradient(circle at 20% 80%, rgba(182,45,36,.28), transparent 26%),
+    linear-gradient(145deg, #f2eee4 0%, #b5aea3 48%, #6d6761 100%) !important;
+}
+
+html[data-member-set="challengers"] .campaign-sticker-power { background: #b62d24 !important; color: #f2eee4 !important; }
+html[data-member-set="challengers"] .campaign-sticker-us { background: #77b8cf !important; color: #090a0b !important; }
