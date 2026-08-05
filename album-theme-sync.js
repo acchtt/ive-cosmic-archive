@@ -2,7 +2,7 @@
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'd753358';
+  const MOBILE_ASSET_VERSION = '1fdff39';
 
   const themes = {
     bangers: {
@@ -81,7 +81,7 @@
 
     appendStylesheet('mobile-theme-picker.css');
     appendStylesheet('mobile-theme-picker-input.css');
-    appendStylesheet('mobile-theme-picker-luxe.css');
+    appendStylesheet('mobile-theme-picker-deck.css');
 
     if (!document.querySelector('script[data-mobile-picker-script]')) {
       const script = document.createElement('script');
