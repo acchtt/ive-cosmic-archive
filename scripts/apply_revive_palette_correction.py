@@ -143,8 +143,9 @@ js = replace_once(js, r"const ARCHIVE_BUILD = '[^']+';", f"const ARCHIVE_BUILD =
 
 for set_id, values in SET_COPY.items():
     tags = ", ".join(repr(tag) for tag in values["tags"])
+    key_pattern = rf"(?:'{re.escape(set_id)}'|{re.escape(set_id)})"
     pattern = (
-        rf"({re.escape(set_id)}: \{{\n\s+label: '[^']+',\n)"
+        rf"({key_pattern}: \{{\n\s+label: '[^']+',\n)"
         rf"\s+description: '[^']*',\n"
         rf"\s+themeColor: '#[0-9a-fA-F]{{6}}',\n"
         rf"\s+tags: \[[^\n]*\],"
