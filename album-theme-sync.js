@@ -2,6 +2,7 @@
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
+  const MOBILE_ASSET_VERSION = '2e0cfd7';
 
   const themes = {
     bangers: {
@@ -65,21 +66,27 @@
     return resolved;
   }
 
+  function appendStylesheet(path) {
+    if (document.querySelector(`link[data-mobile-picker-asset="${path}"]`)) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.dataset.mobilePickerAsset = path;
+    link.href = `${path}?v=${MOBILE_ASSET_VERSION}`;
+    document.head.appendChild(link);
+  }
+
   function loadMobilePicker() {
     const page = document.documentElement.dataset.page;
     if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page)) return;
 
-    if (!document.querySelector('link[href="mobile-theme-picker.css"]')) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = 'mobile-theme-picker.css';
-      document.head.appendChild(link);
-    }
+    appendStylesheet('mobile-theme-picker.css');
+    appendStylesheet('mobile-theme-picker-input.css');
 
-    if (!document.querySelector('script[src="mobile-theme-picker.js"]')) {
+    if (!document.querySelector('script[data-mobile-picker-script]')) {
       const script = document.createElement('script');
-      script.src = 'mobile-theme-picker.js';
-      script.defer = true;
+      script.dataset.mobilePickerScript = 'true';
+      script.src = `mobile-theme-picker.js?v=${MOBILE_ASSET_VERSION}`;
+      script.async = false;
       document.head.appendChild(script);
     }
   }
