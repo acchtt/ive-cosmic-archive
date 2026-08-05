@@ -1,7 +1,8 @@
 (() => {
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const CONFIRMATION_STYLESHEET = 'mobile-theme-confirmation.css';
-  const MOBILE_PICKER = window.matchMedia('(max-width: 640px)');
+  const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
+  const PICKER_PAGES = new Set(['index', 'members']);
+
   const themes = {
     bangers: {
       color: '#f20808',
@@ -26,20 +27,14 @@
   };
 
   const valid = new Set(Object.keys(themes));
-  const pickerPages = new Set(['index', 'members']);
 
   function storedTheme() {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = window.localStorage.getItem(STORAGE_KEY);
       return valid.has(stored) ? stored : 'bangers';
     } catch {
       return 'bangers';
     }
-  }
-
-  function currentTheme() {
-    const current = document.documentElement.dataset.memberSet;
-    return valid.has(current) ? current : storedTheme();
   }
 
   function syncMeta(id) {
@@ -54,11 +49,8 @@
 
   function syncCopy(id) {
     const theme = themes[id];
-    const switcher = document.querySelector('[data-member-set-switcher]');
     const description = document.querySelector('[data-member-set-description]');
-    if (description && !switcher?.dataset.confirmationPending) {
-      description.textContent = theme.description;
-    }
+    if (description) description.textContent = theme.description;
 
     document.querySelectorAll('.revive-campaign-tags span').forEach((node, index) => {
       if (theme.tags[index]) node.textContent = theme.tags[index];
@@ -73,186 +65,47 @@
     return resolved;
   }
 
-  function ensureConfirmationStyles() {
-    if (!pickerPages.has(document.documentElement.dataset.page)) return;
-    if (document.querySelector(`link[href="${CONFIRMATION_STYLESHEET}"]`)) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = CONFIRMATION_STYLESHEET;
-    document.head.appendChild(link);
-  }
+  function loadMobilePicker() {
+    const page = document.documentElement.dataset.page;
+    if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page)) return;
 
-  function clearOptionFocus(switcher) {
-    if (!MOBILE_PICKER.matches || !switcher) return;
-    const focused = document.activeElement;
-    if (focused instanceof HTMLElement && focused.closest('.member-set-options [data-member-set]')) {
-      focused.blur();
+    if (!document.querySelector('link[href="mobile-theme-picker.css"]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'mobile-theme-picker.css';
+      document.head.appendChild(link);
     }
-    window.requestAnimationFrame(() => {
-      const retained = document.activeElement;
-      if (retained instanceof HTMLElement && retained.closest('.member-set-options [data-member-set]')) {
-        retained.blur();
-      }
-    });
-  }
 
-  function setPendingTheme(switcher, id) {
-    if (!switcher || !valid.has(id)) return;
-    clearOptionFocus(switcher);
-    switcher.dataset.confirmationPending = id;
-
-    switcher.querySelectorAll('.member-set-options [data-member-set]').forEach((button) => {
-      button.setAttribute('aria-pressed', String(button.dataset.memberSet === id));
-    });
-
-    const description = switcher.querySelector('[data-member-set-description]');
-    const label = switcher.querySelector('[data-member-set-confirm-label]');
-    const confirm = switcher.querySelector('[data-member-set-confirm]');
-    if (description) description.textContent = themes[id].description;
-    if (label) label.textContent = `Selected: ${id === 'loved-ive' ? 'LOVED IVE' : id.toUpperCase()}`;
-    if (confirm) {
-      const edition = id === 'loved-ive' ? 'LOVED IVE' : id.toUpperCase();
-      confirm.textContent = `Use ${edition}`;
-      confirm.setAttribute('aria-label', `Confirm the ${edition} archive theme`);
+    if (!document.querySelector('script[src="mobile-theme-picker.js"]')) {
+      const script = document.createElement('script');
+      script.src = 'mobile-theme-picker.js';
+      script.defer = true;
+      document.head.appendChild(script);
     }
   }
 
-  function clearPendingTheme(switcher, id = currentTheme()) {
-    if (!switcher) return;
-    delete switcher.dataset.confirmationPending;
-    setPendingTheme(switcher, id);
-    delete switcher.dataset.confirmationPending;
-    clearOptionFocus(switcher);
-  }
-
-  function installConfirmation() {
-    if (!pickerPages.has(document.documentElement.dataset.page)) return false;
-    const switcher = document.querySelector('[data-member-set-switcher]');
-    if (!switcher) return false;
-    if (switcher.dataset.confirmationReady === 'true') return true;
-
-    const options = switcher.querySelector('.member-set-options');
-    if (!options) return false;
-
-    const row = document.createElement('div');
-    row.className = 'member-set-confirm-row';
-    row.innerHTML = `
-      <span data-member-set-confirm-label>Selected theme</span>
-      <button type="button" class="member-set-confirm" data-member-set-confirm>Use theme</button>
-    `;
-    options.insertAdjacentElement('afterend', row);
-
-    let committing = false;
-
-    switcher.addEventListener('click', (event) => {
-      if (!MOBILE_PICKER.matches) return;
-
-      const confirm = event.target.closest('[data-member-set-confirm]');
-      if (confirm) {
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        const id = switcher.dataset.confirmationPending || currentTheme();
-        const option = switcher.querySelector(`.member-set-options [data-member-set="${id}"]`);
-        if (!option) return;
-
-        committing = true;
-        delete switcher.dataset.confirmationPending;
-        option.click();
-        committing = false;
-        window.setTimeout(() => clearPendingTheme(switcher, currentTheme()), 0);
-        return;
-      }
-
-      const option = event.target.closest('.member-set-options [data-member-set]');
-      if (option && !committing) {
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        setPendingTheme(switcher, option.dataset.memberSet);
-        return;
-      }
-
-      if (event.target.closest('[data-member-set-toggle], [data-member-set-close]')) {
-        clearPendingTheme(switcher, currentTheme());
-      }
-    }, true);
-
-    switcher.addEventListener('pointerdown', (event) => {
-      if (!MOBILE_PICKER.matches) return;
-      const option = event.target.closest('.member-set-options [data-member-set]');
-      if (!option) return;
-      clearOptionFocus(switcher);
-    }, true);
-
-    document.addEventListener('pointerdown', (event) => {
-      if (!MOBILE_PICKER.matches || !switcher.dataset.confirmationPending) return;
-      if (!switcher.contains(event.target)) {
-        window.setTimeout(() => clearPendingTheme(switcher, currentTheme()), 0);
-      }
-    }, true);
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && switcher.dataset.confirmationPending) {
-        clearPendingTheme(switcher, currentTheme());
-      }
-    });
-
-    const handleViewportChange = (event) => {
-      if (!event.matches) clearPendingTheme(switcher, currentTheme());
-      else clearOptionFocus(switcher);
-    };
-    if (typeof MOBILE_PICKER.addEventListener === 'function') {
-      MOBILE_PICKER.addEventListener('change', handleViewportChange);
-    } else if (typeof MOBILE_PICKER.addListener === 'function') {
-      MOBILE_PICKER.addListener(handleViewportChange);
-    }
-
-    switcher.dataset.confirmationReady = 'true';
-    clearPendingTheme(switcher, currentTheme());
-    window.setTimeout(() => clearOptionFocus(switcher), 0);
-    window.setTimeout(() => clearOptionFocus(switcher), 120);
-    return true;
-  }
-
-  function watchForPicker() {
-    if (!pickerPages.has(document.documentElement.dataset.page)) return;
-    ensureConfirmationStyles();
-    if (installConfirmation()) return;
-
-    const observer = new MutationObserver(() => {
-      if (installConfirmation()) observer.disconnect();
-    });
-
-    const begin = () => {
-      if (installConfirmation()) return;
-      observer.observe(document.body, { childList: true, subtree: true });
-      [0, 80, 240, 700].forEach((delay) => window.setTimeout(installConfirmation, delay));
-    };
-
-    if (document.body) begin();
-    else document.addEventListener('DOMContentLoaded', begin, { once: true });
-  }
-
-  ensureConfirmationStyles();
+  loadMobilePicker();
   apply();
-  watchForPicker();
 
   window.addEventListener('revive-member-set-change', (event) => {
     const id = event.detail?.id;
-    requestAnimationFrame(() => apply(id));
-    setTimeout(() => apply(id), 80);
+    window.requestAnimationFrame(() => apply(id));
+    window.setTimeout(() => apply(id), 80);
   });
 
   const observer = new MutationObserver(() => {
     const id = document.documentElement.dataset.memberSet;
-    if (valid.has(id)) {
-      syncMeta(id);
-      if (document.body) syncCopy(id);
-    }
+    if (!valid.has(id)) return;
+    syncMeta(id);
+    if (document.body) syncCopy(id);
   });
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-member-set'] });
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-member-set']
+  });
 
   document.addEventListener('DOMContentLoaded', () => {
     const id = apply(document.documentElement.dataset.memberSet || storedTheme());
-    [0, 180, 650].forEach((delay) => setTimeout(() => syncCopy(id), delay));
+    [0, 180, 650].forEach((delay) => window.setTimeout(() => syncCopy(id), delay));
   }, { once: true });
 })();
