@@ -1,0 +1,153 @@
+name: Analyze REVIVE+ palettes
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Build palette analysis
+        shell: bash
+        run: |
+          python3 -m pip install --quiet pillow
+          python3 - <<'PY'
+          from pathlib import Path
+          from collections import Counter
+          from PIL import Image, ImageDraw, ImageFont, ImageOps
+          import colorsys, json, math
+
+          root = Path('assets/revive/member-cards')
+          sets = ['bangers', 'challengers', 'spoilers', 'loved-ive']
+          members = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo']
+
+          def hex_color(rgb):
+              return '#%02x%02x%02x' % tuple(rgb)
+
+          def color_distance(a, b):
+              return math.sqrt(sum((a[i]-b[i])**2 for i in range(3)))
+
+          def image_palette(path, colors=20):
+              image = Image.open(path).convert('RGB')
+              image.thumbnail((320, 420))
+              quant = image.quantize(colors=colors, method=Image.Quantize.MEDIANCUT).convert('RGB')
+              counts = Counter(quant.getdata())
+              total = sum(counts.values())
+              return [(rgb, count / total) for rgb, count in counts.most_common()]
+
+          def select_brand_colors(weighted):
+              # Consolidate near-duplicate quantized colors, then select a balanced
+              # dark base, a strong primary, a secondary, and a light paper tone.
+              merged = []
+              for rgb, weight in sorted(weighted, key=lambda item: item[1], reverse=True):
+                  found = False
+                  for item in merged:
+                      if color_distance(rgb, item[0]) < 34:
+                          item[1] += weight
+                          found = True
+                          break
+                  if not found:
+                      merged.append([rgb, weight])
+
+              entries = []
+              for rgb, weight in merged:
+                  r, g, b = [v / 255 for v in rgb]
+                  h, s, v = colorsys.rgb_to_hsv(r, g, b)
+                  luminance = 0.2126*r + 0.7152*g + 0.0722*b
+                  entries.append({'rgb': rgb, 'weight': weight, 'h': h, 's': s, 'v': v, 'lum': luminance})
+
+              darks = [e for e in entries if e['lum'] < .22]
+              lights = [e for e in entries if e['lum'] > .72]
+              accents = [e for e in entries if e['s'] > .32 and .24 < e['v'] < .98]
+
+              base = max(darks or entries, key=lambda e: e['weight'])
+              paper = max(lights or entries, key=lambda e: e['weight'])
+              primary = max(accents or entries, key=lambda e: e['weight'] * (0.6 + e['s']))
+              secondary_candidates = sorted(
+                  [e for e in accents if color_distance(e['rgb'], primary['rgb']) > 70],
+                  key=lambda e: e['weight'] * (0.55 + e['s']),
+                  reverse=True,
+              )
+              secondary = secondary_candidates[0] if secondary_candidates else primary
+
+              return {
+                  'base': hex_color(base['rgb']),
+                  'primary': hex_color(primary['rgb']),
+                  'secondary': hex_color(secondary['rgb']),
+                  'paper': hex_color(paper['rgb']),
+                  'top': [
+                      {'hex': hex_color(e['rgb']), 'weight': round(e['weight'], 4)}
+                      for e in sorted(entries, key=lambda e: e['weight'], reverse=True)[:12]
+                  ]
+              }
+
+          results = {}
+          member_palettes = {}
+          for set_id in sets:
+              aggregate = Counter()
+              member_palettes[set_id] = {}
+              for member in members:
+                  path = root / set_id / f'{member}.jpg'
+                  palette = image_palette(path)
+                  member_palettes[set_id][member] = [
+                      {'hex': hex_color(rgb), 'weight': round(weight, 4)} for rgb, weight in palette[:8]
+                  ]
+                  for rgb, weight in palette:
+                      aggregate[rgb] += weight
+              weighted = [(rgb, weight / len(members)) for rgb, weight in aggregate.items()]
+              results[set_id] = select_brand_colors(weighted)
+
+          Path('palette-analysis.json').write_text(json.dumps({
+              'recommended': results,
+              'members': member_palettes
+          }, indent=2), encoding='utf-8')
+
+          thumb_w, thumb_h = 220, 290
+          gap = 18
+          label_h = 44
+          palette_h = 74
+          row_h = label_h + thumb_h + palette_h + gap
+          canvas_w = gap + len(members) * (thumb_w + gap)
+          canvas_h = gap + len(sets) * row_h
+          canvas = Image.new('RGB', (canvas_w, canvas_h), '#09070b')
+          draw = ImageDraw.Draw(canvas)
+          font = ImageFont.load_default()
+
+          for row, set_id in enumerate(sets):
+              y = gap + row * row_h
+              draw.text((gap, y + 12), set_id.upper(), fill='#ffffff', font=font)
+              for col, member in enumerate(members):
+                  x = gap + col * (thumb_w + gap)
+                  image = Image.open(root / set_id / f'{member}.jpg').convert('RGB')
+                  image = ImageOps.fit(image, (thumb_w, thumb_h), method=Image.Resampling.LANCZOS, centering=(.5, .38))
+                  canvas.paste(image, (x, y + label_h))
+                  draw.rectangle((x, y + label_h, x + thumb_w - 1, y + label_h + thumb_h - 1), outline='#ffffff', width=1)
+                  draw.text((x + 7, y + label_h + thumb_h - 18), member.upper(), fill='#ffffff', font=font)
+
+              palette_y = y + label_h + thumb_h + 12
+              swatches = results[set_id]['top'][:10]
+              swatch_w = max(1, (canvas_w - gap * 2) // len(swatches))
+              for index, swatch in enumerate(swatches):
+                  x0 = gap + index * swatch_w
+                  x1 = canvas_w - gap if index == len(swatches)-1 else x0 + swatch_w
+                  draw.rectangle((x0, palette_y, x1, palette_y + 34), fill=swatch['hex'])
+                  draw.text((x0 + 4, palette_y + 40), swatch['hex'].upper(), fill='#ffffff', font=font)
+
+          canvas.save('palette-contact-sheet.png', quality=92)
+          print(json.dumps(results, indent=2))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: revive-palette-analysis
+          path: |
+            palette-analysis.json
+            palette-contact-sheet.png
