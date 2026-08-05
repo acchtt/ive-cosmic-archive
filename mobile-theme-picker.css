@@ -29,6 +29,26 @@
     font-family: inherit;
   }
 
+  .mobile-theme-picker[data-pending="bangers"] {
+    --mobile-option-a: #f20808;
+    --mobile-option-b: #7bdff6;
+  }
+
+  .mobile-theme-picker[data-pending="challengers"] {
+    --mobile-option-a: #b62d24;
+    --mobile-option-b: #9bc9dc;
+  }
+
+  .mobile-theme-picker[data-pending="spoilers"] {
+    --mobile-option-a: #2f70b5;
+    --mobile-option-b: #e4ec2a;
+  }
+
+  .mobile-theme-picker[data-pending="loved-ive"] {
+    --mobile-option-a: #6fa6c8;
+    --mobile-option-b: #d8cec0;
+  }
+
   .mobile-theme-dock {
     pointer-events: auto;
     position: fixed;
@@ -142,11 +162,12 @@
   .mobile-theme-header span {
     display: block;
     margin-bottom: 8px;
-    color: #b84b45;
+    color: var(--mobile-option-a);
     font-size: .56rem;
     font-weight: 820;
     letter-spacing: .18em;
     text-transform: uppercase;
+    transition: color .14s ease;
   }
 
   .mobile-theme-header h2 {
@@ -328,18 +349,29 @@
     width: 100%;
     min-height: 56px;
     padding: 0 18px;
-    border: 0;
+    border: 1px solid color-mix(in srgb, var(--mobile-option-a) 68%, white 18%);
     border-radius: 16px;
     color: #09080a;
-    background: #f2eeea;
-    box-shadow: none;
+    background: linear-gradient(
+      108deg,
+      color-mix(in srgb, var(--mobile-option-a) 72%, white),
+      color-mix(in srgb, var(--mobile-option-b) 72%, white)
+    );
+    box-shadow:
+      0 12px 30px color-mix(in srgb, var(--mobile-option-a) 24%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, .38);
     font: inherit;
     font-size: .74rem;
     font-weight: 900;
     letter-spacing: .08em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: transform .1s ease, opacity .1s ease;
+    transition:
+      transform .1s ease,
+      opacity .1s ease,
+      background .14s ease,
+      border-color .14s ease,
+      box-shadow .14s ease;
     -webkit-tap-highlight-color: transparent;
   }
 
