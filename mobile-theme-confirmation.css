@@ -1,32 +1,7 @@
-/* Explicit confirmation step for the REVIVE+ edition picker. */
-
-.member-set-popover {
-  max-height: calc(100dvh - 32px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-}
+/* Explicit confirmation step for the REVIVE+ edition picker on mobile. */
 
 .member-set-confirm-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
-  align-items: center;
-  margin-top: 13px;
-  padding-top: 13px;
-  border-top: 1px solid color-mix(in srgb, var(--popup-accent) 22%, rgba(255, 255, 255, .08));
-}
-
-.member-set-confirm-row > span {
-  min-width: 0;
-  overflow: hidden;
-  color: color-mix(in srgb, var(--set-muted) 78%, var(--set-paper));
-  font-size: .58rem;
-  font-weight: 760;
-  letter-spacing: .08em;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  white-space: nowrap;
+  display: none;
 }
 
 .member-set-confirm {
@@ -58,8 +33,14 @@
 }
 
 @media (max-width: 640px) {
-  .member-set-switcher-popup[data-launch="true"] .member-set-popover {
+  .member-set-popover {
     max-height: calc(100dvh - 20px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  .member-set-switcher-popup[data-launch="true"] .member-set-popover {
     padding-bottom: 0;
   }
 
@@ -85,11 +66,13 @@
     position: sticky;
     z-index: 4;
     bottom: 0;
+    display: grid;
     grid-template-columns: 1fr;
     gap: 8px;
+    align-items: center;
     margin: 12px -17px 0;
     padding: 12px 17px 17px;
-    border-top-color: color-mix(in srgb, var(--popup-accent) 30%, rgba(255, 255, 255, .1));
+    border-top: 1px solid color-mix(in srgb, var(--popup-accent) 30%, rgba(255, 255, 255, .1));
     background: linear-gradient(
       180deg,
       color-mix(in srgb, var(--set-panel-strong) 88%, transparent),
@@ -100,7 +83,16 @@
   }
 
   .member-set-confirm-row > span {
+    min-width: 0;
+    overflow: hidden;
+    color: color-mix(in srgb, var(--set-muted) 78%, var(--set-paper));
+    font-size: .58rem;
+    font-weight: 760;
+    letter-spacing: .08em;
     text-align: center;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
 
   .member-set-confirm {
