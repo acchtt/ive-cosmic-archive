@@ -1,79 +1,79 @@
 /* REVIVE+ multi-set member-card selector and album-version themes. */
 
 html[data-member-set="bangers"] {
-  --set-bg: #090305;
-  --set-bg-soft: #190509;
-  --set-panel: rgba(27, 6, 11, .78);
-  --set-panel-strong: rgba(34, 7, 13, .94);
-  --set-paper: #fff6f1;
-  --set-muted: #c8aeb1;
-  --set-ink: #1b0508;
-  --set-accent: #ff435e;
-  --set-accent-2: #ffae47;
-  --set-accent-3: #ff7c98;
-  --set-line: rgba(255, 119, 137, .22);
-  --set-glow-a: rgba(255, 45, 77, .24);
-  --set-glow-b: rgba(255, 164, 58, .13);
-  --set-board-a: #fff0e6;
-  --set-board-b: #ff9e8e;
-  --set-board-c: #8e172a;
+  --set-bg: #08070b;
+  --set-bg-soft: #18090f;
+  --set-panel: rgba(18, 9, 14, .82);
+  --set-panel-strong: rgba(25, 9, 15, .95);
+  --set-paper: #f4fcfe;
+  --set-muted: #c9bdc8;
+  --set-ink: #08070b;
+  --set-accent: #fd0100;
+  --set-accent-2: #79e5fd;
+  --set-accent-3: #e5f183;
+  --set-line: rgba(253, 1, 0, .24);
+  --set-glow-a: rgba(253, 1, 0, .25);
+  --set-glow-b: rgba(121, 229, 253, .16);
+  --set-board-a: #f4fcfe;
+  --set-board-b: #ded8eb;
+  --set-board-c: #ca0009;
 }
 
 html[data-member-set="challengers"] {
-  --set-bg: #031014;
-  --set-bg-soft: #071d25;
-  --set-panel: rgba(4, 24, 31, .78);
-  --set-panel-strong: rgba(5, 31, 41, .94);
-  --set-paper: #effcff;
-  --set-muted: #9fc1c9;
-  --set-ink: #031217;
-  --set-accent: #69e5ff;
-  --set-accent-2: #7b8fff;
-  --set-accent-3: #8dffd6;
-  --set-line: rgba(105, 229, 255, .22);
-  --set-glow-a: rgba(55, 209, 255, .22);
-  --set-glow-b: rgba(111, 133, 255, .16);
-  --set-board-a: #effcff;
-  --set-board-b: #a9dce7;
-  --set-board-c: #31536a;
+  --set-bg: #07090a;
+  --set-bg-soft: #071710;
+  --set-panel: rgba(7, 18, 13, .82);
+  --set-panel-strong: rgba(7, 24, 16, .95);
+  --set-paper: #ecf7eb;
+  --set-muted: #9fbdb1;
+  --set-ink: #050806;
+  --set-accent: #10e68a;
+  --set-accent-2: #c7e3d9;
+  --set-accent-3: #5db08f;
+  --set-line: rgba(16, 230, 138, .24);
+  --set-glow-a: rgba(16, 230, 138, .27);
+  --set-glow-b: rgba(199, 227, 217, .12);
+  --set-board-a: #ecf7eb;
+  --set-board-b: #97c1b5;
+  --set-board-c: #175c46;
 }
 
 html[data-member-set="spoilers"] {
-  --set-bg: #0b0712;
-  --set-bg-soft: #1a1027;
-  --set-panel: rgba(22, 13, 34, .79);
-  --set-panel-strong: rgba(28, 16, 45, .95);
-  --set-paper: #fcf7ff;
-  --set-muted: #bcaecc;
-  --set-ink: #160c1f;
-  --set-accent: #c7a6ff;
-  --set-accent-2: #ff9ed8;
-  --set-accent-3: #a7c7ff;
-  --set-line: rgba(199, 166, 255, .24);
-  --set-glow-a: rgba(171, 119, 255, .23);
-  --set-glow-b: rgba(255, 126, 205, .13);
-  --set-board-a: #f5efff;
-  --set-board-b: #cdbce8;
-  --set-board-c: #68517e;
+  --set-bg: #090d14;
+  --set-bg-soft: #111b28;
+  --set-panel: rgba(11, 20, 31, .82);
+  --set-panel-strong: rgba(12, 27, 43, .95);
+  --set-paper: #e7eef1;
+  --set-muted: #a5b5bd;
+  --set-ink: #08111d;
+  --set-accent: #3071b6;
+  --set-accent-2: #9cd0db;
+  --set-accent-3: #e7ef19;
+  --set-line: rgba(48, 113, 182, .26);
+  --set-glow-a: rgba(48, 113, 182, .25);
+  --set-glow-b: rgba(156, 208, 219, .16);
+  --set-board-a: #e7eef1;
+  --set-board-b: #9cd0db;
+  --set-board-c: #3071b6;
 }
 
 html[data-member-set="loved-ive"] {
-  --set-bg: #12090d;
-  --set-bg-soft: #251319;
-  --set-panel: rgba(34, 18, 24, .78);
-  --set-panel-strong: rgba(43, 22, 29, .94);
-  --set-paper: #fff9f3;
-  --set-muted: #d1b8bd;
-  --set-ink: #2b1118;
-  --set-accent: #ffb7d2;
-  --set-accent-2: #ffd488;
-  --set-accent-3: #b9dbff;
-  --set-line: rgba(255, 183, 210, .23);
-  --set-glow-a: rgba(255, 163, 196, .2);
-  --set-glow-b: rgba(255, 211, 130, .13);
-  --set-board-a: #fffaf2;
-  --set-board-b: #f5d9dc;
-  --set-board-c: #b88791;
+  --set-bg: #0b1220;
+  --set-bg-soft: #102742;
+  --set-panel: rgba(11, 29, 48, .82);
+  --set-panel-strong: rgba(10, 38, 64, .95);
+  --set-paper: #f3f1ed;
+  --set-muted: #a9bdcf;
+  --set-ink: #09111c;
+  --set-accent: #72aacc;
+  --set-accent-2: #a3bdcf;
+  --set-accent-3: #ccc3bb;
+  --set-line: rgba(114, 170, 204, .26);
+  --set-glow-a: rgba(38, 105, 163, .25);
+  --set-glow-b: rgba(204, 195, 187, .13);
+  --set-board-a: #e9eef1;
+  --set-board-b: #a3bdcf;
+  --set-board-c: #0a355e;
 }
 
 html[data-member-set] {
@@ -244,10 +244,10 @@ html[data-member-set] .member-card:focus-within {
   box-shadow: 0 0 10px color-mix(in srgb, var(--option-a, #ff8fc7) 65%, transparent);
 }
 
-.member-set-options button[data-member-set="bangers"] { --option-a: #ff435e; --option-b: #ffae47; }
-.member-set-options button[data-member-set="challengers"] { --option-a: #69e5ff; --option-b: #7b8fff; }
-.member-set-options button[data-member-set="spoilers"] { --option-a: #c7a6ff; --option-b: #ff9ed8; }
-.member-set-options button[data-member-set="loved-ive"] { --option-a: #ffb7d2; --option-b: #ffd488; }
+.member-set-options button[data-member-set="bangers"] { --option-a: #fd0100; --option-b: #79e5fd; }
+.member-set-options button[data-member-set="challengers"] { --option-a: #10e68a; --option-b: #c7e3d9; }
+.member-set-options button[data-member-set="spoilers"] { --option-a: #3071b6; --option-b: #9cd0db; }
+.member-set-options button[data-member-set="loved-ive"] { --option-a: #72aacc; --option-b: #a3bdcf; }
 
 .member-set-options button:hover,
 .member-set-options button:focus-visible {

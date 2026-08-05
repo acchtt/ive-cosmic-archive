@@ -5,8 +5,8 @@
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
-  const ARCHIVE_VERSION = '0.19.1';
-  const ARCHIVE_BUILD = '020';
+  const ARCHIVE_VERSION = '0.20.0';
+  const ARCHIVE_BUILD = '021';
   const RELOAD_NAVIGATION = (() => {
     try {
       const navigation = window.performance?.getEntriesByType?.('navigation')?.[0];
@@ -23,9 +23,9 @@
   const SETS = {
     bangers: {
       label: 'BANGERS',
-      description: 'High-impact color, styling, and performance energy.',
-      themeColor: '#ff435e',
-      tags: ['Redline styling', 'High impact', 'Performance', 'Forward motion'],
+      description: 'Color-block fashion energy in signal red, electric cyan, acid lime, and icy white.',
+      themeColor: '#fd0100',
+      tags: ['Signal red', 'Electric cyan', 'Acid lime', 'Color-block'],
       portraits: [
         'assets/revive/member-cards/bangers/gaeul.jpg',
         'assets/revive/member-cards/bangers/yujin.jpg',
@@ -37,9 +37,9 @@
     },
     challengers: {
       label: 'CHALLENGERS',
-      description: 'Sharper silhouettes and a confident competitive coordinate.',
-      themeColor: '#69e5ff',
-      tags: ['Competitive edge', 'Icy chrome', 'Precision', 'Momentum'],
+      description: 'Black-stage portraits cut by laser green light and cold mint styling.',
+      themeColor: '#10e68a',
+      tags: ['Laser green', 'Black stage', 'Cold mint', 'Challenge mode'],
       portraits: [
         'assets/revive/member-cards/challengers/gaeul.jpg',
         'assets/revive/member-cards/challengers/yujin.jpg',
@@ -51,9 +51,9 @@
     },
     spoilers: {
       label: 'SPOILERS',
-      description: 'Lavender press-room styling with polished editorial tension.',
-      themeColor: '#c7a6ff',
-      tags: ['Press room', 'Lavender flash', 'Editorial', 'Tension'],
+      description: 'Press-room blue, cool gray, powder cyan, and acid-yellow editorial details.',
+      themeColor: '#3071b6',
+      tags: ['Press blue', 'Cool gray', 'Powder cyan', 'Acid yellow'],
       portraits: [
         'assets/revive/member-cards/spoilers/gaeul.jpg',
         'assets/revive/member-cards/spoilers/yujin.jpg',
@@ -65,9 +65,9 @@
     },
     'loved-ive': {
       label: 'LOVED IVE',
-      description: 'A softer graduation-inspired set built around warmth and connection.',
-      themeColor: '#ffb7d2',
-      tags: ['Graduation', 'Soft focus', 'Warmth', 'Connection'],
+      description: 'School-portrait navy, studio blue, soft gray, and warm uniform neutrals.',
+      themeColor: '#0a355e',
+      tags: ['School portrait', 'Deep navy', 'Studio blue', 'Uniform neutrals'],
       portraits: [
         'assets/revive/member-cards/loved-ive/gaeul.jpg',
         'assets/revive/member-cards/loved-ive/yujin.jpg',
