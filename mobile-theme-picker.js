@@ -31,11 +31,12 @@
   };
 
   const ORDER = ['bangers', 'challengers', 'spoilers', 'loved-ive'];
-  let root;
+  let root = null;
   let appliedId = readStoredTheme();
   let pendingId = appliedId;
   let launchMode = launchRequired();
   let busy = false;
+  let lastPointerAction = 0;
 
   function readStoredTheme() {
     try {
@@ -60,14 +61,13 @@
       window.localStorage.setItem(STORAGE_KEY, id);
       window.sessionStorage.setItem(LAUNCH_KEY, 'true');
     } catch {
-      // The picker still applies the current session when storage is blocked.
+      // The current session still updates when storage is unavailable.
     }
   }
 
   function createPicker() {
-    if (document.querySelector('[data-mobile-theme-picker]')) {
-      return document.querySelector('[data-mobile-theme-picker]');
-    }
+    const existing = document.querySelector('[data-mobile-theme-picker]');
+    if (existing) return existing;
 
     const picker = document.createElement('aside');
     picker.className = 'mobile-theme-picker';
@@ -123,10 +123,13 @@
   }
 
   function renderSelection() {
-    if (!root) return;
+    if (!root || !THEMES[pendingId]) return;
     root.dataset.pending = pendingId;
+
     root.querySelectorAll('[data-mobile-theme-option]').forEach((button) => {
-      button.setAttribute('aria-checked', String(button.dataset.mobileThemeOption === pendingId));
+      const selected = button.dataset.mobileThemeOption === pendingId;
+      button.setAttribute('aria-checked', String(selected));
+      button.tabIndex = selected ? 0 : -1;
     });
 
     const summary = root.querySelector('[data-mobile-theme-summary]');
@@ -134,7 +137,16 @@
     const confirm = root.querySelector('[data-mobile-theme-confirm]');
     if (summary) summary.textContent = THEMES[pendingId].label;
     if (description) description.textContent = THEMES[pendingId].short;
-    if (confirm) confirm.textContent = busy ? 'Applying…' : `Use ${THEMES[pendingId].label}`;
+    if (confirm) {
+      confirm.textContent = busy ? 'Applying…' : `Use ${THEMES[pendingId].label}`;
+      confirm.disabled = busy;
+    }
+  }
+
+  function selectTheme(id) {
+    if (busy || !THEMES[id]) return;
+    pendingId = id;
+    renderSelection();
   }
 
   function openPicker(asLaunch = false) {
@@ -145,17 +157,12 @@
     root.dataset.open = 'true';
     document.documentElement.dataset.mobileThemePickerOpen = 'true';
     renderSelection();
-
-    window.requestAnimationFrame(() => {
-      root.querySelector(`[data-mobile-theme-option="${pendingId}"]`)?.focus({ preventScroll: true });
-    });
   }
 
   function closePicker() {
     if (!root || launchMode || busy) return;
     root.dataset.open = 'false';
     delete document.documentElement.dataset.mobileThemePickerOpen;
-    root.querySelector('[data-mobile-theme-open]')?.focus({ preventScroll: true });
   }
 
   function waitForDesktopOption(id, timeout = 1800) {
@@ -163,14 +170,8 @@
       const started = performance.now();
       const find = () => {
         const option = document.querySelector(`.member-set-switcher-popup [data-member-set="${id}"]`);
-        if (option) {
-          resolve(option);
-          return;
-        }
-        if (performance.now() - started >= timeout) {
-          resolve(null);
-          return;
-        }
+        if (option) return resolve(option);
+        if (performance.now() - started >= timeout) return resolve(null);
         window.setTimeout(find, 40);
       };
       find();
@@ -184,12 +185,11 @@
     renderSelection();
 
     const id = pendingId;
-    const option = await waitForDesktopOption(id);
+    const desktopOption = await waitForDesktopOption(id);
 
-    if (option) {
-      option.click();
+    if (desktopOption) {
+      desktopOption.click();
     } else {
-      storeTheme(id);
       document.documentElement.dataset.memberSet = id;
       window.dispatchEvent(new CustomEvent('revive-member-set-change', {
         detail: { id, label: THEMES[id].label, themeColor: THEMES[id].color }
@@ -213,31 +213,33 @@
     renderSelection();
   }
 
-  function bindEvents() {
-    root.addEventListener('click', (event) => {
-      const open = event.target.closest('[data-mobile-theme-open]');
-      if (open) {
-        openPicker(false);
-        return;
-      }
+  function bindAction(element, action) {
+    if (!element) return;
 
-      const close = event.target.closest('[data-mobile-theme-close]');
-      if (close) {
-        closePicker();
-        return;
-      }
+    element.addEventListener('pointerup', (event) => {
+      if (event.pointerType === 'mouse') return;
+      event.preventDefault();
+      event.stopPropagation();
+      lastPointerAction = performance.now();
+      action();
+    }, { passive: false });
 
-      const option = event.target.closest('[data-mobile-theme-option]');
-      if (option && THEMES[option.dataset.mobileThemeOption]) {
-        pendingId = option.dataset.mobileThemeOption;
-        renderSelection();
-        return;
-      }
-
-      if (event.target.closest('[data-mobile-theme-confirm]')) {
-        commitSelection();
-      }
+    element.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (performance.now() - lastPointerAction < 500) return;
+      action();
     });
+  }
+
+  function bindEvents() {
+    root.querySelectorAll('[data-mobile-theme-option]').forEach((button) => {
+      bindAction(button, () => selectTheme(button.dataset.mobileThemeOption));
+    });
+
+    bindAction(root.querySelector('[data-mobile-theme-confirm]'), commitSelection);
+    bindAction(root.querySelector('[data-mobile-theme-open]'), () => openPicker(false));
+    bindAction(root.querySelector('[data-mobile-theme-close]'), closePicker);
 
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && root.dataset.open === 'true') closePicker();
