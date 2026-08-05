@@ -1,0 +1,327 @@
+/* Homepage color synchronization for the four physical REVIVE+ album versions. */
+
+html[data-page="index"][data-member-set] {
+  --rv-ink: var(--set-ink);
+  --rv-paper: var(--set-paper);
+  --rv-pink: var(--set-accent);
+  --rv-hot: var(--set-accent);
+  --rv-lilac: var(--set-accent-2);
+  --rv-cyan: var(--set-accent-2);
+  --rv-yellow: var(--set-accent-3);
+  --rv-chrome: var(--set-board-b);
+  --rv-line: var(--set-line);
+  --home-panel: color-mix(in srgb, var(--set-panel-strong) 92%, transparent);
+  --home-panel-soft: color-mix(in srgb, var(--set-panel) 88%, transparent);
+  --home-copy: color-mix(in srgb, var(--set-muted) 88%, var(--set-paper));
+  --home-line: color-mix(in srgb, var(--set-accent) 24%, rgba(255, 255, 255, .1));
+  --home-line-strong: color-mix(in srgb, var(--set-accent) 46%, rgba(255, 255, 255, .12));
+  --home-shadow: color-mix(in srgb, var(--set-bg) 70%, rgba(0, 0, 0, .52));
+  background: var(--set-bg);
+}
+
+html[data-page="index"][data-member-set] body {
+  background:
+    radial-gradient(circle at 86% 8%, var(--set-glow-a), transparent 24%),
+    radial-gradient(circle at 12% 31%, var(--set-glow-b), transparent 28%),
+    linear-gradient(180deg, var(--set-bg) 0%, var(--set-bg-soft) 46%, var(--set-bg) 100%);
+}
+
+html[data-page="index"][data-member-set] .site-header {
+  border-color: var(--home-line);
+  background: color-mix(in srgb, var(--set-bg) 84%, transparent);
+  box-shadow: 0 18px 70px var(--home-shadow);
+}
+
+html[data-page="index"][data-member-set] .site-nav a::after,
+html[data-page="index"][data-member-set] .revive-campaign-copy .eyebrow span:first-child,
+html[data-page="index"][data-member-set] .revive-section-heading .eyebrow span:first-child,
+html[data-page="index"][data-member-set] .revive-story-copy .eyebrow span:first-child {
+  background: linear-gradient(90deg, var(--set-accent), var(--set-accent-2));
+}
+
+html[data-page="index"][data-member-set] .motion-dot {
+  background: var(--set-accent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--set-accent) 72%, transparent);
+}
+
+html[data-page="index"][data-member-set] .revive-campaign-hero::before {
+  background:
+    radial-gradient(circle at 75% 44%, color-mix(in srgb, var(--set-accent) 20%, transparent), transparent 20%),
+    radial-gradient(circle at 72% 38%, color-mix(in srgb, var(--set-accent-2) 13%, transparent), transparent 34%),
+    linear-gradient(90deg, color-mix(in srgb, var(--set-accent) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--set-accent-2) 5%, transparent) 1px, transparent 1px);
+  background-size: auto, auto, 54px 54px, 54px 54px;
+}
+
+html[data-page="index"][data-member-set] .revive-campaign-title .title-ive {
+  color: var(--set-paper);
+  text-shadow: 0 0 40px color-mix(in srgb, var(--set-accent) 11%, transparent);
+}
+
+html[data-page="index"][data-member-set] .revive-campaign-title .title-revive {
+  color: var(--set-ink);
+  background: linear-gradient(105deg, var(--set-paper), var(--set-accent-2) 53%, var(--set-accent));
+  box-shadow: 9px 9px 0 color-mix(in srgb, var(--set-accent) 22%, transparent);
+}
+
+html[data-page="index"][data-member-set] .revive-campaign-title::after {
+  border-color: color-mix(in srgb, var(--set-accent-2) 42%, rgba(255, 255, 255, .16));
+  color: color-mix(in srgb, var(--set-paper) 82%, var(--set-muted));
+  background: color-mix(in srgb, var(--set-panel) 64%, transparent);
+}
+
+html[data-page="index"][data-member-set] .revive-campaign-tagline,
+html[data-page="index"][data-member-set] .revive-section-heading > p,
+html[data-page="index"][data-member-set] .revive-section-heading .section-side,
+html[data-page="index"][data-member-set] .revive-story-copy > p:not(.eyebrow),
+html[data-page="index"][data-member-set] .revive-portal-card p {
+  color: var(--home-copy);
+}
+
+html[data-page="index"][data-member-set] .revive-campaign-tagline strong {
+  color: var(--set-paper);
+}
+
+html[data-page="index"][data-member-set] .revive-campaign-actions .button-primary,
+html[data-page="index"][data-member-set] .revive-closing .button-primary {
+  color: var(--set-ink);
+  background: linear-gradient(112deg, var(--set-paper), var(--set-accent) 54%, var(--set-accent-2));
+  box-shadow: 0 16px 44px color-mix(in srgb, var(--set-accent) 23%, transparent);
+}
+
+html[data-page="index"][data-member-set] .revive-campaign-actions .button-ghost,
+html[data-page="index"][data-member-set] .revive-campaign-tags span {
+  border-color: var(--home-line);
+  background: color-mix(in srgb, var(--set-panel) 55%, transparent);
+}
+
+html[data-page="index"][data-member-set] .revive-campaign-tags span {
+  color: color-mix(in srgb, var(--set-muted) 80%, var(--set-paper));
+}
+
+html[data-page="index"][data-member-set] .campaign-board {
+  border-color: color-mix(in srgb, var(--set-accent) 30%, rgba(255, 255, 255, .15));
+  background:
+    radial-gradient(circle at 77% 18%, color-mix(in srgb, var(--set-accent-2) 34%, transparent), transparent 21%),
+    radial-gradient(circle at 18% 78%, color-mix(in srgb, var(--set-accent) 25%, transparent), transparent 25%),
+    linear-gradient(145deg, var(--set-board-a) 0%, var(--set-board-b) 48%, var(--set-board-c) 100%);
+  box-shadow: 0 48px 130px var(--home-shadow);
+}
+
+html[data-page="index"][data-member-set] .campaign-board::before {
+  border-color: color-mix(in srgb, var(--set-ink) 18%, transparent);
+}
+
+html[data-page="index"][data-member-set] .campaign-board::after {
+  content: attr(data-theme-label);
+  color: color-mix(in srgb, var(--set-ink) 72%, transparent);
+}
+
+html[data-page="index"][data-member-set] .campaign-photo {
+  border-color: color-mix(in srgb, var(--set-ink) 19%, transparent);
+  background: var(--set-board-b);
+  box-shadow: 0 15px 34px color-mix(in srgb, var(--set-board-c) 22%, transparent);
+}
+
+html[data-page="index"][data-member-set] .campaign-photo figcaption {
+  border-color: color-mix(in srgb, var(--set-ink) 13%, transparent);
+  color: var(--set-ink);
+  background: color-mix(in srgb, var(--set-paper) 88%, transparent);
+  box-shadow: 0 5px 14px color-mix(in srgb, var(--set-board-c) 18%, transparent);
+}
+
+html[data-page="index"][data-member-set] .campaign-sticker {
+  color: var(--set-ink);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--set-board-c) 22%, transparent);
+}
+
+html[data-page="index"][data-member-set] .campaign-sticker-power {
+  background: var(--set-accent-3);
+}
+
+html[data-page="index"][data-member-set] .campaign-sticker-us {
+  background: var(--set-accent-2);
+}
+
+html[data-page="index"][data-member-set] .campaign-chrome-ring {
+  border-color: color-mix(in srgb, var(--set-paper) 78%, var(--set-board-b));
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--set-ink) 14%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--set-ink) 11%, transparent),
+    0 18px 34px color-mix(in srgb, var(--set-board-c) 20%, transparent);
+}
+
+html[data-page="index"][data-member-set] .revive-status-strip {
+  border-color: var(--home-line);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--set-accent) 8%, transparent), transparent 32%),
+    var(--home-panel);
+  box-shadow: 0 24px 70px var(--home-shadow);
+}
+
+html[data-page="index"][data-member-set] .revive-status-strip > div + div,
+html[data-page="index"][data-member-set] .revive-story-points,
+html[data-page="index"][data-member-set] .revive-story-points div + div {
+  border-color: var(--home-line);
+}
+
+html[data-page="index"][data-member-set] .revive-status-strip span,
+html[data-page="index"][data-member-set] .revive-story-points span,
+html[data-page="index"][data-member-set] .revive-portal-label,
+html[data-page="index"][data-member-set] .revive-closing p {
+  color: color-mix(in srgb, var(--set-muted) 74%, transparent);
+}
+
+html[data-page="index"][data-member-set] .revive-status-strip strong,
+html[data-page="index"][data-member-set] .revive-story-points strong {
+  color: var(--set-paper);
+}
+
+html[data-page="index"][data-member-set] .revive-status-strip .status-lead strong,
+html[data-page="index"][data-member-set] .text-link,
+html[data-page="index"][data-member-set] .revive-portal-arrow {
+  color: var(--set-accent-2);
+}
+
+html[data-page="index"][data-member-set] .concept-card {
+  border-color: var(--home-line);
+  background: var(--home-panel);
+  box-shadow: 0 28px 80px var(--home-shadow);
+}
+
+html[data-page="index"][data-member-set] .concept-campaign {
+  background:
+    radial-gradient(circle at 22% 22%, color-mix(in srgb, var(--set-accent) 34%, transparent), transparent 27%),
+    linear-gradient(145deg, var(--set-board-a), var(--set-board-b) 58%, var(--set-board-c));
+}
+
+html[data-page="index"][data-member-set] .concept-card::after,
+html[data-page="index"][data-member-set] .concept-bangers::after,
+html[data-page="index"][data-member-set] .concept-blackhole::after {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--set-bg) 6%, transparent) 24%, color-mix(in srgb, var(--set-bg) 94%, transparent) 100%);
+}
+
+html[data-page="index"][data-member-set] .concept-copy > span {
+  border-color: var(--home-line-strong);
+  color: color-mix(in srgb, var(--set-paper) 82%, var(--set-muted));
+  background: color-mix(in srgb, var(--set-bg) 58%, transparent);
+}
+
+html[data-page="index"][data-member-set] .concept-copy p {
+  color: color-mix(in srgb, var(--set-paper) 72%, var(--set-muted));
+}
+
+html[data-page="index"][data-member-set] .concept-copy a {
+  color: var(--set-paper);
+}
+
+html[data-page="index"][data-member-set] .revive-story {
+  border-color: var(--home-line);
+  background:
+    radial-gradient(circle at 76% 42%, color-mix(in srgb, var(--set-accent) 15%, transparent), transparent 29%),
+    linear-gradient(145deg, var(--home-panel), color-mix(in srgb, var(--set-bg) 96%, black));
+  box-shadow: 0 36px 110px var(--home-shadow);
+}
+
+html[data-page="index"][data-member-set] .revive-story-visual {
+  border-color: var(--home-line);
+  background:
+    radial-gradient(circle at center, color-mix(in srgb, var(--set-accent) 22%, transparent), transparent 25%),
+    linear-gradient(90deg, color-mix(in srgb, var(--set-accent) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--set-accent-2) 5%, transparent) 1px, transparent 1px),
+    var(--set-bg-soft);
+  background-size: auto, 38px 38px, 38px 38px, auto;
+}
+
+html[data-page="index"][data-member-set] .story-word-me {
+  -webkit-text-stroke-color: color-mix(in srgb, var(--set-paper) 42%, transparent);
+}
+
+html[data-page="index"][data-member-set] .story-word-us {
+  color: var(--set-paper);
+  text-shadow: 0 0 42px color-mix(in srgb, var(--set-accent) 34%, transparent);
+}
+
+html[data-page="index"][data-member-set] .story-arrow {
+  background: linear-gradient(90deg, var(--set-accent), var(--set-accent-2));
+  box-shadow: 0 0 24px color-mix(in srgb, var(--set-accent) 40%, transparent);
+}
+
+html[data-page="index"][data-member-set] .story-arrow::after {
+  border-color: var(--set-accent-2);
+}
+
+html[data-page="index"][data-member-set] .revive-members .member-card {
+  border-color: var(--home-line);
+  background:
+    radial-gradient(circle at 76% 8%, color-mix(in srgb, var(--set-accent) 10%, transparent), transparent 34%),
+    var(--home-panel-soft);
+}
+
+html[data-page="index"][data-member-set] .revive-members .member-card::after {
+  border-color: var(--home-line-strong);
+  color: color-mix(in srgb, var(--set-paper) 78%, var(--set-muted));
+  background: color-mix(in srgb, var(--set-bg) 60%, transparent);
+}
+
+html[data-page="index"][data-member-set] .revive-portal-card {
+  border-color: var(--home-line);
+  background:
+    radial-gradient(circle at 110% -10%, color-mix(in srgb, var(--set-accent) 12%, transparent), transparent 42%),
+    linear-gradient(145deg, var(--home-panel), color-mix(in srgb, var(--set-bg) 97%, black));
+}
+
+html[data-page="index"][data-member-set] .revive-portal-card:hover,
+html[data-page="index"][data-member-set] .revive-portal-card:focus-visible {
+  border-color: var(--home-line-strong);
+  box-shadow: 0 30px 80px var(--home-shadow);
+}
+
+html[data-page="index"][data-member-set] .revive-portal-card::before {
+  border-color: color-mix(in srgb, var(--set-accent-2) 18%, transparent);
+  box-shadow:
+    0 0 0 28px color-mix(in srgb, var(--set-accent) 4%, transparent),
+    0 0 0 56px color-mix(in srgb, var(--set-accent-2) 3%, transparent);
+}
+
+html[data-page="index"][data-member-set] .revive-portal-number {
+  color: color-mix(in srgb, var(--set-accent) 34%, var(--set-paper));
+}
+
+html[data-page="index"][data-member-set] .revive-closing {
+  border-color: var(--home-line);
+  background:
+    radial-gradient(circle at 76% 35%, color-mix(in srgb, var(--set-accent-2) 17%, transparent), transparent 27%),
+    radial-gradient(circle at 22% 72%, color-mix(in srgb, var(--set-accent) 20%, transparent), transparent 29%),
+    linear-gradient(130deg, var(--set-bg-soft), var(--set-bg) 72%);
+  box-shadow: 0 36px 100px var(--home-shadow);
+}
+
+html[data-page="index"][data-member-set] .revive-closing h2 span {
+  -webkit-text-stroke-color: color-mix(in srgb, var(--set-accent-2) 72%, var(--set-paper));
+}
+
+html[data-page="index"][data-member-set] .site-footer {
+  border-color: var(--home-line);
+}
+
+html[data-page="index"][data-member-set] .footer-code {
+  color: color-mix(in srgb, var(--set-accent-2) 74%, var(--set-muted));
+}
+
+@media (max-width: 900px) {
+  html[data-page="index"][data-member-set] .revive-status-strip > div:nth-child(3),
+  html[data-page="index"][data-member-set] .revive-status-strip > div:nth-child(4),
+  html[data-page="index"][data-member-set] .revive-story-visual {
+    border-color: var(--home-line);
+  }
+}
+
+@media (max-width: 660px) {
+  html[data-page="index"][data-member-set] .revive-status-strip > div + div,
+  html[data-page="index"][data-member-set] .revive-status-strip > div:nth-child(3),
+  html[data-page="index"][data-member-set] .revive-status-strip > div:nth-child(4),
+  html[data-page="index"][data-member-set] .revive-story-points div + div {
+    border-color: var(--home-line);
+  }
+}
