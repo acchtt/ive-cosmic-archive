@@ -82,8 +82,23 @@
     document.head.appendChild(link);
   }
 
+  function clearOptionFocus(switcher) {
+    if (!MOBILE_PICKER.matches || !switcher) return;
+    const focused = document.activeElement;
+    if (focused instanceof HTMLElement && focused.closest('.member-set-options [data-member-set]')) {
+      focused.blur();
+    }
+    window.requestAnimationFrame(() => {
+      const retained = document.activeElement;
+      if (retained instanceof HTMLElement && retained.closest('.member-set-options [data-member-set]')) {
+        retained.blur();
+      }
+    });
+  }
+
   function setPendingTheme(switcher, id) {
     if (!switcher || !valid.has(id)) return;
+    clearOptionFocus(switcher);
     switcher.dataset.confirmationPending = id;
 
     switcher.querySelectorAll('.member-set-options [data-member-set]').forEach((button) => {
@@ -107,6 +122,7 @@
     delete switcher.dataset.confirmationPending;
     setPendingTheme(switcher, id);
     delete switcher.dataset.confirmationPending;
+    clearOptionFocus(switcher);
   }
 
   function installConfirmation() {
@@ -160,6 +176,13 @@
       }
     }, true);
 
+    switcher.addEventListener('pointerdown', (event) => {
+      if (!MOBILE_PICKER.matches) return;
+      const option = event.target.closest('.member-set-options [data-member-set]');
+      if (!option) return;
+      clearOptionFocus(switcher);
+    }, true);
+
     document.addEventListener('pointerdown', (event) => {
       if (!MOBILE_PICKER.matches || !switcher.dataset.confirmationPending) return;
       if (!switcher.contains(event.target)) {
@@ -175,6 +198,7 @@
 
     const handleViewportChange = (event) => {
       if (!event.matches) clearPendingTheme(switcher, currentTheme());
+      else clearOptionFocus(switcher);
     };
     if (typeof MOBILE_PICKER.addEventListener === 'function') {
       MOBILE_PICKER.addEventListener('change', handleViewportChange);
@@ -184,6 +208,8 @@
 
     switcher.dataset.confirmationReady = 'true';
     clearPendingTheme(switcher, currentTheme());
+    window.setTimeout(() => clearOptionFocus(switcher), 0);
+    window.setTimeout(() => clearOptionFocus(switcher), 120);
     return true;
   }
 
