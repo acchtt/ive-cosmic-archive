@@ -70,24 +70,26 @@
   .member-set-options button:not([aria-pressed="true"]):focus,
   .member-set-switcher-popup[data-confirmation-pending]
   .member-set-options button:not([aria-pressed="true"]):focus-visible {
-    outline: none;
-    border-color: rgba(255, 255, 255, .085);
-    color: color-mix(in srgb, var(--set-paper) 62%, transparent);
-    background: rgba(255, 255, 255, .025);
-    box-shadow: none;
-    transform: none;
+    outline: none !important;
+    outline-color: transparent !important;
+    border-color: rgba(255, 255, 255, .085) !important;
+    color: color-mix(in srgb, var(--set-paper) 62%, transparent) !important;
+    background: rgba(255, 255, 255, .025) !important;
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
   }
 
   .member-set-switcher-popup[data-confirmation-pending]
   .member-set-options button[aria-pressed="true"] {
-    outline: none;
-    border-color: color-mix(in srgb, var(--option-a) 70%, white 12%);
+    outline: none !important;
+    border-color: color-mix(in srgb, var(--option-a) 70%, white 12%) !important;
     background:
-      linear-gradient(120deg, color-mix(in srgb, var(--option-a) 22%, transparent), color-mix(in srgb, var(--option-b) 10%, transparent));
+      linear-gradient(120deg, color-mix(in srgb, var(--option-a) 22%, transparent), color-mix(in srgb, var(--option-b) 10%, transparent)) !important;
     box-shadow:
       inset 4px 0 0 var(--option-a),
       0 0 0 1px color-mix(in srgb, var(--option-a) 16%, transparent),
-      0 10px 24px color-mix(in srgb, var(--option-a) 12%, transparent);
+      0 10px 24px color-mix(in srgb, var(--option-a) 12%, transparent) !important;
   }
 
   .member-set-confirm-row {
@@ -136,6 +138,17 @@
 @media (hover: none) and (pointer: coarse) and (max-width: 640px) {
   .member-set-switcher-popup .member-set-options button:hover {
     transform: none;
+  }
+
+  .member-set-switcher-popup[data-confirmation-pending]
+  .member-set-options button:not([aria-pressed="true"]),
+  .member-set-switcher-popup[data-confirmation-pending]
+  .member-set-options button:not([aria-pressed="true"]):hover,
+  .member-set-switcher-popup[data-confirmation-pending]
+  .member-set-options button:not([aria-pressed="true"]):active {
+    outline: none !important;
+    outline-color: transparent !important;
+    box-shadow: none !important;
   }
 }
 
