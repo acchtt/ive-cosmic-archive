@@ -1,0 +1,7 @@
+/* Final mobile selector cleanup. Desktop is unaffected. */
+@media (max-width: 640px) {
+  .mobile-theme-dock,
+  [data-mobile-theme-open] {
+    display: none !important;
+  }
+}
