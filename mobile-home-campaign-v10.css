@@ -139,11 +139,23 @@
     transform: none !important;
   }
 
-  /* Mobile Home member-card names: uppercase Latin stage name plus native spelling. */
+  /* Mobile Home member cards: full name first, stage and native names second. */
   html[data-page="index"] .revive-members .member-info h3 {
     display: grid;
-    gap: 4px;
+    gap: 5px;
+    margin: 0;
+    font-size: 0;
     line-height: 1;
+    text-transform: none;
+  }
+
+  html[data-page="index"] .revive-members .member-info h3::before {
+    display: block;
+    color: inherit;
+    font-size: clamp(1.72rem, 8.4vw, 2.25rem);
+    font-weight: 850;
+    letter-spacing: -.045em;
+    line-height: .96;
     text-transform: uppercase;
   }
 
@@ -152,15 +164,31 @@
     color: rgba(235, 225, 232, .72);
     font-size: .72rem;
     font-weight: 650;
-    letter-spacing: .08em;
+    letter-spacing: .075em;
     line-height: 1.35;
     text-transform: none;
   }
 
-  html[data-page="index"] .revive-members .member-card:nth-child(1) .member-info h3::after { content: "가을"; }
-  html[data-page="index"] .revive-members .member-card:nth-child(2) .member-info h3::after { content: "유진"; }
-  html[data-page="index"] .revive-members .member-card:nth-child(3) .member-info h3::after { content: "레이 · 直井怜"; }
-  html[data-page="index"] .revive-members .member-card:nth-child(4) .member-info h3::after { content: "원영"; }
-  html[data-page="index"] .revive-members .member-card:nth-child(5) .member-info h3::after { content: "리즈"; }
-  html[data-page="index"] .revive-members .member-card:nth-child(6) .member-info h3::after { content: "이서"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(1) .member-info h3::before { content: "KIM GAEUL"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(1) .member-info h3::after { content: "GAEUL · 김가을"; }
+
+  html[data-page="index"] .revive-members .member-card:nth-child(2) .member-info h3::before { content: "AN YUJIN"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(2) .member-info h3::after { content: "YUJIN · 안유진"; }
+
+  html[data-page="index"] .revive-members .member-card:nth-child(3) .member-info h3::before { content: "NAOI REI"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(3) .member-info h3::after { content: "REI · 레이 · 直井 怜"; }
+
+  html[data-page="index"] .revive-members .member-card:nth-child(4) .member-info h3::before { content: "JANG WONYOUNG"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(4) .member-info h3::after { content: "WONYOUNG · 장원영"; }
+
+  html[data-page="index"] .revive-members .member-card:nth-child(5) .member-info h3::before { content: "KIM JIWON"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(5) .member-info h3::after { content: "LIZ · 김지원"; }
+
+  html[data-page="index"] .revive-members .member-card:nth-child(6) .member-info h3::before { content: "LEE HYUNSEO"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(6) .member-info h3::after { content: "LEESEO · 이현서"; }
+
+  html[data-page="index"] .revive-members .member-card:nth-child(4) .member-info h3::before,
+  html[data-page="index"] .revive-members .member-card:nth-child(6) .member-info h3::before {
+    font-size: clamp(1.52rem, 7.3vw, 2.05rem);
+  }
 }
