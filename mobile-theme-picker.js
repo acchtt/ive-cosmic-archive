@@ -32,9 +32,7 @@
 
   const ORDER = ['bangers', 'challengers', 'spoilers', 'loved-ive'];
   let root = null;
-  let appliedId = readStoredTheme();
-  let pendingId = appliedId;
-  let launchMode = launchRequired();
+  let pendingId = readStoredTheme();
   let busy = false;
 
   function readStoredTheme() {
@@ -71,17 +69,11 @@
     const picker = document.createElement('aside');
     picker.className = 'mobile-theme-picker';
     picker.dataset.mobileThemePicker = '';
-    picker.dataset.open = 'false';
-    picker.dataset.launch = String(launchMode);
+    picker.dataset.open = 'true';
+    picker.dataset.launch = 'true';
     picker.dataset.pending = pendingId;
     picker.setAttribute('aria-label', 'REVIVE+ mobile edition selector');
     picker.innerHTML = `
-      <button class="mobile-theme-dock" type="button" data-mobile-theme-open aria-label="Change REVIVE+ edition">
-        <span aria-hidden="true"></span>
-        <small>REVIVE+ edition</small>
-        <strong data-mobile-theme-dock-label>${THEMES[appliedId].label}</strong>
-      </button>
-
       <div class="mobile-theme-screen" role="dialog" aria-modal="true" aria-labelledby="mobile-theme-title">
         <div class="mobile-theme-surface">
           <header class="mobile-theme-header">
@@ -90,7 +82,6 @@
               <h2 id="mobile-theme-title">Choose your edition</h2>
               <p class="mobile-theme-hint">Pick the cover palette that should shape your archive.</p>
             </div>
-            <button class="mobile-theme-close" type="button" data-mobile-theme-close aria-label="Close edition selector">×</button>
           </header>
 
           <div class="mobile-theme-summary" aria-live="polite">
@@ -169,22 +160,6 @@
     sourceButton?.blur();
   }
 
-  function openPicker(asLaunch = false) {
-    if (!root) return;
-    launchMode = asLaunch || launchMode;
-    pendingId = appliedId;
-    root.dataset.launch = String(launchMode);
-    root.dataset.open = 'true';
-    document.documentElement.dataset.mobileThemePickerOpen = 'true';
-    renderSelection();
-  }
-
-  function closePicker() {
-    if (!root || launchMode || busy) return;
-    root.dataset.open = 'false';
-    delete document.documentElement.dataset.mobileThemePickerOpen;
-  }
-
   function commitSelection() {
     if (busy || !THEMES[pendingId]) return;
     busy = true;
@@ -192,25 +167,19 @@
     renderSelection();
 
     const id = pendingId;
-    appliedId = id;
     storeTheme(id);
     document.documentElement.dataset.memberSet = id;
     window.dispatchEvent(new CustomEvent('revive-member-set-change', {
       detail: { id, label: THEMES[id].label, themeColor: THEMES[id].color }
     }));
 
-    launchMode = false;
     delete document.documentElement.dataset.themeLaunchPending;
     delete document.documentElement.dataset.mobileThemePickerOpen;
+    delete document.documentElement.dataset.mobileThemePickerReady;
 
-    const dockLabel = root.querySelector('[data-mobile-theme-dock-label]');
-    if (dockLabel) dockLabel.textContent = THEMES[id].label;
-
-    root.dataset.launch = 'false';
-    root.dataset.open = 'false';
-    root.dataset.busy = 'false';
+    root.remove();
+    root = null;
     busy = false;
-    renderSelection();
   }
 
   function bindClick(element, action) {
@@ -228,34 +197,17 @@
     });
 
     bindClick(root.querySelector('[data-mobile-theme-confirm]'), commitSelection);
-    bindClick(root.querySelector('[data-mobile-theme-open]'), () => openPicker(false));
-    bindClick(root.querySelector('[data-mobile-theme-close]'), closePicker);
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && root.dataset.open === 'true') closePicker();
-    });
-
-    window.addEventListener('revive-member-set-change', (event) => {
-      const id = event.detail?.id;
-      if (!THEMES[id]) return;
-      appliedId = id;
-      if (root.dataset.open !== 'true') pendingId = id;
-      const dockLabel = root.querySelector('[data-mobile-theme-dock-label]');
-      if (dockLabel) dockLabel.textContent = THEMES[id].label;
-      renderSelection();
-    });
   }
 
   function initialize() {
+    if (!launchRequired()) return;
+
     root = createPicker();
     bindEvents();
     renderSelection();
+    document.documentElement.dataset.themeLaunchPending = 'true';
+    document.documentElement.dataset.mobileThemePickerOpen = 'true';
     revealWhenStyled();
-
-    if (launchMode) {
-      document.documentElement.dataset.themeLaunchPending = 'true';
-      openPicker(true);
-    }
   }
 
   if (document.readyState === 'loading') {
