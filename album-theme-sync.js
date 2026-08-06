@@ -1,8 +1,9 @@
 (() => {
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
+  const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = '5d111d4';
+  const MOBILE_ASSET_VERSION = 'b8fc11b';
 
   const themes = {
     bangers: {
@@ -36,6 +37,79 @@
     } catch {
       return 'bangers';
     }
+  }
+
+  function mobileLaunchRequired() {
+    try {
+      return window.sessionStorage.getItem(LAUNCH_KEY) !== 'true'
+        || !valid.has(window.localStorage.getItem(STORAGE_KEY));
+    } catch {
+      return true;
+    }
+  }
+
+  function installMobileLaunchGuard() {
+    const page = document.documentElement.dataset.page;
+    if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page)) return;
+
+    if (mobileLaunchRequired()) {
+      document.documentElement.dataset.themeLaunchPending = 'true';
+    }
+
+    if (document.querySelector('style[data-mobile-theme-launch-guard]')) return;
+
+    const style = document.createElement('style');
+    style.dataset.mobileThemeLaunchGuard = 'true';
+    style.textContent = `
+      @media (max-width: 640px) {
+        html[data-theme-launch-pending="true"],
+        html[data-theme-launch-pending="true"] body {
+          min-height: 100%;
+          background: #08080a !important;
+        }
+
+        html[data-theme-launch-pending="true"] body > :not(.mobile-theme-picker) {
+          visibility: hidden !important;
+        }
+
+        html[data-theme-launch-pending="true"] body::before {
+          content: "REVIVE+";
+          position: fixed;
+          inset: 0;
+          z-index: 100000;
+          display: grid;
+          place-items: center;
+          color: #f8f4f5;
+          background: #08080a;
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: clamp(1.35rem, 7vw, 2rem);
+          font-weight: 900;
+          letter-spacing: .08em;
+        }
+
+        html[data-theme-launch-pending="true"] body::after {
+          content: "Preparing your archive theme";
+          position: fixed;
+          left: 0;
+          right: 0;
+          bottom: max(28px, env(safe-area-inset-bottom));
+          z-index: 100001;
+          color: #7e787f;
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: .58rem;
+          font-weight: 750;
+          letter-spacing: .14em;
+          text-align: center;
+          text-transform: uppercase;
+        }
+
+        html[data-theme-launch-pending="true"][data-mobile-theme-picker-open="true"][data-mobile-theme-picker-ready="true"] body::before,
+        html[data-theme-launch-pending="true"][data-mobile-theme-picker-open="true"][data-mobile-theme-picker-ready="true"] body::after {
+          display: none !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
   }
 
   function syncMeta(id) {
@@ -92,6 +166,7 @@
     }
   }
 
+  installMobileLaunchGuard();
   loadMobilePicker();
   apply();
 
