@@ -1,0 +1,47 @@
+name: Finalize cover-card mobile selector
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/finalize-cover-cards.yml
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Refresh mobile version selector references
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          replacements = {
+              "ive-cosmic-revive-launch-seen-cover-grid-v3": "ive-cosmic-revive-launch-seen-cover-cards-v4",
+              "cover-grid-v7": "cover-cards-v8",
+          }
+
+          for name in ["album-theme-sync.js", "index.html", "members.html"]:
+              path = Path(name)
+              text = path.read_text(encoding="utf-8")
+              for old, new in replacements.items():
+                  text = text.replace(old, new)
+              path.write_text(text, encoding="utf-8")
+          PY
+
+          git rm .github/workflows/finalize-cover-cards.yml
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add album-theme-sync.js index.html members.html
+          git commit -m "Finalize cover-card mobile selector"
+          git push
