@@ -3,7 +3,7 @@
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-clean-v2';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'mobile-launch-v2';
+  const MOBILE_ASSET_VERSION = 'campaign-mobile-v4';
 
   const themes = {
     bangers: {
