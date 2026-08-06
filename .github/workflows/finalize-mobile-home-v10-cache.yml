@@ -1,0 +1,44 @@
+name: Finalize mobile home cache v10
+
+on:
+  push:
+    paths:
+      - '.github/workflows/finalize-mobile-home-v10-cache.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Refresh bootstrap URLs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          for name in ('index.html', 'members.html'):
+              path = Path(name)
+              html = path.read_text()
+              updated = re.sub(r'album-theme-sync\.js\?v=[^"\']+', 'album-theme-sync.js?v=mobile-home-v10', html, count=1)
+              if updated == html:
+                  print(f'{name}: bootstrap already current or pattern unchanged')
+              path.write_text(updated)
+          PY
+
+      - name: Remove temporary workflows
+        run: |
+          rm -f .github/workflows/finalize-mobile-home-v10-cache.yml
+          rm -f .github/workflows/finalize-mobile-home-v10.yml
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html members.html .github/workflows/finalize-mobile-home-v10-cache.yml .github/workflows/finalize-mobile-home-v10.yml
+          git commit -m "Finalize mobile home campaign cache refresh"
+          git push
