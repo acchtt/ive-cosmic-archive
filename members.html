@@ -6,13 +6,13 @@
   <meta name="description" content="Explore six member dossiers in the LUMINARE · IVE Archive." />
   <title>Members · LUMINARE · IVE Archive</title>
   <link rel="icon" type="image/svg+xml" href="assets/luminare-mark.svg" />
-  <script src="album-theme-sync.js?v=mobile-launch-v2"></script>
+  <script src="album-theme-sync.js?v=campaign-mobile-v4"></script>
   <script>
     (() => {
       const editions = new Set(['bangers', 'challengers', 'spoilers', 'loved-ive']);
       let launchRequired = true;
       try {
-        launchRequired = sessionStorage.getItem('ive-cosmic-revive-launch-seen') !== 'true'
+        launchRequired = sessionStorage.getItem('ive-cosmic-revive-launch-seen-clean-v2') !== 'true'
 || !editions.has(localStorage.getItem('ive-cosmic-revive-member-set'));
       } catch {
         launchRequired = true;
