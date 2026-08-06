@@ -3,7 +3,7 @@
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-cards-v4';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'mobile-shell-v9';
+  const MOBILE_ASSET_VERSION = 'mobile-home-v10';
 
   const themes = {
     bangers: {
@@ -203,6 +203,7 @@
     if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page)) return;
 
     appendStylesheet('mobile-page-shell-fix.css');
+    if (page === 'index') appendStylesheet('mobile-home-campaign-v10.css');
     appendStylesheet('mobile-theme-picker-cover-grid.css');
 
     if (!document.querySelector('script[data-mobile-picker-script]')) {
