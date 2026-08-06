@@ -36,7 +36,6 @@
   let pendingId = appliedId;
   let launchMode = launchRequired();
   let busy = false;
-  let scrollTimer = 0;
 
   function readStoredTheme() {
     try {
@@ -89,10 +88,16 @@
             <div>
               <span>REVIVE+ archive theme</span>
               <h2 id="mobile-theme-title">Choose your edition</h2>
-              <p class="mobile-theme-hint"><strong>Swipe</strong> to preview · tap a card to select</p>
+              <p class="mobile-theme-hint"><strong>Tap an edition</strong> to preview its palette, then confirm.</p>
             </div>
             <button class="mobile-theme-close" type="button" data-mobile-theme-close aria-label="Close edition selector">×</button>
           </header>
+
+          <div class="mobile-theme-summary" aria-live="polite">
+            <span>Palette preview</span>
+            <strong data-mobile-theme-summary>${THEMES[pendingId].label}</strong>
+            <p data-mobile-theme-description>${THEMES[pendingId].short}</p>
+          </div>
 
           <div class="mobile-theme-options" role="radiogroup" aria-label="REVIVE+ editions">
             ${ORDER.map((id, index) => `
@@ -102,12 +107,6 @@
                 <span class="mobile-theme-option-swatch" aria-hidden="true"><i></i><i></i><i></i></span>
               </button>
             `).join('')}
-          </div>
-
-          <div class="mobile-theme-summary" aria-live="polite">
-            <span>Selected edition</span>
-            <strong data-mobile-theme-summary>${THEMES[pendingId].label}</strong>
-            <p data-mobile-theme-description>${THEMES[pendingId].short}</p>
           </div>
 
           <footer class="mobile-theme-footer">
@@ -123,16 +122,6 @@
     return picker;
   }
 
-  function optionFor(id) {
-    return root?.querySelector(`[data-mobile-theme-option="${id}"]`) || null;
-  }
-
-  function alignCard(id) {
-    const button = optionFor(id);
-    if (!button) return;
-    button.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
-  }
-
   function renderSelection() {
     if (!root || !THEMES[pendingId]) return;
     root.dataset.pending = pendingId;
@@ -146,6 +135,7 @@
     const summary = root.querySelector('[data-mobile-theme-summary]');
     const description = root.querySelector('[data-mobile-theme-description]');
     const confirm = root.querySelector('[data-mobile-theme-confirm]');
+
     if (summary) summary.textContent = THEMES[pendingId].label;
     if (description) description.textContent = THEMES[pendingId].short;
     if (confirm) {
@@ -154,34 +144,11 @@
     }
   }
 
-  function selectTheme(id, shouldAlign = false) {
+  function selectTheme(id, sourceButton = null) {
     if (busy || !THEMES[id]) return;
     pendingId = id;
     renderSelection();
-    if (shouldAlign) alignCard(id);
-  }
-
-  function selectNearestCard() {
-    const track = root?.querySelector('.mobile-theme-options');
-    if (!track) return;
-
-    const trackRect = track.getBoundingClientRect();
-    const center = trackRect.left + (trackRect.width / 2);
-    let nearest = null;
-    let distance = Number.POSITIVE_INFINITY;
-
-    track.querySelectorAll('[data-mobile-theme-option]').forEach((button) => {
-      const rect = button.getBoundingClientRect();
-      const cardCenter = rect.left + (rect.width / 2);
-      const nextDistance = Math.abs(center - cardCenter);
-      if (nextDistance < distance) {
-        distance = nextDistance;
-        nearest = button;
-      }
-    });
-
-    const id = nearest?.dataset.mobileThemeOption;
-    if (id && id !== pendingId) selectTheme(id, false);
+    sourceButton?.blur();
   }
 
   function openPicker(asLaunch = false) {
@@ -192,7 +159,6 @@
     root.dataset.open = 'true';
     document.documentElement.dataset.mobileThemePickerOpen = 'true';
     renderSelection();
-    window.requestAnimationFrame(() => alignCard(pendingId));
   }
 
   function closePicker() {
@@ -234,20 +200,14 @@
     element.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
-      action();
+      action(event.currentTarget);
     });
   }
 
   function bindEvents() {
     root.querySelectorAll('[data-mobile-theme-option]').forEach((button) => {
-      bindClick(button, () => selectTheme(button.dataset.mobileThemeOption, true));
+      bindClick(button, (target) => selectTheme(target.dataset.mobileThemeOption, target));
     });
-
-    const track = root.querySelector('.mobile-theme-options');
-    track?.addEventListener('scroll', () => {
-      window.clearTimeout(scrollTimer);
-      scrollTimer = window.setTimeout(selectNearestCard, 72);
-    }, { passive: true });
 
     bindClick(root.querySelector('[data-mobile-theme-confirm]'), commitSelection);
     bindClick(root.querySelector('[data-mobile-theme-open]'), () => openPicker(false));
