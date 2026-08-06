@@ -3,7 +3,7 @@
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-cards-v4';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'cover-cards-v8';
+  const MOBILE_ASSET_VERSION = 'mobile-shell-v9';
 
   const themes = {
     bangers: {
@@ -149,10 +149,60 @@
     document.head.appendChild(link);
   }
 
+  function purgeLegacyMobileControls() {
+    const page = document.documentElement.dataset.page;
+    if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page) || !document.body) return;
+
+    document.querySelectorAll([
+      '.mobile-theme-dock',
+      '.mobile-theme-picker-toggle',
+      '[data-mobile-theme-open]',
+      '[data-mobile-theme-dock]',
+      '[data-theme-dock]'
+    ].join(',')).forEach((node) => {
+      if (!node.closest('.mobile-theme-picker')) node.remove();
+    });
+
+    const legacyLabels = new Set(['REVIVE+ EDITION', 'REVIVE+ VERSION']);
+    document.querySelectorAll('button, a, [role="button"], div').forEach((node) => {
+      const label = node.textContent?.replace(/\s+/g, ' ').trim().toUpperCase();
+      if (!legacyLabels.has(label)) return;
+      if (window.getComputedStyle(node).position === 'fixed') node.remove();
+    });
+
+    document.documentElement.scrollLeft = 0;
+    document.body.scrollLeft = 0;
+  }
+
+  function installLegacyMobileControlPurge() {
+    const page = document.documentElement.dataset.page;
+    if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page)) return;
+
+    const start = () => {
+      purgeLegacyMobileControls();
+      const observer = new MutationObserver(purgeLegacyMobileControls);
+      observer.observe(document.body, { childList: true, subtree: true });
+      [250, 900, 2400, 5000].forEach((delay) => {
+        window.setTimeout(purgeLegacyMobileControls, delay);
+      });
+      window.setTimeout(() => {
+        purgeLegacyMobileControls();
+        observer.disconnect();
+      }, 9000);
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', start, { once: true });
+    } else {
+      start();
+    }
+  }
+
   function loadMobilePicker() {
     const page = document.documentElement.dataset.page;
     if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page)) return;
 
+    appendStylesheet('mobile-page-shell-fix.css');
     appendStylesheet('mobile-theme-picker-cover-grid.css');
 
     if (!document.querySelector('script[data-mobile-picker-script]')) {
@@ -166,12 +216,19 @@
 
   installMobileLaunchGuard();
   loadMobilePicker();
+  installLegacyMobileControlPurge();
   apply();
 
   window.addEventListener('revive-member-set-change', (event) => {
     const id = event.detail?.id;
-    window.requestAnimationFrame(() => apply(id));
-    window.setTimeout(() => apply(id), 80);
+    window.requestAnimationFrame(() => {
+      apply(id);
+      purgeLegacyMobileControls();
+    });
+    window.setTimeout(() => {
+      apply(id);
+      purgeLegacyMobileControls();
+    }, 80);
   });
 
   const observer = new MutationObserver(() => {
@@ -187,6 +244,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     const id = apply(document.documentElement.dataset.memberSet || storedTheme());
+    purgeLegacyMobileControls();
     [0, 180, 650].forEach((delay) => window.setTimeout(() => syncCopy(id), delay));
   }, { once: true });
 })();
