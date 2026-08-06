@@ -3,7 +3,7 @@
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-clean-v2';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'campaign-mobile-v4';
+  const MOBILE_ASSET_VERSION = 'campaign-mobile-v5';
 
   const themes = {
     bangers: {
@@ -156,6 +156,7 @@
     appendStylesheet('mobile-theme-picker.css');
     appendStylesheet('mobile-theme-picker-input.css');
     appendStylesheet('mobile-theme-picker-clean.css');
+    appendStylesheet('mobile-theme-picker-final.css');
 
     if (!document.querySelector('script[data-mobile-picker-script]')) {
       const script = document.createElement('script');
