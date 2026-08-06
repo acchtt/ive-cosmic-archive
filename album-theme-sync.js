@@ -1,9 +1,9 @@
 (() => {
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-clean-v2';
+  const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-grid-v3';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'minimal-mobile-v6';
+  const MOBILE_ASSET_VERSION = 'cover-grid-v7';
 
   const themes = {
     bangers: {
@@ -153,10 +153,7 @@
     const page = document.documentElement.dataset.page;
     if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page)) return;
 
-    appendStylesheet('mobile-theme-picker.css');
-    appendStylesheet('mobile-theme-picker-input.css');
-    appendStylesheet('mobile-theme-picker-clean.css');
-    appendStylesheet('mobile-theme-picker-final.css');
+    appendStylesheet('mobile-theme-picker-cover-grid.css');
 
     if (!document.querySelector('script[data-mobile-picker-script]')) {
       const script = document.createElement('script');
