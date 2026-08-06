@@ -3,7 +3,7 @@
   const PAGE = document.documentElement.dataset.page;
   const PICKER_PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-clean-v2';
+  const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-grid-v3';
 
   if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(PAGE)) return;
 
@@ -77,18 +77,10 @@
       <div class="mobile-theme-screen" role="dialog" aria-modal="true" aria-labelledby="mobile-theme-title">
         <div class="mobile-theme-surface">
           <header class="mobile-theme-header">
-            <div>
-              <span>REVIVE+ archive theme</span>
-              <h2 id="mobile-theme-title">Choose your edition</h2>
-              <p class="mobile-theme-hint">Pick the cover palette that should shape your archive.</p>
-            </div>
+            <span>REVIVE+ archive theme</span>
+            <h2 id="mobile-theme-title">Choose your edition</h2>
+            <p class="mobile-theme-hint">Choose the cover colorway for this archive session.</p>
           </header>
-
-          <div class="mobile-theme-summary" aria-live="polite">
-            <span>Palette preview</span>
-            <strong data-mobile-theme-summary>${THEMES[pendingId].label}</strong>
-            <p data-mobile-theme-description>${THEMES[pendingId].short}</p>
-          </div>
 
           <div class="mobile-theme-options" role="radiogroup" aria-label="REVIVE+ editions">
             ${ORDER.map((id, index) => `
@@ -100,9 +92,15 @@
             `).join('')}
           </div>
 
+          <div class="mobile-theme-summary" aria-live="polite">
+            <span>Selected</span>
+            <strong data-mobile-theme-summary>${THEMES[pendingId].label}</strong>
+            <p data-mobile-theme-description>${THEMES[pendingId].short}</p>
+          </div>
+
           <footer class="mobile-theme-footer">
             <button class="mobile-theme-confirm" type="button" data-mobile-theme-confirm>
-              Use ${THEMES[pendingId].label}
+              Continue with ${THEMES[pendingId].label}
             </button>
           </footer>
         </div>
@@ -148,7 +146,7 @@
     if (summary) summary.textContent = THEMES[pendingId].label;
     if (description) description.textContent = THEMES[pendingId].short;
     if (confirm) {
-      confirm.textContent = busy ? 'Applying…' : `Use ${THEMES[pendingId].label}`;
+      confirm.textContent = busy ? 'Applying…' : `Continue with ${THEMES[pendingId].label}`;
       confirm.disabled = busy;
     }
   }
