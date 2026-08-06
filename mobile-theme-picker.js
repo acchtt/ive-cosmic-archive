@@ -88,7 +88,7 @@
             <div>
               <span>REVIVE+ archive theme</span>
               <h2 id="mobile-theme-title">Choose your edition</h2>
-              <p class="mobile-theme-hint"><strong>Tap an edition</strong> to preview its palette, then confirm.</p>
+              <p class="mobile-theme-hint">Pick the cover palette that should shape your archive.</p>
             </div>
             <button class="mobile-theme-close" type="button" data-mobile-theme-close aria-label="Close edition selector">×</button>
           </header>
@@ -120,6 +120,24 @@
 
     document.body.appendChild(picker);
     return picker;
+  }
+
+  function revealWhenStyled() {
+    let attempts = 0;
+
+    const check = () => {
+      if (!root) return;
+      attempts += 1;
+
+      if (window.getComputedStyle(root).position === 'fixed' || attempts >= 120) {
+        document.documentElement.dataset.mobileThemePickerReady = 'true';
+        return;
+      }
+
+      window.requestAnimationFrame(check);
+    };
+
+    window.requestAnimationFrame(check);
   }
 
   function renderSelection() {
@@ -232,6 +250,7 @@
     root = createPicker();
     bindEvents();
     renderSelection();
+    revealWhenStyled();
 
     if (launchMode) {
       document.documentElement.dataset.themeLaunchPending = 'true';
