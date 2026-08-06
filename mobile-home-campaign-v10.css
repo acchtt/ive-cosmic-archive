@@ -138,4 +138,29 @@
   html[data-page="index"] .campaign-photo:focus-within img {
     transform: none !important;
   }
+
+  /* Mobile Home member-card names: uppercase Latin stage name plus native spelling. */
+  html[data-page="index"] .revive-members .member-info h3 {
+    display: grid;
+    gap: 4px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  html[data-page="index"] .revive-members .member-info h3::after {
+    display: block;
+    color: rgba(235, 225, 232, .72);
+    font-size: .72rem;
+    font-weight: 650;
+    letter-spacing: .08em;
+    line-height: 1.35;
+    text-transform: none;
+  }
+
+  html[data-page="index"] .revive-members .member-card:nth-child(1) .member-info h3::after { content: "가을"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(2) .member-info h3::after { content: "유진"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(3) .member-info h3::after { content: "레이 · 直井怜"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(4) .member-info h3::after { content: "원영"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(5) .member-info h3::after { content: "리즈"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(6) .member-info h3::after { content: "이서"; }
 }
