@@ -3,7 +3,7 @@
   const PAGE = document.documentElement.dataset.page;
   const PICKER_PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
+  const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-clean-v2';
 
   if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(PAGE)) return;
 

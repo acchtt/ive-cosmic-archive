@@ -1,9 +1,9 @@
 (() => {
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
+  const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-clean-v2';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'b8fc11b';
+  const MOBILE_ASSET_VERSION = 'mobile-launch-v2';
 
   const themes = {
     bangers: {
