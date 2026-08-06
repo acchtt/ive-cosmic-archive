@@ -46,11 +46,14 @@
     width: calc(100% - 16px) !important;
     max-width: calc(100% - 16px) !important;
     margin-inline: auto !important;
-    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
     transform: none !important;
   }
 
   html body .site-header .brand {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
     min-width: 0 !important;
     max-width: 100% !important;
     overflow: hidden;
@@ -73,8 +76,27 @@
   }
 
   html body .site-header .menu-toggle {
-    grid-column: 2 !important;
-    justify-self: end !important;
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    justify-self: start !important;
+    display: inline-grid !important;
+    grid-auto-flow: row !important;
+    place-content: center !important;
+    row-gap: 5px !important;
+  }
+
+  html body .site-header .menu-toggle::before {
+    content: "";
+    display: block;
+  }
+
+  html body .site-header .menu-toggle::before,
+  html body .site-header .menu-toggle span:not(.sr-only) {
+    width: 18px !important;
+    height: 1.5px !important;
+    margin: 0 !important;
+    border-radius: 999px;
+    background: var(--header-paper, #fff7fb) !important;
   }
 
   html body .site-header .site-nav {
