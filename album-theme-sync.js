@@ -1,9 +1,9 @@
 (() => {
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-grid-v3';
+  const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-cards-v4';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'cover-grid-v7';
+  const MOBILE_ASSET_VERSION = 'cover-cards-v8';
 
   const themes = {
     bangers: {
