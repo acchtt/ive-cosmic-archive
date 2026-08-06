@@ -26,3 +26,4 @@ jobs:
           git add index.html members.html
           git diff --cached --quiet || git commit -m 'Load full mobile member names'
           git push origin main
+# trigger: 2
