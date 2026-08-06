@@ -1,0 +1,31 @@
+name: Finalize minimal mobile selector
+
+on:
+  push:
+    paths:
+      - '.github/workflows/finalize-minimal-mobile-selector.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Refresh mobile selector assets
+        run: |
+          sed -i 's/campaign-mobile-v5/minimal-mobile-v6/g' album-theme-sync.js index.html members.html
+          rm .github/workflows/finalize-minimal-mobile-selector.yml
+
+      - name: Commit changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Finalize minimal mobile selector'
+          git push
