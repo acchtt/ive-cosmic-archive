@@ -1,0 +1,35 @@
+name: Finalize mobile dock removal
+
+on:
+  push:
+    paths:
+      - .github/workflows/finalize-dock-removal.yml
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Refresh mobile boot references
+        shell: bash
+        run: |
+          set -euo pipefail
+          sed -i 's/album-theme-sync.js?v=campaign-mobile-v4/album-theme-sync.js?v=campaign-mobile-v5/g' index.html members.html
+          rm -f .github/workflows/finalize-dock-removal.yml
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html members.html .github/workflows/finalize-dock-removal.yml
+          git commit -m 'Finalize dock-free mobile selector'
+          git push
