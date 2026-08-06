@@ -1,0 +1,126 @@
+/* Mobile-only viewport and legacy-control cleanup. Desktop remains unchanged. */
+@media (max-width: 640px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+    overflow-x: clip !important;
+  }
+
+  body {
+    min-width: 0 !important;
+    position: relative;
+  }
+
+  main,
+  main > section,
+  .section-shell,
+  .revive-campaign-copy,
+  .revive-campaign-title,
+  .revive-campaign-tagline,
+  .revive-campaign-actions,
+  .revive-campaign-tags,
+  .campaign-board,
+  .campaign-grid,
+  .revive-status-strip,
+  .revive-home-section,
+  .revive-section-heading,
+  .concept-grid,
+  .revive-story,
+  .member-grid,
+  .revive-portal-grid,
+  .site-footer {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .section-shell {
+    width: calc(100% - 24px) !important;
+    margin-inline: auto !important;
+  }
+
+  html body .site-header {
+    left: auto !important;
+    right: auto !important;
+    width: calc(100% - 16px) !important;
+    max-width: calc(100% - 16px) !important;
+    margin-inline: auto !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    transform: none !important;
+  }
+
+  html body .site-header .brand {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden;
+  }
+
+  html body .site-header .brand-lockup {
+    min-width: 0 !important;
+    overflow: hidden;
+  }
+
+  html body .site-header .brand-mark {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  html body .site-header .motion-toggle {
+    display: none !important;
+  }
+
+  html body .site-header .menu-toggle {
+    grid-column: 2 !important;
+    justify-self: end !important;
+  }
+
+  html body .site-header .site-nav {
+    max-width: 100% !important;
+  }
+
+  html[data-page="index"] .revive-campaign-hero {
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    overflow: hidden;
+    overflow: clip;
+  }
+
+  html[data-page="index"] .revive-campaign-hero::before {
+    inset-inline: 0 !important;
+  }
+
+  html[data-page="index"] .revive-campaign-title > span,
+  html[data-page="index"] .revive-campaign-title .title-revive {
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  html[data-page="index"] .revive-campaign-title .title-revive {
+    margin-left: 0 !important;
+  }
+
+  html[data-page="index"] .campaign-board {
+    width: 100% !important;
+    transform: none !important;
+  }
+
+  html[data-page="index"] .revive-campaign-actions .button,
+  html[data-page="index"] .revive-campaign-tagline,
+  html[data-page="index"] .revive-campaign-tags {
+    width: 100%;
+  }
+
+  .mobile-theme-dock,
+  .mobile-theme-picker-toggle,
+  [data-mobile-theme-open],
+  [data-mobile-theme-dock],
+  [data-theme-dock] {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
