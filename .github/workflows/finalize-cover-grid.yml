@@ -1,0 +1,49 @@
+name: Finalize cover-grid mobile selector
+
+on:
+  push:
+    paths:
+      - '.github/workflows/finalize-cover-grid.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Refresh mobile boot references
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          for name in ('index.html', 'members.html'):
+              path = Path(name)
+              text = path.read_text()
+              text = re.sub(
+                  r'album-theme-sync\.js\?v=[^"\']+',
+                  'album-theme-sync.js?v=cover-grid-v7',
+                  text,
+              )
+              text = text.replace(
+                  'ive-cosmic-revive-launch-seen-clean-v2',
+                  'ive-cosmic-revive-launch-seen-cover-grid-v3',
+              )
+              path.write_text(text)
+
+          Path('.github/workflows/finalize-cover-grid.yml').unlink()
+          PY
+
+      - name: Commit changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html members.html .github/workflows/finalize-cover-grid.yml
+          git commit -m 'Finalize cover-grid mobile selector'
+          git push
