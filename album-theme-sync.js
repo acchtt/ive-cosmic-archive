@@ -3,7 +3,7 @@
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-cards-v4';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'mobile-home-version-card-v18';
+  const MOBILE_ASSET_VERSION = 'mobile-version-button-v19';
 
   const themes = {
     bangers: {
@@ -149,6 +149,15 @@
     document.head.appendChild(link);
   }
 
+  function appendScript(path, marker) {
+    if (document.querySelector(`script[${marker}]`)) return;
+    const script = document.createElement('script');
+    script.setAttribute(marker, 'true');
+    script.src = `${path}?v=${MOBILE_ASSET_VERSION}`;
+    script.async = false;
+    document.head.appendChild(script);
+  }
+
   function purgeLegacyMobileControls() {
     const page = document.documentElement.dataset.page;
     if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page) || !document.body) return;
@@ -198,25 +207,28 @@
     }
   }
 
-  function loadMobilePicker() {
+  function loadMobileAssets() {
     const page = document.documentElement.dataset.page;
     if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page)) return;
 
     appendStylesheet('mobile-page-shell-fix.css');
     if (page === 'index') appendStylesheet('mobile-home-campaign-v10.css');
     appendStylesheet('mobile-theme-picker-cover-grid.css');
+    appendStylesheet('mobile-version-button.css');
 
     if (!document.querySelector('script[data-mobile-picker-script]')) {
-      const script = document.createElement('script');
-      script.dataset.mobilePickerScript = 'true';
-      script.src = `mobile-theme-picker.js?v=${MOBILE_ASSET_VERSION}`;
-      script.async = false;
-      document.head.appendChild(script);
+      const picker = document.createElement('script');
+      picker.dataset.mobilePickerScript = 'true';
+      picker.src = `mobile-theme-picker.js?v=${MOBILE_ASSET_VERSION}`;
+      picker.async = false;
+      document.head.appendChild(picker);
     }
+
+    appendScript('mobile-version-button.js', 'data-mobile-version-button-script');
   }
 
   installMobileLaunchGuard();
-  loadMobilePicker();
+  loadMobileAssets();
   installLegacyMobileControlPurge();
   apply();
 
