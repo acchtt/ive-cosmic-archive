@@ -48,6 +48,18 @@
     }
   }
 
+  function syncHero() {
+    const title = document.querySelector('.page-hero-members #page-title');
+    if (title && title.dataset.mobileTitle !== 'true') {
+      title.innerHTML = 'Six signals.<br /><span>One constellation.</span>';
+      title.dataset.mobileTitle = 'true';
+    }
+
+    const intro = document.querySelector('.page-hero-members .page-hero-copy > p:last-child');
+    const mobileIntro = 'Choose a member to open a version-synchronized REVIVE+ dossier.';
+    if (intro && intro.textContent !== mobileIntro) intro.textContent = mobileIntro;
+  }
+
   function syncStageNames() {
     document.querySelectorAll('[data-dossier-index]').forEach((button, index) => {
       const name = button.querySelector('strong');
@@ -86,6 +98,7 @@
 
   function syncAll() {
     moveRedesignStylesLast();
+    syncHero();
     syncStageNames();
     syncVersionCopy();
   }
