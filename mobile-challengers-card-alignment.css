@@ -1,0 +1,116 @@
+/* Mobile CHALLENGERS: keep the cleaner portrait set, but present it in the same archive-card language as the other REVIVE+ versions. */
+@media (max-width: 640px) {
+  html[data-member-set="challengers"] {
+    --challengers-ivory: #f2eee4;
+    --challengers-oxide: #b62d24;
+    --challengers-concrete: #8f8a83;
+    --challengers-sky: #77b8cf;
+    --challengers-ink: #171411;
+  }
+
+  /* Six-card campaign board: same photo-card density and paper-label treatment as the other versions. */
+  html[data-page="index"][data-member-set="challengers"] .campaign-photo {
+    border: 1px solid rgba(56, 48, 43, .22) !important;
+    background: var(--challengers-ivory) !important;
+    box-shadow:
+      0 9px 20px rgba(39, 27, 23, .16),
+      inset 0 0 0 1px rgba(255, 255, 255, .28) !important;
+  }
+
+  html[data-page="index"][data-member-set="challengers"] .campaign-photo::before {
+    content: "" !important;
+    display: block !important;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(11, 10, 9, 0) 54%, rgba(11, 10, 9, .13) 100%),
+      linear-gradient(110deg, rgba(182, 45, 36, .07), transparent 26%, transparent 72%, rgba(119, 184, 207, .08));
+    box-shadow: inset 0 0 0 1px rgba(242, 238, 228, .22);
+  }
+
+  html[data-page="index"][data-member-set="challengers"] .campaign-photo img {
+    filter: saturate(.92) contrast(1.035) brightness(.99) !important;
+  }
+
+  html[data-page="index"][data-member-set="challengers"] .campaign-photo figcaption {
+    z-index: 4 !important;
+    min-height: 30px;
+    display: inline-flex !important;
+    align-items: center;
+    padding: 7px 10px 7px 9px !important;
+    border: 1px solid rgba(31, 26, 23, .15) !important;
+    border-left: 3px solid var(--challengers-oxide) !important;
+    border-radius: 3px !important;
+    color: var(--challengers-ink) !important;
+    background: rgba(242, 238, 228, .96) !important;
+    box-shadow: 0 5px 13px rgba(31, 21, 18, .14) !important;
+  }
+
+  /* Home member cards: retain the same card silhouette, gradient depth and stage-name hierarchy. */
+  html[data-page="index"][data-member-set="challengers"] .revive-members .member-card {
+    border-color: rgba(182, 45, 36, .28) !important;
+    background: color-mix(in srgb, var(--set-panel-strong) 92%, var(--challengers-ivory) 8%) !important;
+    box-shadow:
+      0 22px 52px rgba(9, 9, 9, .28),
+      inset 0 0 0 1px rgba(242, 238, 228, .04) !important;
+  }
+
+  html[data-page="index"][data-member-set="challengers"] .revive-members .member-art {
+    background-color: #282522 !important;
+    filter: saturate(.92) contrast(1.035) !important;
+  }
+
+  html[data-page="index"][data-member-set="challengers"] .revive-members .member-art::before {
+    content: "" !important;
+    display: block !important;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(135deg, rgba(182, 45, 36, .08), transparent 34%),
+      linear-gradient(315deg, rgba(119, 184, 207, .07), transparent 31%);
+    box-shadow: inset 0 0 0 1px rgba(242, 238, 228, .10);
+  }
+
+  html[data-page="index"][data-member-set="challengers"] .revive-members .member-art::after {
+    background:
+      linear-gradient(180deg, rgba(8, 7, 6, .01) 43%, rgba(8, 7, 6, .22) 66%, rgba(8, 7, 6, .94) 100%),
+      linear-gradient(120deg, rgba(182, 45, 36, .06), transparent 45%, rgba(119, 184, 207, .06)) !important;
+  }
+
+  html[data-page="index"][data-member-set="challengers"] .revive-members .member-code {
+    color: color-mix(in srgb, var(--challengers-ivory) 72%, var(--challengers-sky)) !important;
+  }
+
+  /* Members dossier: use the same neutral archival framing instead of presenting the portrait like a standalone gallery image. */
+  html[data-page="members"][data-member-set="challengers"] .dossier-panel .dossier-visual {
+    background:
+      radial-gradient(circle at 82% 12%, rgba(119, 184, 207, .13), transparent 34%),
+      radial-gradient(circle at 14% 88%, rgba(182, 45, 36, .13), transparent 38%),
+      linear-gradient(180deg, #24211f 0%, #11100f 100%) !important;
+  }
+
+  html[data-page="members"][data-member-set="challengers"] .dossier-panel .dossier-visual::before {
+    filter: saturate(.92) contrast(1.035) brightness(.99);
+  }
+
+  html[data-page="members"][data-member-set="challengers"] .dossier-panel .dossier-visual::after {
+    background:
+      linear-gradient(180deg, transparent 63%, rgba(12, 10, 9, .22) 78%, rgba(8, 7, 6, .80) 100%),
+      linear-gradient(110deg, rgba(182, 45, 36, .05), transparent 36%, rgba(119, 184, 207, .05)) !important;
+    box-shadow: inset 0 0 0 1px rgba(242, 238, 228, .08);
+  }
+
+  /* Version-aware feature card should read like the same CHALLENGERS set, not a separate hero treatment. */
+  html[data-page="index"][data-member-set="challengers"] .concept-card.concept-campaign[data-version="challengers"] {
+    border-color: rgba(182, 45, 36, .30) !important;
+    background: linear-gradient(145deg, #f2eee4, #a7a099) !important;
+  }
+
+  html[data-page="index"][data-member-set="challengers"] .concept-card.concept-campaign[data-version="challengers"] img {
+    filter: saturate(.92) contrast(1.035) brightness(.88) !important;
+  }
+}
