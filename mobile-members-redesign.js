@@ -43,20 +43,24 @@
 
   function moveRedesignStylesLast() {
     const link = document.querySelector('link[data-mobile-picker-asset="mobile-members-redesign.css"]');
-    if (link && link.parentNode === document.head) document.head.appendChild(link);
+    if (link && link.parentNode === document.head && link !== document.head.lastElementChild) {
+      document.head.appendChild(link);
+    }
   }
 
   function syncStageNames() {
     document.querySelectorAll('[data-dossier-index]').forEach((button, index) => {
       const name = button.querySelector('strong');
-      if (name && STAGE_NAMES[index]) name.textContent = STAGE_NAMES[index];
+      const desired = STAGE_NAMES[index];
+      if (name && desired && name.textContent !== desired) name.textContent = desired;
     });
 
     const panel = document.querySelector('[data-member-profile]');
     const parsed = Number(panel?.dataset.activeMember ?? 0);
     const index = Number.isInteger(parsed) && parsed >= 0 && parsed < STAGE_NAMES.length ? parsed : 0;
     const profileName = document.querySelector('[data-profile-name]');
-    if (profileName) profileName.textContent = STAGE_NAMES[index];
+    const desired = STAGE_NAMES[index];
+    if (profileName && profileName.textContent !== desired) profileName.textContent = desired;
   }
 
   function syncVersionCopy() {
@@ -64,15 +68,16 @@
     const copy = VERSION_COPY[set];
     const heading = document.querySelector('.page-section > .section-heading');
     const description = heading?.querySelector(':scope > p');
-    if (description) description.textContent = copy.description;
+    if (description && description.textContent !== copy.description) description.textContent = copy.description;
 
     const credit = document.querySelector('.photo-credit');
-    if (credit) {
+    if (credit && credit.dataset.mobileCreditSet !== set) {
       const official = credit.querySelector('a[href*="x.com/IVEstarship"]')?.outerHTML
         || '<a href="https://x.com/IVEstarship" target="_blank" rel="noreferrer">IVE Official</a>';
       const starship = credit.querySelector('a[href*="starship-ent.com"]')?.outerHTML
         || '<a href="https://www.starship-ent.com/musician/ive" target="_blank" rel="noreferrer">Starship Entertainment</a>';
       credit.innerHTML = `${copy.credit} · ${official} · ${starship}`;
+      credit.dataset.mobileCreditSet = set;
     }
 
     document.documentElement.dataset.mobileMembersVersion = copy.label.toLowerCase().replaceAll(' ', '-');
