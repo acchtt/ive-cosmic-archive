@@ -30,7 +30,7 @@
       label: 'LOVED IVE',
       short: 'Deep navy · studio blue · warm cream',
       color: '#6fa6c8',
-      cover: 'https://kpops.pl/18873-large_default/ive-revive-limited-loved-ive-ver-preorder.jpg'
+      cover: 'https://starship-square.com/web/product/big/202602/8f77f8217ed9a8a19d0dee343d5c386b.jpg'
     }
   };
 
