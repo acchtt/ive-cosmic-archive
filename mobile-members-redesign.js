@@ -1,0 +1,120 @@
+(() => {
+  const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
+  const PAGE = document.documentElement.dataset.page;
+  const STORAGE_KEY = 'ive-cosmic-revive-member-set';
+  const ASSET_VERSION = 'mobile-members-redesign-v31';
+  const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
+
+  if (!MOBILE_QUERY.matches || PAGE !== 'members') return;
+
+  const VERSION_COPY = {
+    bangers: {
+      label: 'BANGERS',
+      description: 'Six member dossiers synchronized to the BANGERS concept-photo set.',
+      credit: 'REVIVE+ “BANGERS” concept photos'
+    },
+    challengers: {
+      label: 'CHALLENGERS',
+      description: 'Six member dossiers synchronized to the CHALLENGERS concept-photo set.',
+      credit: 'REVIVE+ “CHALLENGERS” concept photos'
+    },
+    spoilers: {
+      label: 'SPOILERS',
+      description: 'Six member dossiers synchronized to the SPOILERS concept-photo set.',
+      credit: 'REVIVE+ “SPOILERS” concept photos'
+    },
+    'loved-ive': {
+      label: 'LOVED IVE',
+      description: 'Six member dossiers synchronized to the LOVED IVE concept-photo set.',
+      credit: 'REVIVE+ “LOVED IVE” concept photos'
+    }
+  };
+
+  function activeSet() {
+    const root = document.documentElement.dataset.memberSet;
+    if (VERSION_COPY[root]) return root;
+    try {
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      return VERSION_COPY[stored] ? stored : 'bangers';
+    } catch {
+      return 'bangers';
+    }
+  }
+
+  function moveRedesignStylesLast() {
+    const link = document.querySelector('link[data-mobile-picker-asset="mobile-members-redesign.css"]');
+    if (link && link.parentNode === document.head) document.head.appendChild(link);
+  }
+
+  function syncStageNames() {
+    document.querySelectorAll('[data-dossier-index]').forEach((button, index) => {
+      const name = button.querySelector('strong');
+      if (name && STAGE_NAMES[index]) name.textContent = STAGE_NAMES[index];
+    });
+
+    const panel = document.querySelector('[data-member-profile]');
+    const parsed = Number(panel?.dataset.activeMember ?? 0);
+    const index = Number.isInteger(parsed) && parsed >= 0 && parsed < STAGE_NAMES.length ? parsed : 0;
+    const profileName = document.querySelector('[data-profile-name]');
+    if (profileName) profileName.textContent = STAGE_NAMES[index];
+  }
+
+  function syncVersionCopy() {
+    const set = activeSet();
+    const copy = VERSION_COPY[set];
+    const heading = document.querySelector('.page-section > .section-heading');
+    const description = heading?.querySelector(':scope > p');
+    if (description) description.textContent = copy.description;
+
+    const credit = document.querySelector('.photo-credit');
+    if (credit) {
+      const official = credit.querySelector('a[href*="x.com/IVEstarship"]')?.outerHTML
+        || '<a href="https://x.com/IVEstarship" target="_blank" rel="noreferrer">IVE Official</a>';
+      const starship = credit.querySelector('a[href*="starship-ent.com"]')?.outerHTML
+        || '<a href="https://www.starship-ent.com/musician/ive" target="_blank" rel="noreferrer">Starship Entertainment</a>';
+      credit.innerHTML = `${copy.credit} · ${official} · ${starship}`;
+    }
+
+    document.documentElement.dataset.mobileMembersVersion = copy.label.toLowerCase().replaceAll(' ', '-');
+    document.documentElement.dataset.mobileMembersUi = ASSET_VERSION;
+  }
+
+  function syncAll() {
+    moveRedesignStylesLast();
+    syncStageNames();
+    syncVersionCopy();
+  }
+
+  function scheduleSync() {
+    [0, 40, 120, 320, 900].forEach((delay) => window.setTimeout(syncAll, delay));
+  }
+
+  function install() {
+    syncAll();
+
+    const panel = document.querySelector('[data-member-profile]');
+    if (panel) {
+      new MutationObserver(scheduleSync).observe(panel, {
+        attributes: true,
+        attributeFilter: ['data-active-member']
+      });
+    }
+
+    const list = document.querySelector('[data-dossier-list]');
+    if (list) new MutationObserver(scheduleSync).observe(list, { childList: true, subtree: true });
+
+    new MutationObserver(scheduleSync).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-member-set']
+    });
+
+    window.addEventListener('revive-member-set-change', scheduleSync);
+    scheduleSync();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', install, { once: true });
+  } else {
+    install();
+  }
+})();
