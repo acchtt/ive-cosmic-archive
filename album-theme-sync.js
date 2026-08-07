@@ -3,7 +3,7 @@
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-cards-v4';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'mobile-members-hero-type-v30';
+  const MOBILE_ASSET_VERSION = 'mobile-members-redesign-v31';
 
   const themes = {
     bangers: {
@@ -213,6 +213,7 @@
 
     appendStylesheet('mobile-page-shell-fix.css');
     if (page === 'index') appendStylesheet('mobile-home-campaign-v10.css');
+    if (page === 'members') appendStylesheet('mobile-members-redesign.css');
     appendStylesheet('mobile-theme-picker-cover-grid.css');
     appendStylesheet('mobile-version-button.css');
     if (page === 'index') appendStylesheet('mobile-version-palette-sync.css');
@@ -228,6 +229,7 @@
     appendScript('mobile-version-button.js', 'data-mobile-version-button-script');
     appendScript('mobile-loved-ive-photo-fix.js', 'data-mobile-loved-ive-photo-fix-script');
     appendScript('mobile-challengers-card-refresh.js', 'data-mobile-challengers-card-refresh-script');
+    if (page === 'members') appendScript('mobile-members-redesign.js', 'data-mobile-members-redesign-script');
   }
 
   installMobileLaunchGuard();
