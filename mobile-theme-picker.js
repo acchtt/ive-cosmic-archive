@@ -35,6 +35,8 @@
   };
 
   const ORDER = ['bangers', 'challengers', 'spoilers', 'loved-ive'];
+  const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
+  const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
   let root = null;
   let pendingId = readStoredTheme();
   let busy = false;
@@ -63,6 +65,122 @@
       window.sessionStorage.setItem(LAUNCH_KEY, 'true');
     } catch {
       // The current session still updates when storage is unavailable.
+    }
+  }
+
+  function portraitUrl(id, index) {
+    return `assets/revive/member-cards/${id}/${MEMBER_KEYS[index]}.jpg`;
+  }
+
+  function cssUrl(url) {
+    return `url("${String(url).replaceAll('"', '\\"')}")`;
+  }
+
+  function installStageNameOnlyOverrides() {
+    if (document.querySelector('style[data-mobile-stage-name-only]')) return;
+
+    const style = document.createElement('style');
+    style.dataset.mobileStageNameOnly = 'true';
+    style.textContent = `
+      @media (max-width: 640px) {
+        html[data-page="index"] .revive-members .member-info h3 {
+          gap: 0 !important;
+        }
+
+        html[data-page="index"] .revive-members .member-info h3::after {
+          content: none !important;
+          display: none !important;
+        }
+
+        html[data-page="index"] .revive-members .member-card:nth-child(2) .member-info h3::before {
+          content: "AN YUJIN" !important;
+        }
+
+        html[data-page="index"] .revive-members .member-card:nth-child(4) .member-info h3::before {
+          content: "JANG WONYOUNG" !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function syncCampaignStageLabels() {
+    if (PAGE !== 'index') return;
+    document.querySelectorAll('[data-campaign-board] .campaign-photo figcaption').forEach((caption, index) => {
+      if (STAGE_NAMES[index]) caption.textContent = STAGE_NAMES[index];
+    });
+  }
+
+  function syncMemberGrid(id) {
+    document.querySelectorAll('[data-member-grid] .member-card .member-art').forEach((art, index) => {
+      if (!MEMBER_KEYS[index]) return;
+      const url = portraitUrl(id, index);
+      art.style.setProperty('--member-portrait', cssUrl(url));
+      art.setAttribute('role', 'img');
+      art.setAttribute('aria-label', `${STAGE_NAMES[index]} — ${THEMES[id].label} concept card`);
+    });
+  }
+
+  function syncCampaignBoard(id) {
+    if (PAGE !== 'index') return;
+
+    document.querySelectorAll('[data-campaign-board] .campaign-photo img').forEach((image, index) => {
+      if (!MEMBER_KEYS[index]) return;
+      image.src = portraitUrl(id, index);
+      image.alt = `${STAGE_NAMES[index]} in the REVIVE+ ${THEMES[id].label} concept-photo set`;
+    });
+
+    syncCampaignStageLabels();
+  }
+
+  function syncDossier(id) {
+    if (PAGE !== 'members') return;
+    const panel = document.querySelector('[data-member-profile]');
+    const visual = document.querySelector('[data-profile-visual]');
+    if (!visual) return;
+
+    const parsed = Number(panel?.dataset.activeMember ?? 0);
+    const index = Number.isInteger(parsed) && parsed >= 0 && parsed < MEMBER_KEYS.length ? parsed : 0;
+    visual.style.setProperty('--dossier-portrait', cssUrl(portraitUrl(id, index)));
+  }
+
+  function syncVersionMemberCards(id = readStoredTheme()) {
+    const resolved = THEMES[id] ? id : 'bangers';
+    document.documentElement.dataset.memberSet = resolved;
+    syncMemberGrid(resolved);
+    syncCampaignBoard(resolved);
+    syncDossier(resolved);
+    document.documentElement.dataset.mobileSyncedMemberSet = resolved;
+  }
+
+  function scheduleVersionMemberSync(id = readStoredTheme()) {
+    syncVersionMemberCards(id);
+    window.requestAnimationFrame(() => syncVersionMemberCards(id));
+    [40, 120, 320].forEach((delay) => {
+      window.setTimeout(() => syncVersionMemberCards(id), delay);
+    });
+  }
+
+  function observeMemberSurfaces() {
+    const grid = document.querySelector('[data-member-grid]');
+    if (grid) {
+      const gridObserver = new MutationObserver(() => {
+        window.setTimeout(() => syncMemberGrid(readStoredTheme()), 0);
+        window.requestAnimationFrame(() => syncMemberGrid(readStoredTheme()));
+      });
+      gridObserver.observe(grid, { childList: true });
+    }
+
+    const panel = document.querySelector('[data-member-profile]');
+    if (panel) {
+      const dossierObserver = new MutationObserver(() => {
+        window.requestAnimationFrame(() => syncDossier(readStoredTheme()));
+        window.setTimeout(() => syncDossier(readStoredTheme()), 40);
+      });
+      dossierObserver.observe(panel, {
+        attributes: true,
+        attributeFilter: ['data-active-member']
+      });
     }
   }
 
@@ -173,7 +291,7 @@
 
     const id = pendingId;
     storeTheme(id);
-    document.documentElement.dataset.memberSet = id;
+    scheduleVersionMemberSync(id);
     window.dispatchEvent(new CustomEvent('revive-member-set-change', {
       detail: { id, label: THEMES[id].label, themeColor: THEMES[id].color }
     }));
@@ -231,6 +349,11 @@
   }
 
   function initialize() {
+    installStageNameOnlyOverrides();
+    syncCampaignStageLabels();
+    observeMemberSurfaces();
+    scheduleVersionMemberSync(readStoredTheme());
+
     if (!launchRequired()) {
       delete document.documentElement.dataset.themeLaunchPending;
       return;
