@@ -255,7 +255,7 @@
 
   .mobile-theme-option-cover img {
     display: block;
-    width: min(76%, 116px);
+    width: min(92%, 144px);
     max-width: 100%;
     max-height: 100%;
     aspect-ratio: 1;
@@ -411,7 +411,7 @@
   }
 
   .mobile-theme-option-cover img {
-    width: min(70%, 92px);
+    width: min(88%, 112px);
   }
 
   .mobile-theme-options button strong {
