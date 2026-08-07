@@ -3,22 +3,22 @@
   const PAGE = document.documentElement.dataset.page;
   const PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-challengers-genie-v28';
+  const ASSET_VERSION = 'mobile-challengers-alert-v29';
   const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
   const FAILED = new Set();
 
   if (!MOBILE_QUERY.matches || !PAGES.has(PAGE)) return;
 
-  // Cohesive six-member REVIVE+ jacket-shoot cuts published together by Genie.
-  // They share one styling/location language and avoid the mixed poster/gallery feel.
+  // Official CHALLENGERS ALERT! member series: one controlled visual system
+  // across all six — black field, white/silver styling, neon-green flashlight.
   const PORTRAITS = [
-    'https://image.genie.co.kr/Y/IMAGE/IMG_MUZICAT/IV2/Genie_Magazine/15911/Mgz_Sub_IMG_20260206141426.jpg',
-    'https://image.genie.co.kr/Y/IMAGE/IMG_MUZICAT/IV2/Genie_Magazine/15911/Mgz_Sub_IMG_20260206141413.jpg',
-    'https://image.genie.co.kr/Y/IMAGE/IMG_MUZICAT/IV2/Genie_Magazine/15911/Mgz_Sub_IMG_20260206141444.jpg',
-    'https://image.genie.co.kr/Y/IMAGE/IMG_MUZICAT/IV2/Genie_Magazine/15911/Mgz_Sub_IMG_20260206141456.jpg',
-    'https://image.genie.co.kr/Y/IMAGE/IMG_MUZICAT/IV2/Genie_Magazine/15911/Mgz_Sub_IMG_20260206141509.jpg',
-    'https://image.genie.co.kr/Y/IMAGE/IMG_MUZICAT/IV2/Genie_Magazine/15911/Mgz_Sub_IMG_20260206141528.jpg'
+    'https://i.imgur.com/U9c80gv.jpg',
+    'https://i.imgur.com/ZVnaaYc.jpg',
+    'https://i.imgur.com/V5MRKib.jpg',
+    'https://i.imgur.com/fk5Pt1u.jpg',
+    'https://i.imgur.com/j6WvOG4.jpg',
+    'https://i.imgur.com/6o4i2dg.jpg'
   ];
 
   const POSITIONS = [
@@ -93,7 +93,7 @@
     document.querySelectorAll('[data-campaign-board] .campaign-photo img').forEach((image, index) => {
       if (!PORTRAITS[index]) return;
       usePortrait(image, index);
-      image.alt = `${STAGE_NAMES[index]} in the REVIVE+ CHALLENGERS jacket-photo set`;
+      image.alt = `${STAGE_NAMES[index]} in the REVIVE+ CHALLENGERS ALERT concept-photo set`;
       image.style.objectPosition = POSITIONS[index];
     });
 
@@ -102,7 +102,7 @@
       art.style.setProperty('--member-portrait', cssPortrait(index));
       art.style.backgroundPosition = POSITIONS[index];
       art.setAttribute('role', 'img');
-      art.setAttribute('aria-label', `${STAGE_NAMES[index]} — CHALLENGERS jacket-photo card`);
+      art.setAttribute('aria-label', `${STAGE_NAMES[index]} — CHALLENGERS ALERT concept card`);
     });
 
     if (PAGE === 'members') {
@@ -117,7 +117,7 @@
       const feature = document.querySelector('.concept-card.concept-campaign img');
       if (feature) {
         usePortrait(feature, 1);
-        feature.alt = 'AN YUJIN in the REVIVE+ CHALLENGERS jacket-photo set';
+        feature.alt = 'AN YUJIN in the REVIVE+ CHALLENGERS ALERT concept-photo set';
         feature.style.objectPosition = POSITIONS[1];
       }
     }
