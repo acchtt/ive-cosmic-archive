@@ -1,0 +1,100 @@
+/* Mobile Home: keep every prominent surface synchronized to the selected REVIVE+ version. */
+@media (max-width: 640px) {
+  html[data-page="index"][data-member-set] body {
+    background:
+      radial-gradient(circle at 84% 8%, var(--set-glow-a), transparent 25%),
+      radial-gradient(circle at 12% 34%, var(--set-glow-b), transparent 29%),
+      linear-gradient(180deg, var(--set-bg) 0%, var(--set-bg-soft) 48%, var(--set-bg) 100%) !important;
+  }
+
+  html[data-page="index"][data-member-set] .revive-campaign-title .title-revive {
+    color: var(--set-ink) !important;
+    background:
+      linear-gradient(
+        105deg,
+        var(--set-paper) 0%,
+        color-mix(in srgb, var(--set-accent-2) 72%, var(--set-paper)) 54%,
+        var(--set-accent) 100%
+      ) !important;
+    box-shadow: 9px 9px 0 color-mix(in srgb, var(--set-accent) 22%, transparent) !important;
+  }
+
+  html[data-page="index"][data-member-set] .campaign-board {
+    border-color: var(--cover-edge) !important;
+    background:
+      radial-gradient(circle at 80% 12%, color-mix(in srgb, var(--set-accent-2) 24%, transparent), transparent 31%),
+      radial-gradient(circle at 14% 88%, color-mix(in srgb, var(--set-accent) 18%, transparent), transparent 34%),
+      linear-gradient(180deg, var(--set-board-a) 0%, var(--set-board-b) 48%, var(--set-board-c) 100%) !important;
+    box-shadow:
+      0 24px 58px color-mix(in srgb, var(--set-bg) 68%, transparent),
+      0 0 42px color-mix(in srgb, var(--set-accent) 13%, transparent) !important;
+  }
+
+  html[data-page="index"][data-member-set] .revive-status-strip {
+    border-color: var(--cover-edge) !important;
+    background:
+      radial-gradient(circle at 90% 5%, color-mix(in srgb, var(--set-accent) 17%, transparent), transparent 38%),
+      radial-gradient(circle at 8% 92%, color-mix(in srgb, var(--set-accent-2) 9%, transparent), transparent 40%),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--set-panel-strong) 96%, var(--set-accent) 4%),
+        var(--set-panel-strong)
+      ) !important;
+    box-shadow:
+      0 24px 70px color-mix(in srgb, var(--set-bg) 70%, transparent),
+      inset 0 0 70px color-mix(in srgb, var(--set-accent) 6%, transparent) !important;
+  }
+
+  html[data-page="index"][data-member-set] .revive-status-strip > div + div,
+  html[data-page="index"][data-member-set] .revive-status-strip > div:nth-child(3),
+  html[data-page="index"][data-member-set] .revive-status-strip > div:nth-child(4) {
+    border-color: color-mix(in srgb, var(--set-accent) 30%, rgba(255, 255, 255, .08)) !important;
+  }
+
+  html[data-page="index"][data-member-set] .revive-status-strip .status-lead strong {
+    color: color-mix(in srgb, var(--set-accent-2) 80%, var(--set-paper)) !important;
+    text-shadow: 0 0 20px color-mix(in srgb, var(--set-accent-2) 18%, transparent);
+  }
+
+  html[data-page="index"][data-member-set] .revive-campaign-actions .button-primary {
+    color: var(--set-ink) !important;
+    background:
+      linear-gradient(112deg, var(--set-paper), var(--set-accent) 56%, var(--set-accent-2)) !important;
+    box-shadow: 0 16px 44px color-mix(in srgb, var(--set-accent) 22%, transparent) !important;
+  }
+
+  html[data-page="index"][data-member-set] .revive-campaign-actions .button-ghost {
+    border-color: color-mix(in srgb, var(--set-accent) 38%, rgba(255, 255, 255, .12)) !important;
+    background: color-mix(in srgb, var(--set-panel) 82%, transparent) !important;
+  }
+
+  /* Palette chips are always one compact four-column row on mobile. */
+  html[data-page="index"] .revive-campaign-tags {
+    width: 100%;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px !important;
+    align-items: stretch;
+    margin-top: 24px;
+  }
+
+  html[data-page="index"][data-member-set] .revive-campaign-tags span {
+    min-width: 0;
+    width: 100%;
+    padding: 8px 3px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-color: color-mix(in srgb, var(--set-accent) 34%, rgba(255, 255, 255, .12)) !important;
+    color: color-mix(in srgb, var(--set-muted) 86%, var(--set-paper)) !important;
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--set-accent) 8%, transparent), transparent 62%),
+      color-mix(in srgb, var(--set-panel) 74%, transparent) !important;
+    font-size: clamp(.43rem, 2.2vw, .54rem) !important;
+    line-height: 1.05;
+    letter-spacing: .055em !important;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: clip;
+  }
+}
