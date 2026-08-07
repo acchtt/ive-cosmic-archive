@@ -172,22 +172,18 @@
   html[data-page="index"] .revive-members .member-card:nth-child(1) .member-info h3::before { content: "GAEUL"; }
   html[data-page="index"] .revive-members .member-card:nth-child(1) .member-info h3::after { content: "KIM GAEUL · 김가을"; }
 
-  html[data-page="index"] .revive-members .member-card:nth-child(2) .member-info h3::before { content: "AN YUJIN"; }
-  html[data-page="index"] .revive-members .member-card:nth-child(2) .member-info h3::after { content: "안유진"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(2) .member-info h3::before { content: "YUJIN"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(2) .member-info h3::after { content: "AN YUJIN · 안유진"; }
 
   html[data-page="index"] .revive-members .member-card:nth-child(3) .member-info h3::before { content: "REI"; }
   html[data-page="index"] .revive-members .member-card:nth-child(3) .member-info h3::after { content: "NAOI REI · 레이 · 直井 怜"; }
 
-  html[data-page="index"] .revive-members .member-card:nth-child(4) .member-info h3::before { content: "JANG WONYOUNG"; }
-  html[data-page="index"] .revive-members .member-card:nth-child(4) .member-info h3::after { content: "장원영"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(4) .member-info h3::before { content: "WONYOUNG"; }
+  html[data-page="index"] .revive-members .member-card:nth-child(4) .member-info h3::after { content: "JANG WONYOUNG · 장원영"; }
 
   html[data-page="index"] .revive-members .member-card:nth-child(5) .member-info h3::before { content: "LIZ"; }
   html[data-page="index"] .revive-members .member-card:nth-child(5) .member-info h3::after { content: "KIM JIWON · 김지원"; }
 
   html[data-page="index"] .revive-members .member-card:nth-child(6) .member-info h3::before { content: "LEESEO"; }
   html[data-page="index"] .revive-members .member-card:nth-child(6) .member-info h3::after { content: "LEE HYUNSEO · 이현서"; }
-
-  html[data-page="index"] .revive-members .member-card:nth-child(4) .member-info h3::before {
-    font-size: clamp(1.52rem, 7.3vw, 2.05rem);
-  }
 }
