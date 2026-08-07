@@ -136,6 +136,54 @@
     width: 100%;
   }
 
+  /* Members hero: keep the editorial hierarchy without the oversized outlined mobile treatment. */
+  html[data-page="members"] .page-hero {
+    padding-top: 62px !important;
+    padding-bottom: 64px !important;
+    gap: 26px !important;
+  }
+
+  html[data-page="members"] .page-hero-copy {
+    max-width: none !important;
+  }
+
+  html[data-page="members"] .page-hero-copy .eyebrow {
+    margin-bottom: 16px !important;
+    font-size: .68rem !important;
+    letter-spacing: .18em !important;
+  }
+
+  html[data-page="members"] .page-hero h1 {
+    margin: 14px 0 24px !important;
+    max-width: 100% !important;
+    font-size: clamp(2.9rem, 12.5vw, 4.35rem) !important;
+    line-height: .94 !important;
+    letter-spacing: -.058em !important;
+    font-weight: 860 !important;
+    text-wrap: balance;
+  }
+
+  html[data-page="members"] .page-hero h1 span {
+    display: block !important;
+    margin-top: .14em !important;
+    color: color-mix(in srgb, var(--set-accent) 68%, var(--set-paper)) !important;
+    -webkit-text-stroke: 0 !important;
+    text-shadow: none !important;
+  }
+
+  html[data-page="members"] .page-hero-copy > p:last-child {
+    max-width: 34rem !important;
+    margin-top: 0 !important;
+    color: color-mix(in srgb, var(--set-muted) 90%, var(--set-paper)) !important;
+    font-size: clamp(1rem, 4.6vw, 1.12rem) !important;
+    line-height: 1.62 !important;
+    letter-spacing: -.012em !important;
+  }
+
+  html[data-page="members"] .page-hero-orb {
+    margin-top: 8px !important;
+  }
+
   .mobile-theme-dock,
   .mobile-theme-picker-toggle,
   [data-mobile-theme-open],
