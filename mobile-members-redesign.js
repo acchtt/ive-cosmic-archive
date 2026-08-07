@@ -2,7 +2,7 @@
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PAGE = document.documentElement.dataset.page;
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-members-redesign-v31';
+  const ASSET_VERSION = 'mobile-members-polish-v32';
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
 
   if (!MOBILE_QUERY.matches || PAGE !== 'members') return;
@@ -41,11 +41,11 @@
     }
   }
 
-  function moveRedesignStylesLast() {
-    const link = document.querySelector('link[data-mobile-picker-asset="mobile-members-redesign.css"]');
-    if (link && link.parentNode === document.head && link !== document.head.lastElementChild) {
-      document.head.appendChild(link);
-    }
+  function moveMemberStylesLast() {
+    const redesign = document.querySelector('link[data-mobile-picker-asset="mobile-members-redesign.css"]');
+    const polish = document.querySelector('link[data-mobile-picker-asset="mobile-members-polish-v32.css"]');
+    if (redesign?.parentNode === document.head) document.head.appendChild(redesign);
+    if (polish?.parentNode === document.head) document.head.appendChild(polish);
   }
 
   function syncHero() {
@@ -97,7 +97,7 @@
   }
 
   function syncAll() {
-    moveRedesignStylesLast();
+    moveMemberStylesLast();
     syncHero();
     syncStageNames();
     syncVersionCopy();
