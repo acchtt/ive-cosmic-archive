@@ -4,6 +4,7 @@
   const PICKER_PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-cards-v4';
+  const HINT_DURATION = 4200;
   const VERSION_LABELS = {
     bangers: 'BANGERS',
     challengers: 'CHALLENGERS',
@@ -14,6 +15,7 @@
   if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(PAGE)) return;
 
   let control = null;
+  let hintTimer = 0;
 
   function currentVersion() {
     try {
@@ -32,10 +34,30 @@
     if (current) current.textContent = VERSION_LABELS[id];
   }
 
+  function hideHint() {
+    if (!control) return;
+    window.clearTimeout(hintTimer);
+    control.dataset.hint = 'false';
+  }
+
+  function showHint() {
+    if (!control || control.dataset.open === 'true') return;
+    window.clearTimeout(hintTimer);
+    control.dataset.hint = 'false';
+    window.requestAnimationFrame(() => {
+      if (!control || control.dataset.open === 'true') return;
+      control.dataset.hint = 'true';
+      hintTimer = window.setTimeout(() => {
+        if (control) control.dataset.hint = 'false';
+      }, HINT_DURATION);
+    });
+  }
+
   function setPopupOpen(open) {
     if (!control) return;
     const button = control.querySelector('[data-mobile-version-button]');
     const popup = control.querySelector('[data-mobile-version-popup]');
+    if (open) hideHint();
     control.dataset.open = String(open);
     if (button) button.setAttribute('aria-expanded', String(open));
     if (popup) popup.hidden = !open;
@@ -72,9 +94,10 @@
     control.className = 'mobile-version-control';
     control.dataset.mobileVersionControl = '';
     control.dataset.open = 'false';
+    control.dataset.hint = 'false';
     control.innerHTML = `
+      <span class="mobile-version-hint" data-mobile-version-hint aria-hidden="true">Change REVIVE+ version</span>
       <div class="mobile-version-popup" data-mobile-version-popup hidden>
-        <span class="mobile-version-bubble" aria-hidden="true">Change your REVIVE+ version</span>
         <div class="mobile-version-popup-panel">
           <span class="mobile-version-popup-label">Current version</span>
           <strong data-mobile-version-current>${VERSION_LABELS[currentVersion()]}</strong>
@@ -118,11 +141,18 @@
 
     window.addEventListener('revive-member-set-change', () => {
       window.requestAnimationFrame(syncCurrentVersion);
-      window.setTimeout(syncCurrentVersion, 80);
+      window.setTimeout(() => {
+        syncCurrentVersion();
+        showHint();
+      }, 480);
     });
 
     document.body.appendChild(control);
     syncCurrentVersion();
+
+    if (document.documentElement.dataset.themeLaunchPending !== 'true') {
+      window.setTimeout(showHint, 650);
+    }
   }
 
   if (document.readyState === 'loading') {
