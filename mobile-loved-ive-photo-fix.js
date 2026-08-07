@@ -3,7 +3,7 @@
   const PAGE = document.documentElement.dataset.page;
   const PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-loved-ive-photo-fix-v22';
+  const ASSET_VERSION = 'mobile-theme-sync-pills-v24';
   const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
 
