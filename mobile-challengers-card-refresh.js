@@ -3,99 +3,158 @@
   const PAGE = document.documentElement.dataset.page;
   const PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-runtime-stability-v35';
+  const ASSET_VERSION = 'mobile-member-cardsets-v36';
   const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
   const FAILED = new Set();
 
   if (!MOBILE_QUERY.matches || !PAGES.has(PAGE)) return;
 
-  const PORTRAITS = [
-    'https://i.imgur.com/U9c80gv.jpg',
-    'https://i.imgur.com/ZVnaaYc.jpg',
-    'https://i.imgur.com/V5MRKib.jpg',
-    'https://i.imgur.com/fk5Pt1u.jpg',
-    'https://i.imgur.com/j6WvOG4.jpg',
-    'https://i.imgur.com/6o4i2dg.jpg'
-  ];
+  // One coherent six-member image selection per REVIVE+ version.
+  // BANGERS / SPOILERS use matching ordinal cuts from their official concept-photo runs.
+  // CHALLENGERS keeps the ALERT cards the mobile layout already uses well.
+  // LOVED IVE keeps the corrected local graduation-card mapping.
+  const SETS = {
+    bangers: {
+      label: 'BANGERS',
+      featureIndex: 3,
+      portraits: [
+        'https://i.imgur.com/4hsGTOs.jpg',
+        'https://i.imgur.com/KCZkQiX.jpg',
+        'https://i.imgur.com/m1ERSWg.jpg',
+        'https://i.imgur.com/IHBkZIr.jpg',
+        'https://i.imgur.com/vQ9l4no.jpg',
+        'https://i.imgur.com/YfLymCh.jpg'
+      ]
+    },
+    challengers: {
+      label: 'CHALLENGERS ALERT',
+      featureIndex: 1,
+      portraits: [
+        'https://i.imgur.com/U9c80gv.jpg',
+        'https://i.imgur.com/ZVnaaYc.jpg',
+        'https://i.imgur.com/V5MRKib.jpg',
+        'https://i.imgur.com/fk5Pt1u.jpg',
+        'https://i.imgur.com/j6WvOG4.jpg',
+        'https://i.imgur.com/6o4i2dg.jpg'
+      ]
+    },
+    spoilers: {
+      label: 'SPOILERS',
+      featureIndex: 2,
+      portraits: [
+        'https://i.imgur.com/cwa7j4g.jpg',
+        'https://i.imgur.com/0j0gGiC.jpg',
+        'https://i.imgur.com/JGJe8Z2.jpg',
+        'https://i.imgur.com/PCP9J1j.jpg',
+        'https://i.imgur.com/FkD8Hj5.jpg',
+        'https://i.imgur.com/wADkLMC.jpg'
+      ]
+    },
+    'loved-ive': {
+      label: 'LOVED IVE',
+      featureIndex: 0,
+      portraits: MEMBER_KEYS.map((key) => `assets/revive/member-cards/loved-ive/${key}.jpg?v=${ASSET_VERSION}`)
+    }
+  };
 
   function activeSet() {
     const root = document.documentElement.dataset.memberSet;
-    if (root) return root;
+    if (SETS[root]) return root;
     try {
-      return window.localStorage.getItem(STORAGE_KEY) || 'bangers';
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      return SETS[stored] ? stored : 'bangers';
     } catch {
       return 'bangers';
     }
   }
 
-  function localPortrait(index) {
-    return `assets/revive/member-cards/challengers/${MEMBER_KEYS[index]}.jpg`;
+  function localPortrait(set, index) {
+    return `assets/revive/member-cards/${set}/${MEMBER_KEYS[index]}.jpg?v=${ASSET_VERSION}`;
   }
 
-  function resolvedPortrait(index) {
-    return FAILED.has(index) ? localPortrait(index) : PORTRAITS[index];
+  function failureKey(set, index) {
+    return `${set}:${index}`;
+  }
+
+  function resolvedPortrait(set, index) {
+    const config = SETS[set];
+    if (!config?.portraits[index]) return localPortrait(set, index);
+    return FAILED.has(failureKey(set, index)) ? localPortrait(set, index) : config.portraits[index];
   }
 
   function cssUrl(url) {
     return `url("${String(url).replaceAll('"', '\\"')}")`;
   }
 
-  function cssPortrait(index) {
-    return `${cssUrl(PORTRAITS[index])}, ${cssUrl(localPortrait(index))}`;
+  function cssPortrait(set, index) {
+    const source = SETS[set]?.portraits[index];
+    const fallback = localPortrait(set, index);
+    if (!source || source === fallback || source.startsWith('assets/')) return cssUrl(source || fallback);
+    return `${cssUrl(source)}, ${cssUrl(fallback)}`;
   }
 
-  function usePortrait(image, index) {
-    if (!image || !PORTRAITS[index]) return;
+  function usePortrait(image, set, index) {
+    const source = SETS[set]?.portraits[index];
+    if (!image || !source) return;
+
     image.referrerPolicy = 'no-referrer';
     image.onerror = () => {
-      FAILED.add(index);
+      FAILED.add(failureKey(set, index));
       image.onerror = null;
-      image.src = localPortrait(index);
+      image.src = localPortrait(set, index);
     };
-    image.src = resolvedPortrait(index);
+    image.src = resolvedPortrait(set, index);
   }
 
-  function applyChallengersPortraits() {
-    if (activeSet() !== 'challengers') return;
+  function activeMemberIndex() {
+    const panel = document.querySelector('[data-member-profile]');
+    const parsed = Number(panel?.dataset.activeMember ?? 0);
+    return Number.isInteger(parsed) && parsed >= 0 && parsed < MEMBER_KEYS.length ? parsed : 0;
+  }
+
+  function applyVersionCards() {
+    const set = activeSet();
+    const config = SETS[set];
+    if (!config) return;
 
     document.querySelectorAll('[data-campaign-board] .campaign-photo img').forEach((image, index) => {
-      if (!PORTRAITS[index]) return;
-      usePortrait(image, index);
-      image.alt = `${STAGE_NAMES[index]} in the REVIVE+ CHALLENGERS ALERT concept-photo set`;
+      if (!MEMBER_KEYS[index]) return;
+      usePortrait(image, set, index);
+      image.alt = `${STAGE_NAMES[index]} in the REVIVE+ ${config.label} concept-card set`;
       image.style.objectPosition = 'center center';
     });
 
     document.querySelectorAll('[data-member-grid] .member-card .member-art').forEach((art, index) => {
-      if (!PORTRAITS[index]) return;
-      art.style.setProperty('--member-portrait', cssPortrait(index));
+      if (!MEMBER_KEYS[index]) return;
+      art.style.setProperty('--member-portrait', cssPortrait(set, index));
       art.style.backgroundPosition = 'center center';
       art.setAttribute('role', 'img');
-      art.setAttribute('aria-label', `${STAGE_NAMES[index]} — CHALLENGERS ALERT concept card`);
+      art.setAttribute('aria-label', `${STAGE_NAMES[index]} — ${config.label} concept card`);
     });
 
     if (PAGE === 'members') {
-      const panel = document.querySelector('[data-member-profile]');
       const visual = document.querySelector('[data-profile-visual]');
-      const parsed = Number(panel?.dataset.activeMember ?? 0);
-      const index = Number.isInteger(parsed) && parsed >= 0 && parsed < PORTRAITS.length ? parsed : 0;
-      if (visual) visual.style.setProperty('--dossier-portrait', cssPortrait(index));
+      const index = activeMemberIndex();
+      if (visual) visual.style.setProperty('--dossier-portrait', cssPortrait(set, index));
     }
 
     if (PAGE === 'index') {
       const feature = document.querySelector('.concept-card.concept-campaign img');
-      if (feature) {
-        usePortrait(feature, 1);
-        feature.alt = 'AN YUJIN in the REVIVE+ CHALLENGERS ALERT concept-photo set';
+      const index = config.featureIndex;
+      if (feature && Number.isInteger(index)) {
+        usePortrait(feature, set, index);
+        feature.alt = `${STAGE_NAMES[index]} in the REVIVE+ ${config.label} concept-card set`;
         feature.style.objectPosition = 'center center';
       }
     }
 
+    document.documentElement.dataset.versionCards = ASSET_VERSION;
     document.documentElement.dataset.challengersCards = ASSET_VERSION;
   }
 
   function scheduleSync() {
-    window.requestAnimationFrame(() => window.setTimeout(applyChallengersPortraits, 0));
+    window.requestAnimationFrame(() => window.setTimeout(applyVersionCards, 0));
   }
 
   window.addEventListener('revive-member-set-change', scheduleSync);
