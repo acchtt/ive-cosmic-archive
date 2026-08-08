@@ -3,15 +3,15 @@
   const PAGE = document.documentElement.dataset.page;
   const PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-site-rollback-v34';
+  const ASSET_VERSION = 'mobile-runtime-stability-v35';
   const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
 
   if (!MOBILE_QUERY.matches || !PAGES.has(PAGE)) return;
 
   function activeSet() {
-    const fromRoot = document.documentElement.dataset.memberSet;
-    if (fromRoot) return fromRoot;
+    const root = document.documentElement.dataset.memberSet;
+    if (root) return root;
     try {
       return window.localStorage.getItem(STORAGE_KEY) || 'bangers';
     } catch {
@@ -61,39 +61,17 @@
   }
 
   function scheduleSync() {
-    [0, 40, 120, 320, 800, 1600].forEach((delay) => {
-      window.setTimeout(applyLovedIvePortraits, delay);
-    });
+    window.requestAnimationFrame(() => window.setTimeout(applyLovedIvePortraits, 0));
   }
 
   window.addEventListener('revive-member-set-change', scheduleSync);
-
-  const rootObserver = new MutationObserver(scheduleSync);
-  rootObserver.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['data-member-set']
+  document.addEventListener('click', (event) => {
+    if (PAGE === 'members' && event.target.closest('[data-dossier-index]')) scheduleSync();
   });
 
-  function observeSurfaces() {
-    const grid = document.querySelector('[data-member-grid]');
-    if (grid) {
-      new MutationObserver(scheduleSync).observe(grid, { childList: true });
-    }
-
-    const panel = document.querySelector('[data-member-profile]');
-    if (panel) {
-      new MutationObserver(scheduleSync).observe(panel, {
-        attributes: true,
-        attributeFilter: ['data-active-member']
-      });
-    }
-
-    scheduleSync();
-  }
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', observeSurfaces, { once: true });
+    document.addEventListener('DOMContentLoaded', scheduleSync, { once: true });
   } else {
-    observeSurfaces();
+    scheduleSync();
   }
 })();
