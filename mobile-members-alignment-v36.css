@@ -1,0 +1,107 @@
+/* Mobile Members v36 — sticky-header, selector, and concept-card alignment. */
+@media (max-width: 640px) {
+  html[data-page="members"] {
+    scroll-padding-top: 104px;
+  }
+
+  /* Hide scrolled hero copy behind the floating sticky header instead of letting it bleed through the top gap. */
+  html[data-page="members"] body .site-header {
+    box-shadow:
+      0 -30px 0 14px color-mix(in srgb, var(--set-bg) 97%, #050506),
+      0 24px 68px rgba(0,0,0,.42),
+      0 0 44px color-mix(in srgb, var(--header-accent) 11%, transparent),
+      inset 0 1px 0 rgba(255,255,255,.12),
+      inset 0 -24px 46px color-mix(in srgb, var(--header-accent) 4%, transparent) !important;
+  }
+
+  html[data-page="members"] .page-hero.page-hero-members,
+  html[data-page="members"] .page-section {
+    scroll-margin-top: 104px;
+  }
+
+  /* Every selector cell uses the same fixed number/name columns. */
+  html[data-page="members"] .dossier-list {
+    align-items: stretch !important;
+  }
+
+  html[data-page="members"] .dossier-button {
+    min-height: 64px !important;
+    padding: 10px 12px !important;
+    display: grid !important;
+    grid-template-columns: 32px minmax(0, 1fr) !important;
+    grid-template-rows: 1fr !important;
+    align-items: center !important;
+    justify-content: initial !important;
+    gap: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  html[data-page="members"] .dossier-button::after {
+    display: none !important;
+  }
+
+  html[data-page="members"] .dossier-button > span:first-child {
+    width: 32px !important;
+    min-width: 32px !important;
+    flex: none !important;
+    justify-self: start !important;
+    text-align: left !important;
+  }
+
+  html[data-page="members"] .dossier-button strong {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    justify-self: stretch !important;
+    align-self: center !important;
+    text-align: left !important;
+  }
+
+  html[data-page="members"] .dossier-button[aria-pressed="true"] {
+    padding: 10px 12px !important;
+    box-shadow:
+      inset 3px 0 0 color-mix(in srgb, var(--set-accent) 82%, var(--set-paper)),
+      inset 0 0 28px color-mix(in srgb, var(--set-accent) 8%, transparent) !important;
+  }
+
+  /* BANGERS / CHALLENGERS / SPOILERS artwork is composition-heavy: show the full square card instead of cropping it into 5:6. */
+  html[data-page="members"][data-member-set="bangers"] .dossier-panel .dossier-visual,
+  html[data-page="members"][data-member-set="challengers"] .dossier-panel .dossier-visual,
+  html[data-page="members"][data-member-set="spoilers"] .dossier-panel .dossier-visual {
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  html[data-page="members"][data-member-set="bangers"] .dossier-panel .dossier-visual::before,
+  html[data-page="members"][data-member-set="challengers"] .dossier-panel .dossier-visual::before,
+  html[data-page="members"][data-member-set="spoilers"] .dossier-panel .dossier-visual::before {
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+  }
+
+  html[data-page="members"][data-member-set="loved-ive"] .dossier-panel .dossier-visual {
+    aspect-ratio: 5 / 6 !important;
+  }
+
+  html[data-page="members"][data-member-set="loved-ive"] .dossier-panel .dossier-visual::before {
+    background-size: cover !important;
+    background-position: center 24% !important;
+  }
+}
+
+@media (max-width: 370px) {
+  html[data-page="members"] .dossier-button {
+    min-height: 60px !important;
+    padding-inline: 9px !important;
+    grid-template-columns: 28px minmax(0, 1fr) !important;
+  }
+
+  html[data-page="members"] .dossier-button[aria-pressed="true"] {
+    padding-inline: 9px !important;
+  }
+
+  html[data-page="members"] .dossier-button > span:first-child {
+    width: 28px !important;
+    min-width: 28px !important;
+  }
+}
