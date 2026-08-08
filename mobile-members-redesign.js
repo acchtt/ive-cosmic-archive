@@ -2,16 +2,16 @@
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PAGE = document.documentElement.dataset.page;
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-member-cardsets-v36';
+  const ASSET_VERSION = 'mobile-member-cardsets-header-v37';
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
 
   if (!MOBILE_QUERY.matches || PAGE !== 'members') return;
 
   const VERSION_COPY = {
-    bangers: 'Six member dossiers synchronized to the BANGERS concept-photo set.',
-    challengers: 'Six member dossiers synchronized to the CHALLENGERS concept-photo set.',
-    spoilers: 'Six member dossiers synchronized to the SPOILERS concept-photo set.',
-    'loved-ive': 'Six member dossiers synchronized to the LOVED IVE concept-photo set.'
+    bangers: 'Six member dossiers synchronized to the BANGERS concept-card set.',
+    challengers: 'Six member dossiers synchronized to the CHALLENGERS concept-card set.',
+    spoilers: 'Six member dossiers synchronized to the SPOILERS concept-card set.',
+    'loved-ive': 'Six member dossiers synchronized to the LOVED IVE graduation-card set.'
   };
 
   function activeSet() {
