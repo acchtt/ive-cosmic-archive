@@ -3,7 +3,7 @@
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-cards-v4';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'mobile-site-rollback-v34';
+  const MOBILE_ASSET_VERSION = 'mobile-runtime-stability-v35';
 
   const themes = {
     bangers: {
@@ -172,38 +172,34 @@
       if (!node.closest('.mobile-theme-picker')) node.remove();
     });
 
-    const legacyLabels = new Set(['REVIVE+ EDITION', 'REVIVE+ VERSION']);
-    document.querySelectorAll('button, a, [role="button"], div').forEach((node) => {
-      const label = node.textContent?.replace(/\s+/g, ' ').trim().toUpperCase();
-      if (!legacyLabels.has(label)) return;
-      if (window.getComputedStyle(node).position === 'fixed') node.remove();
-    });
-
     document.documentElement.scrollLeft = 0;
     document.body.scrollLeft = 0;
   }
 
-  function installLegacyMobileControlPurge() {
+  function installHomeMenuFallback() {
     const page = document.documentElement.dataset.page;
-    if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page)) return;
+    if (page !== 'index') return;
 
-    const start = () => {
-      purgeLegacyMobileControls();
-      const observer = new MutationObserver(purgeLegacyMobileControls);
-      observer.observe(document.body, { childList: true, subtree: true });
-      [250, 900, 2400, 5000].forEach((delay) => {
-        window.setTimeout(purgeLegacyMobileControls, delay);
+    const install = () => {
+      const toggle = document.querySelector('[data-menu-toggle]');
+      const nav = document.getElementById('site-nav');
+      if (!toggle || !nav || nav.hasAttribute('data-nav') || toggle.dataset.menuFallback === 'true') return;
+
+      toggle.dataset.menuFallback = 'true';
+      toggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
       });
-      window.setTimeout(() => {
-        purgeLegacyMobileControls();
-        observer.disconnect();
-      }, 9000);
+      nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }));
     };
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', start, { once: true });
+      document.addEventListener('DOMContentLoaded', install, { once: true });
     } else {
-      start();
+      install();
     }
   }
 
@@ -234,8 +230,8 @@
   }
 
   installMobileLaunchGuard();
+  installHomeMenuFallback();
   loadMobileAssets();
-  installLegacyMobileControlPurge();
   apply();
 
   window.addEventListener('revive-member-set-change', (event) => {
@@ -244,26 +240,10 @@
       apply(id);
       purgeLegacyMobileControls();
     });
-    window.setTimeout(() => {
-      apply(id);
-      purgeLegacyMobileControls();
-    }, 80);
-  });
-
-  const observer = new MutationObserver(() => {
-    const id = document.documentElement.dataset.memberSet;
-    if (!valid.has(id)) return;
-    syncMeta(id);
-    if (document.body) syncCopy(id);
-  });
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['data-member-set']
   });
 
   document.addEventListener('DOMContentLoaded', () => {
-    const id = apply(document.documentElement.dataset.memberSet || storedTheme());
+    apply(document.documentElement.dataset.memberSet || storedTheme());
     purgeLegacyMobileControls();
-    [0, 180, 650].forEach((delay) => window.setTimeout(() => syncCopy(id), delay));
   }, { once: true });
 })();
