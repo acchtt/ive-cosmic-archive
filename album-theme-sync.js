@@ -3,7 +3,7 @@
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-cards-v4';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'mobile-member-cardsets-v36';
+  const MOBILE_ASSET_VERSION = 'mobile-member-cardsets-header-v37';
 
   const themes = {
     bangers: {
@@ -176,42 +176,15 @@
     document.body.scrollLeft = 0;
   }
 
-  function installHomeMenuFallback() {
-    const page = document.documentElement.dataset.page;
-    if (page !== 'index') return;
-
-    const install = () => {
-      const toggle = document.querySelector('[data-menu-toggle]');
-      const nav = document.getElementById('site-nav');
-      if (!toggle || !nav || nav.hasAttribute('data-nav') || toggle.dataset.menuFallback === 'true') return;
-
-      toggle.dataset.menuFallback = 'true';
-      toggle.addEventListener('click', () => {
-        const isOpen = nav.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(isOpen));
-      });
-      nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-        nav.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }));
-    };
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', install, { once: true });
-    } else {
-      install();
-    }
-  }
-
   function loadMobileAssets() {
     const page = document.documentElement.dataset.page;
     if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page)) return;
 
     appendStylesheet('mobile-page-shell-fix.css');
+    appendStylesheet('mobile-header-members-v37.css');
     if (page === 'index') appendStylesheet('mobile-home-campaign-v10.css');
     if (page === 'members') appendStylesheet('mobile-members-redesign.css');
     if (page === 'members') appendStylesheet('mobile-members-polish-v32.css');
-    if (page === 'members') appendStylesheet('mobile-members-alignment-v36.css');
     appendStylesheet('mobile-theme-picker-cover-grid.css');
     appendStylesheet('mobile-version-button.css');
     if (page === 'index') appendStylesheet('mobile-version-palette-sync.css');
@@ -225,13 +198,11 @@
     }
 
     appendScript('mobile-version-button.js', 'data-mobile-version-button-script');
-    appendScript('mobile-loved-ive-photo-fix.js', 'data-mobile-loved-ive-photo-fix-script');
-    appendScript('mobile-challengers-card-refresh.js', 'data-mobile-challengers-card-refresh-script');
+    appendScript('mobile-version-cardsets.js', 'data-mobile-version-cardsets-script');
     if (page === 'members') appendScript('mobile-members-redesign.js', 'data-mobile-members-redesign-script');
   }
 
   installMobileLaunchGuard();
-  installHomeMenuFallback();
   loadMobileAssets();
   apply();
 
