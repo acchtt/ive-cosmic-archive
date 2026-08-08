@@ -16,7 +16,7 @@
       title: 'CHALLENGERS',
       body: 'Sharper editorial contrast, oxide-red accents, cool tailoring, and the confident campaign energy of the CHALLENGERS version.',
       image: 'https://i.imgur.com/ZVnaaYc.jpg',
-      alt: 'AN YUJIN in the REVIVE+ CHALLENGERS ALERT concept-card set',
+      alt: 'AN YUJIN in the REVIVE+ CHALLENGERS concept-card set',
       link: 'Explore CHALLENGERS members ↗'
     },
     spoilers: {
@@ -31,7 +31,7 @@
       kicker: '01 · LOVED IVE version',
       title: 'LOVED IVE',
       body: 'Deep navy, studio blue, soft gray, and warm uniform tones shape the quieter portrait mood of the LOVED IVE version.',
-      image: 'assets/revive/member-cards/loved-ive/gaeul.jpg?v=mobile-member-cardsets-v36',
+      image: 'assets/revive/member-cards/loved-ive/gaeul.jpg?v=mobile-member-cardsets-header-v37',
       alt: 'GAEUL in the REVIVE+ LOVED IVE concept-card set',
       link: 'Explore LOVED IVE members ↗'
     }
@@ -96,10 +96,7 @@
   syncVersionCard();
 
   window.addEventListener('revive-member-set-change', (event) => {
-    const id = event.detail?.id;
-    syncVersionCard(id);
-    window.requestAnimationFrame(() => syncVersionCard(id));
-    window.setTimeout(() => syncVersionCard(id), 80);
+    syncVersionCard(event.detail?.id);
   });
 
   document.querySelectorAll('[data-youtube-thumb]').forEach((image) => {
