@@ -7,32 +7,32 @@
       kicker: '01 · BANGERS version',
       title: 'BANGERS',
       body: 'Signal-red color blocking, icy cyan, acid-lime accents, and high-impact styling tuned to the BANGERS version.',
-      image: 'assets/revive/member-cards/bangers/wonyoung.jpg',
-      alt: 'JANG WONYOUNG in the REVIVE+ BANGERS concept-photo set',
+      image: 'https://i.imgur.com/IHBkZIr.jpg',
+      alt: 'JANG WONYOUNG in the REVIVE+ BANGERS concept-card set',
       link: 'Explore BANGERS members ↗'
     },
     challengers: {
       kicker: '01 · CHALLENGERS version',
       title: 'CHALLENGERS',
       body: 'Sharper editorial contrast, oxide-red accents, cool tailoring, and the confident campaign energy of the CHALLENGERS version.',
-      image: 'assets/revive/member-cards/challengers/yujin.jpg',
-      alt: 'AN YUJIN in the REVIVE+ CHALLENGERS concept-photo set',
+      image: 'https://i.imgur.com/ZVnaaYc.jpg',
+      alt: 'AN YUJIN in the REVIVE+ CHALLENGERS ALERT concept-card set',
       link: 'Explore CHALLENGERS members ↗'
     },
     spoilers: {
       kicker: '01 · SPOILERS version',
       title: 'SPOILERS',
       body: 'Press blue, powder cyan, cool gray, and acid-yellow editorial details define the clean visual language of the SPOILERS version.',
-      image: 'assets/revive/member-cards/spoilers/rei.jpg',
-      alt: 'REI in the REVIVE+ SPOILERS concept-photo set',
+      image: 'https://i.imgur.com/JGJe8Z2.jpg',
+      alt: 'REI in the REVIVE+ SPOILERS concept-card set',
       link: 'Explore SPOILERS members ↗'
     },
     'loved-ive': {
       kicker: '01 · LOVED IVE version',
       title: 'LOVED IVE',
       body: 'Deep navy, studio blue, soft gray, and warm uniform tones shape the quieter portrait mood of the LOVED IVE version.',
-      image: 'assets/revive/member-cards/loved-ive/gaeul.jpg',
-      alt: 'GAEUL in the REVIVE+ LOVED IVE concept-photo set',
+      image: 'assets/revive/member-cards/loved-ive/gaeul.jpg?v=mobile-member-cardsets-v36',
+      alt: 'GAEUL in the REVIVE+ LOVED IVE concept-card set',
       link: 'Explore LOVED IVE members ↗'
     }
   };
@@ -80,6 +80,7 @@
 
     card.dataset.version = resolved;
     if (image) {
+      image.referrerPolicy = 'no-referrer';
       image.src = data.image;
       image.alt = data.alt;
     }
