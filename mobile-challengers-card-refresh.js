@@ -3,15 +3,13 @@
   const PAGE = document.documentElement.dataset.page;
   const PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-site-rollback-v34';
+  const ASSET_VERSION = 'mobile-runtime-stability-v35';
   const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
   const FAILED = new Set();
 
   if (!MOBILE_QUERY.matches || !PAGES.has(PAGE)) return;
 
-  // Official CHALLENGERS ALERT! member series: one controlled visual system
-  // across all six — black field, white/silver styling, neon-green flashlight.
   const PORTRAITS = [
     'https://i.imgur.com/U9c80gv.jpg',
     'https://i.imgur.com/ZVnaaYc.jpg',
@@ -21,18 +19,9 @@
     'https://i.imgur.com/6o4i2dg.jpg'
   ];
 
-  const POSITIONS = [
-    'center center',
-    'center center',
-    'center center',
-    'center center',
-    'center center',
-    'center center'
-  ];
-
   function activeSet() {
-    const fromRoot = document.documentElement.dataset.memberSet;
-    if (fromRoot) return fromRoot;
+    const root = document.documentElement.dataset.memberSet;
+    if (root) return root;
     try {
       return window.localStorage.getItem(STORAGE_KEY) || 'bangers';
     } catch {
@@ -67,40 +56,20 @@
     image.src = resolvedPortrait(index);
   }
 
-  function resetFraming() {
-    document.querySelectorAll('[data-campaign-board] .campaign-photo img').forEach((image) => {
-      image.style.removeProperty('object-position');
-      image.onerror = null;
-    });
-
-    document.querySelectorAll('[data-member-grid] .member-card .member-art').forEach((art) => {
-      art.style.removeProperty('background-position');
-    });
-
-    const feature = document.querySelector('.concept-card.concept-campaign img');
-    if (feature) {
-      feature.style.removeProperty('object-position');
-      feature.onerror = null;
-    }
-  }
-
   function applyChallengersPortraits() {
-    if (activeSet() !== 'challengers') {
-      resetFraming();
-      return;
-    }
+    if (activeSet() !== 'challengers') return;
 
     document.querySelectorAll('[data-campaign-board] .campaign-photo img').forEach((image, index) => {
       if (!PORTRAITS[index]) return;
       usePortrait(image, index);
       image.alt = `${STAGE_NAMES[index]} in the REVIVE+ CHALLENGERS ALERT concept-photo set`;
-      image.style.objectPosition = POSITIONS[index];
+      image.style.objectPosition = 'center center';
     });
 
     document.querySelectorAll('[data-member-grid] .member-card .member-art').forEach((art, index) => {
       if (!PORTRAITS[index]) return;
       art.style.setProperty('--member-portrait', cssPortrait(index));
-      art.style.backgroundPosition = POSITIONS[index];
+      art.style.backgroundPosition = 'center center';
       art.setAttribute('role', 'img');
       art.setAttribute('aria-label', `${STAGE_NAMES[index]} — CHALLENGERS ALERT concept card`);
     });
@@ -118,7 +87,7 @@
       if (feature) {
         usePortrait(feature, 1);
         feature.alt = 'AN YUJIN in the REVIVE+ CHALLENGERS ALERT concept-photo set';
-        feature.style.objectPosition = POSITIONS[1];
+        feature.style.objectPosition = 'center center';
       }
     }
 
@@ -126,36 +95,17 @@
   }
 
   function scheduleSync() {
-    [0, 40, 120, 320, 800, 1600].forEach((delay) => {
-      window.setTimeout(applyChallengersPortraits, delay);
-    });
+    window.requestAnimationFrame(() => window.setTimeout(applyChallengersPortraits, 0));
   }
 
   window.addEventListener('revive-member-set-change', scheduleSync);
-
-  new MutationObserver(scheduleSync).observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['data-member-set']
+  document.addEventListener('click', (event) => {
+    if (PAGE === 'members' && event.target.closest('[data-dossier-index]')) scheduleSync();
   });
 
-  function observeSurfaces() {
-    const grid = document.querySelector('[data-member-grid]');
-    if (grid) new MutationObserver(scheduleSync).observe(grid, { childList: true });
-
-    const panel = document.querySelector('[data-member-profile]');
-    if (panel) {
-      new MutationObserver(scheduleSync).observe(panel, {
-        attributes: true,
-        attributeFilter: ['data-active-member']
-      });
-    }
-
-    scheduleSync();
-  }
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', observeSurfaces, { once: true });
+    document.addEventListener('DOMContentLoaded', scheduleSync, { once: true });
   } else {
-    observeSurfaces();
+    scheduleSync();
   }
 })();
