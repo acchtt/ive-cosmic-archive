@@ -3,7 +3,7 @@
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-cards-v4';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'mobile-member-cardsets-header-v37';
+  const MOBILE_ASSET_VERSION = 'mobile-members-final-cascade-v38';
 
   const themes = {
     bangers: {
@@ -181,13 +181,13 @@
     if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page)) return;
 
     appendStylesheet('mobile-page-shell-fix.css');
-    appendStylesheet('mobile-header-members-v37.css');
     if (page === 'index') appendStylesheet('mobile-home-campaign-v10.css');
     if (page === 'members') appendStylesheet('mobile-members-redesign.css');
     if (page === 'members') appendStylesheet('mobile-members-polish-v32.css');
     appendStylesheet('mobile-theme-picker-cover-grid.css');
     appendStylesheet('mobile-version-button.css');
     if (page === 'index') appendStylesheet('mobile-version-palette-sync.css');
+    appendStylesheet('mobile-header-members-v38.css');
 
     if (!document.querySelector('script[data-mobile-picker-script]')) {
       const picker = document.createElement('script');
