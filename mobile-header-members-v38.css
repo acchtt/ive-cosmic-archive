@@ -1,0 +1,218 @@
+/* Mobile v38 — final mobile header + Members selector layer. Loaded last on purpose. */
+@media (max-width: 640px) {
+  html body .site-header {
+    top: 0 !important;
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    height: 64px !important;
+    margin: 8px auto 0 !important;
+    padding: 0 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    grid-template-columns: none !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+    background:
+      linear-gradient(112deg, rgba(255,255,255,.045), transparent 28%),
+      color-mix(in srgb, var(--header-panel) 96%, var(--set-bg)) !important;
+  }
+
+  html body .site-header .menu-toggle {
+    order: 1 !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    flex: 0 0 42px !important;
+    width: 42px !important;
+    height: 42px !important;
+    margin: 0 !important;
+    align-self: center !important;
+    justify-self: auto !important;
+  }
+
+  html body .site-header .brand {
+    order: 2 !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+    max-width: calc(100% - 58px) !important;
+    margin: 0 0 0 auto !important;
+    align-self: center !important;
+    justify-self: auto !important;
+  }
+
+  html body .site-header .brand-emblem {
+    width: 30px !important;
+    height: 30px !important;
+    flex-basis: 30px !important;
+  }
+
+  html body .site-header .brand-lockup {
+    padding-left: 10px !important;
+  }
+
+  html body .site-header .site-nav {
+    left: 0 !important;
+    right: 0 !important;
+    top: calc(100% + 8px) !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+  }
+
+  html[data-page="members"] {
+    scroll-padding-top: 92px !important;
+  }
+
+  html[data-page="members"] .page-hero.page-hero-members,
+  html[data-page="members"] .page-section {
+    scroll-margin-top: 92px !important;
+  }
+
+  /* Six genuinely independent tiles. Older v31/v32 outer-panel rules must not survive. */
+  html[data-page="members"] .dossier-list {
+    position: relative !important;
+    z-index: 5 !important;
+    margin: 0 0 14px !important;
+    padding: 0 !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    border: 0 !important;
+    outline: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  html[data-page="members"] .dossier-button {
+    position: relative !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    min-height: 68px !important;
+    padding: 11px 12px !important;
+    display: grid !important;
+    grid-template-columns: 30px minmax(0, 1fr) !important;
+    grid-template-rows: 1fr !important;
+    align-items: center !important;
+    justify-content: initial !important;
+    gap: 8px !important;
+    border: 1px solid color-mix(in srgb, var(--set-accent) 24%, rgba(255,255,255,.08)) !important;
+    border-radius: 15px !important;
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--set-panel-strong) 92%, transparent), color-mix(in srgb, var(--set-bg) 88%, transparent)) !important;
+    box-shadow: inset 0 1px rgba(255,255,255,.025) !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  html[data-page="members"] .dossier-button::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  html[data-page="members"] .dossier-button > span:first-child {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 30px !important;
+    min-width: 30px !important;
+    height: auto !important;
+    margin: 0 !important;
+    align-self: center !important;
+    justify-self: start !important;
+    text-align: left !important;
+    color: color-mix(in srgb, var(--set-muted) 82%, var(--set-paper)) !important;
+    font-size: .62rem !important;
+    font-weight: 760 !important;
+    line-height: 1 !important;
+    letter-spacing: .08em !important;
+  }
+
+  html[data-page="members"] .dossier-button strong {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    align-self: center !important;
+    justify-self: stretch !important;
+    text-align: left !important;
+    color: color-mix(in srgb, var(--set-paper) 96%, white) !important;
+    font-size: clamp(.82rem, 3.8vw, .96rem) !important;
+    font-weight: 820 !important;
+    line-height: 1.04 !important;
+    letter-spacing: -.018em !important;
+    white-space: normal !important;
+  }
+
+  html[data-page="members"] .dossier-button small,
+  html[data-page="members"] .dossier-button .dossier-full-name {
+    display: none !important;
+  }
+
+  html[data-page="members"] .dossier-button[aria-pressed="true"] {
+    padding: 11px 12px !important;
+    border-color: color-mix(in srgb, var(--set-accent) 62%, rgba(255,255,255,.12)) !important;
+    background:
+      radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--set-accent) 24%, transparent), transparent 52%),
+      color-mix(in srgb, var(--set-accent) 10%, var(--set-panel-strong)) !important;
+    box-shadow:
+      inset 3px 0 0 color-mix(in srgb, var(--set-accent) 82%, var(--set-paper)),
+      inset 0 0 26px color-mix(in srgb, var(--set-accent) 7%, transparent) !important;
+  }
+
+  html[data-page="members"] .dossier-button[aria-pressed="true"] > span:first-child {
+    color: color-mix(in srgb, var(--set-accent) 72%, var(--set-paper)) !important;
+  }
+
+  /* Preserve the complete designed card artwork on the three graphic versions. */
+  html[data-page="members"][data-member-set="bangers"] .dossier-panel .dossier-visual,
+  html[data-page="members"][data-member-set="challengers"] .dossier-panel .dossier-visual,
+  html[data-page="members"][data-member-set="spoilers"] .dossier-panel .dossier-visual {
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  html[data-page="members"][data-member-set="bangers"] .dossier-panel .dossier-visual::before,
+  html[data-page="members"][data-member-set="challengers"] .dossier-panel .dossier-visual::before,
+  html[data-page="members"][data-member-set="spoilers"] .dossier-panel .dossier-visual::before {
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+  }
+
+  html[data-page="members"][data-member-set="loved-ive"] .dossier-panel .dossier-visual {
+    aspect-ratio: 5 / 6 !important;
+  }
+
+  html[data-page="members"][data-member-set="loved-ive"] .dossier-panel .dossier-visual::before {
+    background-size: cover !important;
+    background-position: center 24% !important;
+  }
+}
+
+@media (max-width: 370px) {
+  html body .site-header {
+    width: calc(100% - 20px) !important;
+    max-width: calc(100% - 20px) !important;
+    padding-inline: 10px !important;
+  }
+
+  html[data-page="members"] .dossier-button {
+    min-height: 64px !important;
+    padding-inline: 9px !important;
+    grid-template-columns: 27px minmax(0, 1fr) !important;
+  }
+
+  html[data-page="members"] .dossier-button[aria-pressed="true"] {
+    padding-inline: 9px !important;
+  }
+
+  html[data-page="members"] .dossier-button > span:first-child {
+    width: 27px !important;
+    min-width: 27px !important;
+  }
+}
