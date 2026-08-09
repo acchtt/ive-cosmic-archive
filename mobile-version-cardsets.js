@@ -3,7 +3,7 @@
   const PAGE = document.documentElement.dataset.page;
   const PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-members-final-cascade-v38';
+  const ASSET_VERSION = 'mobile-spoilers-member-cards-v39';
   const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
   const FAILED = new Set();
@@ -39,12 +39,12 @@
       label: 'SPOILERS',
       featureIndex: 2,
       portraits: [
-        'https://i.imgur.com/cwa7j4g.jpg',
-        'https://i.imgur.com/0j0gGiC.jpg',
-        'https://i.imgur.com/JGJe8Z2.jpg',
-        'https://i.imgur.com/PCP9J1j.jpg',
-        'https://i.imgur.com/FkD8Hj5.jpg',
-        'https://i.imgur.com/wADkLMC.jpg'
+        'https://i.imgur.com/07h20N1.jpg',
+        'https://i.imgur.com/C9eiRHl.jpg',
+        'https://i.imgur.com/QzkZue5.jpg',
+        'https://i.imgur.com/7um9Vbl.jpg',
+        'https://i.imgur.com/gRgyYBN.jpg',
+        'https://i.imgur.com/qZgZL3X.jpg'
       ]
     },
     'loved-ive': {
