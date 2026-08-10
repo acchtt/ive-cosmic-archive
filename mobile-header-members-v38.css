@@ -1,4 +1,4 @@
-/* Mobile v42 — final mobile header + Members selector and portrait layer. Loaded last on purpose. */
+/* Mobile v43 — final mobile header + Members selector and portrait layer. Loaded last on purpose. */
 @media (max-width: 640px) {
   html body .site-header {
     top: 0 !important;
@@ -182,7 +182,7 @@
     background-position: center center !important;
   }
 
-  /* v42 SPOILERS uses six separate high-resolution member images rather than a sprite. */
+  /* v43 SPOILERS uses six separate original-size media files from the official member posts. */
   html[data-page="members"][data-member-set="spoilers"] .dossier-panel .dossier-visual::before {
     background-image: var(--dossier-portrait) !important;
     background-size: cover !important;

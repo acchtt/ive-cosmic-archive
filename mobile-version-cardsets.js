@@ -3,7 +3,7 @@
   const PAGE = document.documentElement.dataset.page;
   const PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-spoilers-hires-sync-v42';
+  const ASSET_VERSION = 'mobile-spoilers-official-media-v43';
   const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
   const FAILED = new Set();
@@ -36,20 +36,21 @@
       ]
     },
     spoilers: {
-      label: 'SPOILERS',
-      featureIndex: 4,
-      // Same position (09) in each member's verified 15-image SPOILERS block.
-      // These are separate original-size images, not crops from a six-member composite.
-      portraits: [
-        'https://f.ptcdn.info/433/090/000/mkwpec2th1WB52os1Ad-o.jpg',
-        'https://f.ptcdn.info/433/090/000/mkwpauqviaeDbRQe21n-o.jpg',
-        'https://f.ptcdn.info/433/090/000/mkwpjwq4o00Q5nvmppc-o.jpg',
-        'https://f.ptcdn.info/433/090/000/mkwpravrhpijb87Y2f8-o.jpg',
-        'https://f.ptcdn.info/433/090/000/mkwpgjojoSD3a7wmO3B-o.jpg',
-        'https://f.ptcdn.info/433/090/000/mkwpmimmhaO92R4tVCC-o.jpg'
-      ]
-    },
-    'loved-ive': {
+    label: 'SPOILERS',
+    featureIndex: 4,
+    // Media slot 3 from each member's official IVE SPOILERS post.
+    // Liz slot 3 is the approved blue press/nameplate portrait; using
+    // the same slot across all six official posts keeps the sub-series synchronized.
+    portraits: [
+      'https://pbs.twimg.com/media/G_rOpjjbAAI0Zzf?format=jpg&name=orig',
+      'https://pbs.twimg.com/media/G_rOv13bAAMOrul?format=jpg&name=orig',
+      'https://pbs.twimg.com/media/G_rOezqbAAAfAON?format=jpg&name=orig',
+      'https://pbs.twimg.com/media/G_rOSXwbAAAbVQs?format=jpg&name=orig',
+      'https://pbs.twimg.com/media/G_rOkQMbAAAQ3UB?format=jpg&name=orig',
+      'https://pbs.twimg.com/media/G_rOYdzbAAgBg7K?format=jpg&name=orig'
+    ]
+  },
+  'loved-ive': {
       label: 'LOVED IVE',
       featureIndex: 0,
       portraits: MEMBER_KEYS.map((key) => `assets/revive/member-cards/loved-ive/${key}.jpg?v=${ASSET_VERSION}`)
