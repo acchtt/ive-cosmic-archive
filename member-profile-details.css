@@ -320,7 +320,7 @@ html[data-page="members"] .profile-actions .button {
 
 
 /* v48 birthday in member identity cluster */
-.profile-identity .profile-birthday {
+html[data-page="members"] .profile-identity span.profile-birthday {
   flex: 0 0 100%;
   margin-top: 2px;
   display: inline-flex;
@@ -334,7 +334,7 @@ html[data-page="members"] .profile-actions .button {
   white-space: nowrap;
 }
 
-.profile-identity .profile-birthday::before {
+html[data-page="members"] .profile-identity span.profile-birthday::before {
   content: "BIRTHDAY";
   margin: 0;
   color: #746d7d;
@@ -344,7 +344,7 @@ html[data-page="members"] .profile-actions .button {
 }
 
 @media (max-width: 760px) {
-  .profile-identity .profile-birthday {
+  html[data-page="members"] .profile-identity span.profile-birthday {
     margin-top: 1px;
     font-size: .69rem;
   }
