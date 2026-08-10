@@ -2,7 +2,7 @@
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PAGE = document.documentElement.dataset.page;
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-spoilers-member-cards-v39';
+  const ASSET_VERSION = 'mobile-spoilers-press-set-v40';
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
 
   if (!MOBILE_QUERY.matches || PAGE !== 'members') return;
@@ -10,7 +10,7 @@
   const VERSION_COPY = {
     bangers: 'Six member dossiers synchronized to the BANGERS concept-card set.',
     challengers: 'Six member dossiers synchronized to the CHALLENGERS concept-card set.',
-    spoilers: 'Six member dossiers synchronized to the SPOILERS concept-card set.',
+    spoilers: 'Six member dossiers synchronized to the SPOILERS press-conference concept set.',
     'loved-ive': 'Six member dossiers synchronized to the LOVED IVE graduation-card set.'
   };
 
