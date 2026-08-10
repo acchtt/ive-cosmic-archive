@@ -1,0 +1,67 @@
+name: Finalize SPOILERS matched press cards v44
+
+on:
+  push:
+    paths:
+      - '.github/workflows/finalize-spoilers-match-v44.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply verified matching press-card sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          old='mobile-spoilers-official-media-v43'
+          new='mobile-spoilers-matched-press-v44'
+
+          for name in ('album-theme-sync.js','mobile-version-cardsets.js','mobile-members-redesign.js','home-revive.js','index.html','members.html'):
+              p=Path(name)
+              t=p.read_text()
+              if old not in t:
+                  raise SystemExit(f'missing {old} in {name}')
+              p.write_text(t.replace(old,new))
+
+          p=Path('mobile-version-cardsets.js')
+          t=p.read_text()
+          replacements={
+            'https://pbs.twimg.com/media/G_rOpjjbAAI0Zzf?format=jpg&name=orig':'https://pbs.twimg.com/media/G_rOpkKW0AAt_VT?format=jpg&name=orig',
+            'https://pbs.twimg.com/media/G_rOSXwbAAAbVQs?format=jpg&name=orig':'https://pbs.twimg.com/media/G_rOSXybAAAljAV?format=jpg&name=orig',
+          }
+          for a,b in replacements.items():
+              if a not in t:
+                  raise SystemExit(f'missing old SPOILERS source {a}')
+              t=t.replace(a,b,1)
+          t=t.replace(
+              "// Media slot 3 from each member's official IVE SPOILERS post.\n    // Liz slot 3 is the approved blue press/nameplate portrait; using\n    // the same slot across all six official posts keeps the sub-series synchronized.",
+              "// Verified matching blue press/nameplate sub-series from the six official posts.\n    // Slot map: Gaeul 1, Yujin 3, Rei 3, Wonyoung 1, Liz 3, Leeseo 3."
+          )
+          p.write_text(t)
+
+          p=Path('mobile-header-members-v38.css')
+          t=p.read_text().replace(
+              'v43 SPOILERS uses six separate original-size media files from the official member posts.',
+              'v44 SPOILERS uses the verified matching blue press/nameplate member-card sub-series.'
+          )
+          p.write_text(t)
+          PY
+      - name: Remove temporary matching files
+        run: |
+          rm -f .debug/spoilers-match-contact-sheet.jpg
+          rmdir .debug 2>/dev/null || true
+          rm -f .github/workflows/spoilers-match-debug.yml
+          rm -f .github/workflows/finalize-spoilers-match-v44.yml
+      - name: Commit v44
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Match SPOILERS press cards v44'
+          git push
