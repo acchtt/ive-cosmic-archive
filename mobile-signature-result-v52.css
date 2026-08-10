@@ -1,36 +1,4 @@
-from pathlib import Path
-
-OLD = 'member-signature-reveal-v51'
-NEW = 'member-signature-result-v52'
-
-version_files = [
-    'album-theme-sync.js',
-    'mobile-version-cardsets.js',
-    'mobile-members-redesign.js',
-    'home-revive.js',
-    'index.html',
-    'members.html',
-    'member-profile-details.js',
-    'member-profile-details.css',
-]
-
-for name in version_files:
-    path = Path(name)
-    text = path.read_text()
-    if OLD in text:
-        path.write_text(text.replace(OLD, NEW))
-
-sync = Path('album-theme-sync.js')
-text = sync.read_text()
-needle = "    if (page === 'members') appendStylesheet('mobile-members-polish-v32.css');\n"
-insert = needle + "    if (page === 'members') appendStylesheet('mobile-signature-result-v52.css');\n"
-if "mobile-signature-result-v52.css" not in text:
-    if needle not in text:
-        raise SystemExit('Could not find mobile members polish loader')
-    text = text.replace(needle, insert, 1)
-sync.write_text(text)
-
-css = r'''/* v52 — mobile signature result override.
+/* v52 — mobile signature result override.
    Loaded after legacy mobile member CSS so the reveal cannot collapse back
    into the old tiny status-chip treatment. */
 @media (max-width: 640px) {
@@ -143,8 +111,3 @@ css = r'''/* v52 — mobile signature result override.
     line-height: 1 !important;
   }
 }
-'''
-Path('mobile-signature-result-v52.css').write_text(css)
-
-Path('tools/fix-mobile-signature-result-v52.py').unlink(missing_ok=True)
-Path('.github/workflows/fix-mobile-signature-result-v52.yml').unlink(missing_ok=True)
