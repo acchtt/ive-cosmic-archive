@@ -25,7 +25,6 @@ jobs:
           old = 'mobile-spoilers-hires-sync-v42'
           new = 'mobile-spoilers-official-media-v43'
 
-          # Shared version/cache tokens.
           for name in ('album-theme-sync.js', 'mobile-version-cardsets.js', 'mobile-members-redesign.js', 'home-revive.js', 'index.html', 'members.html'):
               path = Path(name)
               text = path.read_text()
@@ -33,9 +32,6 @@ jobs:
                   raise SystemExit(f'Missing old version token in {name}')
               path.write_text(text.replace(old, new))
 
-          # Replace the incorrect gallery-derived SPOILERS set with media slot 3
-          # from each member's official four-image IVE post. Liz slot 3 is the
-          # approved blue press/nameplate image G_rOkQMbAAAQ3UB.
           path = Path('mobile-version-cardsets.js')
           text = path.read_text()
           replacement = """    spoilers: {
@@ -60,21 +56,16 @@ jobs:
               raise SystemExit(f'Could not replace SPOILERS block: {count}')
           path.write_text(text2)
 
-          # Home uses the exact same approved Liz original.
           path = Path('home-revive.js')
           text = path.read_text()
-          text2, count = re.subn(
-              r"https://pbs\.twimg\.com/media/G_rOkQMbAAAQ3UB(?:\.jpg)?(?:\?[^']*)?",
-              'https://pbs.twimg.com/media/G_rOkQMbAAAQ3UB?format=jpg&name=orig',
-              text,
-              count=1
-          )
-          if count != 1:
-              raise SystemExit(f'Could not update Home Liz source: {count}')
-          text2 = text2.replace('press-conference concept set', 'official SPOILERS concept-photo set')
-          path.write_text(text2)
+          old_liz = 'https://pbs.twimg.com/media/G_rOkQMbAAAQ3UB.jpg'
+          new_liz = 'https://pbs.twimg.com/media/G_rOkQMbAAAQ3UB?format=jpg&name=orig'
+          if old_liz not in text:
+              raise SystemExit('Could not locate Home Liz source')
+          text = text.replace(old_liz, new_liz, 1)
+          text = text.replace('press-conference concept set', 'official SPOILERS concept-photo set')
+          path.write_text(text)
 
-          # Keep one identical typography system for all six selector names.
           path = Path('mobile-header-members-v38.css')
           text = path.read_text()
           text = text.replace('Mobile v42', 'Mobile v43')
