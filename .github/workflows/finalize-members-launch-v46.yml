@@ -1,0 +1,30 @@
+name: Members launch fix v46
+
+on:
+  push:
+    paths:
+      - 'tools/finalize_members_launch_v46.py'
+      - '.github/workflows/finalize-members-launch-v46.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply v46
+        run: python tools/finalize_members_launch_v46.py
+      - name: Remove temporary finalizer
+        run: |
+          rm -f tools/finalize_members_launch_v46.py
+          rm -f .github/workflows/finalize-members-launch-v46.yml
+          rm -f .github/workflows/finalize-member-youtube-v45.yml
+      - name: Commit v46
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Fix Members launch freeze v46'
+          git push
