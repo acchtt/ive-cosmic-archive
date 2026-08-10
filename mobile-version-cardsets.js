@@ -3,7 +3,7 @@
   const PAGE = document.documentElement.dataset.page;
   const PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-spoilers-press-set-v40';
+  const ASSET_VERSION = 'mobile-spoilers-card-layer-v41';
   const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
   const FAILED = new Set();
@@ -39,16 +39,16 @@
     spoilers: {
       label: 'SPOILERS',
       featureIndex: 4,
-      // One real six-member press-conference composite, cropped per member.
-      // Published with Starship Entertainment credit by Chosun Online.
+      // Real SPOILERS press/nameplate set. One Starship-credited six-member
+      // composite is cropped consistently so every member uses the same sub-series.
       sprite: 'https://ekr.chosunonline.com/site/data/img_dir/2026/01/29/2026012980226_0.jpg',
       spritePositions: [
-        '50% 0%',   // GAEUL — top middle
-        '0% 0%',    // AN YUJIN — top left
-        '100% 0%',  // REI — top right
-        '100% 100%',// JANG WONYOUNG — bottom right
-        '50% 100%', // LIZ — bottom middle
-        '0% 100%'   // LEESEO — bottom left
+        '50% 0%',    // GAEUL — top middle
+        '0% 0%',     // AN YUJIN — top left
+        '100% 0%',   // REI — top right
+        '100% 100%', // JANG WONYOUNG — bottom right
+        '50% 100%',  // LIZ — bottom middle
+        '0% 100%'    // LEESEO — bottom left
       ]
     },
     'loved-ive': {
@@ -135,21 +135,37 @@
     image.src = resolvedPortrait(set, index);
   }
 
-  function applyArtPortrait(art, set, index, variableName) {
-    if (!art) return;
-    if (isSpriteSet(set)) {
-      art.style.removeProperty(variableName);
-      art.style.backgroundImage = `${cssUrl(SETS[set].sprite)}, ${cssUrl(localPortrait(set, index))}`;
-      art.style.backgroundSize = '300% 200%, cover';
-      art.style.backgroundPosition = `${SETS[set].spritePositions[index]}, center center`;
-      art.style.backgroundRepeat = 'no-repeat, no-repeat';
-      return;
-    }
-
+  function clearPortraitLayerState(art) {
     art.style.removeProperty('background-image');
     art.style.removeProperty('background-size');
     art.style.removeProperty('background-position');
     art.style.removeProperty('background-repeat');
+    art.style.removeProperty('--version-card-background-size');
+    art.style.removeProperty('--version-card-background-position');
+    art.style.removeProperty('--version-card-background-repeat');
+  }
+
+  function applyArtPortrait(art, set, index, variableName) {
+    if (!art) return;
+    clearPortraitLayerState(art);
+
+    if (isSpriteSet(set)) {
+      const config = SETS[set];
+      art.style.setProperty(variableName, cssUrl(config.sprite));
+      art.style.setProperty('--version-card-background-size', '300% 200%');
+      art.style.setProperty('--version-card-background-position', config.spritePositions[index]);
+      art.style.setProperty('--version-card-background-repeat', 'no-repeat');
+
+      // Member cards render on the element itself; dossier portraits render on ::before.
+      if (variableName === '--member-portrait') {
+        art.style.backgroundImage = `var(${variableName})`;
+        art.style.backgroundSize = 'var(--version-card-background-size)';
+        art.style.backgroundPosition = 'var(--version-card-background-position)';
+        art.style.backgroundRepeat = 'var(--version-card-background-repeat)';
+      }
+      return;
+    }
+
     art.style.setProperty(variableName, cssPortrait(set, index));
   }
 
