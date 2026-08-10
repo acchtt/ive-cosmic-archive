@@ -31,7 +31,7 @@
       kicker: '01 · LOVED IVE version',
       title: 'LOVED IVE',
       body: 'Deep navy, studio blue, soft gray, and warm uniform tones shape the quieter portrait mood of the LOVED IVE version.',
-      image: 'assets/revive/member-cards/loved-ive/gaeul.jpg?v=mobile-spoilers-matched-press-v44',
+      image: 'assets/revive/member-cards/loved-ive/gaeul.jpg?v=member-youtube-links-v45',
       alt: 'GAEUL in the REVIVE+ LOVED IVE concept-card set',
       link: 'Explore LOVED IVE members ↗'
     }

@@ -217,3 +217,103 @@ html[data-page="members"] .profile-actions .button {
     margin-bottom: 18px;
   }
 }
+
+
+/* v45 member social channels */
+.profile-social-links {
+  width: 100%;
+  margin: 0 0 22px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.profile-social-links .profile-instagram {
+  margin: 0;
+}
+
+.profile-youtube {
+  width: fit-content;
+  min-height: 44px;
+  margin: 0;
+  padding: 5px 12px 5px 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid rgba(255, 122, 122, .28);
+  border-radius: 999px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.018)),
+    rgba(13, 8, 21, .7);
+  color: #ffe0e0;
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.24),
+    inset 0 0 24px rgba(255,255,255,.025);
+  font-size: .69rem;
+  font-weight: 700;
+  letter-spacing: .035em;
+  text-decoration: none;
+  transition: transform .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease;
+}
+
+.profile-youtube[hidden] { display: none !important; }
+
+.profile-youtube-icon {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 32px;
+  border: 1px solid rgba(255, 113, 113, .5);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255,255,255,.18), transparent 38%),
+    linear-gradient(145deg, rgba(255, 61, 61, .25), rgba(167, 33, 64, .18));
+  color: #ff7676;
+  box-shadow:
+    0 0 18px rgba(255, 72, 72, .16),
+    inset 0 0 16px rgba(255,255,255,.035);
+}
+
+.profile-youtube-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+}
+
+.profile-youtube-icon path { fill: currentColor; stroke: none; }
+.profile-youtube-label { white-space: nowrap; }
+
+.profile-youtube-arrow {
+  color: #a99191;
+  font-size: .82rem;
+  transition: color .2s ease, transform .2s ease;
+}
+
+.profile-youtube:hover,
+.profile-youtube:focus-visible {
+  color: white;
+  border-color: rgba(255, 132, 132, .58);
+  box-shadow:
+    0 13px 32px rgba(0,0,0,.3),
+    0 0 24px rgba(255, 76, 76, .12),
+    inset 0 0 24px rgba(255,255,255,.04);
+  transform: translateY(-2px);
+}
+
+.profile-youtube:hover .profile-youtube-arrow,
+.profile-youtube:focus-visible .profile-youtube-arrow {
+  color: #ffe6e6;
+  transform: translate(2px, -2px);
+}
+
+@media (max-width: 760px) {
+  .profile-social-links {
+    margin-bottom: 18px;
+    gap: 8px;
+  }
+}
