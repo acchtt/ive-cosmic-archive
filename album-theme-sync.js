@@ -3,7 +3,7 @@
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-cards-v4';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'members-launch-freeze-v46';
+  const MOBILE_ASSET_VERSION = 'member-birthdays-social-row-v47';
 
   const themes = {
     bangers: {

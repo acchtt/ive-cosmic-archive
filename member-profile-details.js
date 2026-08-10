@@ -11,21 +11,23 @@
       stage: 'GAEUL',
       english: 'Kim Gaeul',
       korean: '김가을',
+      birthday: 'September 24, 2002',
       instagram: 'fallingin__fall',
       youtube: { label: '가을의 온도', href: 'https://www.youtube.com/@gaeul_mood' }
     },
-    { stage: 'YUJIN', english: 'An Yujin', korean: '안유진', instagram: '_yujin_an' },
+    { stage: 'YUJIN', english: 'An Yujin', korean: '안유진', birthday: 'September 1, 2003', instagram: '_yujin_an' },
     {
       stage: 'REI',
       english: 'Naoi Rei',
       korean: '나오이 레이',
+      birthday: 'February 3, 2004',
       japanese: '直井怜',
       instagram: 'reinyourheart',
       youtube: { label: '따라해볼레이', href: 'https://www.youtube.com/@Follow_Rei' }
     },
-    { stage: 'WONYOUNG', english: 'Jang Wonyoung', korean: '장원영', instagram: 'for_everyoung10' },
-    { stage: 'LIZ', english: 'Kim Jiwon', korean: '김지원', instagram: 'liz.yeyo' },
-    { stage: 'LEESEO', english: 'Lee Hyunseo', korean: '이현서', instagram: 'eeseooes' }
+    { stage: 'WONYOUNG', english: 'Jang Wonyoung', korean: '장원영', birthday: 'August 31, 2004', instagram: 'for_everyoung10' },
+    { stage: 'LIZ', english: 'Kim Jiwon', korean: '김지원', birthday: 'November 21, 2004', instagram: 'liz.yeyo' },
+    { stage: 'LEESEO', english: 'Lee Hyunseo', korean: '이현서', birthday: 'February 21, 2007', instagram: 'eeseooes' }
   ];
 
   function fullIdentity(identity) {
@@ -110,6 +112,7 @@
     const englishName = document.querySelector('[data-profile-english-name]');
     const koreanName = document.querySelector('[data-profile-korean-name]');
     const japaneseName = document.querySelector('[data-profile-japanese-name]');
+    const birthday = document.querySelector('[data-profile-birthday]');
     const identityGroup = document.querySelector('.profile-identity');
     const socialLinks = ensureSocialLinks(identityGroup);
     const instagramLink = ensureInstagramLink(socialLinks);
@@ -118,6 +121,7 @@
     if (stageName) stageName.textContent = identity.stage;
     if (englishName) englishName.textContent = identity.english;
     if (koreanName) koreanName.textContent = identity.korean;
+    if (birthday) birthday.textContent = identity.birthday;
 
     if (japaneseName) {
       japaneseName.textContent = identity.japanese || '';
@@ -146,6 +150,7 @@
 
     if (youtubeLink) {
       const channel = identity.youtube;
+      if (socialLinks) socialLinks.dataset.hasYoutube = channel ? 'true' : 'false';
       youtubeLink.hidden = !channel;
       if (channel) {
         youtubeLink.href = channel.href;
