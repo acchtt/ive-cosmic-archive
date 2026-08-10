@@ -3,11 +3,10 @@
   const PAGE = document.documentElement.dataset.page;
   const PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-spoilers-card-layer-v41';
+  const ASSET_VERSION = 'mobile-spoilers-hires-sync-v42';
   const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
   const FAILED = new Set();
-  const TRANSPARENT_PIXEL = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
 
   if (!MOBILE_QUERY.matches || !PAGES.has(PAGE)) return;
 
@@ -39,16 +38,15 @@
     spoilers: {
       label: 'SPOILERS',
       featureIndex: 4,
-      // Real SPOILERS press/nameplate set. One Starship-credited six-member
-      // composite is cropped consistently so every member uses the same sub-series.
-      sprite: 'https://ekr.chosunonline.com/site/data/img_dir/2026/01/29/2026012980226_0.jpg',
-      spritePositions: [
-        '50% 0%',    // GAEUL — top middle
-        '0% 0%',     // AN YUJIN — top left
-        '100% 0%',   // REI — top right
-        '100% 100%', // JANG WONYOUNG — bottom right
-        '50% 100%',  // LIZ — bottom middle
-        '0% 100%'    // LEESEO — bottom left
+      // Same position (09) in each member's verified 15-image SPOILERS block.
+      // These are separate original-size images, not crops from a six-member composite.
+      portraits: [
+        'https://f.ptcdn.info/433/090/000/mkwpec2th1WB52os1Ad-o.jpg',
+        'https://f.ptcdn.info/433/090/000/mkwpauqviaeDbRQe21n-o.jpg',
+        'https://f.ptcdn.info/433/090/000/mkwpjwq4o00Q5nvmppc-o.jpg',
+        'https://f.ptcdn.info/433/090/000/mkwpravrhpijb87Y2f8-o.jpg',
+        'https://f.ptcdn.info/433/090/000/mkwpgjojoSD3a7wmO3B-o.jpg',
+        'https://f.ptcdn.info/433/090/000/mkwpmimmhaO92R4tVCC-o.jpg'
       ]
     },
     'loved-ive': {
@@ -73,16 +71,12 @@
     return `assets/revive/member-cards/${set}/${MEMBER_KEYS[index]}.jpg?v=${ASSET_VERSION}`;
   }
 
-  function isSpriteSet(set) {
-    return Boolean(SETS[set]?.sprite && SETS[set]?.spritePositions?.length);
-  }
-
   function failureKey(set, index) {
     return `${set}:${index}`;
   }
 
   function resolvedPortrait(set, index) {
-    const source = SETS[set]?.portraits?.[index];
+    const source = SETS[set]?.portraits[index];
     if (!source || FAILED.has(failureKey(set, index))) return localPortrait(set, index);
     return source;
   }
@@ -92,40 +86,26 @@
   }
 
   function cssPortrait(set, index) {
-    const source = SETS[set]?.portraits?.[index];
+    const source = SETS[set]?.portraits[index];
     const fallback = localPortrait(set, index);
     if (!source || source.startsWith('assets/')) return cssUrl(source || fallback);
     return `${cssUrl(source)}, ${cssUrl(fallback)}`;
   }
 
-  function clearSpriteImage(image) {
-    image.style.removeProperty('background-image');
-    image.style.removeProperty('background-size');
-    image.style.removeProperty('background-position');
-    image.style.removeProperty('background-repeat');
-  }
-
-  function useSpriteImage(image, set, index) {
-    const config = SETS[set];
-    if (!image || !config?.sprite) return;
-    image.onerror = null;
-    image.src = TRANSPARENT_PIXEL;
-    image.style.backgroundImage = `${cssUrl(config.sprite)}, ${cssUrl(localPortrait(set, index))}`;
-    image.style.backgroundSize = '300% 200%, cover';
-    image.style.backgroundPosition = `${config.spritePositions[index]}, center center`;
-    image.style.backgroundRepeat = 'no-repeat, no-repeat';
-    image.style.objectPosition = 'center center';
+  function clearLegacyInlineArt(node) {
+    if (!node) return;
+    node.style.removeProperty('background-image');
+    node.style.removeProperty('background-size');
+    node.style.removeProperty('background-position');
+    node.style.removeProperty('background-repeat');
+    node.style.removeProperty('--version-card-background-size');
+    node.style.removeProperty('--version-card-background-position');
+    node.style.removeProperty('--version-card-background-repeat');
   }
 
   function usePortrait(image, set, index) {
-    if (!image) return;
-    if (isSpriteSet(set)) {
-      useSpriteImage(image, set, index);
-      return;
-    }
-
-    clearSpriteImage(image);
-    if (!SETS[set]?.portraits?.[index]) return;
+    if (!image || !SETS[set]?.portraits[index]) return;
+    clearLegacyInlineArt(image);
     image.referrerPolicy = 'no-referrer';
     image.onerror = () => {
       FAILED.add(failureKey(set, index));
@@ -135,37 +115,9 @@
     image.src = resolvedPortrait(set, index);
   }
 
-  function clearPortraitLayerState(art) {
-    art.style.removeProperty('background-image');
-    art.style.removeProperty('background-size');
-    art.style.removeProperty('background-position');
-    art.style.removeProperty('background-repeat');
-    art.style.removeProperty('--version-card-background-size');
-    art.style.removeProperty('--version-card-background-position');
-    art.style.removeProperty('--version-card-background-repeat');
-  }
-
   function applyArtPortrait(art, set, index, variableName) {
     if (!art) return;
-    clearPortraitLayerState(art);
-
-    if (isSpriteSet(set)) {
-      const config = SETS[set];
-      art.style.setProperty(variableName, cssUrl(config.sprite));
-      art.style.setProperty('--version-card-background-size', '300% 200%');
-      art.style.setProperty('--version-card-background-position', config.spritePositions[index]);
-      art.style.setProperty('--version-card-background-repeat', 'no-repeat');
-
-      // Member cards render on the element itself; dossier portraits render on ::before.
-      if (variableName === '--member-portrait') {
-        art.style.backgroundImage = `var(${variableName})`;
-        art.style.backgroundSize = 'var(--version-card-background-size)';
-        art.style.backgroundPosition = 'var(--version-card-background-position)';
-        art.style.backgroundRepeat = 'var(--version-card-background-repeat)';
-      }
-      return;
-    }
-
+    clearLegacyInlineArt(art);
     art.style.setProperty(variableName, cssPortrait(set, index));
   }
 
