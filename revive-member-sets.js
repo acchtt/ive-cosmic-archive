@@ -4,7 +4,8 @@
 
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const CARD_ASSET_VERSION = 'challengers-member-cards-v53';
+  const CARD_ASSET_VERSION = 'challengers-card-owner-sync-v54';
+  const CORE_EVENT_SOURCE = 'revive-member-sets';
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
   const ARCHIVE_VERSION = '0.20.0';
   const ARCHIVE_BUILD = '021';
@@ -505,8 +506,22 @@ ${SET_ORDER.map((setId) => `
     selectionVersion += 1;
     applyCurrentSet();
     window.dispatchEvent(new CustomEvent('revive-member-set-change', {
-      detail: { id: setId, label: SETS[setId].label, themeColor: SETS[setId].themeColor }
+      detail: { id: setId, label: SETS[setId].label, themeColor: SETS[setId].themeColor, source: CORE_EVENT_SOURCE }
     }));
+  }
+
+  function syncExternalMemberSet(event) {
+    const setId = event.detail?.id;
+    if (!SETS[setId] || event.detail?.source === CORE_EVENT_SOURCE) return;
+
+    storeSet(setId);
+    if (setId !== activeSetId) {
+      activeSetId = setId;
+      selectionVersion += 1;
+    }
+
+    document.documentElement.dataset.memberSet = setId;
+    applyCurrentSet();
   }
 
   function observeRenderedCards() {
@@ -536,6 +551,8 @@ ${SET_ORDER.map((setId) => `
     observeDossierSelection();
     applyCurrentSet();
   }
+
+  window.addEventListener('revive-member-set-change', syncExternalMemberSet);
 
   injectPreloadHints();
   preloadAllPortraits();

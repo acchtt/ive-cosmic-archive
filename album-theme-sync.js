@@ -3,7 +3,7 @@
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-cards-v4';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'challengers-member-cards-v53';
+  const MOBILE_ASSET_VERSION = 'challengers-card-owner-sync-v54';
 
   const themes = {
     bangers: {
@@ -208,7 +208,7 @@
     }
 
     appendScript('mobile-version-button.js', 'data-mobile-version-button-script');
-    appendScript('mobile-version-cardsets.js', 'data-mobile-version-cardsets-script');
+    if (page === 'index') appendScript('mobile-version-cardsets.js', 'data-mobile-version-cardsets-script');
     if (page === 'members') appendScript('mobile-members-redesign.js', 'data-mobile-members-redesign-script');
   }
 
