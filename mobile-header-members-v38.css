@@ -1,4 +1,4 @@
-/* Mobile v38 — final mobile header + Members selector layer. Loaded last on purpose. */
+/* Mobile v41 — final mobile header + Members selector and portrait layer. Loaded last on purpose. */
 @media (max-width: 640px) {
   html body .site-header {
     top: 0 !important;
@@ -71,7 +71,6 @@
     scroll-margin-top: 92px !important;
   }
 
-  /* Six genuinely independent tiles. Older v31/v32 outer-panel rules must not survive. */
   html[data-page="members"] .dossier-list {
     position: relative !important;
     z-index: 5 !important;
@@ -149,6 +148,14 @@
     white-space: normal !important;
   }
 
+  /* Keep JANG WONYOUNG on the same text axis as the other five selector labels. */
+  html[data-page="members"] .dossier-button:nth-child(4) strong {
+    font-size: clamp(.70rem, 3.15vw, .82rem) !important;
+    line-height: 1 !important;
+    letter-spacing: -.038em !important;
+    white-space: nowrap !important;
+  }
+
   html[data-page="members"] .dossier-button small,
   html[data-page="members"] .dossier-button .dossier-full-name {
     display: none !important;
@@ -169,7 +176,6 @@
     color: color-mix(in srgb, var(--set-accent) 72%, var(--set-paper)) !important;
   }
 
-  /* Preserve the complete designed card artwork on the three graphic versions. */
   html[data-page="members"][data-member-set="bangers"] .dossier-panel .dossier-visual,
   html[data-page="members"][data-member-set="challengers"] .dossier-panel .dossier-visual,
   html[data-page="members"][data-member-set="spoilers"] .dossier-panel .dossier-visual {
@@ -177,11 +183,20 @@
   }
 
   html[data-page="members"][data-member-set="bangers"] .dossier-panel .dossier-visual::before,
-  html[data-page="members"][data-member-set="challengers"] .dossier-panel .dossier-visual::before,
-  html[data-page="members"][data-member-set="spoilers"] .dossier-panel .dossier-visual::before {
+  html[data-page="members"][data-member-set="challengers"] .dossier-panel .dossier-visual::before {
     background-size: contain !important;
     background-repeat: no-repeat !important;
     background-position: center center !important;
+  }
+
+  /* SPOILERS is a 3×2 source sheet. These variables are set by the v41 renderer
+     on the actual ::before portrait layer, preventing the legacy graphic card from
+     sitting above the correct press/nameplate crop. */
+  html[data-page="members"][data-member-set="spoilers"] .dossier-panel .dossier-visual::before {
+    background-image: var(--dossier-portrait) !important;
+    background-size: var(--version-card-background-size, 300% 200%) !important;
+    background-position: var(--version-card-background-position, center center) !important;
+    background-repeat: var(--version-card-background-repeat, no-repeat) !important;
   }
 
   html[data-page="members"][data-member-set="loved-ive"] .dossier-panel .dossier-visual {
@@ -214,5 +229,9 @@
   html[data-page="members"] .dossier-button > span:first-child {
     width: 27px !important;
     min-width: 27px !important;
+  }
+
+  html[data-page="members"] .dossier-button:nth-child(4) strong {
+    font-size: .66rem !important;
   }
 }
