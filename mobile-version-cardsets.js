@@ -3,10 +3,11 @@
   const PAGE = document.documentElement.dataset.page;
   const PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-spoilers-member-cards-v39';
+  const ASSET_VERSION = 'mobile-spoilers-press-set-v40';
   const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
   const FAILED = new Set();
+  const TRANSPARENT_PIXEL = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
 
   if (!MOBILE_QUERY.matches || !PAGES.has(PAGE)) return;
 
@@ -37,14 +38,17 @@
     },
     spoilers: {
       label: 'SPOILERS',
-      featureIndex: 2,
-      portraits: [
-        'https://i.imgur.com/07h20N1.jpg',
-        'https://i.imgur.com/C9eiRHl.jpg',
-        'https://i.imgur.com/QzkZue5.jpg',
-        'https://i.imgur.com/7um9Vbl.jpg',
-        'https://i.imgur.com/gRgyYBN.jpg',
-        'https://i.imgur.com/qZgZL3X.jpg'
+      featureIndex: 4,
+      // One real six-member press-conference composite, cropped per member.
+      // Published with Starship Entertainment credit by Chosun Online.
+      sprite: 'https://ekr.chosunonline.com/site/data/img_dir/2026/01/29/2026012980226_0.jpg',
+      spritePositions: [
+        '50% 0%',   // GAEUL — top middle
+        '0% 0%',    // AN YUJIN — top left
+        '100% 0%',  // REI — top right
+        '100% 100%',// JANG WONYOUNG — bottom right
+        '50% 100%', // LIZ — bottom middle
+        '0% 100%'   // LEESEO — bottom left
       ]
     },
     'loved-ive': {
@@ -69,12 +73,16 @@
     return `assets/revive/member-cards/${set}/${MEMBER_KEYS[index]}.jpg?v=${ASSET_VERSION}`;
   }
 
+  function isSpriteSet(set) {
+    return Boolean(SETS[set]?.sprite && SETS[set]?.spritePositions?.length);
+  }
+
   function failureKey(set, index) {
     return `${set}:${index}`;
   }
 
   function resolvedPortrait(set, index) {
-    const source = SETS[set]?.portraits[index];
+    const source = SETS[set]?.portraits?.[index];
     if (!source || FAILED.has(failureKey(set, index))) return localPortrait(set, index);
     return source;
   }
@@ -84,14 +92,40 @@
   }
 
   function cssPortrait(set, index) {
-    const source = SETS[set]?.portraits[index];
+    const source = SETS[set]?.portraits?.[index];
     const fallback = localPortrait(set, index);
     if (!source || source.startsWith('assets/')) return cssUrl(source || fallback);
     return `${cssUrl(source)}, ${cssUrl(fallback)}`;
   }
 
+  function clearSpriteImage(image) {
+    image.style.removeProperty('background-image');
+    image.style.removeProperty('background-size');
+    image.style.removeProperty('background-position');
+    image.style.removeProperty('background-repeat');
+  }
+
+  function useSpriteImage(image, set, index) {
+    const config = SETS[set];
+    if (!image || !config?.sprite) return;
+    image.onerror = null;
+    image.src = TRANSPARENT_PIXEL;
+    image.style.backgroundImage = `${cssUrl(config.sprite)}, ${cssUrl(localPortrait(set, index))}`;
+    image.style.backgroundSize = '300% 200%, cover';
+    image.style.backgroundPosition = `${config.spritePositions[index]}, center center`;
+    image.style.backgroundRepeat = 'no-repeat, no-repeat';
+    image.style.objectPosition = 'center center';
+  }
+
   function usePortrait(image, set, index) {
-    if (!image || !SETS[set]?.portraits[index]) return;
+    if (!image) return;
+    if (isSpriteSet(set)) {
+      useSpriteImage(image, set, index);
+      return;
+    }
+
+    clearSpriteImage(image);
+    if (!SETS[set]?.portraits?.[index]) return;
     image.referrerPolicy = 'no-referrer';
     image.onerror = () => {
       FAILED.add(failureKey(set, index));
@@ -99,6 +133,24 @@
       image.src = localPortrait(set, index);
     };
     image.src = resolvedPortrait(set, index);
+  }
+
+  function applyArtPortrait(art, set, index, variableName) {
+    if (!art) return;
+    if (isSpriteSet(set)) {
+      art.style.removeProperty(variableName);
+      art.style.backgroundImage = `${cssUrl(SETS[set].sprite)}, ${cssUrl(localPortrait(set, index))}`;
+      art.style.backgroundSize = '300% 200%, cover';
+      art.style.backgroundPosition = `${SETS[set].spritePositions[index]}, center center`;
+      art.style.backgroundRepeat = 'no-repeat, no-repeat';
+      return;
+    }
+
+    art.style.removeProperty('background-image');
+    art.style.removeProperty('background-size');
+    art.style.removeProperty('background-position');
+    art.style.removeProperty('background-repeat');
+    art.style.setProperty(variableName, cssPortrait(set, index));
   }
 
   function activeMemberIndex() {
@@ -121,8 +173,7 @@
 
     document.querySelectorAll('[data-member-grid] .member-card .member-art').forEach((art, index) => {
       if (!MEMBER_KEYS[index]) return;
-      art.style.setProperty('--member-portrait', cssPortrait(set, index));
-      art.style.backgroundPosition = 'center center';
+      applyArtPortrait(art, set, index, '--member-portrait');
       art.setAttribute('role', 'img');
       art.setAttribute('aria-label', `${STAGE_NAMES[index]} — ${config.label} concept card`);
     });
@@ -130,7 +181,7 @@
     if (PAGE === 'members') {
       const visual = document.querySelector('[data-profile-visual]');
       const index = activeMemberIndex();
-      if (visual) visual.style.setProperty('--dossier-portrait', cssPortrait(set, index));
+      applyArtPortrait(visual, set, index, '--dossier-portrait');
     }
 
     if (PAGE === 'index') {
