@@ -23,7 +23,7 @@
       kicker: '01 · SPOILERS version',
       title: 'SPOILERS',
       body: 'Press blue, powder cyan, cool gray, and acid-yellow editorial details define the clean visual language of the SPOILERS version.',
-      image: 'https://i.imgur.com/y74kzOr.jpg',
+      image: 'https://pbs.twimg.com/media/G_rOkQMbAAAQ3UB.jpg',
       alt: 'LIZ in the REVIVE+ SPOILERS press-conference concept set',
       link: 'Explore SPOILERS members ↗'
     },
@@ -31,7 +31,7 @@
       kicker: '01 · LOVED IVE version',
       title: 'LOVED IVE',
       body: 'Deep navy, studio blue, soft gray, and warm uniform tones shape the quieter portrait mood of the LOVED IVE version.',
-      image: 'assets/revive/member-cards/loved-ive/gaeul.jpg?v=mobile-spoilers-press-set-v40',
+      image: 'assets/revive/member-cards/loved-ive/gaeul.jpg?v=mobile-spoilers-card-layer-v41',
       alt: 'GAEUL in the REVIVE+ LOVED IVE concept-card set',
       link: 'Explore LOVED IVE members ↗'
     }
