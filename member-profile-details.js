@@ -193,3 +193,140 @@
     initializeIdentityDetails();
   }
 })();
+
+
+
+/* v51 signature-era reveal */
+(() => {
+  const signatures = [
+    {
+      era: 'AFTER LIKE',
+      title: 'Precision in motion.',
+      copy: 'Controlled charisma, clean performance lines, and a sharper disco-era edge make AFTER LIKE the clearest match for GAEUL’s archive signal.',
+      tags: ['Precision', 'Disco edge', 'Quiet impact']
+    },
+    {
+      era: 'I AM',
+      title: 'Command at full scale.',
+      copy: 'Expansive stage presence, bright leadership energy, and forward momentum align YUJIN most strongly with the scale and confidence of I AM.',
+      tags: ['Command', 'High altitude', 'Center energy']
+    },
+    {
+      era: 'LOVE DIVE',
+      title: 'Expression becomes identity.',
+      copy: 'Distinctive tone, playful detail, and expressive styling converge most clearly in LOVE DIVE, where REI’s individual color reads instantly.',
+      tags: ['Expression', 'Dreamlike', 'Playful detail']
+    },
+    {
+      era: 'LOVE DIVE',
+      title: 'Radiance, distilled.',
+      copy: 'Poised confidence, refined visual language, and effortless presence make LOVE DIVE the strongest archive coordinate for WONYOUNG.',
+      tags: ['Radiance', 'Poise', 'Iconic presence']
+    },
+    {
+      era: 'ELEVEN',
+      title: 'Resonance at first signal.',
+      copy: 'Warm vocal color, luminous restraint, and the elegant tension of IVE’s debut give LIZ her clearest signature alignment in ELEVEN.',
+      tags: ['Resonance', 'Warm tone', 'Elegant tension']
+    },
+    {
+      era: 'I AM',
+      title: 'Momentum unlocked.',
+      copy: 'Fearless energy, bright attack, and a sense of constant forward motion place LEESEO most naturally inside the ambitious lift of I AM.',
+      tags: ['Momentum', 'Fearless', 'Forward lift']
+    }
+  ];
+
+  let scanTimer = 0;
+
+  function activeIndex(panel) {
+    const value = Number(panel?.dataset.activeMember ?? 0);
+    return Number.isInteger(value) && value >= 0 && value < signatures.length ? value : 0;
+  }
+
+  function resetScan() {
+    window.clearTimeout(scanTimer);
+    const panel = document.querySelector('[data-member-profile]');
+    const result = document.querySelector('[data-profile-result]');
+    const button = document.querySelector('[data-profile-era]');
+    if (!panel || !result || !button) return;
+
+    delete panel.dataset.signatureState;
+    result.hidden = true;
+    result.removeAttribute('data-scan-state');
+    result.removeAttribute('aria-busy');
+    result.replaceChildren();
+    button.disabled = false;
+    button.textContent = 'Scan signature era';
+  }
+
+  function revealScan(panel, result, button, signature, index) {
+    panel.dataset.signatureState = 'revealed';
+    result.dataset.scanState = 'revealed';
+    result.removeAttribute('aria-busy');
+    result.innerHTML = `
+      <span class="scan-result-head">
+        <span class="scan-result-kicker"><span class="scan-result-dot" aria-hidden="true"></span>SIGNATURE ERA DETECTED</span>
+        <span class="scan-result-code">STAR-${String(index + 1).padStart(2, '0')} · PRIMARY MATCH</span>
+      </span>
+      <strong class="scan-result-era">${signature.era}</strong>
+      <span class="scan-result-title">${signature.title}</span>
+      <span class="scan-result-copy">${signature.copy}</span>
+      <span class="scan-result-tags">${signature.tags.map((tag) => `<span>${tag}</span>`).join('')}</span>`;
+    button.disabled = false;
+    button.textContent = 'Scan again';
+  }
+
+  function runScan(event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    const panel = document.querySelector('[data-member-profile]');
+    const result = document.querySelector('[data-profile-result]');
+    const button = document.querySelector('[data-profile-era]');
+    if (!panel || !result || !button) return;
+
+    const index = activeIndex(panel);
+    const signature = signatures[index];
+    window.clearTimeout(scanTimer);
+
+    panel.dataset.signatureState = 'scanning';
+    result.hidden = false;
+    result.dataset.scanState = 'scanning';
+    result.setAttribute('aria-busy', 'true');
+    result.innerHTML = `
+      <span class="scan-loading-line"><span aria-hidden="true"></span>ANALYZING MEMBER SIGNAL</span>
+      <span class="scan-loading-sub">Cross-referencing archive class, tone, and era coordinate…</span>`;
+    button.disabled = true;
+    button.textContent = 'Scanning signal…';
+
+    const reduced = document.documentElement.classList.contains('motion-off')
+      || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    scanTimer = window.setTimeout(
+      () => revealScan(panel, result, button, signature, index),
+      reduced ? 0 : 620
+    );
+  }
+
+  function installSignatureReveal() {
+    const panel = document.querySelector('[data-member-profile]');
+    const button = document.querySelector('[data-profile-era]');
+    if (!panel || !button || button.dataset.signatureRevealBound === 'true') return;
+
+    button.dataset.signatureRevealBound = 'true';
+    button.addEventListener('click', runScan, true);
+
+    const observer = new MutationObserver(resetScan);
+    observer.observe(panel, {
+      attributes: true,
+      attributeFilter: ['data-active-member']
+    });
+    resetScan();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', installSignatureReveal, { once: true });
+  } else {
+    installSignatureReveal();
+  }
+})();
