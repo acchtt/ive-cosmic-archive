@@ -1,0 +1,150 @@
+from pathlib import Path
+
+OLD = 'member-signature-reveal-v51'
+NEW = 'member-signature-result-v52'
+
+version_files = [
+    'album-theme-sync.js',
+    'mobile-version-cardsets.js',
+    'mobile-members-redesign.js',
+    'home-revive.js',
+    'index.html',
+    'members.html',
+    'member-profile-details.js',
+    'member-profile-details.css',
+]
+
+for name in version_files:
+    path = Path(name)
+    text = path.read_text()
+    if OLD in text:
+        path.write_text(text.replace(OLD, NEW))
+
+sync = Path('album-theme-sync.js')
+text = sync.read_text()
+needle = "    if (page === 'members') appendStylesheet('mobile-members-polish-v32.css');\n"
+insert = needle + "    if (page === 'members') appendStylesheet('mobile-signature-result-v52.css');\n"
+if "mobile-signature-result-v52.css" not in text:
+    if needle not in text:
+        raise SystemExit('Could not find mobile members polish loader')
+    text = text.replace(needle, insert, 1)
+sync.write_text(text)
+
+css = r'''/* v52 — mobile signature result override.
+   Loaded after legacy mobile member CSS so the reveal cannot collapse back
+   into the old tiny status-chip treatment. */
+@media (max-width: 640px) {
+  html[data-page="members"] .profile-result[data-scan-state="scanning"],
+  html[data-page="members"] .profile-result[data-scan-state="revealed"] {
+    width: 100% !important;
+    min-width: 0 !important;
+    justify-self: stretch !important;
+    display: grid !important;
+    box-sizing: border-box !important;
+    border: 1px solid color-mix(in srgb, var(--set-accent) 34%, rgba(255,255,255,.09)) !important;
+    background:
+      radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--set-accent) 22%, transparent), transparent 38%),
+      linear-gradient(145deg, color-mix(in srgb, var(--set-panel-strong) 96%, var(--set-accent) 2%), color-mix(in srgb, var(--set-bg) 94%, black)) !important;
+    color: var(--set-paper) !important;
+    font-size: inherit !important;
+    letter-spacing: normal !important;
+    box-shadow:
+      0 16px 34px rgba(0,0,0,.22),
+      inset 0 1px rgba(255,255,255,.04) !important;
+  }
+
+  html[data-page="members"] .profile-result[data-scan-state="scanning"] {
+    min-height: 92px !important;
+    padding: 18px 17px !important;
+    gap: 8px !important;
+    align-content: center !important;
+    border-radius: 16px !important;
+  }
+
+  html[data-page="members"] .profile-result[data-scan-state="revealed"] {
+    position: relative !important;
+    overflow: hidden !important;
+    padding: 18px 16px 17px 19px !important;
+    gap: 0 !important;
+    border-radius: 18px !important;
+  }
+
+  html[data-page="members"] .profile-result[data-scan-state="revealed"]::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 auto 0 0 !important;
+    width: 4px !important;
+    background: linear-gradient(180deg, var(--set-accent), var(--set-accent-2)) !important;
+    box-shadow: 0 0 20px color-mix(in srgb, var(--set-accent) 52%, transparent) !important;
+  }
+
+  html[data-page="members"] .scan-loading-line {
+    font-size: .62rem !important;
+    font-weight: 850 !important;
+    letter-spacing: .13em !important;
+  }
+
+  html[data-page="members"] .scan-loading-sub {
+    font-size: .74rem !important;
+    line-height: 1.4 !important;
+  }
+
+  html[data-page="members"] .scan-result-head {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+
+  html[data-page="members"] .scan-result-kicker {
+    font-size: .57rem !important;
+    letter-spacing: .13em !important;
+  }
+
+  html[data-page="members"] .scan-result-code {
+    font-size: .46rem !important;
+    letter-spacing: .1em !important;
+  }
+
+  html[data-page="members"] .scan-result-era {
+    margin-top: 16px !important;
+    font-size: clamp(2.15rem, 10.5vw, 3rem) !important;
+    font-weight: 920 !important;
+    line-height: .9 !important;
+    letter-spacing: -.055em !important;
+    color: var(--set-paper) !important;
+  }
+
+  html[data-page="members"] .scan-result-title {
+    margin-top: 9px !important;
+    font-size: .86rem !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+  }
+
+  html[data-page="members"] .scan-result-copy {
+    margin-top: 10px !important;
+    max-width: none !important;
+    color: color-mix(in srgb, var(--set-muted) 92%, var(--set-paper)) !important;
+    font-size: .78rem !important;
+    line-height: 1.52 !important;
+  }
+
+  html[data-page="members"] .scan-result-tags {
+    margin-top: 15px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  html[data-page="members"] .scan-result-tags > span {
+    padding: 6px 8px !important;
+    border-radius: 999px !important;
+    font-size: .52rem !important;
+    line-height: 1 !important;
+  }
+}
+'''
+Path('mobile-signature-result-v52.css').write_text(css)
+
+Path('tools/fix-mobile-signature-result-v52.py').unlink(missing_ok=True)
+Path('.github/workflows/fix-mobile-signature-result-v52.yml').unlink(missing_ok=True)
