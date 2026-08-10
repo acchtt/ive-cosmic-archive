@@ -17,6 +17,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          python -m pip install --quiet pillow
           mkdir -p .debug/spoilers
           while read -r label id; do
             curl -fsSL -A 'Mozilla/5.0' "https://pbs.twimg.com/media/${id}?format=jpg&name=small" -o ".debug/spoilers/${label}.jpg"
