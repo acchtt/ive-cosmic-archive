@@ -258,6 +258,7 @@
     delete document.documentElement.dataset.themeLaunchPending;
     delete document.documentElement.dataset.mobileThemePickerOpen;
     delete document.documentElement.dataset.mobileThemePickerReady;
+    delete document.documentElement.dataset.mobileThemePickerManual;
 
     const picker = root;
     root = null;
@@ -312,12 +313,22 @@
     syncCampaignStageLabels();
     syncLocalFallback(readStoredTheme());
 
-    if (!launchRequired()) {
+    const manualOpen = document.documentElement.dataset.mobileThemePickerManual === 'true';
+
+    if (PAGE === 'members' && !manualOpen) {
+      delete document.documentElement.dataset.themeLaunchPending;
+      delete document.documentElement.dataset.mobileThemePickerOpen;
+      delete document.documentElement.dataset.mobileThemePickerReady;
+      return;
+    }
+
+    if (!manualOpen && !launchRequired()) {
       delete document.documentElement.dataset.themeLaunchPending;
       return;
     }
 
     root = createPicker();
+    delete document.documentElement.dataset.mobileThemePickerManual;
     bindEvents();
     renderSelection();
     document.documentElement.dataset.themeLaunchPending = 'true';

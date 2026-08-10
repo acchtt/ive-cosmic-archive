@@ -68,6 +68,8 @@
     setPopupOpen(false);
     if (document.querySelector('[data-mobile-theme-picker]')) return;
 
+    document.documentElement.dataset.mobileThemePickerManual = 'true';
+
     try {
       window.sessionStorage.removeItem(LAUNCH_KEY);
     } catch {
@@ -84,6 +86,10 @@
     script.src = src;
     script.async = false;
     script.addEventListener('load', () => script.remove(), { once: true });
+    script.addEventListener('error', () => {
+      delete document.documentElement.dataset.mobileThemePickerManual;
+      script.remove();
+    }, { once: true });
     document.head.appendChild(script);
   }
 

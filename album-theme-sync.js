@@ -3,7 +3,7 @@
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-cards-v4';
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PICKER_PAGES = new Set(['index', 'members']);
-  const MOBILE_ASSET_VERSION = 'member-youtube-links-v45';
+  const MOBILE_ASSET_VERSION = 'members-launch-freeze-v46';
 
   const themes = {
     bangers: {
@@ -50,10 +50,19 @@
 
   function installMobileLaunchGuard() {
     const page = document.documentElement.dataset.page;
-    if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(page)) return;
+    if (!MOBILE_QUERY.matches || page !== 'index') return;
 
     if (mobileLaunchRequired()) {
       document.documentElement.dataset.themeLaunchPending = 'true';
+
+      // Never allow a delayed/failed picker asset to strand the page behind
+      // the launch guard. This is a single fail-safe, not a retry loop.
+      window.setTimeout(() => {
+        if (document.documentElement.dataset.themeLaunchPending === 'true'
+            && document.documentElement.dataset.mobileThemePickerReady !== 'true') {
+          delete document.documentElement.dataset.themeLaunchPending;
+        }
+      }, 3500);
     }
 
     if (document.querySelector('style[data-mobile-theme-launch-guard]')) return;
@@ -88,7 +97,7 @@
         }
 
         html[data-theme-launch-pending="true"] body::after {
-          content: "Preparing your archive theme";
+          content: "Syncing your REVIVE+ version";
           position: fixed;
           left: 0;
           right: 0;
