@@ -149,3 +149,5 @@ profile_css.write_text(css)
 # Cleanup this one-shot finalizer and its workflow before committing.
 Path('tools/finalize-member-birthdays-v47.py').unlink(missing_ok=True)
 Path('.github/workflows/finalize-member-birthdays-v47.yml').unlink(missing_ok=True)
+
+# Triggered after workflow registration.
