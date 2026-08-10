@@ -1,0 +1,19 @@
+name: Member YouTube v45
+on:
+  push:
+    paths:
+      - '.github/workflows/finalize-member-youtube-v45-fixed.yml'
+permissions:
+  contents: write
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python .github/scripts/finalize-member-youtube-v45.py
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Add Gaeul and Rei YouTube links v45"
+          git push
