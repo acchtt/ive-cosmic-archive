@@ -1,0 +1,30 @@
+name: Mobile member birthday fix v49
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-member-birthday-mobile-v49.yml'
+      - 'tools/fix-member-birthday-mobile-v49.py'
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply v49 mobile birthday fix
+        run: python tools/fix-member-birthday-mobile-v49.py
+      - name: Commit v49
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Fix mobile birthday identity label v49"
+          git push
