@@ -182,7 +182,7 @@
     background-position: center center !important;
   }
 
-  /* v43 SPOILERS uses six separate original-size media files from the official member posts. */
+  /* v44 SPOILERS uses the verified matching blue press/nameplate member-card sub-series. */
   html[data-page="members"][data-member-set="spoilers"] .dossier-panel .dossier-visual::before {
     background-image: var(--dossier-portrait) !important;
     background-size: cover !important;

@@ -3,7 +3,7 @@
   const PAGE = document.documentElement.dataset.page;
   const PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-spoilers-official-media-v43';
+  const ASSET_VERSION = 'mobile-spoilers-matched-press-v44';
   const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
   const FAILED = new Set();
@@ -38,14 +38,13 @@
     spoilers: {
     label: 'SPOILERS',
     featureIndex: 4,
-    // Media slot 3 from each member's official IVE SPOILERS post.
-    // Liz slot 3 is the approved blue press/nameplate portrait; using
-    // the same slot across all six official posts keeps the sub-series synchronized.
+    // Verified matching blue press/nameplate sub-series from the six official posts.
+    // Slot map: Gaeul 1, Yujin 3, Rei 3, Wonyoung 1, Liz 3, Leeseo 3.
     portraits: [
-      'https://pbs.twimg.com/media/G_rOpjjbAAI0Zzf?format=jpg&name=orig',
+      'https://pbs.twimg.com/media/G_rOpkKW0AAt_VT?format=jpg&name=orig',
       'https://pbs.twimg.com/media/G_rOv13bAAMOrul?format=jpg&name=orig',
       'https://pbs.twimg.com/media/G_rOezqbAAAfAON?format=jpg&name=orig',
-      'https://pbs.twimg.com/media/G_rOSXwbAAAbVQs?format=jpg&name=orig',
+      'https://pbs.twimg.com/media/G_rOSXybAAAljAV?format=jpg&name=orig',
       'https://pbs.twimg.com/media/G_rOkQMbAAAQ3UB?format=jpg&name=orig',
       'https://pbs.twimg.com/media/G_rOYdzbAAgBg7K?format=jpg&name=orig'
     ]
