@@ -2,7 +2,7 @@
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PAGE = document.documentElement.dataset.page;
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'mobile-spoilers-press-set-v40';
+  const ASSET_VERSION = 'mobile-spoilers-card-layer-v41';
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
 
   if (!MOBILE_QUERY.matches || PAGE !== 'members') return;
