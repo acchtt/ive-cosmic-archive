@@ -2,7 +2,7 @@
   const MOBILE_QUERY = window.matchMedia('(max-width: 640px)');
   const PAGE = document.documentElement.dataset.page;
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'challengers-card-owner-sync-v54';
+  const ASSET_VERSION = 'challengers-concept2-cards-v55';
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
 
   if (!MOBILE_QUERY.matches || PAGE !== 'members') return;

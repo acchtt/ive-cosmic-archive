@@ -4,7 +4,7 @@
 
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const CARD_ASSET_VERSION = 'challengers-card-owner-sync-v54';
+  const CARD_ASSET_VERSION = 'challengers-concept2-cards-v55';
   const CORE_EVENT_SOURCE = 'revive-member-sets';
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
   const ARCHIVE_VERSION = '0.20.0';
@@ -39,9 +39,9 @@
     },
     challengers: {
       label: 'CHALLENGERS',
-      description: 'Black-stage portraits cut by laser green light and cold mint styling.',
-      themeColor: '#10e68a',
-      tags: ['Laser green', 'Black stage', 'Cold mint', 'Challenge mode'],
+      description: 'Industrial street portraits mixing cobalt blue, hard red, metallic pink, black, and raw concrete.',
+      themeColor: '#b62d24',
+      tags: ['Industrial blue', 'Hard red', 'Metallic pink', 'Street edge'],
       portraits: [
         `assets/revive/member-cards/challengers/gaeul.jpg?v=${CARD_ASSET_VERSION}`,
         `assets/revive/member-cards/challengers/yujin.jpg?v=${CARD_ASSET_VERSION}`,
