@@ -3,7 +3,7 @@
   const PAGE = document.documentElement.dataset.page;
   const PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'member-signature-result-v52';
+  const ASSET_VERSION = 'challengers-member-cards-v53';
   const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
   const FAILED = new Set();
@@ -26,14 +26,7 @@
     challengers: {
       label: 'CHALLENGERS',
       featureIndex: 1,
-      portraits: [
-        'https://i.imgur.com/U9c80gv.jpg',
-        'https://i.imgur.com/ZVnaaYc.jpg',
-        'https://i.imgur.com/V5MRKib.jpg',
-        'https://i.imgur.com/fk5Pt1u.jpg',
-        'https://i.imgur.com/j6WvOG4.jpg',
-        'https://i.imgur.com/6o4i2dg.jpg'
-      ]
+      portraits: MEMBER_KEYS.map((key) => `assets/revive/member-cards/challengers/${key}.jpg?v=${ASSET_VERSION}`)
     },
     spoilers: {
     label: 'SPOILERS',
@@ -163,6 +156,7 @@
     }
 
     document.documentElement.dataset.versionCards = ASSET_VERSION;
+    if (set === 'challengers') document.documentElement.dataset.challengersCards = ASSET_VERSION;
   }
 
   function scheduleSync() {
@@ -173,6 +167,16 @@
   document.addEventListener('click', (event) => {
     if (PAGE === 'members' && event.target.closest('[data-dossier-index]')) scheduleSync();
   });
+
+  if (PAGE === 'members') {
+    const panel = document.querySelector('[data-member-profile]');
+    if (panel) {
+      new MutationObserver(scheduleSync).observe(panel, {
+        attributes: true,
+        attributeFilter: ['data-active-member']
+      });
+    }
+  }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', scheduleSync, { once: true });

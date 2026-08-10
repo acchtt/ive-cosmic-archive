@@ -4,6 +4,7 @@
 
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
+  const CARD_ASSET_VERSION = 'challengers-member-cards-v53';
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
   const ARCHIVE_VERSION = '0.20.0';
   const ARCHIVE_BUILD = '021';
@@ -41,12 +42,12 @@
       themeColor: '#10e68a',
       tags: ['Laser green', 'Black stage', 'Cold mint', 'Challenge mode'],
       portraits: [
-        'assets/revive/member-cards/challengers/gaeul.jpg',
-        'assets/revive/member-cards/challengers/yujin.jpg',
-        'assets/revive/member-cards/challengers/rei.jpg',
-        'assets/revive/member-cards/challengers/wonyoung.jpg',
-        'assets/revive/member-cards/challengers/liz.jpg',
-        'assets/revive/member-cards/challengers/leeseo.jpg'
+        `assets/revive/member-cards/challengers/gaeul.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/challengers/yujin.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/challengers/rei.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/challengers/wonyoung.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/challengers/liz.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/challengers/leeseo.jpg?v=${CARD_ASSET_VERSION}`
       ]
     },
     spoilers: {
