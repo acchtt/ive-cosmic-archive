@@ -6,7 +6,7 @@ on:
       - '.github/workflows/spoilers-match-debug.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build-sheet:
@@ -64,10 +64,9 @@ jobs:
                   draw.text((x+6,y+8),f'{m.upper()} {c+1}',fill='black')
           sheet.save('.debug/spoilers-match-contact-sheet.jpg',quality=88)
           PY
-      - name: Commit contact sheet
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add .debug/spoilers-match-contact-sheet.jpg
-          git commit -m 'Add temporary SPOILERS match contact sheet'
-          git push
+      - name: Upload contact sheet
+        uses: actions/upload-artifact@v4
+        with:
+          name: spoilers-match-contact-sheet
+          path: .debug/spoilers-match-contact-sheet.jpg
+          if-no-files-found: error
