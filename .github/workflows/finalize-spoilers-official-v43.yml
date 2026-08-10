@@ -58,12 +58,12 @@ jobs:
 
           path = Path('home-revive.js')
           text = path.read_text()
-          old_liz = 'https://pbs.twimg.com/media/G_rOkQMbAAAQ3UB.jpg'
+          old_liz = 'https://f.ptcdn.info/433/090/000/mkwpgjojoSD3a7wmO3B-o.jpg'
           new_liz = 'https://pbs.twimg.com/media/G_rOkQMbAAAQ3UB?format=jpg&name=orig'
           if old_liz not in text:
-              raise SystemExit('Could not locate Home Liz source')
+              raise SystemExit('Could not locate current Home Liz source')
           text = text.replace(old_liz, new_liz, 1)
-          text = text.replace('press-conference concept set', 'official SPOILERS concept-photo set')
+          text = text.replace('LIZ in the REVIVE+ SPOILERS synchronized concept-card set', 'LIZ in the REVIVE+ official SPOILERS concept-photo set')
           path.write_text(text)
 
           path = Path('mobile-header-members-v38.css')
