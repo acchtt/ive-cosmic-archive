@@ -150,7 +150,6 @@
 
     if (youtubeLink) {
       const channel = identity.youtube;
-      if (socialLinks) socialLinks.dataset.hasYoutube = channel ? 'true' : 'false';
       youtubeLink.hidden = !channel;
       if (channel) {
         youtubeLink.href = channel.href;
