@@ -1,4 +1,4 @@
-/* Mobile v41 — final mobile header + Members selector and portrait layer. Loaded last on purpose. */
+/* Mobile v42 — final mobile header + Members selector and portrait layer. Loaded last on purpose. */
 @media (max-width: 640px) {
   html body .site-header {
     top: 0 !important;
@@ -131,6 +131,7 @@
     letter-spacing: .08em !important;
   }
 
+  /* All six stage names use exactly the same type metrics, including JANG WONYOUNG. */
   html[data-page="members"] .dossier-button strong {
     grid-column: 2 !important;
     grid-row: 1 !important;
@@ -141,18 +142,10 @@
     justify-self: stretch !important;
     text-align: left !important;
     color: color-mix(in srgb, var(--set-paper) 96%, white) !important;
-    font-size: clamp(.82rem, 3.8vw, .96rem) !important;
+    font-size: .84rem !important;
     font-weight: 820 !important;
-    line-height: 1.04 !important;
-    letter-spacing: -.018em !important;
-    white-space: normal !important;
-  }
-
-  /* Keep JANG WONYOUNG on the same text axis as the other five selector labels. */
-  html[data-page="members"] .dossier-button:nth-child(4) strong {
-    font-size: clamp(.70rem, 3.15vw, .82rem) !important;
     line-height: 1 !important;
-    letter-spacing: -.038em !important;
+    letter-spacing: -.024em !important;
     white-space: nowrap !important;
   }
 
@@ -189,14 +182,12 @@
     background-position: center center !important;
   }
 
-  /* SPOILERS is a 3×2 source sheet. These variables are set by the v41 renderer
-     on the actual ::before portrait layer, preventing the legacy graphic card from
-     sitting above the correct press/nameplate crop. */
+  /* v42 SPOILERS uses six separate high-resolution member images rather than a sprite. */
   html[data-page="members"][data-member-set="spoilers"] .dossier-panel .dossier-visual::before {
     background-image: var(--dossier-portrait) !important;
-    background-size: var(--version-card-background-size, 300% 200%) !important;
-    background-position: var(--version-card-background-position, center center) !important;
-    background-repeat: var(--version-card-background-repeat, no-repeat) !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
   }
 
   html[data-page="members"][data-member-set="loved-ive"] .dossier-panel .dossier-visual {
@@ -231,7 +222,7 @@
     min-width: 27px !important;
   }
 
-  html[data-page="members"] .dossier-button:nth-child(4) strong {
-    font-size: .66rem !important;
+  html[data-page="members"] .dossier-button strong {
+    font-size: .76rem !important;
   }
 }
