@@ -3,7 +3,7 @@
   const PAGE = document.documentElement.dataset.page;
   const PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const ASSET_VERSION = 'challengers-concept2-cards-v55';
+  const ASSET_VERSION = 'coherent-member-cardsets-v56';
   const MEMBER_KEYS = ['gaeul', 'yujin', 'rei', 'wonyoung', 'liz', 'leeseo'];
   const STAGE_NAMES = ['GAEUL', 'AN YUJIN', 'REI', 'JANG WONYOUNG', 'LIZ', 'LEESEO'];
   const FAILED = new Set();
@@ -14,14 +14,7 @@
     bangers: {
       label: 'BANGERS',
       featureIndex: 3,
-      portraits: [
-        'https://i.imgur.com/4hsGTOs.jpg',
-        'https://i.imgur.com/KCZkQiX.jpg',
-        'https://i.imgur.com/m1ERSWg.jpg',
-        'https://i.imgur.com/IHBkZIr.jpg',
-        'https://i.imgur.com/vQ9l4no.jpg',
-        'https://i.imgur.com/YfLymCh.jpg'
-      ]
+      portraits: MEMBER_KEYS.map((key) => `assets/revive/member-cards/bangers/${key}.jpg?v=${ASSET_VERSION}`)
     },
     challengers: {
       label: 'CHALLENGERS',
@@ -29,19 +22,10 @@
       portraits: MEMBER_KEYS.map((key) => `assets/revive/member-cards/challengers/${key}.jpg?v=${ASSET_VERSION}`)
     },
     spoilers: {
-    label: 'SPOILERS',
-    featureIndex: 4,
-    // Verified matching blue press/nameplate sub-series from the six official posts.
-    // Slot map: Gaeul 1, Yujin 3, Rei 3, Wonyoung 1, Liz 3, Leeseo 3.
-    portraits: [
-      'https://pbs.twimg.com/media/G_rOpkKW0AAt_VT?format=jpg&name=orig',
-      'https://pbs.twimg.com/media/G_rOv13bAAMOrul?format=jpg&name=orig',
-      'https://pbs.twimg.com/media/G_rOezqbAAAfAON?format=jpg&name=orig',
-      'https://pbs.twimg.com/media/G_rOSXybAAAljAV?format=jpg&name=orig',
-      'https://pbs.twimg.com/media/G_rOkQMbAAAQ3UB?format=jpg&name=orig',
-      'https://pbs.twimg.com/media/G_rOYdzbAAgBg7K?format=jpg&name=orig'
-    ]
-  },
+      label: 'SPOILERS',
+      featureIndex: 4,
+      portraits: MEMBER_KEYS.map((key) => `assets/revive/member-cards/spoilers/${key}.jpg?v=${ASSET_VERSION}`)
+    },
   'loved-ive': {
       label: 'LOVED IVE',
       featureIndex: 0,

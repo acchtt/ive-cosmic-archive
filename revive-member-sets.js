@@ -4,7 +4,7 @@
 
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const CARD_ASSET_VERSION = 'challengers-concept2-cards-v55';
+  const CARD_ASSET_VERSION = 'coherent-member-cardsets-v56';
   const CORE_EVENT_SOURCE = 'revive-member-sets';
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
   const ARCHIVE_VERSION = '0.20.0';
@@ -29,12 +29,12 @@
       themeColor: '#fd0100',
       tags: ['Signal red', 'Electric cyan', 'Acid lime', 'Color-block'],
       portraits: [
-        'assets/revive/member-cards/bangers/gaeul.jpg',
-        'assets/revive/member-cards/bangers/yujin.jpg',
-        'assets/revive/member-cards/bangers/rei.jpg',
-        'assets/revive/member-cards/bangers/wonyoung.jpg',
-        'assets/revive/member-cards/bangers/liz.jpg',
-        'assets/revive/member-cards/bangers/leeseo.jpg'
+        `assets/revive/member-cards/bangers/gaeul.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/bangers/yujin.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/bangers/rei.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/bangers/wonyoung.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/bangers/liz.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/bangers/leeseo.jpg?v=${CARD_ASSET_VERSION}`
       ]
     },
     challengers: {
@@ -57,12 +57,12 @@
       themeColor: '#3071b6',
       tags: ['Press blue', 'Cool gray', 'Powder cyan', 'Acid yellow'],
       portraits: [
-        'assets/revive/member-cards/spoilers/gaeul.jpg',
-        'assets/revive/member-cards/spoilers/yujin.jpg',
-        'assets/revive/member-cards/spoilers/rei.jpg',
-        'assets/revive/member-cards/spoilers/wonyoung.jpg',
-        'assets/revive/member-cards/spoilers/liz.jpg',
-        'assets/revive/member-cards/spoilers/leeseo.jpg'
+        `assets/revive/member-cards/spoilers/gaeul.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/spoilers/yujin.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/spoilers/rei.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/spoilers/wonyoung.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/spoilers/liz.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/spoilers/leeseo.jpg?v=${CARD_ASSET_VERSION}`
       ]
     },
     'loved-ive': {
@@ -71,12 +71,12 @@
       themeColor: '#0a355e',
       tags: ['School portrait', 'Deep navy', 'Studio blue', 'Uniform neutrals'],
       portraits: [
-        'assets/revive/member-cards/loved-ive/gaeul.jpg',
-        'assets/revive/member-cards/loved-ive/yujin.jpg',
-        'assets/revive/member-cards/loved-ive/rei.jpg',
-        'assets/revive/member-cards/loved-ive/wonyoung.jpg',
-        'assets/revive/member-cards/loved-ive/liz.jpg',
-        'assets/revive/member-cards/loved-ive/leeseo.jpg'
+        `assets/revive/member-cards/loved-ive/gaeul.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/loved-ive/yujin.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/loved-ive/rei.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/loved-ive/wonyoung.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/loved-ive/liz.jpg?v=${CARD_ASSET_VERSION}`,
+        `assets/revive/member-cards/loved-ive/leeseo.jpg?v=${CARD_ASSET_VERSION}`
       ]
     }
   };
