@@ -3,7 +3,7 @@
   const PAGE = document.documentElement.dataset.page;
   const PICKER_PAGES = new Set(['index', 'members']);
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const CARD_ASSET_VERSION = 'mobile-card-memory-fix-v62';
+  const CARD_ASSET_VERSION = 'mobile-card-freeze-fix-v63';
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen-cover-cards-v4';
 
   if (!MOBILE_QUERY.matches || !PICKER_PAGES.has(PAGE)) return;

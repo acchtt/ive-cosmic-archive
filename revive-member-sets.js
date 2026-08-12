@@ -4,7 +4,7 @@
 
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const CARD_ASSET_VERSION = 'mobile-card-memory-fix-v62';
+  const CARD_ASSET_VERSION = 'mobile-card-freeze-fix-v63';
   const CORE_EVENT_SOURCE = 'revive-member-sets';
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
   const ARCHIVE_VERSION = '0.20.0';
@@ -85,6 +85,7 @@
   const resolvedPortraits = new Map();
   const portraitLoads = new Map();
   const setLoads = new Map();
+  const MAX_CONCURRENT_PORTRAITS = window.matchMedia('(max-width: 640px)').matches ? 2 : 4;
   let activeSetId = readStoredSet();
   let selectionVersion = 0;
 
@@ -161,13 +162,13 @@
     const set = SETS[setId];
     if (!set) return;
     const fragment = document.createDocumentFragment();
-    set.portraits.forEach((url) => {
+    set.portraits.forEach((url, index) => {
       if (document.querySelector(`link[rel="preload"][as="image"][href="${url}"]`)) return;
       const link = document.createElement('link');
       link.rel = 'preload';
       link.as = 'image';
       link.href = url;
-      link.fetchPriority = 'high';
+      link.fetchPriority = index < 2 ? 'high' : 'auto';
       fragment.appendChild(link);
     });
     document.head.appendChild(fragment);
@@ -404,10 +405,29 @@ ${SET_ORDER.map((setId) => `
   function preloadSetPortraits(setId, priority = 'high') {
     if (setLoads.has(setId)) return setLoads.get(setId);
 
-    const load = Promise.all(SETS[setId].portraits.map((url, index) => {
-      const fallback = SETS.bangers.portraits[index];
-      return preloadPortrait(url, fallback, priority);
-    }));
+    const portraits = SETS[setId].portraits;
+    const load = (async () => {
+      const resolved = new Array(portraits.length);
+      let nextIndex = 0;
+
+      const worker = async () => {
+        while (nextIndex < portraits.length) {
+          const index = nextIndex;
+          nextIndex += 1;
+          const url = portraits[index];
+          const fallback = SETS.bangers.portraits[index];
+          const itemPriority = index < 2 ? priority : 'auto';
+          resolved[index] = await preloadPortrait(url, fallback, itemPriority);
+        }
+      };
+
+      const workers = Array.from(
+        { length: Math.min(MAX_CONCURRENT_PORTRAITS, portraits.length) },
+        () => worker()
+      );
+      await Promise.all(workers);
+      return resolved;
+    })();
 
     setLoads.set(setId, load);
     return load;
