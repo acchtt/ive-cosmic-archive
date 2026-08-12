@@ -301,27 +301,20 @@
       "set": "spoilers",
       "member": "gaeul",
       "path": "assets/revive/member-cards/spoilers/gaeul.jpg",
-      "source": "https://i.imgur.com/R0f7Xu9.jpg",
-      "resolved_source": "https://i.imgur.com/R0f7Xu9.jpg",
-      "bytes": 1355913,
-      "sha256": "fee68ec29755edb50e4e9ac78dcfc36569c33efc4ca1e6ce9317ba4fc3d490e7",
+      "source": "https://i.imgur.com/07h20N1.jpg",
+      "resolved_source": "https://i.imgur.com/07h20N1.jpg",
+      "bytes": 1378498,
+      "sha256": "8a9dd009d5b2c71534983a4c996923ba2237c5d2adb3e5e77d47f65e60b10a9a",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016151017696723199",
-      "concept": "SPOILERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
-      "source_ordinal": 7,
-      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
+      "concept": "SPOILERS CONCEPT PHOTO · YUJIN/WONYOUNG-ALIGNED ALTERNATE",
+      "source_ordinal": 1,
+      "selection_method": "alternate official SPOILERS cut selected against retained Yujin/Wonyoung card framing; previous cut excluded",
       "dimensions": [
-        3151,
-        4177
+        2701,
+        3580
       ],
-      "match_features": {
-        "face_w": 0.25,
-        "face_h": 0.18857,
-        "center_x": 0.45644,
-        "center_y": 0.34429,
-        "aspect": 0.75437,
-        "border_edge": 0.00788
-      }
+      "anchor_score": 1.219395
     },
     {
       "set": "spoilers",
@@ -353,27 +346,20 @@
       "set": "spoilers",
       "member": "rei",
       "path": "assets/revive/member-cards/spoilers/rei.jpg",
-      "source": "https://i.imgur.com/kFQu8tO.jpg",
-      "resolved_source": "https://i.imgur.com/kFQu8tO.jpg",
-      "bytes": 1304487,
-      "sha256": "4979efe6575e615942303d43e07e87f06b652670d21d081b8b12214497979f92",
+      "source": "https://i.imgur.com/QzkZue5.jpg",
+      "resolved_source": "https://i.imgur.com/QzkZue5.jpg",
+      "bytes": 1077611,
+      "sha256": "dc6b6825ce3898ca015c6bb4458e0beda3d9476469964c0170f3cd0d0819e3a8",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016150820228890959",
-      "concept": "SPOILERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
-      "source_ordinal": 13,
-      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
+      "concept": "SPOILERS CONCEPT PHOTO · YUJIN/WONYOUNG-ALIGNED ALTERNATE",
+      "source_ordinal": 1,
+      "selection_method": "alternate official SPOILERS cut selected against retained Yujin/Wonyoung card framing; previous cut excluded",
       "dimensions": [
         3151,
         4178
       ],
-      "match_features": {
-        "face_w": 0.20758,
-        "face_h": 0.15643,
-        "center_x": 0.55024,
-        "center_y": 0.4075,
-        "aspect": 0.75419,
-        "border_edge": 0.02622
-      }
+      "anchor_score": 1.080327
     },
     {
       "set": "spoilers",
@@ -405,53 +391,39 @@
       "set": "spoilers",
       "member": "liz",
       "path": "assets/revive/member-cards/spoilers/liz.jpg",
-      "source": "https://i.imgur.com/gRgyYBN.jpg",
-      "resolved_source": "https://i.imgur.com/gRgyYBN.jpg",
-      "bytes": 1069602,
-      "sha256": "0c9e5f9d56228a5eaff4f7d14475a4196216faa920afc40d980d757220ee6bf0",
+      "source": "https://i.imgur.com/NT3KDm4.jpg",
+      "resolved_source": "https://i.imgur.com/NT3KDm4.jpg",
+      "bytes": 727458,
+      "sha256": "a75474a5789cda7b5c118b5248737d3f860684dc61eaafedab2cbf45fd7e96d7",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016150914076443139",
-      "concept": "SPOILERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
-      "source_ordinal": 1,
-      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
+      "concept": "SPOILERS CONCEPT PHOTO · YUJIN/WONYOUNG-ALIGNED ALTERNATE",
+      "source_ordinal": 3,
+      "selection_method": "alternate official SPOILERS cut selected against retained Yujin/Wonyoung card framing; previous cut excluded",
       "dimensions": [
         3151,
         4178
       ],
-      "match_features": {
-        "face_w": 0.20095,
-        "face_h": 0.15143,
-        "center_x": 0.49763,
-        "center_y": 0.22143,
-        "aspect": 0.75419,
-        "border_edge": 0.01094
-      }
+      "anchor_score": 2.050711
     },
     {
       "set": "spoilers",
       "member": "leeseo",
       "path": "assets/revive/member-cards/spoilers/leeseo.jpg",
-      "source": "https://i.imgur.com/JzR0f2N.jpg",
-      "resolved_source": "https://i.imgur.com/JzR0f2N.jpg",
-      "bytes": 1408641,
-      "sha256": "ae1ea33f4bdc0ecdc40525464a6602ece2ef6bc96f4c9d48a791ace79dbd38a8",
+      "source": "https://i.imgur.com/fAxHA7F.jpg",
+      "resolved_source": "https://i.imgur.com/fAxHA7F.jpg",
+      "bytes": 931814,
+      "sha256": "eb1612b8cba12ac9b7540207ea783caa498209ef2eb4e6e8b310740be03faeae",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016150712049402127",
-      "concept": "SPOILERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
-      "source_ordinal": 10,
-      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
+      "concept": "SPOILERS CONCEPT PHOTO · YUJIN/WONYOUNG-ALIGNED ALTERNATE",
+      "source_ordinal": 3,
+      "selection_method": "alternate official SPOILERS cut selected against retained Yujin/Wonyoung card framing; previous cut excluded",
       "dimensions": [
-        2701,
-        3581
+        3151,
+        4178
       ],
-      "match_features": {
-        "face_w": 0.1564,
-        "face_h": 0.11786,
-        "center_x": 0.42701,
-        "center_y": 0.43893,
-        "aspect": 0.75426,
-        "border_edge": 0.05536
-      }
+      "anchor_score": 1.955495
     },
     {
       "set": "loved-ive",
