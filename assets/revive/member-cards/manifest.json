@@ -5,301 +5,469 @@
       "set": "bangers",
       "member": "gaeul",
       "path": "assets/revive/member-cards/bangers/gaeul.jpg",
-      "source": "https://i.imgur.com/4hsGTOs.jpg",
-      "resolved_source": "https://i.imgur.com/4hsGTOs.jpg",
-      "bytes": 1527538,
-      "sha256": "9d527a4228a5ef6dde8ce593dd4ed78c6765170838a54be0c9527047e9205291",
+      "source": "https://i.imgur.com/YMGFk57.jpg",
+      "resolved_source": "https://i.imgur.com/YMGFk57.jpg",
+      "bytes": 1069255,
+      "sha256": "f6f6f475e90dedfd5b90a0ba2610090a530202b85c115011f04bfd6eccc7dae0",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1771426264.A.F85.html",
       "official_post": "https://x.com/IVEstarship/status/2024121969587761165",
-      "concept": "BANGERS CONCEPT PHOTO · MATCHED SECOND CUT",
-      "ordinal": 2,
+      "concept": "BANGERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 5,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        5472,
-        7059
-      ]
+        2493,
+        3324
+      ],
+      "match_features": {
+        "face_w": 0.19524,
+        "face_h": 0.14643,
+        "center_x": 0.27286,
+        "center_y": 0.32964,
+        "aspect": 0.75,
+        "border_edge": 0.02374
+      }
     },
     {
       "set": "bangers",
       "member": "yujin",
       "path": "assets/revive/member-cards/bangers/yujin.jpg",
-      "source": "https://i.imgur.com/KCZkQiX.jpg",
-      "resolved_source": "https://i.imgur.com/KCZkQiX.jpg",
-      "bytes": 2863628,
-      "sha256": "a85476b808a5d3593067e9a4686568ca36565ac942f5c389e32493209ba6244f",
+      "source": "https://i.imgur.com/JH54fPO.jpg",
+      "resolved_source": "https://i.imgur.com/JH54fPO.jpg",
+      "bytes": 1084476,
+      "sha256": "7150e78cb4c9908b94c726acde4889c0e250f01a628b8dac14c0fe79474b84ea",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1771426264.A.F85.html",
       "official_post": "https://x.com/IVEstarship/status/2024121836557185221",
-      "concept": "BANGERS CONCEPT PHOTO · MATCHED SECOND CUT",
-      "ordinal": 2,
+      "concept": "BANGERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 4,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        5472,
-        7059
-      ]
+        2873,
+        3830
+      ],
+      "match_features": {
+        "face_w": 0.20476,
+        "face_h": 0.15357,
+        "center_x": 0.5681,
+        "center_y": 0.21821,
+        "aspect": 0.75013,
+        "border_edge": 0.04823
+      }
     },
     {
       "set": "bangers",
       "member": "rei",
       "path": "assets/revive/member-cards/bangers/rei.jpg",
-      "source": "https://i.imgur.com/m1ERSWg.jpg",
-      "resolved_source": "https://i.imgur.com/m1ERSWg.jpg",
-      "bytes": 1669381,
-      "sha256": "c07dcadae741a6d8eeebda2a8e87e9083f295cbb9ddf74d50ccac284c7b4b3fb",
+      "source": "https://i.imgur.com/4UCnYQC.jpg",
+      "resolved_source": "https://i.imgur.com/4UCnYQC.jpg",
+      "bytes": 1109135,
+      "sha256": "3e421c33a3df12389b494a051a592b2592270626f04a0c48a76015262974d1fe",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1771426264.A.F85.html",
       "official_post": "https://x.com/IVEstarship/status/2024121756412236221",
-      "concept": "BANGERS CONCEPT PHOTO · MATCHED SECOND CUT",
-      "ordinal": 2,
+      "concept": "BANGERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 1,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        4378,
-        5647
-      ]
+        2554,
+        3405
+      ],
+      "match_features": {
+        "face_w": 0.24095,
+        "face_h": 0.18071,
+        "center_x": 0.45286,
+        "center_y": 0.27893,
+        "aspect": 0.75007,
+        "border_edge": 0.0365
+      }
     },
     {
       "set": "bangers",
       "member": "wonyoung",
       "path": "assets/revive/member-cards/bangers/wonyoung.jpg",
-      "source": "https://i.imgur.com/IHBkZIr.jpg",
-      "resolved_source": "https://i.imgur.com/IHBkZIr.jpg",
-      "bytes": 2481966,
-      "sha256": "54f1cf93c84191cb92a2e6c70ee6a4dfb1f0eca1a6c64d50311b3f48c27b41ae",
+      "source": "https://i.imgur.com/IOEwPMi.jpg",
+      "resolved_source": "https://i.imgur.com/IOEwPMi.jpg",
+      "bytes": 1240611,
+      "sha256": "e4869c42263c5851b50eb9bc84eae9fd47a2374dba5d6c99f4b0cff31be0f604",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1771426264.A.F85.html",
       "official_post": "https://x.com/IVEstarship/status/2024122160810451353",
-      "concept": "BANGERS CONCEPT PHOTO · MATCHED SECOND CUT",
-      "ordinal": 2,
+      "concept": "BANGERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 5,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        5472,
-        7059
-      ]
+        3203,
+        4270
+      ],
+      "match_features": {
+        "face_w": 0.22,
+        "face_h": 0.165,
+        "center_x": 0.5119,
+        "center_y": 0.17464,
+        "aspect": 0.75012,
+        "border_edge": 0.02565
+      }
     },
     {
       "set": "bangers",
       "member": "liz",
       "path": "assets/revive/member-cards/bangers/liz.jpg",
-      "source": "https://i.imgur.com/vQ9l4no.jpg",
-      "resolved_source": "https://i.imgur.com/vQ9l4no.jpg",
-      "bytes": 3168376,
-      "sha256": "cc579f62132a044f91c83b62c3c15164dededb5c544803772f11af4c7f683a21",
+      "source": "https://i.imgur.com/357dsaD.jpg",
+      "resolved_source": "https://i.imgur.com/357dsaD.jpg",
+      "bytes": 1276600,
+      "sha256": "c80624cfbd387933d14e650115f69a5bc54d894b555445d8079131930cacbd51",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1771426264.A.F85.html",
       "official_post": "https://x.com/IVEstarship/status/2024122105168855228",
-      "concept": "BANGERS CONCEPT PHOTO · MATCHED SECOND CUT",
-      "ordinal": 2,
+      "concept": "BANGERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 3,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        5472,
-        7059
-      ]
+        2766,
+        3688
+      ],
+      "match_features": {
+        "face_w": 0.17524,
+        "face_h": 0.13143,
+        "center_x": 0.55143,
+        "center_y": 0.08857,
+        "aspect": 0.75,
+        "border_edge": 0.03244
+      }
     },
     {
       "set": "bangers",
       "member": "leeseo",
       "path": "assets/revive/member-cards/bangers/leeseo.jpg",
-      "source": "https://i.imgur.com/YfLymCh.jpg",
-      "resolved_source": "https://i.imgur.com/YfLymCh.jpg",
-      "bytes": 1719230,
-      "sha256": "7a6718644577c5485091e654e7e58e1b8c387b17f19b4ebfaf76d302675097d1",
+      "source": "https://i.imgur.com/7RlyvTg.jpg",
+      "resolved_source": "https://i.imgur.com/7RlyvTg.jpg",
+      "bytes": 1639384,
+      "sha256": "963ef15f1b43ef1352bf037ad3ebebaa5a2a2e3473556810fd0715a9a5c83536",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1771426264.A.F85.html",
       "official_post": "https://x.com/IVEstarship/status/2024121904383004940",
-      "concept": "BANGERS CONCEPT PHOTO · MATCHED SECOND CUT",
-      "ordinal": 2,
+      "concept": "BANGERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 3,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        4378,
-        5647
-      ]
+        2461,
+        3282
+      ],
+      "match_features": {
+        "face_w": 0.26215,
+        "face_h": 0.19643,
+        "center_x": 0.35605,
+        "center_y": 0.20036,
+        "aspect": 0.74985,
+        "border_edge": 0.10899
+      }
     },
     {
       "set": "challengers",
       "member": "gaeul",
       "path": "assets/revive/member-cards/challengers/gaeul.jpg",
-      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEhgV9_rkDOVY6gK2PwWD40xAfbLtiysKMv-TsGFnRwpOUmj5UppWl75_sxQrQhbkBpJZAym9RhZH4uuCoxOqFWPnaLOYOdpve0Vn51_GTWKcci0JK8RWFjb2wTjcCeU8BC6uvtkfPm5i7-S7JIHefmUs3_-Es4UiqQrgk1emh40WRw2S_sIIyxz-GIM46Cg",
-      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEhgV9_rkDOVY6gK2PwWD40xAfbLtiysKMv-TsGFnRwpOUmj5UppWl75_sxQrQhbkBpJZAym9RhZH4uuCoxOqFWPnaLOYOdpve0Vn51_GTWKcci0JK8RWFjb2wTjcCeU8BC6uvtkfPm5i7-S7JIHefmUs3_-Es4UiqQrgk1emh40WRw2S_sIIyxz-GIM46Cg",
-      "bytes": 736835,
-      "sha256": "3a2687ae248b88f410d674ec09cf87282cf5ea7ce6ccba8db35c1138316f819a",
+      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEgpXQtKIEGOww-rvOcEI2z03BhS3nDrdO7zJUIwYwUIMzu66SDGLZxCyP7DMHv2DSuEUv2Awz_U-AgXM4THFdAQBq7LotzUsNTELJE8RT11DttQMKp9unEgxv049hA_As0Y9JiB5huEAoJiXLtfqpcDgz_QoH2vO_PKfTEkYhQ1KFNsbzr8_w2aAAEFaB9M",
+      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEgpXQtKIEGOww-rvOcEI2z03BhS3nDrdO7zJUIwYwUIMzu66SDGLZxCyP7DMHv2DSuEUv2Awz_U-AgXM4THFdAQBq7LotzUsNTELJE8RT11DttQMKp9unEgxv049hA_As0Y9JiB5huEAoJiXLtfqpcDgz_QoH2vO_PKfTEkYhQ1KFNsbzr8_w2aAAEFaB9M",
+      "bytes": 479068,
+      "sha256": "8717e68ba9e058e9584a9fea4c09f176f50d48c5df78eaf8280dccfb3a6547a7",
       "source_page": "https://www.pannchoa.com/2026/02/theqoo-ive-2nd-album-revive-challengers_3.html",
       "official_post": "https://x.com/IVEstarship/status/2018686237352079410",
-      "concept": "CHALLENGERS CONCEPT PHOTO 2",
+      "concept": "CHALLENGERS CONCEPT PHOTO 2 · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 5,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
         1280,
         1600
-      ]
+      ],
+      "match_features": {
+        "face_w": 0.17411,
+        "face_h": 0.13929,
+        "center_x": 0.69509,
+        "center_y": 0.61321,
+        "aspect": 0.8,
+        "border_edge": 0.03305
+      }
     },
     {
       "set": "challengers",
       "member": "yujin",
       "path": "assets/revive/member-cards/challengers/yujin.jpg",
-      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEjjeynLY8Ypr6XP3l4BE_iirXCAYkPObbXbaY_Aps1z77M0NAXKQmy5krafm2sglAzW4-7vF9i_cPipRbhmKAHduN83K4pbzv93aSIV4xYKb-rJpXrho4xmrnRlJ7fuEBdA4TB3nAFmKS21iV7kDqx8IJRb_RIWE3IfhQL7r4c9-io2WmAQbM1L6iIEltA8",
-      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEjjeynLY8Ypr6XP3l4BE_iirXCAYkPObbXbaY_Aps1z77M0NAXKQmy5krafm2sglAzW4-7vF9i_cPipRbhmKAHduN83K4pbzv93aSIV4xYKb-rJpXrho4xmrnRlJ7fuEBdA4TB3nAFmKS21iV7kDqx8IJRb_RIWE3IfhQL7r4c9-io2WmAQbM1L6iIEltA8",
-      "bytes": 412097,
-      "sha256": "39abb895271fa7c04acd55a83112ae0933ad2d22ccb774b8b5c9711484be4b9d",
+      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEiouq-W5a5btNIYM113mfL1F8xAawIEMe31PWukCPmci_eBZairbLzwc32LQQCfVSsr9QU2uwotyxoPVUj231OrEP-WBhO9riYTiFoJdanrtLhrWk5MetV4nUS4mmCRY9VOJ56JXrgo6BymEu3HYZ4QaTeWAclonQw4GziGdR_Xw1NjL-GfRFYOBib3Dfvw",
+      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEiouq-W5a5btNIYM113mfL1F8xAawIEMe31PWukCPmci_eBZairbLzwc32LQQCfVSsr9QU2uwotyxoPVUj231OrEP-WBhO9riYTiFoJdanrtLhrWk5MetV4nUS4mmCRY9VOJ56JXrgo6BymEu3HYZ4QaTeWAclonQw4GziGdR_Xw1NjL-GfRFYOBib3Dfvw",
+      "bytes": 712443,
+      "sha256": "09a19497d8d5823ee8504913b1907cba33d821b5cdedda948f32a11b0145a305",
       "source_page": "https://www.pannchoa.com/2026/02/theqoo-ive-2nd-album-revive-challengers_3.html",
       "official_post": "https://x.com/IVEstarship/status/2018686596204159478",
-      "concept": "CHALLENGERS CONCEPT PHOTO 2",
+      "concept": "CHALLENGERS CONCEPT PHOTO 2 · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 4,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
         1280,
         1600
-      ]
+      ],
+      "match_features": {
+        "face_w": 0.22857,
+        "face_h": 0.18286,
+        "center_x": 0.51339,
+        "center_y": 0.205,
+        "aspect": 0.8,
+        "border_edge": 0.02222
+      }
     },
     {
       "set": "challengers",
       "member": "rei",
       "path": "assets/revive/member-cards/challengers/rei.jpg",
-      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEj99OH4Vbe3TmKg4YH_EXA5avOfOH_AJ7sTt0cHwlxtegYoGt0ZX93bCfwrWTJBhDCBxurx4lZAP8WdqQAwV1z6nvReB46Jtj93PcT9sREKLMr4rmHDJJ5b1PQqXbDPZwOAUrPWIyJfamtbAukOS6GOIdKth64lFZUfcPXxZV675GXD_6I5Y22m5WnPCqhP",
-      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEj99OH4Vbe3TmKg4YH_EXA5avOfOH_AJ7sTt0cHwlxtegYoGt0ZX93bCfwrWTJBhDCBxurx4lZAP8WdqQAwV1z6nvReB46Jtj93PcT9sREKLMr4rmHDJJ5b1PQqXbDPZwOAUrPWIyJfamtbAukOS6GOIdKth64lFZUfcPXxZV675GXD_6I5Y22m5WnPCqhP",
-      "bytes": 538720,
-      "sha256": "e3a42f17d81e35dd11693361ac2cdc40ff2b13b73c47d7ebe9322fe8b109794b",
+      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEiYIaJvQrlrqJgl1xfdxQDc-AUVymKilErEjpPGr6q2qwA2WMPOI9cSzlDKtPahVGWWXwWgTs5r2XQGsyeyRL_f7V3LN7noFbf9Ti-qrmPI0IB-p_ECEFy2kKN0x29FitcIYkkPXxzog94tEqC5m2aVrEGl7EHZgVlx0UmFIW7qakYQG3bjt2IWrwHdMYP5",
+      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEiYIaJvQrlrqJgl1xfdxQDc-AUVymKilErEjpPGr6q2qwA2WMPOI9cSzlDKtPahVGWWXwWgTs5r2XQGsyeyRL_f7V3LN7noFbf9Ti-qrmPI0IB-p_ECEFy2kKN0x29FitcIYkkPXxzog94tEqC5m2aVrEGl7EHZgVlx0UmFIW7qakYQG3bjt2IWrwHdMYP5",
+      "bytes": 751630,
+      "sha256": "8fa9c837c056650d1e666e43fb7fb42542a3ec9c7a0b07eeaa36a6f6453180ba",
       "source_page": "https://www.pannchoa.com/2026/02/theqoo-ive-2nd-album-revive-challengers_3.html",
       "official_post": "https://x.com/IVEstarship/status/2018686360610029824",
-      "concept": "CHALLENGERS CONCEPT PHOTO 2",
+      "concept": "CHALLENGERS CONCEPT PHOTO 2 · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 4,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
         1280,
         1600
-      ]
+      ],
+      "match_features": {
+        "face_w": 0.14196,
+        "face_h": 0.11357,
+        "center_x": 0.62634,
+        "center_y": 0.26821,
+        "aspect": 0.8,
+        "border_edge": 0.05052
+      }
     },
     {
       "set": "challengers",
       "member": "wonyoung",
       "path": "assets/revive/member-cards/challengers/wonyoung.jpg",
-      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEjrK1AQ9FVa2W1mYCybq273VndYSZUgditIdQUsuI2MfONKq1X9jPv8ohYjILZnDjLUhkQTA6WvnVHYJ-6kLSB51zKk7d6Jmf6KgXKJ_zeyIa9PL-rL3f1-f-pGV6fCvO7e43Vy4Kyfzg9qn3z5sh3mIagDbFKa1HqCm7oUEZWSTUdOWoAqx9VS9dIWWmBG",
-      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEjrK1AQ9FVa2W1mYCybq273VndYSZUgditIdQUsuI2MfONKq1X9jPv8ohYjILZnDjLUhkQTA6WvnVHYJ-6kLSB51zKk7d6Jmf6KgXKJ_zeyIa9PL-rL3f1-f-pGV6fCvO7e43Vy4Kyfzg9qn3z5sh3mIagDbFKa1HqCm7oUEZWSTUdOWoAqx9VS9dIWWmBG",
-      "bytes": 845387,
-      "sha256": "442d64a29c42126a4e6cc2a3bf8e852a7da1b1af059b0eda509ed5148f0563f0",
+      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEh5MHTwAMJMG-kdTPBq1kNtRP8_k78zxnB-vg12YXzi7_gH_2CZbQ0NR9h7X3oZnBzx5ZEC3eKFEe_qIVXjH1S9okx6RtxnJmKi1zsLH1Uot92CwDeLBiVeS3PXIXoqnUKrxlgiGSxm3s7DvEmI-6ddQtTHX0SH68x__g2p5vQsHNJOdo7cwo_XF3E7CgFW",
+      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEh5MHTwAMJMG-kdTPBq1kNtRP8_k78zxnB-vg12YXzi7_gH_2CZbQ0NR9h7X3oZnBzx5ZEC3eKFEe_qIVXjH1S9okx6RtxnJmKi1zsLH1Uot92CwDeLBiVeS3PXIXoqnUKrxlgiGSxm3s7DvEmI-6ddQtTHX0SH68x__g2p5vQsHNJOdo7cwo_XF3E7CgFW",
+      "bytes": 559771,
+      "sha256": "b9f8eeded67f775829a7dc0814ab1bc8cbfb225a7440aa84a818451fe1c390bd",
       "source_page": "https://www.pannchoa.com/2026/02/theqoo-ive-2nd-album-revive-challengers_3.html",
       "official_post": "https://x.com/IVEstarship/status/2018686484816027989",
-      "concept": "CHALLENGERS CONCEPT PHOTO 2",
+      "concept": "CHALLENGERS CONCEPT PHOTO 2 · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 4,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
         1280,
         1600
-      ]
+      ],
+      "match_features": {
+        "face_w": 0.3375,
+        "face_h": 0.27,
+        "center_x": 0.69196,
+        "center_y": 0.24071,
+        "aspect": 0.8,
+        "border_edge": 0.02485
+      }
     },
     {
       "set": "challengers",
       "member": "liz",
       "path": "assets/revive/member-cards/challengers/liz.jpg",
-      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEjEBHw2GS78pmn7dseng2eI1ToEFqK6w64urcSAKexayG5CDdCcCXmlQqb3t79BRsDgceEU9s-6Nf2tB9we5gC498Ps3L3t0Mj0oU8AA-AAaApewS7C1D9G7eREFqLOR0DceDuvxm76xIcYlqdqRu8QfNV7gk6Z4KHTugFgpWtWwpEHcDtL4lPx5VBkphrn",
-      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEjEBHw2GS78pmn7dseng2eI1ToEFqK6w64urcSAKexayG5CDdCcCXmlQqb3t79BRsDgceEU9s-6Nf2tB9we5gC498Ps3L3t0Mj0oU8AA-AAaApewS7C1D9G7eREFqLOR0DceDuvxm76xIcYlqdqRu8QfNV7gk6Z4KHTugFgpWtWwpEHcDtL4lPx5VBkphrn",
-      "bytes": 524322,
-      "sha256": "c34b09e6652f280d785d47bc5c3ce2b88f5265447632f94d9e2ca0230be8cf2b",
+      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEirwa64acXg7D0w0BWlnrKHzJA-GZJ-j9So-IyadK-RtxzoiHLRltukcRe0NmBu2iE1ZD4C73IV3BxFxfFmvpYvEMSAISpc1abZ6ClIMJ8v1Acc-VL7cKQwac59JMZNQhtRfzIb8OFTDI3xAed6E64vUhdlhFA35qULFOOBLcOIUygiVS6Fy0hmHqlFW5Vt",
+      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEirwa64acXg7D0w0BWlnrKHzJA-GZJ-j9So-IyadK-RtxzoiHLRltukcRe0NmBu2iE1ZD4C73IV3BxFxfFmvpYvEMSAISpc1abZ6ClIMJ8v1Acc-VL7cKQwac59JMZNQhtRfzIb8OFTDI3xAed6E64vUhdlhFA35qULFOOBLcOIUygiVS6Fy0hmHqlFW5Vt",
+      "bytes": 617700,
+      "sha256": "cd638f1f7cdfddae1504d5ee480869959cbaa2d5a59784e9f34ffde663a1e5e1",
       "source_page": "https://www.pannchoa.com/2026/02/theqoo-ive-2nd-album-revive-challengers_3.html",
       "official_post": "https://x.com/IVEstarship/status/2018685965313741223",
-      "concept": "CHALLENGERS CONCEPT PHOTO 2",
+      "concept": "CHALLENGERS CONCEPT PHOTO 2 · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 5,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
         1280,
         1600
-      ]
+      ],
+      "match_features": {
+        "face_w": 0.30804,
+        "face_h": 0.24643,
+        "center_x": 0.62455,
+        "center_y": 0.15393,
+        "aspect": 0.8,
+        "border_edge": 0.05777
+      }
     },
     {
       "set": "challengers",
       "member": "leeseo",
       "path": "assets/revive/member-cards/challengers/leeseo.jpg",
-      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEisTjCpozQIMBLJMXHxiMmpIWAIpeFQwTp7C0QDrM17xcgDlrmRpkZ5hWdfss_QZ_N3vjY837wdRFsue7iqNeqFI0tMKyj9upbIN-he8qjc--8RQ7Lck_gRaCdkGUqgyiksc9qCGyLe4gdjt4-oBLzZmx46GVXXf2FmF35JO7_PZiv_jZFgs9QFjuWIZ9QF",
-      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEisTjCpozQIMBLJMXHxiMmpIWAIpeFQwTp7C0QDrM17xcgDlrmRpkZ5hWdfss_QZ_N3vjY837wdRFsue7iqNeqFI0tMKyj9upbIN-he8qjc--8RQ7Lck_gRaCdkGUqgyiksc9qCGyLe4gdjt4-oBLzZmx46GVXXf2FmF35JO7_PZiv_jZFgs9QFjuWIZ9QF",
-      "bytes": 485036,
-      "sha256": "07248fa1798d041c04f817df89df2ac80b525ec8b35a7b36a922171076a677f4",
+      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEhHXEMrmlMCAokTirqBRAfKZ8awDWiIzo1TwGJeDZWjLC4Nh8iJy7g2nPMjauB1MGtCaTnJ1SCSc3BSjiwerpb_c-0eFuQuAd-HlItejBOwrsnJ-LNIUS2oSB2apDUZzQedrSfxp7IxOBwLJAmKzMM7W2lQlbuEJSgLf5bqslqlFC55aedPd9XMZrYD54z6",
+      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEhHXEMrmlMCAokTirqBRAfKZ8awDWiIzo1TwGJeDZWjLC4Nh8iJy7g2nPMjauB1MGtCaTnJ1SCSc3BSjiwerpb_c-0eFuQuAd-HlItejBOwrsnJ-LNIUS2oSB2apDUZzQedrSfxp7IxOBwLJAmKzMM7W2lQlbuEJSgLf5bqslqlFC55aedPd9XMZrYD54z6",
+      "bytes": 754512,
+      "sha256": "845b39583c6ed8a0619df67b4e1d715d433f6fd150928a17acb1f554622f7a5f",
       "source_page": "https://www.pannchoa.com/2026/02/theqoo-ive-2nd-album-revive-challengers_3.html",
       "official_post": "https://x.com/IVEstarship/status/2018686118691012895",
-      "concept": "CHALLENGERS CONCEPT PHOTO 2",
+      "concept": "CHALLENGERS CONCEPT PHOTO 2 · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 3,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
         1280,
         1600
-      ]
+      ],
+      "match_features": {
+        "face_w": 0.26875,
+        "face_h": 0.215,
+        "center_x": 0.55402,
+        "center_y": 0.52607,
+        "aspect": 0.8,
+        "border_edge": 0.05074
+      }
     },
     {
       "set": "spoilers",
       "member": "gaeul",
       "path": "assets/revive/member-cards/spoilers/gaeul.jpg",
-      "source": "https://i.imgur.com/cwa7j4g.jpg",
-      "resolved_source": "https://i.imgur.com/cwa7j4g.jpg",
-      "bytes": 1025454,
-      "sha256": "c0d19dcb3c6168acde55a24ee9815661a8be34b77f484d28c336f8b80c8fd449",
+      "source": "https://i.imgur.com/R0f7Xu9.jpg",
+      "resolved_source": "https://i.imgur.com/R0f7Xu9.jpg",
+      "bytes": 1355913,
+      "sha256": "fee68ec29755edb50e4e9ac78dcfc36569c33efc4ca1e6ce9317ba4fc3d490e7",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016151017696723199",
-      "concept": "SPOILERS CONCEPT PHOTO · MATCHED SECOND CUT",
-      "ordinal": 2,
+      "concept": "SPOILERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 7,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        4501,
-        5967
-      ]
+        3151,
+        4177
+      ],
+      "match_features": {
+        "face_w": 0.25,
+        "face_h": 0.18857,
+        "center_x": 0.45644,
+        "center_y": 0.34429,
+        "aspect": 0.75437,
+        "border_edge": 0.00788
+      }
     },
     {
       "set": "spoilers",
       "member": "yujin",
       "path": "assets/revive/member-cards/spoilers/yujin.jpg",
-      "source": "https://i.imgur.com/0j0gGiC.jpg",
-      "resolved_source": "https://i.imgur.com/0j0gGiC.jpg",
-      "bytes": 664128,
-      "sha256": "489433005ec3ef8b16223c7d0342541fbd49389a1e5624652fcf77b35a312815",
+      "source": "https://i.imgur.com/p3c6Wy1.jpg",
+      "resolved_source": "https://i.imgur.com/p3c6Wy1.jpg",
+      "bytes": 773482,
+      "sha256": "53f71fe1d15b0b2b57dc8f4ef7767b0a99fb3e2f7f2043f7c096f8ba703ebd3b",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016151111749820512",
-      "concept": "SPOILERS CONCEPT PHOTO · MATCHED SECOND CUT",
-      "ordinal": 2,
+      "concept": "SPOILERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 3,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        4501,
-        5968
-      ]
+        3151,
+        4178
+      ],
+      "match_features": {
+        "face_w": 0.20284,
+        "face_h": 0.15286,
+        "center_x": 0.38009,
+        "center_y": 0.40929,
+        "aspect": 0.75419,
+        "border_edge": 0.00243
+      }
     },
     {
       "set": "spoilers",
       "member": "rei",
       "path": "assets/revive/member-cards/spoilers/rei.jpg",
-      "source": "https://i.imgur.com/JGJe8Z2.jpg",
-      "resolved_source": "https://i.imgur.com/JGJe8Z2.jpg",
-      "bytes": 730853,
-      "sha256": "7cf61c1cde7c6fa0d8bab3640d772a29315d6c74ef5feabf30e124f3349005bb",
+      "source": "https://i.imgur.com/kFQu8tO.jpg",
+      "resolved_source": "https://i.imgur.com/kFQu8tO.jpg",
+      "bytes": 1304487,
+      "sha256": "4979efe6575e615942303d43e07e87f06b652670d21d081b8b12214497979f92",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016150820228890959",
-      "concept": "SPOILERS CONCEPT PHOTO · MATCHED SECOND CUT",
-      "ordinal": 2,
+      "concept": "SPOILERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 13,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        4501,
-        5968
-      ]
+        3151,
+        4178
+      ],
+      "match_features": {
+        "face_w": 0.20758,
+        "face_h": 0.15643,
+        "center_x": 0.55024,
+        "center_y": 0.4075,
+        "aspect": 0.75419,
+        "border_edge": 0.02622
+      }
     },
     {
       "set": "spoilers",
       "member": "wonyoung",
       "path": "assets/revive/member-cards/spoilers/wonyoung.jpg",
-      "source": "https://i.imgur.com/PCP9J1j.jpg",
-      "resolved_source": "https://i.imgur.com/PCP9J1j.jpg",
-      "bytes": 738139,
-      "sha256": "16a554aae52d82c78c67dfbe0a6659bef11fb16c58ce6e04000bf44c8b262288",
+      "source": "https://i.imgur.com/nUwIaLx.jpg",
+      "resolved_source": "https://i.imgur.com/nUwIaLx.jpg",
+      "bytes": 816353,
+      "sha256": "e1693f23c47dd9411609fc613cda4d17af985c8952be83cbcfcc6eccad331c1b",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016150607573483593",
-      "concept": "SPOILERS CONCEPT PHOTO · MATCHED SECOND CUT",
-      "ordinal": 2,
+      "concept": "SPOILERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 13,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        4501,
-        5967
-      ]
+        3151,
+        4177
+      ],
+      "match_features": {
+        "face_w": 0.24621,
+        "face_h": 0.18571,
+        "center_x": 0.52557,
+        "center_y": 0.26357,
+        "aspect": 0.75437,
+        "border_edge": 0.01234
+      }
     },
     {
       "set": "spoilers",
       "member": "liz",
       "path": "assets/revive/member-cards/spoilers/liz.jpg",
-      "source": "https://i.imgur.com/FkD8Hj5.jpg",
-      "resolved_source": "https://i.imgur.com/FkD8Hj5.jpg",
-      "bytes": 622037,
-      "sha256": "a16865ea4d7759f3532c74e0d92774583ee02699eac8243e79f41f430a795748",
+      "source": "https://i.imgur.com/gRgyYBN.jpg",
+      "resolved_source": "https://i.imgur.com/gRgyYBN.jpg",
+      "bytes": 1069602,
+      "sha256": "0c9e5f9d56228a5eaff4f7d14475a4196216faa920afc40d980d757220ee6bf0",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016150914076443139",
-      "concept": "SPOILERS CONCEPT PHOTO · MATCHED SECOND CUT",
-      "ordinal": 2,
+      "concept": "SPOILERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 1,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        4501,
-        5968
-      ]
+        3151,
+        4178
+      ],
+      "match_features": {
+        "face_w": 0.20095,
+        "face_h": 0.15143,
+        "center_x": 0.49763,
+        "center_y": 0.22143,
+        "aspect": 0.75419,
+        "border_edge": 0.01094
+      }
     },
     {
       "set": "spoilers",
       "member": "leeseo",
       "path": "assets/revive/member-cards/spoilers/leeseo.jpg",
-      "source": "https://i.imgur.com/wADkLMC.jpg",
-      "resolved_source": "https://i.imgur.com/wADkLMC.jpg",
-      "bytes": 789450,
-      "sha256": "80b16ca377aa0d9f571d984754b0b9e2084e6977040d1efe0f4e79a6256e76d3",
+      "source": "https://i.imgur.com/JzR0f2N.jpg",
+      "resolved_source": "https://i.imgur.com/JzR0f2N.jpg",
+      "bytes": 1408641,
+      "sha256": "ae1ea33f4bdc0ecdc40525464a6602ece2ef6bc96f4c9d48a791ace79dbd38a8",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016150712049402127",
-      "concept": "SPOILERS CONCEPT PHOTO · MATCHED SECOND CUT",
-      "ordinal": 2,
+      "concept": "SPOILERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
+      "source_ordinal": 10,
+      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        4501,
-        5968
-      ]
+        2701,
+        3581
+      ],
+      "match_features": {
+        "face_w": 0.1564,
+        "face_h": 0.11786,
+        "center_x": 0.42701,
+        "center_y": 0.43893,
+        "aspect": 0.75426,
+        "border_edge": 0.05536
+      }
     },
     {
       "set": "loved-ive",
