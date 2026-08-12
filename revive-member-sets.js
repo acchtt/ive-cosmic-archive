@@ -4,7 +4,7 @@
 
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const CARD_ASSET_VERSION = 'spoilers-alternates-v60';
+  const CARD_ASSET_VERSION = 'spoilers-rei-align-v61';
   const CORE_EVENT_SOURCE = 'revive-member-sets';
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
   const ARCHIVE_VERSION = '0.20.0';

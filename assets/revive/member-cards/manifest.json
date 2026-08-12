@@ -346,20 +346,20 @@
       "set": "spoilers",
       "member": "rei",
       "path": "assets/revive/member-cards/spoilers/rei.jpg",
-      "source": "https://i.imgur.com/QzkZue5.jpg",
-      "resolved_source": "https://i.imgur.com/QzkZue5.jpg",
-      "bytes": 1077611,
-      "sha256": "dc6b6825ce3898ca015c6bb4458e0beda3d9476469964c0170f3cd0d0819e3a8",
+      "source": "https://i.imgur.com/BXTxBOk.jpg",
+      "resolved_source": "https://i.imgur.com/BXTxBOk.jpg",
+      "bytes": 1353136,
+      "sha256": "74750b4de1ba579aba7a58d8cfa44f4e5b74b52eba1bca0aea6b4a7bea9f5cd2",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016150820228890959",
-      "concept": "SPOILERS CONCEPT PHOTO · YUJIN/WONYOUNG-ALIGNED ALTERNATE",
-      "source_ordinal": 1,
-      "selection_method": "alternate official SPOILERS cut selected against retained Yujin/Wonyoung card framing; previous cut excluded",
+      "concept": "SPOILERS CONCEPT PHOTO · FIVE-CARD-ALIGNED REI ALTERNATE",
+      "source_ordinal": 10,
+      "selection_method": "alternate official SPOILERS cut selected against the five retained SPOILERS cards; previous Rei cut excluded",
       "dimensions": [
-        3151,
-        4178
+        2701,
+        3581
       ],
-      "anchor_score": 1.080327
+      "anchor_score": 0.5099
     },
     {
       "set": "spoilers",
