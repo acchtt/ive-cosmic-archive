@@ -161,27 +161,19 @@
       "set": "challengers",
       "member": "gaeul",
       "path": "assets/revive/member-cards/challengers/gaeul.jpg",
-      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEgpXQtKIEGOww-rvOcEI2z03BhS3nDrdO7zJUIwYwUIMzu66SDGLZxCyP7DMHv2DSuEUv2Awz_U-AgXM4THFdAQBq7LotzUsNTELJE8RT11DttQMKp9unEgxv049hA_As0Y9JiB5huEAoJiXLtfqpcDgz_QoH2vO_PKfTEkYhQ1KFNsbzr8_w2aAAEFaB9M",
-      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEgpXQtKIEGOww-rvOcEI2z03BhS3nDrdO7zJUIwYwUIMzu66SDGLZxCyP7DMHv2DSuEUv2Awz_U-AgXM4THFdAQBq7LotzUsNTELJE8RT11DttQMKp9unEgxv049hA_As0Y9JiB5huEAoJiXLtfqpcDgz_QoH2vO_PKfTEkYhQ1KFNsbzr8_w2aAAEFaB9M",
-      "bytes": 479068,
-      "sha256": "8717e68ba9e058e9584a9fea4c09f176f50d48c5df78eaf8280dccfb3a6547a7",
+      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEjlVzrUmp0F8qBEAQDbYIF08Ti2hgDRA_4My3lzAqaeukqaf8y7LH6f4Z1_h1DT7ojqZOZj7nKicTsN2LF1XZqKwo0hjnZn4hhFis1IzvVFsY7copiyxpQfS8zuV3u9jZ05_BTsX1ojG6ArnaVNkr1SAOYPcoFDeBLp3ePcGlZVqIozP9Z3vjTR2fXcuvq7",
+      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEjlVzrUmp0F8qBEAQDbYIF08Ti2hgDRA_4My3lzAqaeukqaf8y7LH6f4Z1_h1DT7ojqZOZj7nKicTsN2LF1XZqKwo0hjnZn4hhFis1IzvVFsY7copiyxpQfS8zuV3u9jZ05_BTsX1ojG6ArnaVNkr1SAOYPcoFDeBLp3ePcGlZVqIozP9Z3vjTR2fXcuvq7",
+      "bytes": 510200,
+      "sha256": "a4aec458d4e35f7a6c2aeffe9c817de1d0a48939af80ba483a79051461be5b32",
       "source_page": "https://www.pannchoa.com/2026/02/theqoo-ive-2nd-album-revive-challengers_3.html",
       "official_post": "https://x.com/IVEstarship/status/2018686237352079410",
-      "concept": "CHALLENGERS CONCEPT PHOTO 2 · PORTRAIT-MATCHED CUT",
-      "source_ordinal": 5,
-      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
+      "concept": "CHALLENGERS CONCEPT PHOTO 2 · MANUAL ALTERNATE CUT",
+      "source_ordinal": 2,
+      "selection_method": "manual alternate requested after v57 portrait-matched set",
       "dimensions": [
         1280,
         1600
-      ],
-      "match_features": {
-        "face_w": 0.17411,
-        "face_h": 0.13929,
-        "center_x": 0.69509,
-        "center_y": 0.61321,
-        "aspect": 0.8,
-        "border_edge": 0.03305
-      }
+      ]
     },
     {
       "set": "challengers",
@@ -265,27 +257,19 @@
       "set": "challengers",
       "member": "liz",
       "path": "assets/revive/member-cards/challengers/liz.jpg",
-      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEirwa64acXg7D0w0BWlnrKHzJA-GZJ-j9So-IyadK-RtxzoiHLRltukcRe0NmBu2iE1ZD4C73IV3BxFxfFmvpYvEMSAISpc1abZ6ClIMJ8v1Acc-VL7cKQwac59JMZNQhtRfzIb8OFTDI3xAed6E64vUhdlhFA35qULFOOBLcOIUygiVS6Fy0hmHqlFW5Vt",
-      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEirwa64acXg7D0w0BWlnrKHzJA-GZJ-j9So-IyadK-RtxzoiHLRltukcRe0NmBu2iE1ZD4C73IV3BxFxfFmvpYvEMSAISpc1abZ6ClIMJ8v1Acc-VL7cKQwac59JMZNQhtRfzIb8OFTDI3xAed6E64vUhdlhFA35qULFOOBLcOIUygiVS6Fy0hmHqlFW5Vt",
-      "bytes": 617700,
-      "sha256": "cd638f1f7cdfddae1504d5ee480869959cbaa2d5a59784e9f34ffde663a1e5e1",
+      "source": "https://blogger.googleusercontent.com/img/a/AVvXsEi8xv27SYReAnAL76lVaoxBwitUYnSVXPFg38-hw65oWP450DRnZ8BcatZfM38FTXcybzWvP36KCNjP1ADq6c4RUlDWlgX_CWuE9AgrJrBOYSqih90N49zEYF2HXom0He00o7YqIMCaS2jRT0ppQuFT5BBQFbafX39WzIQPatfBmWeEcG3ZTLnCS448IIhb",
+      "resolved_source": "https://blogger.googleusercontent.com/img/a/AVvXsEi8xv27SYReAnAL76lVaoxBwitUYnSVXPFg38-hw65oWP450DRnZ8BcatZfM38FTXcybzWvP36KCNjP1ADq6c4RUlDWlgX_CWuE9AgrJrBOYSqih90N49zEYF2HXom0He00o7YqIMCaS2jRT0ppQuFT5BBQFbafX39WzIQPatfBmWeEcG3ZTLnCS448IIhb",
+      "bytes": 601681,
+      "sha256": "da9a7fd03ee0bc5384dfcdf11377e700578c7742fe22eaf62903cc9e22005005",
       "source_page": "https://www.pannchoa.com/2026/02/theqoo-ive-2nd-album-revive-challengers_3.html",
       "official_post": "https://x.com/IVEstarship/status/2018685965313741223",
-      "concept": "CHALLENGERS CONCEPT PHOTO 2 · PORTRAIT-MATCHED CUT",
-      "source_ordinal": 5,
-      "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
+      "concept": "CHALLENGERS CONCEPT PHOTO 2 · MANUAL ALTERNATE CUT",
+      "source_ordinal": 4,
+      "selection_method": "manual alternate requested after v57 portrait-matched set",
       "dimensions": [
         1280,
         1600
-      ],
-      "match_features": {
-        "face_w": 0.30804,
-        "face_h": 0.24643,
-        "center_x": 0.62455,
-        "center_y": 0.15393,
-        "aspect": 0.8,
-        "border_edge": 0.05777
-      }
+      ]
     },
     {
       "set": "challengers",
