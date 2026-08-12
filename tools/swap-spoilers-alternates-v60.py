@@ -47,7 +47,8 @@ OFFICIAL_POSTS = {
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131 Safari/537.36',
-    'Referer': SOURCE_PAGE,
+    'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.9',
 }
 CASCADE = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
@@ -68,9 +69,25 @@ def decode(data: bytes) -> Image.Image:
 
 
 def download(url: str) -> tuple[bytes, Image.Image]:
-    response = requests.get(url, headers=HEADERS, timeout=45)
-    response.raise_for_status()
-    return response.content, decode(response.content)
+    image_id = url.rsplit('/', 1)[-1].split('.', 1)[0]
+    attempts = [
+        f'https://i.imgur.com/{image_id}.jpg',
+        f'https://i.imgur.com/{image_id}.jpeg',
+        f'https://imgur.com/{image_id}.jpg',
+        f'https://imgur.com/{image_id}.jpeg',
+    ]
+    errors = []
+    session = requests.Session()
+    session.headers.update(HEADERS)
+    for candidate in attempts:
+        try:
+            response = session.get(candidate, timeout=45, allow_redirects=True)
+            response.raise_for_status()
+            image = decode(response.content)
+            return response.content, image
+        except Exception as exc:
+            errors.append(f'{candidate}: {type(exc).__name__} {str(exc)[:90]}')
+    raise RuntimeError(' | '.join(errors))
 
 
 def normalized_face(image: Image.Image):
@@ -167,7 +184,7 @@ for member in TARGETS:
             value = score(sig, anchor)
             candidates.append((value, ordinal, url, raw, image, sig))
         except Exception as exc:
-            print('SKIP', member, ordinal, url, type(exc).__name__, str(exc)[:120])
+            print('SKIP', member, ordinal, url, type(exc).__name__, str(exc)[:240])
     if not candidates:
         raise RuntimeError(f'No usable alternate SPOILERS candidates for {member}')
     candidates.sort(key=lambda item: item[0])
