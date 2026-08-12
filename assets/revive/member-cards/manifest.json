@@ -7,16 +7,16 @@
       "path": "assets/revive/member-cards/bangers/gaeul.jpg",
       "source": "https://i.imgur.com/YMGFk57.jpg",
       "resolved_source": "https://i.imgur.com/YMGFk57.jpg",
-      "bytes": 1069255,
-      "sha256": "f6f6f475e90dedfd5b90a0ba2610090a530202b85c115011f04bfd6eccc7dae0",
+      "bytes": 426770,
+      "sha256": "7a40ff41851e5f17a38bcab2890cd7ad4392b09f2be6e3203db2d7d5523eb9b9",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1771426264.A.F85.html",
       "official_post": "https://x.com/IVEstarship/status/2024121969587761165",
       "concept": "BANGERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
       "source_ordinal": 5,
       "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        2493,
-        3324
+        1200,
+        1600
       ],
       "match_features": {
         "face_w": 0.19524,
@@ -25,6 +25,11 @@
         "center_y": 0.32964,
         "aspect": 0.75,
         "border_edge": 0.02374
+      },
+      "display_optimization": {
+        "version": "mobile-card-memory-fix-v62",
+        "max_height": 1600,
+        "preserves_selected_photo": true
       }
     },
     {
@@ -33,16 +38,16 @@
       "path": "assets/revive/member-cards/bangers/yujin.jpg",
       "source": "https://i.imgur.com/JH54fPO.jpg",
       "resolved_source": "https://i.imgur.com/JH54fPO.jpg",
-      "bytes": 1084476,
-      "sha256": "7150e78cb4c9908b94c726acde4889c0e250f01a628b8dac14c0fe79474b84ea",
+      "bytes": 375255,
+      "sha256": "33b15ab88b2259694b7b21485122501e9d6b15ce784ff2ab3e9933e8a35cee74",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1771426264.A.F85.html",
       "official_post": "https://x.com/IVEstarship/status/2024121836557185221",
       "concept": "BANGERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
       "source_ordinal": 4,
       "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        2873,
-        3830
+        1200,
+        1600
       ],
       "match_features": {
         "face_w": 0.20476,
@@ -51,6 +56,11 @@
         "center_y": 0.21821,
         "aspect": 0.75013,
         "border_edge": 0.04823
+      },
+      "display_optimization": {
+        "version": "mobile-card-memory-fix-v62",
+        "max_height": 1600,
+        "preserves_selected_photo": true
       }
     },
     {
@@ -59,16 +69,16 @@
       "path": "assets/revive/member-cards/bangers/rei.jpg",
       "source": "https://i.imgur.com/4UCnYQC.jpg",
       "resolved_source": "https://i.imgur.com/4UCnYQC.jpg",
-      "bytes": 1109135,
-      "sha256": "3e421c33a3df12389b494a051a592b2592270626f04a0c48a76015262974d1fe",
+      "bytes": 434694,
+      "sha256": "3ee2e76c16b2bc18f055759effc35d69fe5841163494ce64c51e4d30197a6c51",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1771426264.A.F85.html",
       "official_post": "https://x.com/IVEstarship/status/2024121756412236221",
       "concept": "BANGERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
       "source_ordinal": 1,
       "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        2554,
-        3405
+        1200,
+        1600
       ],
       "match_features": {
         "face_w": 0.24095,
@@ -77,6 +87,11 @@
         "center_y": 0.27893,
         "aspect": 0.75007,
         "border_edge": 0.0365
+      },
+      "display_optimization": {
+        "version": "mobile-card-memory-fix-v62",
+        "max_height": 1600,
+        "preserves_selected_photo": true
       }
     },
     {
@@ -85,16 +100,16 @@
       "path": "assets/revive/member-cards/bangers/wonyoung.jpg",
       "source": "https://i.imgur.com/IOEwPMi.jpg",
       "resolved_source": "https://i.imgur.com/IOEwPMi.jpg",
-      "bytes": 1240611,
-      "sha256": "e4869c42263c5851b50eb9bc84eae9fd47a2374dba5d6c99f4b0cff31be0f604",
+      "bytes": 353884,
+      "sha256": "a9ad4a2700d09cf811986335e23fb76805f561abb53b734ec275da7f9d400059",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1771426264.A.F85.html",
       "official_post": "https://x.com/IVEstarship/status/2024122160810451353",
       "concept": "BANGERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
       "source_ordinal": 5,
       "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        3203,
-        4270
+        1200,
+        1600
       ],
       "match_features": {
         "face_w": 0.22,
@@ -103,6 +118,11 @@
         "center_y": 0.17464,
         "aspect": 0.75012,
         "border_edge": 0.02565
+      },
+      "display_optimization": {
+        "version": "mobile-card-memory-fix-v62",
+        "max_height": 1600,
+        "preserves_selected_photo": true
       }
     },
     {
@@ -111,16 +131,16 @@
       "path": "assets/revive/member-cards/bangers/liz.jpg",
       "source": "https://i.imgur.com/357dsaD.jpg",
       "resolved_source": "https://i.imgur.com/357dsaD.jpg",
-      "bytes": 1276600,
-      "sha256": "c80624cfbd387933d14e650115f69a5bc54d894b555445d8079131930cacbd51",
+      "bytes": 446007,
+      "sha256": "7f6906018f39cb0a8e2a71eadf28a871cfd6adaea98fbd538137b3745086730e",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1771426264.A.F85.html",
       "official_post": "https://x.com/IVEstarship/status/2024122105168855228",
       "concept": "BANGERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
       "source_ordinal": 3,
       "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        2766,
-        3688
+        1200,
+        1600
       ],
       "match_features": {
         "face_w": 0.17524,
@@ -129,6 +149,11 @@
         "center_y": 0.08857,
         "aspect": 0.75,
         "border_edge": 0.03244
+      },
+      "display_optimization": {
+        "version": "mobile-card-memory-fix-v62",
+        "max_height": 1600,
+        "preserves_selected_photo": true
       }
     },
     {
@@ -137,16 +162,16 @@
       "path": "assets/revive/member-cards/bangers/leeseo.jpg",
       "source": "https://i.imgur.com/7RlyvTg.jpg",
       "resolved_source": "https://i.imgur.com/7RlyvTg.jpg",
-      "bytes": 1639384,
-      "sha256": "963ef15f1b43ef1352bf037ad3ebebaa5a2a2e3473556810fd0715a9a5c83536",
+      "bytes": 672315,
+      "sha256": "97808ab53acb626b2b081da3bbed5e114e2556ae741057f757784f05196edd37",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1771426264.A.F85.html",
       "official_post": "https://x.com/IVEstarship/status/2024121904383004940",
       "concept": "BANGERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
       "source_ordinal": 3,
       "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        2461,
-        3282
+        1200,
+        1600
       ],
       "match_features": {
         "face_w": 0.26215,
@@ -155,6 +180,11 @@
         "center_y": 0.20036,
         "aspect": 0.74985,
         "border_edge": 0.10899
+      },
+      "display_optimization": {
+        "version": "mobile-card-memory-fix-v62",
+        "max_height": 1600,
+        "preserves_selected_photo": true
       }
     },
     {
@@ -303,18 +333,23 @@
       "path": "assets/revive/member-cards/spoilers/gaeul.jpg",
       "source": "https://i.imgur.com/07h20N1.jpg",
       "resolved_source": "https://i.imgur.com/07h20N1.jpg",
-      "bytes": 1378498,
-      "sha256": "8a9dd009d5b2c71534983a4c996923ba2237c5d2adb3e5e77d47f65e60b10a9a",
+      "bytes": 375632,
+      "sha256": "211af150f34bd798d8ce169d6881b588c67398141dff34ca5aeb72e8daaa6e57",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016151017696723199",
       "concept": "SPOILERS CONCEPT PHOTO · YUJIN/WONYOUNG-ALIGNED ALTERNATE",
       "source_ordinal": 1,
       "selection_method": "alternate official SPOILERS cut selected against retained Yujin/Wonyoung card framing; previous cut excluded",
       "dimensions": [
-        2701,
-        3580
+        1207,
+        1600
       ],
-      "anchor_score": 1.219395
+      "anchor_score": 1.219395,
+      "display_optimization": {
+        "version": "mobile-card-memory-fix-v62",
+        "max_height": 1600,
+        "preserves_selected_photo": true
+      }
     },
     {
       "set": "spoilers",
@@ -322,16 +357,16 @@
       "path": "assets/revive/member-cards/spoilers/yujin.jpg",
       "source": "https://i.imgur.com/p3c6Wy1.jpg",
       "resolved_source": "https://i.imgur.com/p3c6Wy1.jpg",
-      "bytes": 773482,
-      "sha256": "53f71fe1d15b0b2b57dc8f4ef7767b0a99fb3e2f7f2043f7c096f8ba703ebd3b",
+      "bytes": 224804,
+      "sha256": "e345c90c128dba70c2cdc627ee6747d0d8f3e3d748013bf7bbf63e7717295d79",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016151111749820512",
       "concept": "SPOILERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
       "source_ordinal": 3,
       "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        3151,
-        4178
+        1207,
+        1600
       ],
       "match_features": {
         "face_w": 0.20284,
@@ -340,6 +375,11 @@
         "center_y": 0.40929,
         "aspect": 0.75419,
         "border_edge": 0.00243
+      },
+      "display_optimization": {
+        "version": "mobile-card-memory-fix-v62",
+        "max_height": 1600,
+        "preserves_selected_photo": true
       }
     },
     {
@@ -348,18 +388,23 @@
       "path": "assets/revive/member-cards/spoilers/rei.jpg",
       "source": "https://i.imgur.com/BXTxBOk.jpg",
       "resolved_source": "https://i.imgur.com/BXTxBOk.jpg",
-      "bytes": 1353136,
-      "sha256": "74750b4de1ba579aba7a58d8cfa44f4e5b74b52eba1bca0aea6b4a7bea9f5cd2",
+      "bytes": 384959,
+      "sha256": "8957b91927664b05c308b0d3db79ba2584699a668cbea8a778f9942c78459502",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016150820228890959",
       "concept": "SPOILERS CONCEPT PHOTO · FIVE-CARD-ALIGNED REI ALTERNATE",
       "source_ordinal": 10,
       "selection_method": "alternate official SPOILERS cut selected against the five retained SPOILERS cards; previous Rei cut excluded",
       "dimensions": [
-        2701,
-        3581
+        1207,
+        1600
       ],
-      "anchor_score": 0.5099
+      "anchor_score": 0.5099,
+      "display_optimization": {
+        "version": "mobile-card-memory-fix-v62",
+        "max_height": 1600,
+        "preserves_selected_photo": true
+      }
     },
     {
       "set": "spoilers",
@@ -367,16 +412,16 @@
       "path": "assets/revive/member-cards/spoilers/wonyoung.jpg",
       "source": "https://i.imgur.com/nUwIaLx.jpg",
       "resolved_source": "https://i.imgur.com/nUwIaLx.jpg",
-      "bytes": 816353,
-      "sha256": "e1693f23c47dd9411609fc613cda4d17af985c8952be83cbcfcc6eccad331c1b",
+      "bytes": 267766,
+      "sha256": "4c7c192486cba3585e3271a678553605892f335b3ca36cf4d5af3db7f6c8129e",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016150607573483593",
       "concept": "SPOILERS CONCEPT PHOTO · PORTRAIT-MATCHED CUT",
       "source_ordinal": 13,
       "selection_method": "closest portrait geometry to existing LOVED IVE cardset, then six-card consistency",
       "dimensions": [
-        3151,
-        4177
+        1207,
+        1600
       ],
       "match_features": {
         "face_w": 0.24621,
@@ -385,6 +430,11 @@
         "center_y": 0.26357,
         "aspect": 0.75437,
         "border_edge": 0.01234
+      },
+      "display_optimization": {
+        "version": "mobile-card-memory-fix-v62",
+        "max_height": 1600,
+        "preserves_selected_photo": true
       }
     },
     {
@@ -393,18 +443,23 @@
       "path": "assets/revive/member-cards/spoilers/liz.jpg",
       "source": "https://i.imgur.com/NT3KDm4.jpg",
       "resolved_source": "https://i.imgur.com/NT3KDm4.jpg",
-      "bytes": 727458,
-      "sha256": "a75474a5789cda7b5c118b5248737d3f860684dc61eaafedab2cbf45fd7e96d7",
+      "bytes": 186874,
+      "sha256": "4aed8f18af58708aa3abdda261ff17e0f689f1fe89343f7150426f078312369e",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016150914076443139",
       "concept": "SPOILERS CONCEPT PHOTO · YUJIN/WONYOUNG-ALIGNED ALTERNATE",
       "source_ordinal": 3,
       "selection_method": "alternate official SPOILERS cut selected against retained Yujin/Wonyoung card framing; previous cut excluded",
       "dimensions": [
-        3151,
-        4178
+        1207,
+        1600
       ],
-      "anchor_score": 2.050711
+      "anchor_score": 2.050711,
+      "display_optimization": {
+        "version": "mobile-card-memory-fix-v62",
+        "max_height": 1600,
+        "preserves_selected_photo": true
+      }
     },
     {
       "set": "spoilers",
@@ -412,18 +467,23 @@
       "path": "assets/revive/member-cards/spoilers/leeseo.jpg",
       "source": "https://i.imgur.com/fAxHA7F.jpg",
       "resolved_source": "https://i.imgur.com/fAxHA7F.jpg",
-      "bytes": 931814,
-      "sha256": "eb1612b8cba12ac9b7540207ea783caa498209ef2eb4e6e8b310740be03faeae",
+      "bytes": 246614,
+      "sha256": "503f9754f6a0ab31235b593c0efb511cf9c86cad7f63e881c11b379dfcc3f397",
       "source_page": "https://www.ptt.cc/bbs/IVE_STARSHIP/M.1769526059.A.0FF.html",
       "official_post": "https://x.com/IVEstarship/status/2016150712049402127",
       "concept": "SPOILERS CONCEPT PHOTO · YUJIN/WONYOUNG-ALIGNED ALTERNATE",
       "source_ordinal": 3,
       "selection_method": "alternate official SPOILERS cut selected against retained Yujin/Wonyoung card framing; previous cut excluded",
       "dimensions": [
-        3151,
-        4178
+        1207,
+        1600
       ],
-      "anchor_score": 1.955495
+      "anchor_score": 1.955495,
+      "display_optimization": {
+        "version": "mobile-card-memory-fix-v62",
+        "max_height": 1600,
+        "preserves_selected_photo": true
+      }
     },
     {
       "set": "loved-ive",

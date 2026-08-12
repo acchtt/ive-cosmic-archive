@@ -4,7 +4,7 @@
 
   const MEMBER_NAMES = ['Gaeul', 'Yujin', 'Rei', 'Wonyoung', 'Liz', 'Leeseo'];
   const STORAGE_KEY = 'ive-cosmic-revive-member-set';
-  const CARD_ASSET_VERSION = 'spoilers-rei-align-v61';
+  const CARD_ASSET_VERSION = 'mobile-card-memory-fix-v62';
   const CORE_EVENT_SOURCE = 'revive-member-sets';
   const LAUNCH_KEY = 'ive-cosmic-revive-launch-seen';
   const ARCHIVE_VERSION = '0.20.0';
@@ -84,7 +84,6 @@
   const SET_ORDER = ['bangers', 'challengers', 'spoilers', 'loved-ive'];
   const resolvedPortraits = new Map();
   const portraitLoads = new Map();
-  const portraitImages = new Map();
   const setLoads = new Map();
   let activeSetId = readStoredSet();
   let selectionVersion = 0;
@@ -158,18 +157,18 @@
     }
   }
 
-  function injectPreloadHints() {
+  function injectPreloadHints(setId = activeSetId) {
+    const set = SETS[setId];
+    if (!set) return;
     const fragment = document.createDocumentFragment();
-    SET_ORDER.forEach((setId) => {
-      SETS[setId].portraits.forEach((url) => {
-        if (document.querySelector(`link[rel="preload"][as="image"][href="${url}"]`)) return;
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'image';
-        link.href = url;
-        link.fetchPriority = 'high';
-        fragment.appendChild(link);
-      });
+    set.portraits.forEach((url) => {
+      if (document.querySelector(`link[rel="preload"][as="image"][href="${url}"]`)) return;
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = url;
+      link.fetchPriority = 'high';
+      fragment.appendChild(link);
     });
     document.head.appendChild(fragment);
   }
@@ -379,7 +378,6 @@ ${SET_ORDER.map((setId) => `
         } catch {
           // A completed load is still usable when explicit decode is unsupported.
         }
-        portraitImages.set(url, image);
         resolvedPortraits.set(url, url);
         resolve(url);
       };
@@ -413,18 +411,6 @@ ${SET_ORDER.map((setId) => `
 
     setLoads.set(setId, load);
     return load;
-  }
-
-  function preloadAllPortraits() {
-    const preloadOrder = [
-      activeSetId,
-      ...SET_ORDER.filter((setId) => setId !== activeSetId)
-    ];
-
-    return Promise.all(preloadOrder.map((setId) => preloadSetPortraits(setId, 'high')))
-      .then(() => {
-        document.documentElement.dataset.memberAssetsReady = 'true';
-      });
   }
 
   function applyPortraitToCard(index, url) {
@@ -487,9 +473,12 @@ ${SET_ORDER.map((setId) => `
   function applyCurrentSet() {
     const setId = activeSetId;
     const version = selectionVersion;
+    document.documentElement.dataset.memberAssetsReady = 'loading';
 
     return preloadSetPortraits(setId, 'high').then((portraits) => {
+      if (version !== selectionVersion || setId !== activeSetId) return;
       applyResolvedSet(setId, portraits, version);
+      document.documentElement.dataset.memberAssetsReady = 'true';
     });
   }
 
@@ -504,6 +493,7 @@ ${SET_ORDER.map((setId) => `
 
     activeSetId = setId;
     selectionVersion += 1;
+    injectPreloadHints(setId);
     applyCurrentSet();
     window.dispatchEvent(new CustomEvent('revive-member-set-change', {
       detail: { id: setId, label: SETS[setId].label, themeColor: SETS[setId].themeColor, source: CORE_EVENT_SOURCE }
@@ -553,9 +543,6 @@ ${SET_ORDER.map((setId) => `
   }
 
   window.addEventListener('revive-member-set-change', syncExternalMemberSet);
-
-  injectPreloadHints();
-  preloadAllPortraits();
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initialize, { once: true });
